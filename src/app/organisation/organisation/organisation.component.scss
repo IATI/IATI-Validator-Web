@@ -1,0 +1,14 @@
+.about-organisation {
+  margin-bottom: 20px;
+ }
+
+ .workspaces {
+  display: flex;
+  flex-wrap: wrap;
+  //compensate for the margin of the boxes
+  margin: 0 -22px;
+}
+
+.card-item {
+  width: 33%;
+}

@@ -1,0 +1,23 @@
+.mycard {
+  margin: 10px;
+  border: 1px lightgray solid;
+  border-radius: 3px;
+  font-family: Lato;
+}
+
+.mycard-title {
+  font-weight: 700;
+  font-size: 18px;
+  padding: 14px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.mycard-body {
+  padding: 14px;
+}
+
+.workspace-link {
+  text-decoration: none;
+  color: inherit;
+}
