@@ -22,6 +22,26 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Creating and testing a Docker image
+
+Create the docker image with
+
+```
+docker build -t test-me .
+```
+
+and then start and stop it with
+
+```
+# start the docker container
+docker run --name test-me -d --rm -p 8123:80 test-me
+
+# visit http://0.0.0.0:8123/iati-feedback (or the location you specified)
+
+# stop the docker container
+docker stop test-me
+```
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
