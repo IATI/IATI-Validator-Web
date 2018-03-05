@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: '', component: OrganisationComponent },
   { path: ':name', component: OrganisationComponent },
   { path: ':organisation/ws/:workspace', component: WorkspaceComponent },
+  { path: ':organisation/ws/:workspace/:version', component: WorkspaceComponent }
 ];
 
 @NgModule({

@@ -1,3 +1,4 @@
+import { Version } from './version';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -14,6 +15,7 @@ import { Workspace } from './workspace';
 export class OrganisationService {
   private urlApiOrganisation: string = environment.apiBaseUrl + '/organisations';
   private urlApiWorkspaces: string = environment.apiBaseUrl + '/workspaces';
+  private urlApiVersions: string = environment.apiBaseUrl + '/versions';
 
   constructor(private http: HttpClient) { }
 
@@ -35,6 +37,28 @@ getWorkspaces(name: string): Observable<Array<Workspace>> {
     catchError(this.handleError('getWorkspaces', []))
   );
 }
+
+getVersions(workspaceid: string): Observable<Array<Version>> {
+  const url: string = this.urlApiVersions + '?workspace_id=' + workspaceid;
+  this.log(url);
+  return this.http.get<Version[]>(url)
+  .pipe(
+    tap(_ => this.log(`fetched versions`)),
+    catchError(this.handleError('getVersions', []))
+  );
+}
+
+getVersion(versionid: string): Observable<Version> {
+  const url: string = this.urlApiVersions + '?slug=' + versionid;
+  this.log(url);
+  return this.http.get<Version>(url)
+  .pipe(
+    tap(_ => this.log(`fetched version`)),
+    catchError(this.handleError('getVersion', undefined ))
+  );
+}
+
+
 
 private log(message: string) {
   if (!environment.production) {

@@ -1,37 +1,29 @@
-<div class="view-type">
-    <h4 class="view-name">View title - Data Quality Feedback</h4>
-    <table class="table table-hover view-table">
-      <thead>
-        <tr >
-          <th scope="col">File name</th>
-          <th scope="col">IAITI version and type</th>
-          <th scope="col">Updated</th>
-          <th scope="col">Contains</th>
-          <th scope="col">With feedback items</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr (click)="rowClick('myfilename')">
-          <td>cordaid-activities.xml</td>
-          <td>2.02 activities</td>
-          <td>5 december 2017 14:08</td>
-          <td>59 activities</td>
-          <td>12345</td>
-        </tr>
-        <tr (click)="rowClick('myfilename 2')">
-            <td>cordaid-activities.xml</td>
-            <td>2.02 activities</td>
-            <td>5 december 2017 14:08</td>
-            <td>59 activities</td>
-            <td>12345</td>
-        </tr>
-        <tr (click)="rowClick('myfilename 3')">
-            <td>cordaid-activities.xml</td>
-            <td>2.02 activities</td>
-            <td>5 december 2017 14:08</td>
-            <td>59 activities</td>
-            <td>12345</td>
-        </tr>
-      </tbody>
-    </table>
+<div *ngIf="versionData == undefined">
+  <p>No data found.</p>
+</div>
+
+<div *ngIf="versionData != undefined">
+  <div>
+    Version: {{ versionData.name }} <br>
+    Last modified: {{ versionData.last_modified }} <br>
+    Description: {{ versionData.description }} <br>
   </div>
+
+  <div *ngFor="let view of versionData.views" class="view-type"  >
+      <h4 class="view-name">{{ view.type_name }}</h4>
+      <table class="table table-hover view-table">
+        <thead>
+          <tr >
+            <th *ngFor="let prop of view.properties" scope="col">{{prop.name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr (click)="rowClick( view.type, view.id )">
+            <td *ngFor="let prop of view.properties" >{{prop.value}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+</div>
+
