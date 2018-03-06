@@ -9,16 +9,16 @@
     Description: {{ versionData.description }} <br>
   </div>
 
-  <div *ngFor="let view of versionData.views" class="view-type"  >
-      <h4 class="view-name">{{ view.type_name }}</h4>
+  <div *ngFor="let viewGroup of viewData" class="view-type"  >
+      <h4 class="view-name">{{ viewGroup.typeName }}</h4>
       <table class="table table-hover view-table">
         <thead>
           <tr >
-            <th *ngFor="let prop of view.properties" scope="col">{{prop.name}}</th>
+            <th *ngFor="let prop of viewGroup.views[0].properties" scope="col">{{prop.name}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr (click)="rowClick( view.type, view.id )">
+          <tr *ngFor="let view of viewGroup.views" (click)="rowClick( view.type, view.id )">
             <td *ngFor="let prop of view.properties" >{{prop.value}}</td>
           </tr>
         </tbody>

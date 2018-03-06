@@ -15,21 +15,6 @@ export class OrganisationComponent implements OnInit, OnDestroy {
   error: any;
   name = '';
 
-  //  = {
-  //   display_name: 'Cordaid',
-  //   description: '',
-  //   image_display_url: 'https://upload.wikimedia.org/wikipedia/en/9/97/CORDAID_logo_RGB.gif',
-  //   package_count: 2,
-  //   title: 'Cordaid',
-  //   is_organization: true,
-  //   state: 'active',
-  //   image_url: 'https://upload.wikimedia.org/wikipedia/en/9/97/CORDAID_logo_RGB.gif',
-  //   type: 'organization',
-  //   num_followers: 0,
-  //   id: '0557913f-0e99-47ce-a29a-b81d2c023b0b',
-  //   name: 'cordaid'
-  //  };
-
   constructor(private organisationService: OrganisationService,
               private activateRoute: ActivatedRoute) {
                 this.activateRoute
@@ -40,7 +25,6 @@ export class OrganisationComponent implements OnInit, OnDestroy {
                }
 
   ngOnInit() {
-    // this.organisationData = this.organisationService.getOrganisation('cordaid');
     this.LoadOrganisation(this.name);
     this.LoadWorkSpaces(this.name);
   }
@@ -60,8 +44,6 @@ export class OrganisationComponent implements OnInit, OnDestroy {
         error => this.error = error // error path
       );
   }
-
-
 
   ngOnDestroy() {
   }

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+
 import { OrganisationComponent } from './organisation/organisation.component';
 import { OrganisationService } from './shared/organisation.service';
 import { WorkspaceListItemComponent } from './workspace-list-item/workspace-list-item.component';
@@ -18,6 +20,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    FormsModule,
   ],
   exports: [
     RouterModule

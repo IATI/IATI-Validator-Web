@@ -28,13 +28,23 @@ export class OrganisationService {
     );
   }
 
-getWorkspaces(name: string): Observable<Array<Workspace>> {
-  const url: string = this.urlApiWorkspaces + '?organisation=' + name;
+getWorkspaces(organisation: string): Observable<Array<Workspace>> {
+  const url: string = this.urlApiWorkspaces + '?organisation_id=' + organisation;
   this.log(url);
   return this.http.get<Workspace[]>(url)
   .pipe(
     tap(_ => this.log(`fetched workspaces`)),
     catchError(this.handleError('getWorkspaces', []))
+  );
+}
+
+getWorkspace(id: string): Observable<Workspace> {
+  const url: string = this.urlApiWorkspaces + '/' + id;
+  this.log(url);
+  return this.http.get<Workspace>(url)
+  .pipe(
+    tap(_ => this.log(`fetched workspaces`)),
+    catchError(this.handleError('getWorkspaces', undefined))
   );
 }
 
@@ -58,7 +68,18 @@ getVersion(versionid: string): Observable<Version> {
   );
 }
 
+getEmptyWorkspace(): Workspace {
+  const ws: Workspace = {
+    id: '',
+    description: '',
+    organisation_id: '',
+    organisation_name: '',
+    slug: '',
+    title: ''
+  };
 
+  return ws;
+}
 
 private log(message: string) {
   if (!environment.production) {

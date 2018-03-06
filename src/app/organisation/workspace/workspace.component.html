@@ -1,13 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1 class="organisation-name">Organisation name</h1>
-      <h2 class="workspace-name">Workspace name</h2>
+      <h1 class="organisation-name">{{ workspaceData.organisation_name }}</h1>
+      <h2 class="workspace-name"> {{ workspaceData.title }} </h2>
+      <p>{{ workspaceData.description }}</p>
     </div>
     <div class="col-md-auto version-col">
       <div class="version-wrapper">
         <label for="versionSelect">Version</label>
-        <select class="version-select custom-select" id="versionSelect" (change)="selectedVersion($event.target.value)">
+        <select [(ngModel)]="versionid" class="version-select custom-select"  #versionSelect (change)="selectedVersion(versionSelect.value )">
           <option *ngIf="versionid ===''" selected value="" >Select a version...</option>
           <option *ngFor="let vers of versions" value="{{ vers.slug }}" >{{vers.name}}</option>
         </select>
@@ -15,7 +16,11 @@
     </div>
   </div>
 
-  <div *ngIf="versionid ===''" class="no-version-selected">
+<div *ngIf="versions?.length === 0" class="no-version-selected">
+  <h4>No versions found.</h4>
+</div>
+
+  <div *ngIf="versionid ==='' && versions?.length !== 0" class="no-version-selected">
     <h4>Please select a version.</h4>
 
     <div class="list-group">
@@ -26,7 +31,7 @@
 
   </div>
 
-  <app-workspace-view-item *ngIf="versionid !==''" [version]="currentVersion"></app-workspace-view-item>
+  <app-workspace-view-item *ngIf="versionid !==''" [versionid]="versionid"></app-workspace-view-item>
 
 </div>
 
