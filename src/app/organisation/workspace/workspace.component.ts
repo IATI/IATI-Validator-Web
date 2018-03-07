@@ -48,16 +48,27 @@ export class WorkspaceComponent implements OnInit {
 
       this.organisationService.getVersions(workspaceid)
         .subscribe(
-          data => this.versions = data  ,
-          error => this.error = error
+          data => this.versions = data   ,
+          error => this.error = error,
+          () => {
+            // if version = latest, then set the last version and select it
+            if (this.versionid === 'latest') {
+              // TODO: get latest modified version. Now it is the first item in the array.
+              // This must be the item with the youngest last_modified date.
+              this.versionid = this.versions[0].slug;
+              // tslint:disable-next-line:max-line-length
+              this.router.navigate(['organisation', this.organisationId, 'ws', this.workspaceid, this.versionid], { skipLocationChange: false, replaceUrl: true });
+            }
+          }
         );
 
     }
 
     selectedVersion(versionNew: string) {
-      // versionNew we don't need, because the select control is two way binded to this.versionid
-      // this.versionid = versionNew;
-      // this.router.navigate(['organisation', this.organisationId, 'ws', this.workspaceid, versionNew], { skipLocationChange: false });
+      if (this.versionid !== versionNew) {
+        this.versionid = versionNew;
+      }
+      // tslint:disable-next-line:max-line-length
       this.router.navigate(['organisation', this.organisationId, 'ws', this.workspaceid, this.versionid], { skipLocationChange: false });
     }
 

@@ -1,5 +1,6 @@
 <div class="mycard">
-  <a class="workspace-link" [routerLink]="['ws', workspace.slug ]">
+  <!-- we go to virtual version latest, in the workspace component the latest version will be loaded. -->
+  <a class="workspace-link" [routerLink]="['ws', workspace.slug, 'latest' ]">
 
     <div class="mycard-title">
         {{workspace.title}}

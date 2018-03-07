@@ -20,7 +20,7 @@
       name: string;
       slug: string;
       description: string;
-      last_modified: string;
+      last_modified: Date ;
       views: View[];
   }
 
