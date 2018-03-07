@@ -1,5 +1,6 @@
 <div class="container">
   <h1>Organisations</h1>
   <app-organisations-search (search)="searchOrganisation($event)"></app-organisations-search>
+  <div *ngIf="isSearching" class="text-info">Searching ....</div>
   <app-organisations-list [organisations]="filteredOrganisations"></app-organisations-list>
 </div>
