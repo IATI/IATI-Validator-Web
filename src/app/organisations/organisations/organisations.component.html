@@ -1,5 +1,5 @@
 <div class="container">
   <h1>Organisations</h1>
   <app-organisations-search (search)="searchOrganisation($event)"></app-organisations-search>
-  <app-organisations-list [organisations]="organisations"></app-organisations-list>
+  <app-organisations-list [organisations]="filteredOrganisations"></app-organisations-list>
 </div>

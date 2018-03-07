@@ -27,7 +27,7 @@ export class OrganisationsSearchComponent implements OnInit {
 
     // Subscribe to changes in the search field and emit a search after 400 ms.
     this.term.valueChanges
-              .debounceTime(400)
+              .debounceTime(300)
               .distinctUntilChanged()
               .subscribe(searchValue => this.searchOrganisations());
               // .subscribe(t => this.search.emit(t));

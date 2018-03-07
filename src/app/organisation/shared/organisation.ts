@@ -1,3 +1,15 @@
+// export interface Organisation {
+//   name: string;
+//   slug: string;
+//   logo: string;
+//   country: string;
+//   iati_id: string;
+//   registry_id: string;
+//   datasets: number;
+//   state: string;
+//   id: string;
+// }
+
 export interface Organisation {
   display_name: string;
   description: string;

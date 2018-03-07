@@ -51,6 +51,7 @@ export class WorkspaceComponent implements OnInit {
           data => this.versions = data  ,
           error => this.error = error
         );
+
     }
 
     selectedVersion(versionNew: string) {

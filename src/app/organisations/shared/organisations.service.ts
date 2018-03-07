@@ -10,30 +10,16 @@ import { Organisation } from './organisation';
 
 @Injectable()
 export class OrganisationsService {
-  private organisationsUrl = environment.apiBaseUrl;
+  private organisationsUrl = environment.apiDataworkBench;
 
   constructor(private http: HttpClient) { }
 
   getOrganisations (): Observable<Organisation[]> {
-    const url: string = this.organisationsUrl + '/organisations?_sort=display_name';
-    return this.http.get<Organisation[]>(url)
+    const url: string = this.organisationsUrl + '/iati-publishers/current';
+    return  this.http.get<Organisation[]>(url)
       .pipe(
         tap(_ => this.log(`fetched organisations`)),
         catchError(this.handleError('getOrganisations', []))
-      );
-  }
-
-  filterOrganisations(name: string): Observable<Organisation[]> {
-    if (!name.trim()) {
-      // if not search term, return all organisations.
-      return this.getOrganisations();
-    }
-    const url: string = this.organisationsUrl + '/organisations/?q=' + name + '&_sort=display_name';
-    this.log(url);
-    return this.http.get<Organisation[]>(url)
-      .pipe(
-        tap(_ => this.log(`found organisations matching "${name}"`)),
-        catchError(this.handleError<Organisation[]>('filterOrganisations', []))
       );
   }
 

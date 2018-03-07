@@ -33,7 +33,7 @@ export class WorkspaceViewItemComponent implements OnInit, OnChanges {
   }
 
   loadVersionData() {
-    if (this.versionid  === '' ) {
+    if (this.versionid  === '' || this.versionid === 'latest' ) {
       this.versionData = undefined;
     } else {
       this.organisationService.getVersion(this.versionid)
