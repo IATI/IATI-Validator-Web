@@ -7,12 +7,14 @@ import { catchError, map, tap } from 'rxjs/operators';
 import 'rxjs/add/observable/of';
 
 import { Organisation } from './organisation';
+import { LogService } from '../../core/logging/log.service';
 
 @Injectable()
 export class OrganisationsService {
   private organisationsUrl = environment.apiDataworkBench;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private logger: LogService) { }
 
   getOrganisations (): Observable<Organisation[]> {
     const url: string = this.organisationsUrl + '/iati-publishers/current';
@@ -39,7 +41,8 @@ export class OrganisationsService {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging
-      console.error(error); // log to console instead
+      this.logger.error(error);
+      // console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       // this.log(`${operation} failed: ${error.message}`);

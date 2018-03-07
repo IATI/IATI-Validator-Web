@@ -66,8 +66,6 @@ export class WorkspaceViewItemComponent implements OnInit, OnChanges {
             previousView = view.type;
           }
 
-          console.log(this.viewData);
-
         } ,
         error => this.error = error
       );

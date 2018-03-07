@@ -1,3 +1,4 @@
+import { LogService } from './../../core/logging/log.service';
 import { Version } from './version';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -17,7 +18,8 @@ export class OrganisationService {
   private urlApiWorkspaces: string = environment.apiBaseUrl + '/workspaces';
   private urlApiVersions: string = environment.apiBaseUrl + '/versions';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private logger: LogService) { }
 
   getOrganisation(name: string): Observable<Organisation> {
     const url: string = this.urlApiOrganisation + '/' + name;
@@ -83,7 +85,7 @@ getEmptyWorkspace(): Workspace {
 
 private log(message: string) {
   if (!environment.production) {
-    console.log(message);
+    this.logger.debug(message);
   }
 }
 
@@ -97,7 +99,8 @@ private log(message: string) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging
-      console.error(error); // log to console instead
+      this.logger.error(error);
+      // console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       // this.log(`${operation} failed: ${error.message}`);

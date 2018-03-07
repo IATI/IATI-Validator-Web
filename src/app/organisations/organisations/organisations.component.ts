@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { OrganisationsService } from './../shared/organisations.service';
 import { Organisation } from '../shared/organisation';
 import { Observable } from 'rxjs/Observable';
+import { LogService } from '../../core/logging/log.service';
+
 
 @Component({
   selector: 'app-organisations',
@@ -14,13 +16,15 @@ export class OrganisationsComponent implements OnInit {
   filteredOrganisations: Organisation[] = [];
   isSearching = false;
 
-  constructor(private organisationService: OrganisationsService) { }
+  constructor(private organisationService: OrganisationsService,
+              private logger: LogService) { }
 
   ngOnInit() {
     this.searchOrganisation('');
   }
 
   searchOrganisation(name: string) {
+    this.logger.debug('Start searching organisations', name);
     this.isSearching = true;
     if (this.organisations === undefined || this.organisations.length === 0) {
       // get organisations from the web api
@@ -35,6 +39,7 @@ export class OrganisationsComponent implements OnInit {
       // organisations already loaded, only apply filter
       this.filterOrganisations(name);
     }
+    this.logger.debug('End searching organisations', name);
   }
 
   filterOrganisations(name: string) {
