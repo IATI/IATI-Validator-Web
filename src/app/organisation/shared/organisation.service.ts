@@ -14,15 +14,15 @@ import { Workspace } from './workspace';
 
 @Injectable()
 export class OrganisationService {
-  private urlApiOrganisation: string = environment.apiBaseUrl + '/organisations';
+  private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
   private urlApiWorkspaces: string = environment.apiBaseUrl + '/workspaces';
   private urlApiVersions: string = environment.apiBaseUrl + '/versions';
 
   constructor(private http: HttpClient,
               private logger: LogService) { }
-
+              // ttp://dev1.dataworkbench.io/api/iati-publishers/findOne?filter[where][slug]=cordaid
   getOrganisation(name: string): Observable<Organisation> {
-    const url: string = this.urlApiOrganisation + '/' + name;
+    const url: string = this.urlApiOrganisation + '/findOne?filter[where][slug]=' + name;
     this.log(url);
     return this.http.get<Organisation>(url).pipe(
       tap(_ => this.log(`fetched organisation id=${name}`)),
