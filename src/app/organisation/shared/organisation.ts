@@ -1,5 +1,6 @@
 // export interface Organisation {
 //   name: string;
+//   description: string;
 //   slug: string;
 //   logo: string;
 //   country: string;
