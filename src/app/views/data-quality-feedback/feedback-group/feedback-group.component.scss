@@ -2,7 +2,6 @@
   margin: 0 0 10px 0;
   border: 1px lightgray solid;
   border-radius: 3px;
-  // font-family: Lato;
 }
 
 .feedback-heading {
@@ -11,6 +10,11 @@
   padding: 14px;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+}
+
+.feedback-heading  h3 {
+  cursor: pointer;
 }
 
 .feedback-items {

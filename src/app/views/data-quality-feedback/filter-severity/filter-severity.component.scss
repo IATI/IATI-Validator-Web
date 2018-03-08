@@ -1,6 +1,10 @@
 
 @import "variables";
 
+.card {
+  margin-bottom: 20px;
+}
+
 .error {
   background-color: $severity-error;
   color: white;
