@@ -1,0 +1,19 @@
+<div class="feedback-group">
+  <div class="feedback-heading">
+    <div class="d-inline "><h3 class="title d-inline" (click)="collapse()">Project titel</h3></div>
+    <div class="d-inline float-right">
+        <span><a href="#">NL-KVK-41160054-113043</a></span> <span>[5] [16] [34] [24]</span> <button type="button" class="btn btn-outline-secondary collapser" (click)="collapse()"><span *ngIf="!isCollapsed">-</span><span *ngIf="isCollapsed">+</span></button>
+    </div>
+
+  </div>
+  <div class="feedback-items" [ngbCollapse]="isCollapsed">
+    <app-feedback-item></app-feedback-item>
+    <app-feedback-item></app-feedback-item>
+    <app-feedback-item></app-feedback-item>
+    <app-feedback-item></app-feedback-item>
+    <app-feedback-item></app-feedback-item>
+  </div>
+</div>
+
+
+

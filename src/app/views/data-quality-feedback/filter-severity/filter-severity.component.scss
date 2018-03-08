@@ -1,0 +1,24 @@
+
+@import "variables";
+
+.error {
+  background-color: $severity-error;
+  color: white;
+}
+.warning {
+  background-color: $severity-warning;
+  color: white;
+}
+.improvement {
+  background-color: $severity-improvement;
+  color: white;
+}
+.optimisation {
+  background-color: $severity-optimisations;
+  color: white;
+}
+
+
+
+
+

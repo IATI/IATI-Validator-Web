@@ -1,0 +1,33 @@
+.feedback-group {
+  margin: 0 0 10px 0;
+  border: 1px lightgray solid;
+  border-radius: 3px;
+  // font-family: Lato;
+}
+
+.feedback-heading {
+  font-weight: 700;
+  font-size: 18px;
+  padding: 14px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.feedback-items {
+  padding: 14px;
+}
+
+.btn.collapser {
+  margin-left: 12px;
+  padding: 3px 6px;
+  font-size: 1.40625rem;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: none;
+  opacity: .5;
+}
+
+// .workspace-link {
+//   text-decoration: none;
+//   color: inherit;
+// }

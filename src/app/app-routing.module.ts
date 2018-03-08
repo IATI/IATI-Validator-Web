@@ -1,3 +1,4 @@
+import { DataQualityFeedbackModule } from './views/data-quality-feedback/data-quality-feedback.module';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,7 +14,7 @@ const routes: Routes = [
   {path: 'organisations', component: OrganisationsComponent, pathMatch: 'full'},
 
   {path: 'organisation', loadChildren: 'app/organisation/organisation.module#OrganisationModule'},
-  {path: 'view', loadChildren: 'app/views/views.module#ViewsModule'},
+  {path: 'view/dqf', loadChildren: 'app/views/data-quality-feedback/data-quality-feedback.module#DataQualityFeedbackModule'},
   {path: 'validate', loadChildren: 'app/validate-iati/validate-iati.module#ValidateIatiModule'},
 
   // Lazy loading Dashboard
