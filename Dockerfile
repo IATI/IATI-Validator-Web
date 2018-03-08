@@ -5,7 +5,7 @@
 ### STAGE 1: Build ###
 
 # We label our stage as ‘builder’
-FROM node:8.1.4-alpine as validator-front-end-builder
+FROM node:8.9.4-alpine as validator-front-end-builder
 
 # Optional --build-arg location=<path> to run the app from a different path on the server
 ARG location=iati-feedback/
