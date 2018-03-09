@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
+import { DataQualityFeedbackService } from './shared/data-quality-feedback.service';
 import { MainComponent } from './main/main.component';
 import { FilterSeverityComponent } from './filter-severity/filter-severity.component';
 import { FilterCategoryComponent } from './filter-category/filter-category.component';
@@ -21,6 +24,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    FormsModule,
     NgbModule,
   ],
   exports: [
@@ -34,6 +38,7 @@ const routes: Routes = [
     FeedbackGroupComponent,
     FeedbackItemComponent,
     FeedbackComponent,
-    CheckboxComponent]
+    CheckboxComponent],
+    providers: [DataQualityFeedbackService]
 })
 export class DataQualityFeedbackModule { }

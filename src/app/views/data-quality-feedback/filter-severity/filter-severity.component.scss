@@ -1,7 +1,6 @@
-
 @import "variables";
 
-.card {
+.filter {
   margin-bottom: 20px;
 }
 
@@ -22,6 +21,30 @@
   color: white;
 }
 
+.severity-count {
+  font-weight: 700;
+}
+
+.caption {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: $background-title;
+}
+
+.title {
+  font-weight: 700;
+  display: inline;
+}
+
+.show-label {
+  float: right;
+  margin-right: -10px;
+}
+
+.select {
+  margin-right: -10px;
+  float: right;
+}
 
 
 

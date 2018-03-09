@@ -1,13 +1,15 @@
-<div class="card">
-    <div class="card-body">
-      <h4 class="card-title">Severity</h4>
-      <div class="card-text">
-          <ul class="list-group">
-              <li class="list-group-item error">Errors  <span>189</span> <app-checkbox [checked]="true"></app-checkbox>        </li>
-              <li class="list-group-item warning">Warnings <app-checkbox></app-checkbox> </li>
-              <li class="list-group-item improvement"> Improvements <app-checkbox></app-checkbox> </li>
-              <li class="list-group-item optimisation">Optimisations <app-checkbox [checked]="true"></app-checkbox> </li>
-            </ul>
-      </div>
-    </div>
-  </div>
+<div class="filter">
+  <ul class="list-group">
+    <li class="list-group-item caption">
+      <div class="title">Severity</div>
+      <span class="show-label">Show/hide</span>
+    </li>
+    <li *ngFor="let sev of severities" class="list-group-item" [className]="'list-group-item ' + sev.id">
+      {{ sev.name }}
+      <span class="severity-count">({{sev.count}})</span>
+      <span class="select">
+        <app-checkbox [(checked)]="sev.show" [name]="'filterSev' + sev.name" (checkedChange)="selectionChanged()"></app-checkbox>
+      </span>
+    </li>
+  </ul>
+</div>

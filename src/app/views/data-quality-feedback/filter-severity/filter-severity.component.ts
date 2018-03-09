@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Severity } from '../shared/severity';
 
 @Component({
   selector: 'app-filter-severity',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./filter-severity.component.scss']
 })
 export class FilterSeverityComponent implements OnInit {
+  @Input() severities: Severity[] = [];
+  @Output() selectedChanged = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  selectionChanged() {
+    this.selectedChanged.emit('');
   }
 
 }
