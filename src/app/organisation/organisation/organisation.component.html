@@ -1,19 +1,19 @@
 <div class="container">
-  <h1>{{ organisationData?.display_name }}</h1>
+  <h1>{{ organisationData?.name }}</h1>
 
   <div class="row about-organisation">
     <div class="col-md-3 h-100">
         <div class="card">
 
             <div class="card-body">
-                <img [src]="organisationData?.image_display_url">
+                <img [src]="organisationData?.logo">
             </div>
           </div>
     </div>
     <div class="col-md-9">
         <div class="card">
             <div class="card-header">
-                About {{ organisationData?.display_name }}
+                About {{ organisationData?.name }}
               </div>
             <div class="card-body">
               <div class="card-text">
