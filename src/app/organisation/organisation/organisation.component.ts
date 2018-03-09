@@ -26,7 +26,7 @@ export class OrganisationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.LoadOrganisation(this.name);
-    this.LoadWorkSpaces(this.name);
+    // this.LoadWorkSpaces(this.name);
   }
 
     LoadOrganisation(name: string) {
@@ -37,13 +37,13 @@ export class OrganisationComponent implements OnInit, OnDestroy {
         );
     }
 
-  LoadWorkSpaces(name: string) {
-     this.organisationService.getWorkspaces(name)
-      .subscribe(
-        data => this.workspaces = data , // success path
-        error => this.error = error // error path
-      );
-  }
+  // LoadWorkSpaces(name: string) {
+  //    this.organisationService.getWorkspaces(name)
+  //     .subscribe(
+  //       data => this.workspaces = data , // success path
+  //       error => this.error = error // error path
+  //     );
+  // }
 
   ngOnDestroy() {
   }

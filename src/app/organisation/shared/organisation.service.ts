@@ -22,7 +22,7 @@ export class OrganisationService {
               private logger: LogService) { }
               // ttp://dev1.dataworkbench.io/api/iati-publishers/findOne?filter[where][slug]=cordaid
   getOrganisation(name: string): Observable<Organisation> {
-    const url: string = this.urlApiOrganisation + '/findOne?filter[where][slug]=' + name;
+    const url: string = this.urlApiOrganisation + '/findOne?filter[where][slug]=' + name + '&filter[include]=workspaces';
     this.log(url);
     return this.http.get<Organisation>(url).pipe(
       tap(_ => this.log(`fetched organisation id=${name}`)),
@@ -74,10 +74,13 @@ getEmptyWorkspace(): Workspace {
   const ws: Workspace = {
     id: '',
     description: '',
-    organisation_id: '',
-    organisation_name: '',
+    // organisation_id: '',
+    // organisation_name: '',
     slug: '',
-    title: ''
+    title: '',
+    'owner-slug': '',
+    'iati-publisherId': '',
+    versions: []
   };
 
   return ws;

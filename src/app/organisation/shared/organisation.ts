@@ -1,3 +1,5 @@
+import { Workspace } from './workspace';
+
 export interface Organisation {
   name: string;
   description: string;
@@ -9,6 +11,7 @@ export interface Organisation {
   datasets: number;
   state: string;
   id: string;
+  workspaces: Workspace[];
 }
 
 // export interface Organisation {
