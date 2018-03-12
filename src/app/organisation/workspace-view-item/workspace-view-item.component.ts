@@ -41,30 +41,32 @@ export class WorkspaceViewItemComponent implements OnInit, OnChanges {
         data => {
           this.versionData = data[0];
 
+          // BW 12-3-2018: Temporary disable this code until we can get this info
+          // from the workbench api.
           // Sort views by type
-          this.versionData.views.sort(function(a, b) {
-            if (a.type < b.type) {
-              return -1;
-            }
-            if (a.type > b.type) {
-              return 1;
-            }
-            // type is equal
-            return 0;
-          });
+          // this.versionData.views.sort(function(a, b) {
+          //   if (a.type < b.type) {
+          //     return -1;
+          //   }
+          //   if (a.type > b.type) {
+          //     return 1;
+          //   }
+          //   // type is equal
+          //   return 0;
+          // });
 
-          // transform the versionData, so that it is grouped by type
-          this.viewData.length = 0;
-          let previousView = '';
-          let indexCurrent = 0;
-          for (const view of this.versionData.views) {
-            if (view.type !== previousView) {
-              this.viewData.push({ type: view.type, typeName: view.type_name, views: [] });
-            }
-            indexCurrent = this.viewData.length - 1;
-            this.viewData[indexCurrent].views.push(view);
-            previousView = view.type;
-          }
+          // // transform the versionData, so that it is grouped by type
+          // this.viewData.length = 0;
+          // let previousView = '';
+          // let indexCurrent = 0;
+          // for (const view of this.versionData.views) {
+          //   if (view.type !== previousView) {
+          //     this.viewData.push({ type: view.type, typeName: view.type_name, views: [] });
+          //   }
+          //   indexCurrent = this.viewData.length - 1;
+          //   this.viewData[indexCurrent].views.push(view);
+          //   previousView = view.type;
+          // }
 
         } ,
         error => this.error = error
