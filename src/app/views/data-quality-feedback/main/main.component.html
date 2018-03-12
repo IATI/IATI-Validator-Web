@@ -9,8 +9,8 @@
     <div class="col-3 filters">
       <h4>Filters</h4>
 
-      <app-filter-severity [severities]="severities"></app-filter-severity>
-      <app-filter-category></app-filter-category>
+      <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()" ></app-filter-severity>
+      <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()" ></app-filter-category>
       <app-filter-type></app-filter-type>
 
     </div>

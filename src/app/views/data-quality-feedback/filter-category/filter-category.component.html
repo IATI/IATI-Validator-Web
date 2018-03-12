@@ -1,6 +1,15 @@
-<div class="card">
-  <div class="card-body">
-    <h4 class="card-title">Category</h4>
-    <p class="card-text">Text</p>
-  </div>
+<div class="filter">
+  <ul class="list-group">
+    <li class="list-group-item caption">
+      <div class="title">Category</div>
+      <span class="show-label">Show/hide</span>
+    </li>
+    <li *ngFor="let cat of categories" class="list-group-item">
+      {{ cat.name }}
+      <span class="severity-count">({{cat.count}})</span>
+      <span class="select">
+        <app-checkbox [(checked)]="cat.show" [name]="'filterSev' + cat.name" (checkedChange)="selectionChanged()"></app-checkbox>
+      </span>
+    </li>
+  </ul>
 </div>
