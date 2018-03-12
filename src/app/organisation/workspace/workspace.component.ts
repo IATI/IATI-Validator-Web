@@ -47,7 +47,8 @@ export class WorkspaceComponent implements OnInit {
           data => this.organisationData = (data )  ,
           error => this.error = error,
           () => {
-            this.workspaceData = this.organisationData.workspaces.find(ws => ws.slug === workspaceid);
+            this.workspaceData = this.organisationData.workspaces.find(ws => ws.slug === workspaceid) ||
+                    this.organisationService.getEmptyWorkspace();
             this.versions = this.workspaceData.versions;
 
             // if version = latest, then set the last version and select it

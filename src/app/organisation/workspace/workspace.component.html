@@ -16,6 +16,10 @@
     </div>
   </div>
 
+<div *ngIf="workspaceData.id===''" class="no-version-selected">
+  <h4>No workspace found.</h4>
+</div>
+
 <div *ngIf="versions?.length === 0" class="no-version-selected">
   <h4>No versions found.</h4>
 </div>
