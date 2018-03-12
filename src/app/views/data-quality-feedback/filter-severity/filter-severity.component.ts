@@ -15,6 +15,10 @@ export class FilterSeverityComponent implements OnInit {
   ngOnInit() {
   }
 
+  allSelected(): boolean {
+     return this.severities.every(x => x.show === true);
+  }
+
   selectionChanged() {
     this.selectedChanged.emit('');
   }

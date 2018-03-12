@@ -6,7 +6,7 @@
     </li>
     <li *ngFor="let sev of severities" class="list-group-item" [className]="'list-group-item ' + sev.id">
       {{ sev.name }}
-      <span class="severity-count">({{sev.count}})</span>
+      <span class="badge severity-count">{{sev.count}}</span>
       <span class="select">
         <app-checkbox [(checked)]="sev.show" [name]="'filterSev' + sev.name" (checkedChange)="selectionChanged()"></app-checkbox>
       </span>
