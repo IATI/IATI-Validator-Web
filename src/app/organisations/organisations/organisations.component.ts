@@ -1,3 +1,4 @@
+import { LoaderService } from './../../core/loader/loader.service';
 import { Component, OnInit } from '@angular/core';
 
 import { OrganisationsService } from './../shared/organisations.service';
@@ -17,7 +18,8 @@ export class OrganisationsComponent implements OnInit {
   isSearching = false;
 
   constructor(private organisationService: OrganisationsService,
-              private logger: LogService) { }
+              private logger: LogService,
+              private loader: LoaderService) { }
 
   ngOnInit() {
     this.searchOrganisation('');
@@ -26,11 +28,12 @@ export class OrganisationsComponent implements OnInit {
   searchOrganisation(name: string) {
     this.logger.debug('Start searching organisations', name);
     this.isSearching = true;
+    this.loader.show();
     if (this.organisations === undefined || this.organisations.length === 0) {
       // get organisations from the web api
       this.organisationService.getOrganisations()
         .subscribe(org => this.organisations = org,
-          error => {console.log(error); this.isSearching = false; },
+          error => {console.log(error); this.isSearching = false; this.loader.hide(); },
           () => {
             // finished fetching organisations from web api, filter the organisations by name
             this.filterOrganisations(name);
@@ -60,5 +63,6 @@ export class OrganisationsComponent implements OnInit {
                                       });
     }
     this.isSearching = false;
+    this.loader.hide();
   }
 }
