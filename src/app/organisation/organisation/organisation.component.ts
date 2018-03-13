@@ -32,7 +32,10 @@ export class OrganisationComponent implements OnInit, OnDestroy {
     LoadOrganisation(name: string) {
       this.organisationService.getOrganisation(name)
         .subscribe(
-          data => this.organisationData = data ,
+          data => {
+            this.organisationData = data;
+            this.workspaces = this.organisationData ? this.organisationData.workspaces : [] ;
+          } ,
           error => this.error = error
         );
     }

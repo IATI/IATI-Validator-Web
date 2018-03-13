@@ -1,36 +1,21 @@
 <div class="container">
-  <h1>{{ organisationData?.name }}</h1>
+  <div class="organisation-name">
+    <h1>{{ organisationData?.name }}</h1>
+  </div>
 
   <div class="row about-organisation">
     <div class="col-md-3 h-100">
-        <div class="card">
-
-            <div class="card-body">
-                <img [src]="organisationData?.logo">
-            </div>
-          </div>
+      <img [src]="organisationData?.logo" class="organisation-logo">
     </div>
     <div class="col-md-9">
-        <div class="card">
-            <div class="card-header">
-                About {{ organisationData?.name }}
-              </div>
-            <div class="card-body">
-              <div class="card-text">
-                <h3>Description</h3>
-                <p>{{ organisationData?.description }}</p>
-              </div>
-            </div>
-          </div>
+      <h3>Description</h3>
+      <p>{{ organisationData?.description }}</p>
     </div>
+
   </div>
 
   <div class="workspaces">
-    <app-workspace-list-item class="card-item" *ngFor="let ws of organisationData.workspaces" [workspace]="ws" ></app-workspace-list-item>
+    <app-workspace-list-item class="card-item" *ngFor="let ws of workspaces" [workspace]="ws"></app-workspace-list-item>
   </div>
 
 </div>
-
-
-
-
