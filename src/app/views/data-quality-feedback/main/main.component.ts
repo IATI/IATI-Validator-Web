@@ -46,8 +46,8 @@ export class MainComponent implements OnInit {
       .subscribe(
         data => {
           this.dqfs = data;
-          this.filterActivities();
           this.loader.hide();
+          this.filterActivities();
         },
         error => {
           this.logger.error('Error loadDqfData', error);
@@ -57,6 +57,7 @@ export class MainComponent implements OnInit {
   }
 
   filterActivities() {
+    this.loader.show();
     let filtered = cloneDeep(this.dqfs.activities);
     // Filter messages that are not selected in source
     filtered.forEach(act => {
@@ -87,6 +88,7 @@ export class MainComponent implements OnInit {
     // set count on filter items
     this.setSeverityCount();
     this.setSourceCount();
+    this.loader.hide();
   }
 
 
@@ -103,7 +105,7 @@ export class MainComponent implements OnInit {
   // Set the count of messages to the severity
   setSeverityCount() {
     this.severities.forEach(sev => {
-      sev.count = this.getIssueCount(sev.slug);
+      sev.count = sev.show ? this.getIssueCount(sev.slug) : null ;
     });
   }
 
@@ -124,7 +126,7 @@ export class MainComponent implements OnInit {
   // Set the count of messages to the sources
   setSourceCount() {
     this.sources.forEach(src => {
-      src.count = this.getSourceCount(src.slug);
+      src.count = src.show ? this.getSourceCount(src.slug) : null ;
     });
   }
 
