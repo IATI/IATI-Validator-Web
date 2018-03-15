@@ -16,8 +16,17 @@ export class FilterSourceComponent implements OnInit {
   ngOnInit() {
   }
 
+  allSelected(): boolean {
+    return this.sources.every(x => x.show === true);
+ }
+
   selectionChanged() {
     this.selectedChanged.emit('');
+  }
+
+  selectAll(): void {
+    this.sources.forEach(x => x.show = true);
+    this.selectionChanged();
   }
 
 }

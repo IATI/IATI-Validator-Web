@@ -4,7 +4,6 @@
   margin-bottom: 20px;
 }
 
-
 .severity-count {
   display: inline-block;
   min-width: 28px;
@@ -26,6 +25,11 @@
 .show-label {
   float: right;
   margin-right: -10px;
+}
+
+.show-label .btn {
+  padding: 0;
+  border: 0;
 }
 
 .select {
