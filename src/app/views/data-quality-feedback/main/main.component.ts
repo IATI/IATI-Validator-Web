@@ -5,6 +5,7 @@ import { LogService } from './../../../core/logging/log.service';
 import { DataQualityFeedbackService } from './../shared/data-quality-feedback.service';
 import { Severity } from '../shared/severity';
 import { Source } from './../shared/source';
+import { Category } from './../shared/category';
 import { Dqfs, Activity, Feedback, Context, Message, Ruleset } from '../shared/feedback';
 import { LoaderService } from '../../../core/loader/loader.service';
 import { cloneDeep } from 'lodash';
@@ -20,6 +21,7 @@ export class MainComponent implements OnInit {
   dqfs: Dqfs;
   severities: Severity[] = [];
   sources: Source[] = [];
+  categories: Category[] = [];
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
     private logger: LogService,
@@ -47,6 +49,7 @@ export class MainComponent implements OnInit {
         data => {
           this.dqfs = data;
           this.loader.hide();
+          this.loadCategories();
           this.filterActivities();
         },
         error => {
@@ -56,9 +59,36 @@ export class MainComponent implements OnInit {
       );
   }
 
+  loadCategories() {
+
+    let uniqueCat: {id: string, name: string}[] = [];
+
+    this.dqfs.activities.forEach( act => {
+      act.feedback.forEach(fb => {
+        if (uniqueCat.some(u => u.id === fb.category )) {
+          // nothing
+        } else {
+          uniqueCat.push({ id: fb.category, name: fb.label  });
+        }
+      });
+    });
+
+    uniqueCat.forEach( u => {
+      this.categories.push({id: u.id, name: u.name, count: null, order: 0, show: true});
+    });
+
+  }
+
+
   filterActivities() {
     this.loader.show();
     let filtered = cloneDeep(this.dqfs.activities);
+
+    // Filter feedback category
+    filtered.forEach(act => {
+      act.feedback = act.feedback.filter(this.filterCategory);
+    });
+
     // Filter messages that are not selected in source
     filtered.forEach(act => {
       act.feedback.forEach(fb => {
@@ -67,6 +97,7 @@ export class MainComponent implements OnInit {
         });
       });
     });
+
     // Filter messages with severity selected
     filtered.forEach(act => {
       act.feedback.forEach(fb => {
@@ -100,6 +131,10 @@ export class MainComponent implements OnInit {
 
   filterSource = (ruleset: Ruleset) => {
     return this.sources.some(s => s.show === true && s.slug === ruleset.src);
+  }
+
+  filterCategory = (feedback: Feedback) => {
+    return this.categories.some(c => c.show === true && c.id === feedback.category);
   }
 
   // Set the count of messages to the severity
@@ -145,6 +180,10 @@ export class MainComponent implements OnInit {
   }
 
   severitySelectedChanged() {
+    this.filterActivities();
+  }
+
+  sourceSelectedChanged() {
     this.filterActivities();
   }
 

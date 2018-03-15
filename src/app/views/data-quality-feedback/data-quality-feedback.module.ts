@@ -14,6 +14,7 @@ import { FeedbackGroupComponent } from './feedback-group/feedback-group.componen
 import { FeedbackItemComponent } from './feedback-item/feedback-item.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { CheckboxComponent } from './shared/checkbox/checkbox.component';
+import { FilterCategoryComponent } from './filter-category/filter-category.component';
 
 const routes: Routes = [
   { path: ':name', component: MainComponent },
@@ -38,7 +39,8 @@ const routes: Routes = [
     FeedbackGroupComponent,
     FeedbackItemComponent,
     FeedbackComponent,
-    CheckboxComponent],
+    CheckboxComponent,
+    FilterCategoryComponent],
     providers: [DataQualityFeedbackService]
 })
 export class DataQualityFeedbackModule { }
