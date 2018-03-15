@@ -3,11 +3,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Source } from './../shared/source';
 
 @Component({
-  selector: 'app-filter-category',
-  templateUrl: './filter-category.component.html',
-  styleUrls: ['./filter-category.component.scss']
+  selector: 'app-filter-source',
+  templateUrl: './filter-source.component.html',
+  styleUrls: ['./filter-source.component.scss']
 })
-export class FilterCategoryComponent implements OnInit {
+export class FilterSourceComponent implements OnInit {
   @Input() sources: Source[] = [];
   @Output() selectedChanged = new EventEmitter<string>();
 

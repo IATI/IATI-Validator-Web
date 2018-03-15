@@ -8,7 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataQualityFeedbackService } from './shared/data-quality-feedback.service';
 import { MainComponent } from './main/main.component';
 import { FilterSeverityComponent } from './filter-severity/filter-severity.component';
-import { FilterCategoryComponent } from './filter-category/filter-category.component';
+import { FilterSourceComponent } from './filter-source/filter-source.component';
 import { FilterTypeComponent } from './filter-type/filter-type.component';
 import { FeedbackGroupComponent } from './feedback-group/feedback-group.component';
 import { FeedbackItemComponent } from './feedback-item/feedback-item.component';
@@ -33,7 +33,7 @@ const routes: Routes = [
   declarations: [
     MainComponent,
     FilterSeverityComponent,
-    FilterCategoryComponent,
+    FilterSourceComponent,
     FilterTypeComponent,
     FeedbackGroupComponent,
     FeedbackItemComponent,
