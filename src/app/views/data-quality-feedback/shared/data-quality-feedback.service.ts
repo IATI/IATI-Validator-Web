@@ -34,19 +34,19 @@ export class DataQualityFeedbackService  {
 
   getSeverities(): Severity[] {
     return [
-      { id:  'error', slug: 'danger' , name: 'Errors', count: 123, order: 1, show: true},
-      { id:  'warning', slug: 'warning' , name: 'Warnings', count: 34,  order: 2, show: true},
-      { id:  'improvement', slug: 'info' , name: 'Improvements', count: 55, order: 3,  show: true},
-      { id:  'optimisation', slug: 'success' , name: 'Optimisations', count: 3, order: 4, show: true},
+      { id:  'error', slug: 'danger' , name: 'Errors', count: null, order: 1, show: true},
+      { id:  'warning', slug: 'warning' , name: 'Warnings', count: null,  order: 2, show: true},
+      { id:  'improvement', slug: 'info' , name: 'Improvements', count: null, order: 3,  show: true},
+      { id:  'optimisation', slug: 'success' , name: 'Optimisations', count: null, order: 4, show: true},
     ];
   }
 
   getSources(): Source[] {
     return [
-      { id:  'practice', slug: 'practice' , name: 'Common practice', count: 123, order: 1, show: true},
-      { id:  'iati', slug: 'iati' , name: 'IATI', count: 34,  order: 2, show: true},
-      { id:  'iati-doc', slug: 'iati-doc' , name: 'IATI documentation', count: 55, order: 3,  show: true},
-      { id:  'minbuza', slug: 'minbuza' , name: 'Ministery of foreign affairs The Netherlands', count: 3, order: 4, show: true},
+      { id:  'practice', slug: 'practice' , name: 'Common practice', count: null, order: 1, show: true},
+      { id:  'iati', slug: 'iati' , name: 'IATI', count: null,  order: 2, show: true},
+      { id:  'iati-doc', slug: 'iati-doc' , name: 'IATI documentation', count: null, order: 3,  show: true},
+      { id:  'minbuza', slug: 'minbuza' , name: 'Ministery of foreign affairs The Netherlands', count: null, order: 4, show: true},
     ];
   }
 
