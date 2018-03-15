@@ -7,7 +7,7 @@
     </li>
     <li *ngFor="let cat of sources" class="list-group-item">
       <span class="severity-count">{{cat.count}}</span>
-      {{ cat.name }}
+      <span [class.unselected]="!cat.show">{{ cat.name }}</span>
       <span class="select">
         <app-checkbox [(checked)]="cat.show" [name]="'filterSrc' + cat.name" (checkedChange)="selectionChanged()"></app-checkbox>
       </span>

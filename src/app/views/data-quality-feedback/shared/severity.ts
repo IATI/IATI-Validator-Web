@@ -5,5 +5,4 @@ export interface Severity {
   count: number;
   order: number;
   show: boolean;
-
 }
