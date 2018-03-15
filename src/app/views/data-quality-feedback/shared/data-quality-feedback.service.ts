@@ -7,30 +7,41 @@ import 'rxjs/add/observable/of';
 
 import { environment } from './../../../../environments/environment';
 import { LogService } from '../../../core/logging/log.service';
-import { Category } from './category';
+import { Source } from './source';
 import { Severity } from './severity';
+import { Feedback, Dqfs } from './feedback';
 
 
 @Injectable()
-export class DataQualityFeedbackService {
-  private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
-
-
+export class DataQualityFeedbackService  {
+  // private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
+  private urlApis: string = environment.apiBaseUrl + '/dqfs';
 
   constructor(private http: HttpClient,
-    private logger: LogService) { }
+              private logger: LogService) { }
 
+
+
+  getDqf(id: string): Observable<Dqfs> {
+    const url: string = this.urlApis + '/' + name + id;
+    this.logger.debug(url);
+
+    return this.http.get<Dqfs>(url).pipe(
+      tap(_ => this.logger.debug(`fetched dqfs id=${id}`)),
+      catchError(this.handleError<Dqfs>(`getDqf id=${id}`))
+    );
+  }
 
   getSeverities(): Severity[] {
     return [
-      { id:  'error', slug: 'error' , name: 'Errors', count: 123, order: 1, show: true},
+      { id:  'error', slug: 'danger' , name: 'Errors', count: 123, order: 1, show: true},
       { id:  'warning', slug: 'warning' , name: 'Warnings', count: 34,  order: 2, show: true},
-      { id:  'improvement', slug: 'improvement' , name: 'Improvements', count: 55, order: 3,  show: true},
-      { id:  'optimisation', slug: 'optimisation' , name: 'Optimisations', count: 3, order: 4, show: true},
+      { id:  'improvement', slug: 'info' , name: 'Improvements', count: 55, order: 3,  show: true},
+      { id:  'optimisation', slug: 'success' , name: 'Optimisations', count: 3, order: 4, show: true},
     ];
   }
 
-  getCategories(): Category[] {
+  getSources(): Source[] {
     return [
       { id:  'practice', slug: 'practice' , name: 'Common practice', count: 123, order: 1, show: true},
       { id:  'iati', slug: 'iati' , name: 'IATI', count: 34,  order: 2, show: true},
@@ -38,4 +49,29 @@ export class DataQualityFeedbackService {
       { id:  'minbuza', slug: 'minbuza' , name: 'Ministery of foreign affairs The Netherlands', count: 3, order: 4, show: true},
     ];
   }
+
+
+
+
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging
+      this.logger.error(error);
+      // console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      // this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+
 }

@@ -1,17 +1,22 @@
 <div class="feedback-group">
-  <div class="feedback-heading">
-    <div class="d-inline "><h3 class="title d-inline" (click)="collapse()">Project titel</h3></div>
-    <div class="d-inline float-right">
-        <span><a href="#">NL-KVK-41160054-113043</a></span> <span>[5] [16] [34] [24]</span> <button type="button" class="btn btn-outline-secondary collapser" (click)="collapse()"><span *ngIf="!isCollapsed">-</span><span *ngIf="isCollapsed">+</span></button>
+  <div class="feedback-heading row">
+    <div class="col title-col">
+      <h4 class="title d-inline" (click)="collapse()">{{ activity.title }}</h4>
+      <div class="d-inline float-right">
+        <span class="identifier-link"><a href="{{getLinkDportal(activity.publisher, cleanIdentifier(activity.identifier))}}" target="_blank" >{{ cleanIdentifier(activity.identifier)}}</a></span>
+        <span class="badge badge-danger">{{getIssueCount('danger')}}</span>
+        <span class="badge badge-warning">{{getIssueCount('warning')}}</span>
+        <span class="badge badge-info">{{getIssueCount('info')}}</span>
+        <span class="badge badge-success">{{getIssueCount('success')}}</span>
+      </div>
+    </div>
+    <div class="col-auto collapse-col">
+        <button type="button" class="btn btn-outline-secondary collapser" (click)="collapse()"><span *ngIf="!isCollapsed">-</span><span *ngIf="isCollapsed">+</span></button>
     </div>
 
   </div>
   <div class="feedback-items" [ngbCollapse]="isCollapsed">
-    <app-feedback-item></app-feedback-item>
-    <app-feedback-item></app-feedback-item>
-    <app-feedback-item></app-feedback-item>
-    <app-feedback-item></app-feedback-item>
-    <app-feedback-item></app-feedback-item>
+    <app-feedback-item *ngFor="let fb of activity.feedback" [feedback]="fb" ></app-feedback-item>
   </div>
 </div>
 

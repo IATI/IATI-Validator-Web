@@ -1,4 +1,3 @@
-<app-feedback-group></app-feedback-group>
-<app-feedback-group></app-feedback-group>
-<app-feedback-group></app-feedback-group>
-<app-feedback-group></app-feedback-group>
+<h4 class="title">Feedback  <span class="toggle-collapse"><button type="button" class="btn btn-link" (click)="toggleCollapse()">Collapse/Expand all</button></span></h4>
+<app-feedback-group *ngFor="let act of activityData" [activity]="act" ></app-feedback-group>
+

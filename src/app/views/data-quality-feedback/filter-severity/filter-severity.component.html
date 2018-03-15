@@ -2,11 +2,12 @@
   <ul class="list-group">
     <li class="list-group-item caption">
       <div class="title">Severity</div>
-      <span class="show-label">Show/hide</span>
+      <span *ngIf="allSelected()" class="show-label">Show/hide</span>
+      <span *ngIf="!allSelected()" class="show-label"><button type="button" class="btn btn-link" (click)="selectAll()">Select all</button></span>
     </li>
     <li *ngFor="let sev of severities" class="list-group-item" [className]="'list-group-item ' + sev.id">
+      <span class="severity-count">{{sev.count}}</span>
       {{ sev.name }}
-      <span class="badge severity-count">{{sev.count}}</span>
       <span class="select">
         <app-checkbox [(checked)]="sev.show" [name]="'filterSev' + sev.name" (checkedChange)="selectionChanged()"></app-checkbox>
       </span>

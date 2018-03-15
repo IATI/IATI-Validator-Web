@@ -1,0 +1,38 @@
+@import "variables";
+
+.category-label {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.feedback > ul {
+  padding: 0;
+}
+
+.message {
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px;
+}
+
+.error {
+  background-color: $severity-error;
+  color: white;
+}
+.warning {
+  background-color: $severity-warning;
+  color: white;
+}
+.improvement {
+  background-color: $severity-improvement;
+  color: white;
+}
+.optimisation {
+  background-color: $severity-optimisations;
+  color: white;
+}
+
+.context {
+  font-size: 15px;
+  font-weight: 400;
+}

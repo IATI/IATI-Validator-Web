@@ -22,10 +22,10 @@
 }
 
 .severity-count {
-  font-weight: 700;
-  background-color: #2C3E50;
-  color: #fff;
-  margin-left: 6px;
+  display: inline-block;
+  min-width: 28px;
+  margin-right: 6px;
+  text-align: right;
 }
 
 .caption {
@@ -42,6 +42,11 @@
 .show-label {
   float: right;
   margin-right: -10px;
+}
+
+.show-label .btn {
+  padding: 0;
+  border: 0;
 }
 
 .select {

@@ -1,4 +1,4 @@
-export interface Category {
+export interface Source {
   id: string;
   slug: string;
   name: string;

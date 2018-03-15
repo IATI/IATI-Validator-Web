@@ -23,4 +23,9 @@ export class FilterSeverityComponent implements OnInit {
     this.selectedChanged.emit('');
   }
 
+  selectAll(): void {
+    this.severities.forEach(x => x.show = true);
+    this.selectionChanged();
+  }
+
 }

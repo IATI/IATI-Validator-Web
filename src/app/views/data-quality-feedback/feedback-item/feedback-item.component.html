@@ -1,1 +1,10 @@
-<div>Feedback regel.</div>
+<div class="feedback">
+  <div class="category-label">{{feedback.label}}</div>
+  <ul>
+    <li *ngFor="let mes of feedback.messages" class="message {{getfeedbackColor(mes)}}"  >{{mes.text}} ({{mes.id}})
+      <ul [hidden]="mes.context.length===1 && mes.context[0].text===''">
+        <li *ngFor="let con of mes.context" class="context">Context: {{con.text}}</li>
+      </ul>
+    </li>
+  </ul>
+</div>

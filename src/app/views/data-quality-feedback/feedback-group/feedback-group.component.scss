@@ -1,20 +1,36 @@
+@import "variables";
+
 .feedback-group {
   margin: 0 0 10px 0;
   border: 1px lightgray solid;
-  border-radius: 3px;
+  border-radius: $border-radius;
 }
 
 .feedback-heading {
   font-weight: 700;
   font-size: 18px;
-  padding: 14px;
-  background-color: rgba(0, 0, 0, 0.03);
+  padding: 14px 0;
+  // background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-
+  margin-left: 0;
+  margin-right: 0;
 }
 
-.feedback-heading  h3 {
+.feedback-heading  h4 {
   cursor: pointer;
+}
+
+.title-col {
+  padding-right: 0;
+}
+
+// .collapse-col {
+//   margin-left: 0;
+// }
+
+.identifier-link {
+  font-size: 16px;
+  margin-right: 8px;
 }
 
 .feedback-items {

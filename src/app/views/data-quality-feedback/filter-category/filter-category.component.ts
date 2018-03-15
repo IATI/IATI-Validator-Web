@@ -1,5 +1,6 @@
-import { Category } from './../shared/category';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { Source } from './../shared/source';
 
 @Component({
   selector: 'app-filter-category',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./filter-category.component.scss']
 })
 export class FilterCategoryComponent implements OnInit {
-  @Input() categories: Category[] = [];
+  @Input() sources: Source[] = [];
   @Output() selectedChanged = new EventEmitter<string>();
 
   constructor() { }
