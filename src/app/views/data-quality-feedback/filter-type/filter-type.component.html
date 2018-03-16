@@ -1,6 +1,10 @@
-<div class="card">
-    <div class="card-body">
-      <h4 class="card-title">Type</h4>
-      <p class="card-text">Text</p>
-    </div>
-  </div>
+<div class="filter">
+  <ul class="list-group">
+    <li class="list-group-item caption">
+      <div class="title">Types</div>
+      <span *ngIf="allSelected()" class="show-label">Show/hide</span>
+      <span *ngIf="!allSelected()" class="show-label"><button type="button" class="btn btn-link" (click)="selectAll()">Select all</button></span>
+    </li>
+    <app-filter-type-severity *ngFor="let item of types" [type]="item" (selectedChanged)="selectionChanged()"  ></app-filter-type-severity>
+  </ul>
+</div>

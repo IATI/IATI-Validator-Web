@@ -1,0 +1,33 @@
+<li class="list-group-item"  [className]="'list-group-item ' + type.severity" [class.hidden]="type.types.length===0">
+    <div class="type-heading row">
+        <div class="col title-col" (click)="collapse()">
+            <span class="severity-count">{{type.count}}</span>
+            <span [class.unselected]="!type.show">{{ type.severity }}</span>
+        </div>
+        <div class="col-auto collapse-col">
+            <button type="button" class="btn btn-outline-light collapser" (click)="collapse()"><span *ngIf="!isCollapsed">-</span><span *ngIf="isCollapsed">+</span></button>
+        </div>
+      </div>
+    </li>
+
+    <div class="type-messages" [ngbCollapse]="isCollapsed">
+      <!-- <ul class="list-group"> -->
+      <app-filter-type-message *ngFor="let mes of type.types" [typeMessage]="mes" (selectedChanged)="selectionChanged()"></app-filter-type-message>
+    <!-- </ul> -->
+      </div>
+
+
+<!-- <div class="type-group">
+    <div class="type-heading row">
+      <div class="col title-col">
+        <h4 class="title d-inline" (click)="collapse()">{{ type.severity }}</h4>
+      </div>
+      <div class="col-auto collapse-col">
+          <button type="button" class="btn btn-outline-secondary collapser" (click)="collapse()"><span *ngIf="!isCollapsed">-</span><span *ngIf="isCollapsed">+</span></button>
+      </div>
+    </div>
+
+    <div class="type-messages" [ngbCollapse]="isCollapsed">
+      <app-filter-type-message *ngFor="let mes of type.types" [typeMessage]="mes" ></app-filter-type-message>
+    </div>
+  </div> -->

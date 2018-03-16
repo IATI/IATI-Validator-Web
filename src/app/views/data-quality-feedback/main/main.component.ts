@@ -6,6 +6,7 @@ import { DataQualityFeedbackService } from './../shared/data-quality-feedback.se
 import { Severity } from '../shared/severity';
 import { Source } from './../shared/source';
 import { Category } from './../shared/category';
+import { TypeSeverity, TypeMessage } from './../shared/type-message';
 import { Dqfs, Activity, Feedback, Context, Message, Ruleset } from '../shared/feedback';
 import { LoaderService } from '../../../core/loader/loader.service';
 import { cloneDeep } from 'lodash';
@@ -22,6 +23,7 @@ export class MainComponent implements OnInit {
   severities: Severity[] = [];
   sources: Source[] = [];
   categories: Category[] = [];
+  typeMessages: TypeSeverity[] = [];
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
     private logger: LogService,
@@ -50,6 +52,7 @@ export class MainComponent implements OnInit {
           this.dqfs = data;
           this.loader.hide();
           this.loadCategories();
+          this.loadTypeMessages(this.dqfs.activities);
           this.filterActivities();
         },
         error => {
@@ -61,7 +64,7 @@ export class MainComponent implements OnInit {
 
   loadCategories() {
 
-    let uniqueCat: {id: string, name: string}[] = [];
+    const uniqueCat: {id: string, name: string}[] = [];
 
     this.dqfs.activities.forEach( act => {
       act.feedback.forEach(fb => {
@@ -75,6 +78,46 @@ export class MainComponent implements OnInit {
 
     uniqueCat.forEach( u => {
       this.categories.push({id: u.id, name: u.name, count: null, order: 0, show: true});
+    });
+
+  }
+
+  loadTypeMessages(activities: Activity[]) {
+    const types: {sev: string, id: string, text: string}[] = [];
+    // Get unique messages, with the highest level of severity
+    activities.forEach(act => {
+      act.feedback.forEach(fb => {
+        fb.messages.forEach(mes => {
+          if (!types.some(t => t.id === mes.id)) {
+            const newType: {sev: string, id: string, text: string} = {sev: '', id: '', text: ''} ;
+            newType.sev = this.getfeedbackSeverity(mes);
+            newType.id = mes.id;
+            newType.text = mes.text;
+            types.push(newType);
+          }
+        });
+      });
+    });
+
+    // empty the current array
+    this.typeMessages.length = 0;
+    // create the 4 levels of severity and save a reference in a variable
+    const errors = this.typeMessages[  this.typeMessages.push({ severity: 'error', order: 1, types: [], show: true }) - 1 ];
+    const warnings = this.typeMessages[ this.typeMessages.push({ severity: 'warning', order: 2, types: [], show: true }) - 1 ];
+    const improvements = this.typeMessages[ this.typeMessages.push({ severity: 'improvement', order: 3, types: [], show: true }) - 1 ];
+    const optimisations = this.typeMessages [ this.typeMessages.push({ severity: 'optimisation', order: 4, types: [], show: true }) - 1 ];
+
+    // push the messages in the severity it belongs to
+    types.forEach(t => {
+      if (t.sev === 'error') {
+        errors.types.push({ id: t.id, text: t.text, show: true });
+      } else if (t.sev === 'warning') {
+        warnings.types.push({ id: t.id, text: t.text, show: true });
+      } else if (t.sev === 'improvement') {
+        improvements.types.push({ id: t.id, text: t.text, show: true });
+      } else if (t.sev === 'optimisation' ) {
+        optimisations.types.push({ id: t.id, text: t.text, show: true });
+      }
     });
 
   }
@@ -95,6 +138,13 @@ export class MainComponent implements OnInit {
         fb.messages.forEach(mes => {
           mes.rulesets = mes.rulesets.filter(this.filterSource);
         });
+      });
+    });
+
+    // Filter type messages selected
+    filtered.forEach(act => {
+      act.feedback.forEach(fb => {
+        fb.messages = fb.messages.filter(this.filterTypeMessage);
       });
     });
 
@@ -119,6 +169,8 @@ export class MainComponent implements OnInit {
     // set count on filter items
     this.setSeverityCount();
     this.setSourceCount();
+    // this.loadTypeMessages(this.activities);
+    this.setTypeMessageCount();
     this.loader.hide();
   }
 
@@ -135,6 +187,10 @@ export class MainComponent implements OnInit {
 
   filterCategory = (feedback: Feedback) => {
     return this.categories.some(c => c.show === true && c.id === feedback.category);
+  }
+
+  filterTypeMessage = (message: Message) => {
+    return this.typeMessages.some(t => t.types.some(m => m.show === true && m.id === message.id ) );
   }
 
   // Set the count of messages to the severity
@@ -179,6 +235,29 @@ export class MainComponent implements OnInit {
     return count;
   }
 
+  // Set the count of the type-messages
+  setTypeMessageCount() {
+    this.typeMessages.forEach(t => {
+      t.types.forEach(m => {
+        m.count = m.show ? this.getTypeMessageCount(m.id) : null ;
+      });
+    });
+  }
+
+  getTypeMessageCount(typeId: string): number {
+    let count = 0;
+    this.activities.forEach(act => {
+      act.feedback.forEach(fb => {
+        fb.messages.forEach(mes => {
+          if (mes.id === typeId) {
+            count++;
+          }
+        });
+      });
+    });
+    return count;
+  }
+
   severitySelectedChanged() {
     this.filterActivities();
   }
@@ -189,6 +268,25 @@ export class MainComponent implements OnInit {
 
   categorySelectedChanged() {
     this.filterActivities();
+  }
+
+  typesSelectedChanged() {
+    this.filterActivities();
+  }
+
+  getfeedbackSeverity(message: Message): string {
+    if (message.rulesets.some(x => x.severity === 'danger')) {
+      return 'error';
+    } else if (message.rulesets.some(x => x.severity === 'warning')) {
+      return 'warning';
+    } else if (message.rulesets.some(x => x.severity === 'info')) {
+      return 'improvement';
+    } else if (message.rulesets.some(x => x.severity === 'success')) {
+      return 'optimisation';
+    } else {
+      return 'other';
+    }
+
   }
 
 
