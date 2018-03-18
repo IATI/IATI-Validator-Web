@@ -26,7 +26,7 @@ export class FilterTypeComponent implements OnInit {
   }
 
   selectAll(): void {
-    this.types.forEach(x => x.types.forEach(t => t.show = true );
+    this.types.forEach(x => x.types.forEach(t => t.show = true ));
     this.selectionChanged();
   }
 }
