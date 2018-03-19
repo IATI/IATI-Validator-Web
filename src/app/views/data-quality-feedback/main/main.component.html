@@ -6,14 +6,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3 filters">
+    <div class="col-md-4 filters">
       <h4>Filters</h4>
       <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()" ></app-filter-severity>
       <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()" ></app-filter-source>
       <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()"></app-filter-category>
       <app-filter-type [types]="typeMessages" (selectedChanged)="typesSelectedChanged()"></app-filter-type>
     </div>
-    <div class="col-md-9 results">
+    <div class="col-md-8 results">
       <app-feedback [activityData]="activities"></app-feedback>
     </div>
   </div>
