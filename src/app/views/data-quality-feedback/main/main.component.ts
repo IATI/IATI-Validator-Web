@@ -50,10 +50,12 @@ export class MainComponent implements OnInit {
       .subscribe(
         data => {
           this.dqfs = data;
-          this.loader.hide();
+          // this.addCountContextFunctions();
+
           this.loadCategories();
           this.loadTypeMessages(this.dqfs.activities);
           this.filterActivities();
+          this.loader.hide();
         },
         error => {
           this.logger.error('Error loadDqfData', error);
@@ -169,6 +171,7 @@ export class MainComponent implements OnInit {
     // set count on filter items
     this.setSeverityCount();
     this.setSourceCount();
+    this.setCategoryCount();
     // this.loadTypeMessages(this.activities);
     this.setTypeMessageCount();
     this.loader.hide();
@@ -235,6 +238,26 @@ export class MainComponent implements OnInit {
     return count;
   }
 
+  setCategoryCount() {
+    this.categories.forEach(cat => {
+      cat.count = cat.show ? this.getCategoryCount(cat.id) : null ;
+    });
+  }
+
+  getCategoryCount(id: string): number {
+    let count = 0;
+    this.activities.forEach(act => {
+      act.feedback.forEach(fb => {
+        if (fb.category === id) {
+          fb.messages.forEach(mes => {
+            count += mes.context.length;
+          });
+        }
+      });
+    });
+    return count;
+  }
+
   // Set the count of the type-messages
   setTypeMessageCount() {
     this.typeMessages.forEach(t => {
@@ -250,7 +273,7 @@ export class MainComponent implements OnInit {
       act.feedback.forEach(fb => {
         fb.messages.forEach(mes => {
           if (mes.id === typeId) {
-            count++;
+            count += mes.context.length;
           }
         });
       });
@@ -289,6 +312,23 @@ export class MainComponent implements OnInit {
 
   }
 
+  // addCountContextFunctions() {
+  //   this.dqfs.activities.forEach( act => {
+  //     act.feedback.forEach(fb => {
 
+  //       fb.countContext = function () {
+  //         let count = 0;
+  //         fb.messages.forEach( mes => {
+  //           count += mes.countContext();
+  //         });
+  //         return count;
+  //        } ;
+
+  //       fb.messages.forEach(mes => {
+  //         mes.countContext = function () { return mes.context.length; };
+  //       });
+  //     });
+  //   });
+  // }
 
 }
