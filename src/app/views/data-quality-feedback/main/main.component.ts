@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { LoaderState } from './../../../core/loader/loader';
+import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { LogService } from './../../../core/logging/log.service';
 import { DataQualityFeedbackService } from './../shared/data-quality-feedback.service';
 import { Severity } from '../shared/severity';
 import { Source } from './../shared/source';
 import { Category } from './../shared/category';
-import { TypeSeverity, TypeMessage } from './../shared/type-message';
+import { TypeMessage } from './../shared/type-message';
+import { TypeSeverity } from './../shared/type-severity';
 import { Dqfs, Activity, Feedback, Context, Message, Ruleset } from '../shared/feedback';
 import { LoaderService } from '../../../core/loader/loader.service';
 import { cloneDeep } from 'lodash';
@@ -16,19 +21,22 @@ import { cloneDeep } from 'lodash';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
+  isLoading = false;
   dqfId = '';
   activities: Activity[] = [];
   dqfs: Dqfs;
   severities: Severity[] = [];
   sources: Source[] = [];
   categories: Category[] = [];
-  typeMessages: TypeSeverity[] = [];
+  private loaderSubscription: Subscription;
+  // typeMessages: TypeSeverity[] = [];
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
     private logger: LogService,
     private activateRoute: ActivatedRoute,
-    private loader: LoaderService) {
+    private loader: LoaderService,
+    private location: Location) {
 
     this.activateRoute
       .params
@@ -39,10 +47,20 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loaderSubscription = this.loader.loaderState
+            .subscribe((state: LoaderState) => {
+                this.isLoading = state.show;
+            });
     this.severities = this.dataQualityFeedbackService.getSeverities();
     this.sources = this.dataQualityFeedbackService.getSources();
     this.loadDqfData(this.dqfId);
   }
+
+  ngOnDestroy() {
+    this.loaderSubscription.unsubscribe();
+  }
+
+
 
   loadDqfData(id: string) {
     this.loader.show();
@@ -51,10 +69,14 @@ export class MainComponent implements OnInit {
         data => {
           this.dqfs = data;
           // this.addCountContextFunctions();
-
+          if (this.dqfs === undefined) {
+            this.loader.hide();
+            return;
+          }
           this.loadCategories();
           this.loadTypeMessages(this.dqfs.activities);
           this.filterActivities();
+
           this.loader.hide();
         },
         error => {
@@ -101,25 +123,13 @@ export class MainComponent implements OnInit {
       });
     });
 
-    // empty the current array
-    this.typeMessages.length = 0;
-    // create the 4 levels of severity and save a reference in a variable
-    const errors = this.typeMessages[  this.typeMessages.push({ severity: 'error', order: 1, types: [], show: true }) - 1 ];
-    const warnings = this.typeMessages[ this.typeMessages.push({ severity: 'warning', order: 2, types: [], show: true }) - 1 ];
-    const improvements = this.typeMessages[ this.typeMessages.push({ severity: 'improvement', order: 3, types: [], show: true }) - 1 ];
-    const optimisations = this.typeMessages [ this.typeMessages.push({ severity: 'optimisation', order: 4, types: [], show: true }) - 1 ];
-
     // push the messages in the severity it belongs to
     types.forEach(t => {
-      if (t.sev === 'error') {
-        errors.types.push({ id: t.id, text: t.text, show: true });
-      } else if (t.sev === 'warning') {
-        warnings.types.push({ id: t.id, text: t.text, show: true });
-      } else if (t.sev === 'improvement') {
-        improvements.types.push({ id: t.id, text: t.text, show: true });
-      } else if (t.sev === 'optimisation' ) {
-        optimisations.types.push({ id: t.id, text: t.text, show: true });
+      const sev = this.severities.find(s => s.id === t.sev);
+      if (sev !== undefined) {
+        sev.types.push({ id: t.id, text: t.text, show: true });
       }
+
     });
 
   }
@@ -193,7 +203,8 @@ export class MainComponent implements OnInit {
   }
 
   filterTypeMessage = (message: Message) => {
-    return this.typeMessages.some(t => t.types.some(m => m.show === true && m.id === message.id ) );
+    // return this.typeMessages.some(t => t.types.some(m => m.show === true && m.id === message.id ) );
+    return this.severities.some(t => t.types.some(m => m.show === true && m.id === message.id ) );
   }
 
   // Set the count of messages to the severity
@@ -260,7 +271,7 @@ export class MainComponent implements OnInit {
 
   // Set the count of the type-messages
   setTypeMessageCount() {
-    this.typeMessages.forEach(t => {
+    this.severities.forEach(t => {
       t.types.forEach(m => {
         m.count = m.show ? this.getTypeMessageCount(m.id) : null ;
       });
@@ -330,5 +341,10 @@ export class MainComponent implements OnInit {
   //     });
   //   });
   // }
+
+  goBack() {
+    this.location.back();
+  }
+
 
 }

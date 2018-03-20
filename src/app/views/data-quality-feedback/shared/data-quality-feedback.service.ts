@@ -34,10 +34,10 @@ export class DataQualityFeedbackService  {
 
   getSeverities(): Severity[] {
     return [
-      { id:  'error', slug: 'danger' , name: 'Errors', count: null, order: 1, show: true},
-      { id:  'warning', slug: 'warning' , name: 'Warnings', count: null,  order: 2, show: true},
-      { id:  'improvement', slug: 'info' , name: 'Improvements', count: null, order: 3,  show: true},
-      { id:  'optimisation', slug: 'success' , name: 'Optimisations', count: null, order: 4, show: true},
+      { id:  'error', slug: 'danger' , name: 'Errors', count: null, order: 1, show: true, types: []},
+      { id:  'warning', slug: 'warning' , name: 'Warnings', count: null,  order: 2, show: true, types: []},
+      { id:  'improvement', slug: 'info' , name: 'Improvements', count: null, order: 3,  show: true, types: []},
+      { id:  'optimisation', slug: 'success' , name: 'Optimisations', count: null, order: 4, show: true, types: []},
     ];
   }
 

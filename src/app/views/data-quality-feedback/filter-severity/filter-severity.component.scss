@@ -4,29 +4,6 @@
   margin-bottom: 20px;
 }
 
-.error {
-  background-color: $severity-error;
-  color: white;
-}
-.warning {
-  background-color: $severity-warning;
-  color: white;
-}
-.improvement {
-  background-color: $severity-improvement;
-  color: white;
-}
-.optimisation {
-  background-color: $severity-optimisations;
-  color: white;
-}
-
-.severity-count {
-  display: inline-block;
-  min-width: 28px;
-  margin-right: 6px;
-  text-align: right;
-}
 
 .caption {
   padding-top: 0.5rem;
@@ -49,14 +26,7 @@
   border: 0;
 }
 
-.select {
-  margin-right: -10px;
-  float: right;
-}
 
-.unselected {
-  text-decoration: line-through;
-}
 
 
 

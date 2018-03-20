@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { TypeSeverity, TypeMessage } from './../shared/type-message';
+import { TypeMessage } from './../shared/type-message';
+import { TypeSeverity } from './../shared/type-severity';
 
 @Component({
   selector: 'app-filter-type-message',

@@ -3,17 +3,30 @@
     <div class="col">
       <h1>IATI Data Quality Feedback</h1>
       <h3>Organisation name</h3>
+      <div *ngIf="dqfs===undefined && isLoading" class="alert alert-info" role="alert">
+          Loading report...
+        </div>
+      <div *ngIf="dqfs===undefined && !isLoading " class="alert alert-warning" role="alert">
+        <h2>No data found.</h2>
+        <p>It looks like the url
+          <strong> {{ dqfId }}</strong> is not valid.</p>
+          <ul>
+            <li (click)="goBack()" ><button type="button" class="btn btn-link">Go back to the previous page.</button> </li>
+            <li  ><button routerLink="\" type="button" class="btn btn-link">Go to the home page.</button> </li>
+          </ul>
+      </div>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="dqfs!==undefined" class="row">
     <div class="col-md-4 filters">
       <h4>Filters</h4>
-      <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()" ></app-filter-severity>
-      <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()" ></app-filter-source>
+      <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()"></app-filter-severity>
+      <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()"></app-filter-source>
       <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()"></app-filter-category>
-      <app-filter-type [types]="typeMessages" (selectedChanged)="typesSelectedChanged()"></app-filter-type>
+      <!-- <app-filter-type [types]="typeMessages" (selectedChanged)="typesSelectedChanged()"></app-filter-type> -->
     </div>
     <div class="col-md-8 results">
+
       <app-feedback [activityData]="activities"></app-feedback>
     </div>
   </div>

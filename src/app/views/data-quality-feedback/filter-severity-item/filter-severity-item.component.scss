@@ -1,0 +1,76 @@
+@import "variables";
+
+.error {
+  background-color: $severity-error;
+  color: white;
+}
+.warning {
+  background-color: $severity-warning;
+  color: white;
+}
+.improvement {
+  background-color: $severity-improvement;
+  color: white;
+}
+.optimisation {
+  background-color: $severity-optimisations;
+  color: white;
+}
+
+.severity-count {
+  display: inline-block;
+  min-width: 28px;
+  margin-right: 6px;
+  text-align: right;
+}
+
+
+.select {
+  margin-right: -10px;
+  float: right;
+}
+
+.unselected {
+  text-decoration: line-through;
+}
+
+
+.hidden {
+  display: none;
+}
+
+.title-col {
+  cursor: pointer;
+}
+
+.btn.collapser {
+  margin-left: 12px;
+  padding: 3px 6px;
+  font-size: 1.40625rem;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: none;
+  opacity: .7;
+}
+
+.show-label {
+  float: right;
+  margin-right: -10px;
+}
+
+.show-label .btn {
+  padding: 0;
+  border: 0;
+}
+
+.filter-row {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  color: $gray-600;
+}
+
+.messages-selected-count {
+  margin-left: 12px;
+  padding: 6px;
+}

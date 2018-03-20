@@ -5,10 +5,4 @@ export interface TypeMessage {
   count?: number;
 }
 
-export interface TypeSeverity {
-  severity: string;
-  order: number;
-  types: TypeMessage[];
-  show: boolean;
-  count?: number;
-}
+
