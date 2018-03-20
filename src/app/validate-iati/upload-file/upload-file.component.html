@@ -1,0 +1,21 @@
+<h4>Upload your IATI file and receive feedback on the quality of the file.</h4>
+<div>
+    <div class="step" [class.next]="!selectedFile" >
+      <h5>Step 1. Select your IATI file.</h5>
+      <input type="file" (change)="onFileChanged($event)" accept=".xml" [disabled]="fileUploaded || fileValidated">
+
+    </div>
+    <!-- <progress max="100" [value]="(uploadProgress | async)"></progress> -->
+    <div class="step" [class.next]="selectedFile!==undefined && !fileUploaded">
+      <h5>Step 2. Upload your IATI file.</h5>
+      <div *ngIf="selectedFile" class="name-file">File: {{selectedFile.name}}</div>
+      <button class="btn btn-success" (click)="UploadFile()" [disabled]="!selectedFile || fileUploaded" >Upload file</button>
+    </div>
+    <div class="step" [class.next]="fileUploaded" >
+      <h5>Step 3. Start validation.</h5>
+      <button class="btn btn-success" (click)="ValidateFile()" [disabled]="!fileUploaded">Start validation</button>
+    </div>
+
+
+
+</div>
