@@ -1,8 +1,11 @@
+@import "variables";
+
 .step {
   padding: 12px;
   margin: 24px;
   border: 1px solid lightgray;
   max-width: 500px;
+  color: $gray-600;
 }
 
 .next {
@@ -11,6 +14,8 @@
   -webkit-box-shadow: 3px 3px 4px 0px rgba(242, 113, 96, 0.3);
   -moz-box-shadow: 3px 3px 4px 0px rgba(242, 113, 96, 0.3);
   box-shadow: 3px 3px 4px 0px rgba(242, 113, 96, 0.3);
+
+  color: inherit;
 }
 
 .name-file {
