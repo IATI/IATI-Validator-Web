@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DataQualityFeedbackModule } from './views/data-quality-feedback/data-quality-feedback.module';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
@@ -16,11 +17,8 @@ const routes: Routes = [
   {path: 'view/dqf', loadChildren: 'app/views/data-quality-feedback/data-quality-feedback.module#DataQualityFeedbackModule'},
   {path: 'validate', loadChildren: 'app/validate-iati/validate-iati.module#ValidateIatiModule'},
 
-
     // Catch all route
-    // TODO: 404 pagina
-    {path: '**', component: HomeComponent}
-
+    {path: '**', component: PageNotFoundComponent}
   ];
 
 @NgModule({
