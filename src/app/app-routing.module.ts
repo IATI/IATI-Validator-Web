@@ -5,21 +5,16 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 import { HomeComponent  } from './home/home.component';
-import { OrganisationsComponent } from './organisations/organisations/organisations.component';
-import { OrganisationComponent } from './organisation/organisation/organisation.component';
+// import { OrganisationsComponent } from './organisations/organisations/organisations.component';
+// import { OrganisationComponent } from './organisation/organisation/organisation.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, pathMatch: 'full'},
-  // TODO: make lazy loading
-  {path: 'organisations', component: OrganisationsComponent, pathMatch: 'full'},
-
+  // Lazy loading feature moduels
+  {path: 'organisations', loadChildren: 'app/organisations/organisations.module#OrganisationsModule' },
   {path: 'organisation', loadChildren: 'app/organisation/organisation.module#OrganisationModule'},
   {path: 'view/dqf', loadChildren: 'app/views/data-quality-feedback/data-quality-feedback.module#DataQualityFeedbackModule'},
   {path: 'validate', loadChildren: 'app/validate-iati/validate-iati.module#ValidateIatiModule'},
-
-  // Lazy loading Dashboard
-    // {path: 'dashboard', loadChildren: '../dashboard/dashboard.module#DashboardModule'},
-    // {path: 'contacts', loadChildren: '../contacts/contacts.module#ContactsModule'},
 
 
     // Catch all route

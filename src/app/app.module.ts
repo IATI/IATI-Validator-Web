@@ -11,9 +11,6 @@ import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { LayoutModule } from './layout/layout.module';
 
-// TODO: moet lazy loaded worden. Hier verwijderen als lazy loading voor organisations is geimplementeerd.
-import { OrganisationsModule } from './organisations/organisations.module';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +23,6 @@ import { OrganisationsModule } from './organisations/organisations.module';
     CoreModule,
     SharedModule,
     LayoutModule,
-    OrganisationsModule,
     AppRoutingModule,
   ],
   exports: [
