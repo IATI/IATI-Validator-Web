@@ -1,12 +1,37 @@
 <div class="container">
-    <h1>Results validation IATI file</h1>
+  <h1>Results validation IATI file</h1>
 
-    <div class="row">
-      <div class="col">
-        Working...
-        <br>
-        {{ workspaceId }}
-        <br>
-        Your personal url is: <a [routerLink]="['/validate', workspaceId]"> /validate/ {{ workspaceId}} </a>
-      </div>
+  <div class="row">
+    <div class="col">
+      <h3 class="text-info">These results will be deleted after 21-3-2018 16:45</h3>
+      <p>Bookmark this page to return to your results.
+        <br> Your personal url is:
+        <a [routerLink]="['/validate', workspaceId]"> /validate/{{ workspaceId}} </a>
+      </p>
     </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h4>Data Quality Feedback</h4>
+      <table class="table table-hover view-table">
+        <thead>
+          <tr >
+            <th scope="col">File name</th>
+            <th scope="col">IATI version and type</th>
+            <th scope="col">Updated</th>
+            <th scope="col">Contains</th>
+            <th scope="col">With feedback types</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr (click)="rowClick( 'dqf', '123456' )">
+            <td>cordaid-activities</td>
+            <td> <app-spinner-circle></app-spinner-circle> Loading your report</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

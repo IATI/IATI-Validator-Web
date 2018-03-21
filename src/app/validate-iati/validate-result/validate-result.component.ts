@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, UrlSegment, Router  } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ValidateResultComponent implements OnInit {
   workspaceId = '';
+  currentUrl = '';
 
-  constructor(private activateRoute: ActivatedRoute) { }
+  constructor(private activateRoute: ActivatedRoute,
+    private router: Router, ) { }
 
   ngOnInit() {
     this.activateRoute
@@ -20,5 +22,9 @@ export class ValidateResultComponent implements OnInit {
   }
 
 
+  rowClick(viewType: string, item: string) {
+    // Routerlink naar de view pagina
+    this.router.navigate(['view', viewType, item] );
+  }
 
 }

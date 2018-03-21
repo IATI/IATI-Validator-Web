@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
+import { SharedModule } from './../shared/shared.module';
 import { ValidateComponent } from './validate/validate.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { ValidateResultComponent } from './validate-result/validate-result.component';
@@ -18,7 +19,12 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     HttpClientModule,
+    SharedModule
   ],
-  declarations: [ValidateComponent, UploadFileComponent, ValidateResultComponent]
+  declarations: [
+    ValidateComponent,
+    UploadFileComponent,
+    ValidateResultComponent,
+  ]
 })
 export class ValidateIatiModule { }
