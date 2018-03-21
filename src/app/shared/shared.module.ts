@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerCircleComponent } from './spinner-circle/spinner-circle.component';
 
 /*
   Do declare components, directives, and pipes in a shared module when those items will be
@@ -11,8 +15,18 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
   ],
-  declarations: []
+  declarations: [
+    SpinnerComponent,
+    SpinnerCircleComponent
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    SpinnerComponent,
+    SpinnerCircleComponent
+  ]
 })
 export class SharedModule { }
