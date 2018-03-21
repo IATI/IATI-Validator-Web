@@ -2,6 +2,11 @@
 
 .filter {
   margin-bottom: 20px;
+  background-color: rgba(0,0,0,.03);
+}
+
+.list-group-item {
+  background-color: inherit;
 }
 
 .severity-count {
@@ -40,3 +45,5 @@
 .unselected {
   text-decoration: line-through;
 }
+
+
