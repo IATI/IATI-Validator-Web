@@ -9,13 +9,15 @@ import { environment } from './../../../../environments/environment';
 import { LogService } from '../../../core/logging/log.service';
 import { Source } from './source';
 import { Severity } from './severity';
-import { Feedback, Dqfs } from './feedback';
+import { Feedback, Dqfs, Activity } from './feedback';
 
 
 @Injectable()
 export class DataQualityFeedbackService  {
   // private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
   private urlApis: string = environment.apiBaseUrl + '/dqfs';
+  private urlApiIatiFile: string = environment.apiDataworkBench + '/iati-files';
+
 
   constructor(private http: HttpClient,
               private logger: LogService) { }
@@ -31,6 +33,19 @@ export class DataQualityFeedbackService  {
       catchError(this.handleError<Dqfs>(`getDqf id=${id}`))
     );
   }
+
+  getActivities(md5: string): Observable<Dqfs> {
+    const container = 'dataworkbench-json';
+    const url: string = this.urlApiIatiFile + '/' + container + '/download/' + md5 + '.json';
+    //   /iati-files/{container}/download/{file}
+    return this.http.get<any>(url)
+    .pipe(
+      // tap(_ => this.log(`fetched iati file`)),
+      catchError(this.handleError('getIatiFile', undefined ))
+    );
+  }
+
+
 
   getSeverities(): Severity[] {
     return [

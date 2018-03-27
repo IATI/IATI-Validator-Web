@@ -93,4 +93,9 @@ export class WorkspaceViewItemComponent implements OnInit, OnChanges {
     // Routerlink naar de view pagina
     this.router.navigate(['view', viewType, item] );
   }
+
+  md5Selected(md5: String) {
+    this.logger.debug('Selected md5: ', md5);
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { OrganisationService } from './../shared/organisation.service';
 import { LogService } from '../../core/logging/log.service';
@@ -12,11 +12,12 @@ import { Router } from '@angular/router';
 })
 export class WorkspaceViewItemFileComponent implements OnInit {
   @Input() md5: string;
+  @Output() selectedMd5: EventEmitter<String> = new EventEmitter<String>() ;
   iatiDatasetData: IatiDataset;
 
   constructor(private organisationService: OrganisationService,
-              private logger: LogService,
-              private router: Router) { }
+    private logger: LogService,
+    private router: Router) { }
 
   ngOnInit() {
     this.loadFileData();
@@ -35,13 +36,20 @@ export class WorkspaceViewItemFileComponent implements OnInit {
   }
 
   rowClick(viewType: string, item: string) {
-    // Routerlink naar de view pagina
-    // this.router.navigate(['view', viewType, item] );
-    this.organisationService.getIatiFile(this.md5)
-      .subscribe(
-        data => this.logger.debug('iati file content', data),
-        error => this.logger.error('Error fetching iati file', error)
-      );
+
+    // this.organisationService.getIatiFile(this.md5)
+    //   .subscribe(
+    //     data => this.logger.debug('iati file content', data),
+    //     error => this.logger.error('Error fetching iati file', error)
+    //   );
+
+    if (this.iatiDatasetData['json-updated']) {
+      // Routerlink naar de view pagina
+      this.router.navigate(['view', 'dqf', this.md5]);
+    } else {
+      this.selectedMd5.emit(this.md5);
+    }
+
     // this.logger.debug('row clicked', this.iatiDatasetData);
 
   }
