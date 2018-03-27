@@ -8,23 +8,23 @@
     <div class="col-md-auto version-col">
       <div class="version-wrapper">
         <label for="versionSelect">Version</label>
-        <select [(ngModel)]="versionid" class="version-select custom-select"  #versionSelect (change)="selectedVersion(versionSelect.value )">
-          <option *ngIf="versionid ===''" selected value="" >Select a version...</option>
-          <option *ngFor="let vers of workspaceData.versions" value="{{ vers.slug }}" >{{vers.title}}</option>
+        <select [(ngModel)]="versionSlug" class="version-select custom-select" #versionSelect (change)="selectedVersion(versionSelect.value )">
+          <option *ngIf="versionSlug ===''" selected value="">Select a version...</option>
+          <option *ngFor="let vers of workspaceData.versions" value="{{ vers.slug }}">{{vers.title}}</option>
         </select>
       </div>
     </div>
   </div>
 
-<div *ngIf="workspaceData.id===''" class="no-version-selected">
-  <h4>No workspace found.</h4>
-</div>
+  <div *ngIf="workspaceData.id===''" class="no-version-selected">
+    <h4>No workspace found.</h4>
+  </div>
 
-<div *ngIf="versions?.length === 0" class="no-version-selected">
-  <h4>No versions found.</h4>
-</div>
+  <div *ngIf="versions?.length === 0" class="no-version-selected">
+    <h4>No versions found.</h4>
+  </div>
 
-  <div *ngIf="versionid ==='' && versions?.length !== 0" class="no-version-selected">
+  <div *ngIf="versionSlug ==='' && versions?.length !== 0" class="no-version-selected">
     <h4>Please select a version.</h4>
 
     <div class="list-group">
@@ -35,7 +35,6 @@
 
   </div>
 
-  <app-workspace-view-item *ngIf="versionid !==''" [versionid]="versionid"></app-workspace-view-item>
+  <app-workspace-view-item *ngIf="versionSlug !==''" [workspaceId]="workspaceId" [versionSlug]="versionSlug" ></app-workspace-view-item>
 
 </div>
-

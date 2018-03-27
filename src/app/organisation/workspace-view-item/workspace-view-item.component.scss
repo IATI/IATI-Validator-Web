@@ -1,7 +1,19 @@
+@import "variables";
+
 .view-type tbody {
   cursor: pointer;
 }
 
 .view-type {
   margin: 20px 0;
+}
+
+.files {
+  margin: 30px 10px;
+}
+
+.files > .heading {
+  background-color: $gray-200;
+  padding: 6px 0;
+  font-weight: 700;
 }

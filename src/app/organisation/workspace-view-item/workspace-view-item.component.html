@@ -1,29 +1,42 @@
-<div *ngIf="versionData == undefined">
-  <p>No data found.</p>
+<div *ngIf="versionData === undefined">
+  <p>No version data found.</p>
 </div>
 
-<div *ngIf="versionData != undefined">
+<div *ngIf="versionData !== undefined">
   <div>
-    Version: {{ versionData.title }} <br>
+    Version: {{ versionData.title }}
+    <br>
     <!-- Last modified: {{ versionData.last_modified }} <br> -->
     <!-- Description: {{ versionData.description }} <br> -->
   </div>
 
-  <div *ngFor="let viewGroup of viewData" class="view-type"  >
-      <h4 class="view-name">{{ viewGroup.typeName }}</h4>
-      <table class="table table-hover view-table">
-        <thead>
-          <tr >
-            <th *ngFor="let prop of viewGroup.views[0].properties" scope="col">{{prop.name}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let view of viewGroup.views" (click)="rowClick( view.type, view.id )">
-            <td *ngFor="let prop of view.properties" >{{prop.value}}</td>
-          </tr>
-        </tbody>
-      </table>
+
+  <div class="files">
+    <div class="row heading">
+      <div class="col">
+        File name
+      </div>
+      <div class="col">
+        Last updated
+      </div>
     </div>
+    <app-workspace-view-item-file *ngFor="let m of versionData.md5" [md5]="m"> </app-workspace-view-item-file>
+  </div>
+
+  <div *ngFor="let viewGroup of viewData" class="view-type">
+    <h4 class="view-name">{{ viewGroup.typeName }}</h4>
+    <table class="table table-hover view-table">
+      <thead>
+        <tr>
+          <th *ngFor="let prop of viewGroup.views[0].properties" scope="col">{{prop.name}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let view of viewGroup.views" (click)="rowClick( view.type, view.id )">
+          <td *ngFor="let prop of view.properties">{{prop.value}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 </div>
-

@@ -3,6 +3,7 @@ import { LogService } from './../../core/logging/log.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { timeout } from 'rxjs/operators';
+import { environment } from './../../../environments/environment';
 // import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -15,6 +16,7 @@ export class UploadFileComponent implements OnInit {
   workspaceId = '';
   fileUploaded = false;
   fileValidated = false;
+  private urlApiFileUpUpload: string = environment.apiDataworkBench + '/file-ups/upload';
 
   constructor(private http: HttpClient,
               private logger: LogService,
@@ -28,16 +30,21 @@ export class UploadFileComponent implements OnInit {
   }
 
   UploadFile() {
-    // const uploadData = new FormData();
-    // uploadData.append('myFile', this.selectedFile, this.selectedFile.name);
-    // this.http.post('my-backend.com/file-upload', uploadData, {
-    //   reportProgress: true,
-    //   observe: 'events'
-    // })
-    //   .subscribe(event => {
-    //     console.log(event); // handle event here
-    //   });
     this.workspaceId = Math.random().toString(36).substring(2);
+    const mydate = new Date();
+
+    console.log('ws id: ', this.workspaceId);
+    const uploadData = new FormData();
+    uploadData.append('file', this.selectedFile, this.workspaceId + '---' +  this.selectedFile.name);
+    // uploadData.append('org_name',  this.selectedFile.name);
+
+    this.http.post(this.urlApiFileUpUpload, uploadData, {
+      reportProgress: true,
+      observe: 'events'
+    })
+      .subscribe(event => {
+        console.log(event); // handle event here
+      });
 
     timeout(2000);
 

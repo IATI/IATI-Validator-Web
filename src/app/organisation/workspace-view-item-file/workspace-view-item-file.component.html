@@ -1,0 +1,10 @@
+<div *ngIf="iatiDatasetData" class="wrapper">
+  <div class="row" (click)="rowClick()" >
+    <div class="col">
+      {{ iatiDatasetData?.filename }}
+    </div>
+    <div class="col">
+      {{ iatiDatasetData?.updated }}
+    </div>
+  </div>
+</div>

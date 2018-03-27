@@ -13,9 +13,10 @@ import { Version, View, Property } from './../shared/version';
   styleUrls: ['./workspace.component.scss']
 })
 export class WorkspaceComponent implements OnInit {
-  organisationId = '';
-  workspaceid = '';
-  versionid = '';
+  organisationSlug = '';
+  workspaceSlug = '';
+  versionSlug = '';
+  workspaceId = '';
   workspaceData: Workspace = this.organisationService.getEmptyWorkspace();
   organisationData: Organisation;
   versions: Version[];
@@ -29,70 +30,85 @@ export class WorkspaceComponent implements OnInit {
                 this.activateRoute
                 .params
                 .subscribe(params => {
-                  this.organisationId = params['organisation'];
-                  this.workspaceid = params['workspace'];
-                  this.versionid = params['version'] || '';
+                  this.organisationSlug = params['organisation'];
+                  this.workspaceSlug = params['workspace'];
+                  this.versionSlug = params['version'] || '';
                 });
 
               }
 
   ngOnInit() {
-    this.LoadVersions(this.workspaceid);
+    // this.LoadVersions(this.organisationSlug, this.workspaceSlug);
+    this.LoadWorkspace(this.organisationSlug, this.workspaceSlug);
   }
 
-    LoadVersions(workspaceid: string) {
+    LoadWorkspace(organisationSlug: string, workspaceSlug: string) {
+      this.organisationService.getWorkspace(organisationSlug, workspaceSlug)
+        .subscribe(
+          data => this.workspaceData = data,
+          error => this.error = error,
+          () => {
+            // Completed
+            this.versions = this.workspaceData.versions ?  this.workspaceData.versions : [] ;
+            this.workspaceId = this.workspaceData.id;
 
-      this.organisationService.getOrganisation(this.organisationId)
+            // if version = latest, then set the last version and select it
+            if (this.versions.length > 0 && this.versionSlug === 'latest') {
+              // TODO: get latest modified version. Now it is the first item in the array.
+              // This must be the item with the youngest last_modified date.
+              this.versionSlug = this.versions[0].slug;
+              // tslint:disable-next-line:max-line-length
+              this.router.navigate(['organisation', this.organisationSlug, 'ws', this.workspaceSlug, this.versionSlug], { skipLocationChange: false, replaceUrl: true });
+            }
+          }
+        );
+
+    }
+
+    // GetCurrentVersion(): Version {
+    //   if (this.versions !== undefined) {
+    //     return this.versions.filter(v => {
+    //       v.slug = this.versionSlug;
+    //     })[0];
+
+    //   } else {
+    //     return this.organisationService.getEmptyVersion();
+    //   }
+
+    // }
+
+    // KAN WEG
+    LoadVersions(organisationSlug: string, workspaceSlug: string) {
+
+      this.organisationService.getOrganisation(this.organisationSlug)
         .subscribe(
           data => this.organisationData = (data )  ,
           error => this.error = error,
           () => {
-            this.workspaceData = this.organisationData.workspaces.find(ws => ws.slug === workspaceid) ||
+            this.workspaceData = this.organisationData.workspaces.find(ws => ws.slug === workspaceSlug) ||
                     this.organisationService.getEmptyWorkspace();
-            this.versions = this.workspaceData.versions;
+            this.versions = this.workspaceData.versions ?  this.workspaceData.versions : [] ;
 
             // if version = latest, then set the last version and select it
-            if (this.versionid === 'latest') {
+            if (this.versions.length > 0 && this.versionSlug === 'latest') {
               // TODO: get latest modified version. Now it is the first item in the array.
               // This must be the item with the youngest last_modified date.
-              this.versionid = this.versions[0].slug;
-              // tslint:disable-next-line:max-line-length
-              this.router.navigate(['organisation', this.organisationId, 'ws', this.workspaceid, this.versionid], { skipLocationChange: false, replaceUrl: true });
+              this.versionSlug = this.versions[0].slug;
+              this.router.navigate(['organisation', this.organisationSlug, 'ws', this.workspaceSlug, this.versionSlug],
+                                  { skipLocationChange: false, replaceUrl: true });
             }
 
           }
         );
 
-      // this.organisationService.getWorkspace(workspaceid)
-      //   .subscribe(
-      //     data => this.workspaceData = (data || this.organisationService.getEmptyWorkspace())  ,
-      //     error => this.error = error
-      //   );
-
-      // this.organisationService.getVersions(workspaceid)
-      //   .subscribe(
-      //     data => this.versions = data   ,
-      //     error => this.error = error,
-      //     () => {
-      //       // if version = latest, then set the last version and select it
-      //       if (this.versionid === 'latest') {
-      //         // TODO: get latest modified version. Now it is the first item in the array.
-      //         // This must be the item with the youngest last_modified date.
-      //         this.versionid = this.versions[0].slug;
-      //         // tslint:disable-next-line:max-line-length
-      //         this.router.navigate(['organisation', this.organisationId, 'ws', this.workspaceid, this.versionid], { skipLocationChange: false, replaceUrl: true });
-      //       }
-      //     }
-      //   );
-
     }
 
     selectedVersion(versionNew: string) {
-      if (this.versionid !== versionNew) {
-        this.versionid = versionNew;
+      if (this.versionSlug !== versionNew) {
+        this.versionSlug = versionNew;
       }
       // tslint:disable-next-line:max-line-length
-      this.router.navigate(['organisation', this.organisationId, 'ws', this.workspaceid, this.versionid], { skipLocationChange: false });
+      this.router.navigate(['organisation', this.organisationSlug, 'ws', this.workspaceSlug, this.versionSlug], { skipLocationChange: false });
     }
 
 }
