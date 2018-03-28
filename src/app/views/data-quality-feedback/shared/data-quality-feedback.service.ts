@@ -1,3 +1,4 @@
+import { Organisation } from './../../../organisation/shared/organisation';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -10,6 +11,8 @@ import { LogService } from '../../../core/logging/log.service';
 import { Source } from './source';
 import { Severity } from './severity';
 import { Feedback, Dqfs, Activity } from './feedback';
+import { IatiDataset } from './../../../organisation/shared/iati-dataset';
+import { ReportInfo } from './report-info';
 
 
 @Injectable()
@@ -17,7 +20,8 @@ export class DataQualityFeedbackService  {
   // private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
   private urlApis: string = environment.apiBaseUrl + '/dqfs';
   private urlApiIatiFile: string = environment.apiDataworkBench + '/iati-files';
-
+  private urlApiIatiDataSet: string = environment.apiDataworkBench + '/iati-datasets';
+  private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
 
   constructor(private http: HttpClient,
               private logger: LogService) { }
@@ -43,6 +47,28 @@ export class DataQualityFeedbackService  {
       // tap(_ => this.log(`fetched iati file`)),
       catchError(this.handleError('getIatiFile', undefined ))
     );
+  }
+
+  getReportInfo(md5: string): Observable<ReportInfo> {
+    const  reportInfo: ReportInfo = {organisationName: '', fileName: '', organisationSlug: '' };
+
+    const url: string = this.urlApiIatiDataSet + '/findOne/' + '?filter[where][md5]=' + md5;
+    this.http.get<IatiDataset>(url)
+      .subscribe(
+        data => {
+          reportInfo.fileName = data.filename;
+          reportInfo.organisationSlug = data.publisher;
+          const urlPublisher: string = this.urlApiOrganisation + '/findOne/' + '?filter[where][slug]=' + data.publisher;
+          this.http.get<Organisation>(urlPublisher)
+            .subscribe(
+              datas => {
+                reportInfo.organisationName = datas.name;
+                return Observable.of(reportInfo);
+              }
+            );
+        }
+      );
+      return Observable.of(reportInfo);
   }
 
 

@@ -18,6 +18,7 @@ import { FilterCategoryComponent } from './filter-category/filter-category.compo
 import { FilterTypeMessageComponent } from './filter-type-message/filter-type-message.component';
 import { FilterTypeSeverityComponent } from './filter-type-severity/filter-type-severity.component';
 import { FilterSeverityItemComponent } from './filter-severity-item/filter-severity-item.component';
+import { MainReportInfoComponent } from './main-report-info/main-report-info.component';
 
 const routes: Routes = [
   { path: ':name', component: MainComponent },
@@ -46,7 +47,8 @@ const routes: Routes = [
     FilterCategoryComponent,
     FilterTypeMessageComponent,
     FilterTypeSeverityComponent,
-    FilterSeverityItemComponent],
+    FilterSeverityItemComponent,
+    MainReportInfoComponent],
     providers: [DataQualityFeedbackService]
 })
 export class DataQualityFeedbackModule { }

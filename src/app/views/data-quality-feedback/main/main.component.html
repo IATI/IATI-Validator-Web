@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <h1>IATI Data Quality Feedback</h1>
-      <h3>Organisation name</h3>
+      <app-main-report-info [md5]="md5"></app-main-report-info>
       <div *ngIf="activityData===undefined && isLoading" class="alert alert-info" role="alert">
           Loading report...
         </div>
