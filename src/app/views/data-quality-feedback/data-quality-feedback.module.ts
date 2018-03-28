@@ -19,6 +19,7 @@ import { FilterTypeMessageComponent } from './filter-type-message/filter-type-me
 import { FilterTypeSeverityComponent } from './filter-type-severity/filter-type-severity.component';
 import { FilterSeverityItemComponent } from './filter-severity-item/filter-severity-item.component';
 import { MainReportInfoComponent } from './main-report-info/main-report-info.component';
+import { SharedModule } from './../../shared/shared.module';
 
 const routes: Routes = [
   { path: ':name', component: MainComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule,
     NgbModule,
+    SharedModule,
   ],
   exports: [
     RouterModule
