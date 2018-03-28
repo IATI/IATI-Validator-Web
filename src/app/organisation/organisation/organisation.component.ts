@@ -16,29 +16,37 @@ export class OrganisationComponent implements OnInit, OnDestroy {
   name = '';
 
   constructor(private organisationService: OrganisationService,
-              private activateRoute: ActivatedRoute) {
-                this.activateRoute
-                .params
-                .subscribe(params => {
-                  this.name = params['name'];
-                });
-               }
+    private activateRoute: ActivatedRoute) {
+    this.activateRoute
+      .params
+      .subscribe(params => {
+        this.name = params['name'];
+      });
+  }
 
   ngOnInit() {
     this.LoadOrganisation(this.name);
     // this.LoadWorkSpaces(this.name);
   }
 
-    LoadOrganisation(name: string) {
-      this.organisationService.getOrganisation(name)
-        .subscribe(
-          data => {
-            this.organisationData = data;
-            this.workspaces = this.organisationData ? this.organisationData.workspaces : [] ;
-          } ,
-          error => this.error = error
-        );
+  LoadOrganisation(name: string) {
+    this.organisationService.getOrganisation(name)
+      .subscribe(
+        data => {
+          this.organisationData = data;
+          this.workspaces = this.organisationData ? this.organisationData.workspaces : [];
+        },
+        error => this.error = error
+      );
+  }
+
+  hasValidLogo(): boolean {
+    if (this.organisationData !== undefined) {
+      if ('logo' in this.organisationData) {
+        return (this.organisationData.logo !== '');
+      }
     }
+  }
 
   // LoadWorkSpaces(name: string) {
   //    this.organisationService.getWorkspaces(name)
