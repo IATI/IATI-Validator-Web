@@ -8,8 +8,8 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngbCollapse]="isCollapsed">
     <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/validate" routerLinkActive="active" >Validate IATI</a>
-      <a class="nav-item nav-link" routerLink="/organisations" routerLinkActive="active" >Browse public IATI</a>
+      <a class="nav-item nav-link" routerLink="/validate" routerLinkActive="active" (click)="isCollapsed=true" >Validate IATI</a>
+      <a class="nav-item nav-link" routerLink="/organisations" routerLinkActive="active" (click)="isCollapsed=true" >Browse public IATI</a>
     </div>
   </div>
 </nav>
