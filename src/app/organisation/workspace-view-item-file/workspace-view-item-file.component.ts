@@ -35,22 +35,32 @@ export class WorkspaceViewItemFileComponent implements OnInit {
       );
   }
 
+  jsonUpdated(): boolean {
+    if (this.iatiDatasetData['json-updated']) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  reportType(): string {
+    if (this.jsonUpdated()) {
+      // Routerlink naar de view pagina
+      return 'Data Quality Report (click to view)';
+    } else {
+      return '-';
+    }
+  }
+
   rowClick(viewType: string, item: string) {
 
-    // this.organisationService.getIatiFile(this.md5)
-    //   .subscribe(
-    //     data => this.logger.debug('iati file content', data),
-    //     error => this.logger.error('Error fetching iati file', error)
-    //   );
-
-    if (this.iatiDatasetData['json-updated']) {
+    if (this.jsonUpdated()) {
       // Routerlink naar de view pagina
       this.router.navigate(['view', 'dqf', this.md5]);
     } else {
       this.selectedMd5.emit(this.md5);
     }
 
-    // this.logger.debug('row clicked', this.iatiDatasetData);
 
   }
 
