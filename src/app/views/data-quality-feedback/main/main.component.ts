@@ -266,12 +266,16 @@ export class MainComponent implements OnInit, OnDestroy {
     return count;
   }
 
-  // Set the count of the type-messages
+  // Set the count of the type-messages and sort types by count desc
   setTypeMessageCount() {
     this.severities.forEach(t => {
       t.types.forEach(m => {
         m.count = m.show ? this.getTypeMessageCount(m.id) : null ;
       });
+    });
+    // Sort Type messages inside severity. Type with more messages on top
+    this.severities.forEach(s => {
+      s.types.sort( (a, b) =>  b.count - a.count );
     });
   }
 

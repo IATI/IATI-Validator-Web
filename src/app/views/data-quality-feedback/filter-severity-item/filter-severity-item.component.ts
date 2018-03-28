@@ -16,7 +16,7 @@ export class FilterSeverityItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.severity.types.sort( (a, b) =>  b.count - a.count );
+    // this.severity.types.sort( (a, b) =>  b.count - a.count );
   }
 
   collapse() {
