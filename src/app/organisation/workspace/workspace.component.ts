@@ -38,7 +38,6 @@ export class WorkspaceComponent implements OnInit {
               }
 
   ngOnInit() {
-    // this.LoadVersions(this.organisationSlug, this.workspaceSlug);
     this.LoadWorkspace(this.organisationSlug, this.workspaceSlug);
   }
 
@@ -60,44 +59,6 @@ export class WorkspaceComponent implements OnInit {
               // tslint:disable-next-line:max-line-length
               this.router.navigate(['organisation', this.organisationSlug, 'ws', this.workspaceSlug, this.versionSlug], { skipLocationChange: false, replaceUrl: true });
             }
-          }
-        );
-
-    }
-
-    // GetCurrentVersion(): Version {
-    //   if (this.versions !== undefined) {
-    //     return this.versions.filter(v => {
-    //       v.slug = this.versionSlug;
-    //     })[0];
-
-    //   } else {
-    //     return this.organisationService.getEmptyVersion();
-    //   }
-
-    // }
-
-    // KAN WEG
-    LoadVersions(organisationSlug: string, workspaceSlug: string) {
-
-      this.organisationService.getOrganisation(this.organisationSlug)
-        .subscribe(
-          data => this.organisationData = (data )  ,
-          error => this.error = error,
-          () => {
-            this.workspaceData = this.organisationData.workspaces.find(ws => ws.slug === workspaceSlug) ||
-                    this.organisationService.getEmptyWorkspace();
-            this.versions = this.workspaceData.versions ?  this.workspaceData.versions : [] ;
-
-            // if version = latest, then set the last version and select it
-            if (this.versions.length > 0 && this.versionSlug === 'latest') {
-              // TODO: get latest modified version. Now it is the first item in the array.
-              // This must be the item with the youngest last_modified date.
-              this.versionSlug = this.versions[0].slug;
-              this.router.navigate(['organisation', this.organisationSlug, 'ws', this.workspaceSlug, this.versionSlug],
-                                  { skipLocationChange: false, replaceUrl: true });
-            }
-
           }
         );
 

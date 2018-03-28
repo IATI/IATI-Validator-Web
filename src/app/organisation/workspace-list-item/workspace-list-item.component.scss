@@ -1,7 +1,9 @@
+@import "variables";
+
 .mycard {
   margin: 10px;
   border: 1px lightgray solid;
-  border-radius: 3px;
+  border-radius: $border-radius;
   font-family: Lato;
 }
 

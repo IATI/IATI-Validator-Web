@@ -1,13 +1,14 @@
 <div class="mycard">
   <!-- we go to virtual version latest, in the workspace component the latest version will be loaded. -->
-  <a class="workspace-link" [routerLink]="['ws', workspace.slug, 'latest' ]">
+  <!-- <a class="workspace-link" [routerLink]="['ws', workspace.slug, 'latest' ]"> -->
 
     <div class="mycard-title">
         {{workspace.title}}
     </div>
     <div class="mycard-body">
         <p class="card-text">{{workspace.description}}</p>
+        <app-workspace-view-item  [workspaceId]="workspace.id" [versionSlug]="'current'" ></app-workspace-view-item>
     </div>
 
-  </a>
+  <!-- </a> -->
   </div>
