@@ -16,8 +16,7 @@ export class UploadFileComponent implements OnInit {
   workspaceId = '';
   fileUploaded = false;
   fileValidated = false;
-  private urlApiFileUpUpload: string = environment.apiDataworkBench + '/file-ups/upload';
-
+  private urlApiFileUpUpload: string = environment.apiDataworkBench + '/iati-testdatasets/upload';
   constructor(private http: HttpClient,
               private logger: LogService,
               private router: Router) { }
@@ -32,13 +31,14 @@ export class UploadFileComponent implements OnInit {
   UploadFile() {
     this.workspaceId = Math.random().toString(36).substring(2);
     const mydate = new Date();
+    const url = this.urlApiFileUpUpload + '?[options][ws]=' + this.workspaceId;
 
     console.log('ws id: ', this.workspaceId);
     const uploadData = new FormData();
-    uploadData.append('file', this.selectedFile, this.workspaceId + '---' +  this.selectedFile.name);
-    // uploadData.append('org_name',  this.selectedFile.name);
+    uploadData.append('file', this.selectedFile, this.selectedFile.name);
+    // uploadData.append('tmpworkspaceId',  'my-temp-workspace');
 
-    this.http.post(this.urlApiFileUpUpload, uploadData, {
+    this.http.post(url, uploadData, {
       reportProgress: true,
       observe: 'events'
     })
