@@ -88,6 +88,7 @@ export class DataQualityFeedbackService  {
       { id:  'iati', slug: 'iati' , name: 'IATI', count: null,  order: 2, show: true},
       { id:  'iati-doc', slug: 'iati-doc' , name: 'IATI documentation', count: null, order: 3,  show: true},
       { id:  'minbuza', slug: 'minbuza' , name: 'Ministery of foreign affairs The Netherlands', count: null, order: 4, show: true},
+      { id:  'dfid', slug: 'dfid' , name: 'Department for International Development UK', count: null, order: 5, show: true},
     ];
   }
 
