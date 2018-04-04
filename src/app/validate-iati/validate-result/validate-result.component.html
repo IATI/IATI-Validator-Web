@@ -10,28 +10,40 @@
       </p>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <h4>Data Quality Feedback</h4>
-      <table class="table table-hover view-table">
-        <thead>
-          <tr >
-            <th scope="col">File name</th>
-            <th scope="col">IATI version and type</th>
-            <th scope="col">Updated</th>
-            <th scope="col">Contains</th>
-            <th scope="col">With feedback types</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr (click)="rowClick( 'dqf', '123456' )">
-            <td>cordaid-activities</td>
-            <td> <app-spinner-circle></app-spinner-circle> Loading your report</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div *ngIf="iatiDatasetData" class="files">
+      <div class="row heading">
+        <div class="col-12 col-md">
+          File name
+        </div>
+        <div class="col-12 col-md d-none d-md-block">
+          Uploaded
+        </div>
+        <div class="col-12 col-md d-none d-md-block">
+          Report available
+        </div>
+      </div>
+
+      <div *ngFor="let ds of iatiDatasetData"  class="wrapper">
+        <div class="row" (click)="rowClick(ds)" [class.dqf]="jsonUpdated(ds)"  >
+          <div class="col-12 col-md">
+            {{ ds?.filename }}
+          </div>
+          <div class="col-12 col-md">
+            {{ ds?.uploaded | date:'yyyy-MM-dd HH:mm (z)' }}
+          </div>
+          <div class="col-12 col-md">
+            <span *ngIf="jsonUpdated(ds); else elseBlock" > <button type="button" class="btn btn-link dqf-button">{{ reportType(ds) }}</button> </span>
+            <ng-template #elseBlock> <span><app-spinner-circle></app-spinner-circle> Loading your report... please wait a moment.</span> </ng-template>
+          </div>
+          <div class="col-12 d-md-none"><hr></div>
+
+        </div>
+
+      </div>
+
     </div>
+
+
+
   </div>
