@@ -37,7 +37,7 @@ export class FileUploadService {
     // Create the request object that POSTs the file to an upload endpoint.
     // The `reportProgress` option tells HttpClient to listen and return
     // XHR progress events.
-    const req = new HttpRequest('POST', this.urlApiFileUpUpload, uploadData, {
+    const req = new HttpRequest('POST', url, uploadData, {
       reportProgress: true
     });
 
