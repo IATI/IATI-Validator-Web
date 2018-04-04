@@ -30,6 +30,12 @@ const routes: Routes = [
   providers: [
     OrganisationService,
   ],
-  declarations: [OrganisationComponent, WorkspaceListItemComponent, WorkspaceComponent, WorkspaceViewItemComponent, WorkspaceViewItemFileComponent]
+  declarations: [
+    OrganisationComponent,
+    WorkspaceListItemComponent,
+    WorkspaceComponent,
+    WorkspaceViewItemComponent,
+    WorkspaceViewItemFileComponent
+  ]
 })
 export class OrganisationModule { }
