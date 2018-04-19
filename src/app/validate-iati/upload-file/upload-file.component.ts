@@ -1,60 +1,81 @@
+import { Subscription } from 'rxjs/Subscription';
+import { FileUploadService } from './../shared/file-upload.service';
 import { Router } from '@angular/router';
 import { LogService } from './../../core/logging/log.service';
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { timeout } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
-// import { HttpClient } from '@angular/common/http';
+import { UploadResponse } from './../shared/uploadResponse';
+import { MessagesService } from './../shared/messages.service';
+import { Message } from '../shared/message';
+import { MessageType } from '../shared/message-type.enum';
 
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
   styleUrls: ['./upload-file.component.scss']
 })
-export class UploadFileComponent implements OnInit {
+export class UploadFileComponent implements OnInit, OnDestroy {
   selectedFile: File;
   workspaceId = '';
   fileUploaded = false;
-  fileValidated = false;
+  uploading = false;
+  message: Message ;
+  messages: Message[] = [];
+  messagesSub: Subscription;
+
   private urlApiFileUpUpload: string = environment.apiDataworkBench + '/iati-testdatasets/upload';
   constructor(private http: HttpClient,
               private logger: LogService,
-              private router: Router) { }
+              private router: Router,
+              private fileUploadService:  FileUploadService,
+              public messageService: MessagesService) { }
 
-  ngOnInit() {
+    ngOnInit() {
+
+    this.messagesSub = this.messageService.messages
+      .subscribe(
+        (messages: Message[]) => {
+          this.messages = messages;
+          this.message = messages[messages.length - 1] ;
+        }
+      );
+
   }
 
   onFileChanged(event) {
+    this.uploading = false;
     this.selectedFile = event.target.files[0];
   }
 
   UploadFile() {
     this.workspaceId = Math.random().toString(36).substring(2);
-    const mydate = new Date();
     const url = this.urlApiFileUpUpload + '?[options][ws]=' + this.workspaceId;
 
-    console.log('ws id: ', this.workspaceId);
-    const uploadData = new FormData();
-    uploadData.append('file', this.selectedFile, this.selectedFile.name);
-    // uploadData.append('tmpworkspaceId',  'my-temp-workspace');
-
-    this.http.post(url, uploadData, {
-      reportProgress: true,
-      observe: 'events'
-    })
-      .subscribe(event => {
-        console.log(event); // handle event here
-      });
-
-    timeout(2000);
-
-    this.fileUploaded = true;
+    if (this.selectedFile) {
+      this.uploading = true;
+      this.fileUploadService.uploadFile(this.selectedFile, this.workspaceId).subscribe(
+        msg => {
+          this.uploading = false;
+          if (msg.type === MessageType.done) {
+            this.fileUploaded = true;
+            // this.ValidateFile();
+          }
+        },
+        error => {
+          this.logger.debug('Error message component: ', error);
+          this.uploading = false;
+        }
+      );
+    }
   }
 
   ValidateFile() {
-    this.logger.debug('Start validate');
-
     this.router.navigate(['validate', this.workspaceId]);
+  }
+
+  ngOnDestroy() {
+    this.messagesSub.unsubscribe();
   }
 
 }

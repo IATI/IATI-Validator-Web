@@ -17,26 +17,12 @@ import { ReportInfo } from './report-info';
 
 @Injectable()
 export class DataQualityFeedbackService  {
-  // private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
-  private urlApis: string = environment.apiBaseUrl + '/dqfs';
   private urlApiIatiFile: string = environment.apiDataworkBench + '/iati-files';
   private urlApiIatiDataSet: string = environment.apiDataworkBench + '/iati-datasets';
   private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
 
   constructor(private http: HttpClient,
               private logger: LogService) { }
-
-
-
-  getDqf(id: string): Observable<Dqfs> {
-    const url: string = this.urlApis + '/' + name + id;
-    this.logger.debug(url);
-
-    return this.http.get<Dqfs>(url).pipe(
-      tap(_ => this.logger.debug(`fetched dqfs id=${id}`)),
-      catchError(this.handleError<Dqfs>(`getDqf id=${id}`))
-    );
-  }
 
   getActivities(md5: string): Observable<Dqfs> {
     const container = 'dataworkbench-json';

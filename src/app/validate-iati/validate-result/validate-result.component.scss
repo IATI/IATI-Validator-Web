@@ -1,0 +1,38 @@
+@import "variables";
+
+.files {
+  // margin: 10px 10px;
+  border: 1px solid lightgray;
+  border-radius: $border-radius;
+}
+
+.files > .heading {
+  background-color: $gray-200;
+  padding: 6px 0;
+  font-weight: 700;
+}
+
+// .row {
+//   margin-right: 0;
+//   margin-left: 0;
+// }
+
+.row {
+  padding: 3px 0;
+  margin-right: 0;
+  margin-left: 0;
+
+}
+.row.dqf {
+  cursor: pointer;
+  color: $success;
+  font-weight: 700;
+}
+
+.row.dqf:hover {
+  background-color: lightyellow;
+}
+
+.dqf-button {
+  padding: 0;
+}
