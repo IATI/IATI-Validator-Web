@@ -61,25 +61,22 @@ export class DataQualityFeedbackService  {
 
   getSeverities(): Severity[] {
     return [
-      { id:  'error', slug: 'danger' , name: 'Errors', count: null, order: 1, show: true, types: []},
-      { id:  'warning', slug: 'warning' , name: 'Warnings', count: null,  order: 2, show: true, types: []},
-      { id:  'improvement', slug: 'info' , name: 'Improvements', count: null, order: 3,  show: true, types: []},
-      { id:  'optimisation', slug: 'success' , name: 'Optimisations', count: null, order: 4, show: true, types: []},
+      { id:  'error', slug: 'danger' , name: 'Errors', description: 'Errors make it hard or impossible to use the data.', count: null, order: 1, show: true, types: []},
+      { id:  'warning', slug: 'warning' , name: 'Warnings', description: 'Warnings indicate where the data can be more valuable.', count: null,  order: 2, show: true, types: []},
+      { id:  'improvement', slug: 'info' , name: 'Improvements', description: 'Improvements can make the data more useful.', count: null, order: 3,  show: true, types: []},
+      { id:  'optimisation', slug: 'success' , name: 'Optimisations', description: 'Optimisations can reduce the size of the data.', count: null, order: 4, show: true, types: []},
     ];
   }
 
   getSources(): Source[] {
     return [
-      { id:  'practice', slug: 'practice' , name: 'Common practice', count: null, order: 1, show: true},
-      { id:  'iati', slug: 'iati' , name: 'IATI', count: null,  order: 2, show: true},
-      { id:  'iati-doc', slug: 'iati-doc' , name: 'IATI documentation', count: null, order: 3,  show: true},
-      { id:  'minbuza', slug: 'minbuza' , name: 'Netherlands - Ministry of Foreign Affairs', count: null, order: 4, show: true},
-      { id:  'dfid', slug: 'dfid' , name: 'UK - Department for International Development (DFID)', count: null, order: 5, show: true},
+      { id:  'iati', slug: 'iati' , name: 'IATI Standard', count: null,  order: 1, show: true},
+      { id:  'minbuza', slug: 'minbuza' , name: 'Netherlands: Ministry of Foreign Affairs additional rules', count: null, order: 2, show: true},
+      { id:  'dfid', slug: 'dfid' , name: 'UK: Department for International Development (DFID) additional rules', count: null, order: 3, show: true},
+      { id:  'practice', slug: 'practice' , name: 'Common practice', count: null, order: 4, show: true},
+      { id:  'iati-doc', slug: 'iati-doc' , name: 'IATI Standard (additional)', count: null, order: 5,  show: true},
     ];
   }
-
-
-
 
   /**
    * Handle Http operation that failed.

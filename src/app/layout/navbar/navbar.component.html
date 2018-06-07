@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" routerLink="/">Dataworkbench</a>
+  <a class="navbar-brand" href="/">DataWorkbench</a>
   <button class="navbar-toggler" type="button"
       (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed"
@@ -8,9 +8,9 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngbCollapse]="isCollapsed">
     <div class="navbar-nav">
+      <a class="nav-item nav-link" routerLink="/">IATI Feedback</a>
       <a class="nav-item nav-link" routerLink="/validate" routerLinkActive="active" (click)="isCollapsed=true" >Validate IATI</a>
       <a class="nav-item nav-link" routerLink="/organisations" routerLinkActive="active" (click)="isCollapsed=true" >Browse public IATI</a>
     </div>
   </div>
 </nav>
-

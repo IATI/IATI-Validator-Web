@@ -22,10 +22,9 @@
 
 <div class="type-messages" [ngbCollapse]="isCollapsed">
   <li *ngIf="severity.types.length!==0" class="list-group-item filter-row">
-    {{ severity.name }} messages.
+    {{ severity.description }}
     <span *ngIf="allSelected()" class="show-label"><button type="button" class="btn btn-link" (click)="unSelectAll()">Unselect all</button></span>
     <span *ngIf="!allSelected()" class="show-label"><button type="button" class="btn btn-link" (click)="selectAll()">Select all</button></span>
   </li>
   <app-filter-type-message *ngFor="let mes of severity.types" [typeMessage]="mes" (selectedChanged)="selectionChanged()"></app-filter-type-message>
 </div>
-
