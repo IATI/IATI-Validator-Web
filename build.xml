@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DataWorkbench">
+  
+  <target name="read-properties">
+    <property file="docker.properties"/>
+    <property name="repo" value="local"/>
+    <property name="tag" value="0.0.0"/>    
+  </target>
+  
+  <target name="release-major" description="Docker tag and push as next major version">
+    <antcall target="release">
+      <param name="bump" value="major"/>
+    </antcall>
+  </target>
+
+  <target name="release-minor" description="Docker tag and push as next minor version">
+    <antcall target="release">
+      <param name="bump" value="minor"/>
+    </antcall>
+  </target>
+  
+  <target name="release-patch" description="Docker tag and push as next patch version">
+    <antcall target="release">
+      <param name="bump" value="patch"/>
+    </antcall>
+  </target>
+  
+  <target name="release">
+    <exec executable="dwb-developer">
+      <arg value="bump-${bump}"/>
+    </exec>
+    
+    <property file="docker.properties"/>
+    
+    <exec executable="docker">
+      <arg value="tag"/>
+      <arg value="${repo}:next"/>
+      <arg value="${repo}:${tag}"/>
+    </exec>
+    
+  </target>
+  
+  <target name="build"
+    description="Docker build image for next version"
+    depends="read-properties">
+    <echo message="docker build -t ${repo}:next ."></echo>
+    
+    <exec executable="docker">
+      <arg value="build"/>
+      <arg value="-t"/>
+      <arg value="${repo}:next"/>
+      <arg value="."/>
+    </exec>
+  </target>
+  
+  <target name="push"
+    description="Docker push image"
+    depends="read-properties">
+    <echo message="docker push ${repo}:${tag} ."></echo>
+    
+    <exec executable="docker">
+      <arg value="push"/>
+      <arg value="${repo}:${tag}"/>
+    </exec>
+  </target>
+  
+</project>
