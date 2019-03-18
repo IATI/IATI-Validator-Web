@@ -317,7 +317,7 @@ export class MainComponent implements OnInit, OnDestroy {
     } else if (message.rulesets.some(x => x.severity === 'info')) {
       return 'improvement';
     } else if (message.rulesets.some(x => x.severity === 'success')) {
-      return 'optimisation';
+      return 'notification';
     } else {
       return 'other';
     }
