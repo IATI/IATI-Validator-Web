@@ -6,10 +6,11 @@
   border: 1px solid lightgray;
   max-width: 500px;
   color: $gray-600;
+  border-radius: $border-radius;
 }
 
 .next {
-  border-color: orange;
+  border-color: $warning;
 
   -webkit-box-shadow: 3px 3px 4px 0px rgba(242, 113, 96, 0.3);
   -moz-box-shadow: 3px 3px 4px 0px rgba(242, 113, 96, 0.3);
@@ -20,4 +21,8 @@
 
 .name-file {
   font-weight: 700;
+}
+
+.message {
+  margin: 16px 0;
 }

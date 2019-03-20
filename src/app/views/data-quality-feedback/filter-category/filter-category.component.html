@@ -2,7 +2,6 @@
   <ul class="list-group">
     <li class="list-group-item caption">
       <div class="title">Category</div>
-      <span *ngIf="allSelected()" class="show-label">Show/hide</span>
       <span *ngIf="!allSelected()" class="show-label"><button type="button" class="btn btn-link" (click)="selectAll()">Select all</button></span>
     </li>
     <li *ngFor="let cat of categories" class="list-group-item">

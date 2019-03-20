@@ -1,0 +1,18 @@
+<div *ngIf="iatiDatasetData" class="wrapper">
+  <div class="row" (click)="rowClick()" [class.dqf]="jsonUpdated()"  >
+    <div class="col-12 col-md">
+      {{ iatiDatasetData?.filename }}
+    </div>
+    <div class="col-12 col-md">
+      {{ iatiDatasetData?.updated | date:'yyyy-MM-dd HH:mm (z)' }}
+    </div>
+    <div class="col-12 col-md">
+      <span *ngIf="jsonUpdated(); else elseBlock" > <button type="button" class="btn btn-link dqf-button">{{ reportType() }}</button> </span>
+      <ng-template #elseBlock> <span>{{ reportType() }}</span> </ng-template>
+    </div>
+    <div class="col-12 d-md-none"><hr></div>
+
+  </div>
+</div>
+
+

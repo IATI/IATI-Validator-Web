@@ -1,21 +1,31 @@
 <h4>Upload your IATI file and receive feedback on the quality of the file.</h4>
 <div>
-    <div class="step" [class.next]="!selectedFile" >
-      <h5 class="step-title">Step 1. Select your IATI file.</h5>
-      <input type="file" (change)="onFileChanged($event)" accept=".xml" [disabled]="fileUploaded || fileValidated">
+  <div class="step" [class.next]="!selectedFile">
+    <h5 class="step-title">Step 1. Select your IATI file.</h5>
+    <input type="file" (change)="onFileChanged($event)" accept=".xml" [disabled]="fileUploaded || uploading">
+  </div>
 
-    </div>
-    <!-- <progress max="100" [value]="(uploadProgress | async)"></progress> -->
-    <div class="step" [class.next]="selectedFile!==undefined && !fileUploaded">
-      <h5 class="step-title">Step 2. Upload your IATI file.</h5>
-      <div *ngIf="selectedFile" class="name-file">File: {{selectedFile.name}}</div>
-      <button class="btn btn-success" (click)="UploadFile()" [disabled]="!selectedFile || fileUploaded" >Upload file</button>
-    </div>
-    <div class="step" [class.next]="fileUploaded" >
-      <h5 class="step-title">Step 3. Start validation.</h5>
-      <button class="btn btn-success" (click)="ValidateFile()" [disabled]="!fileUploaded">Start validation</button>
+  <div class="step" [class.next]="selectedFile!==undefined && !fileUploaded">
+    <h5 class="step-title">Step 2. Upload your IATI file.</h5>
+    <div *ngIf="selectedFile" class="name-file">File: {{selectedFile.name}}</div>
+    <button class="btn btn-success" (click)="UploadFile()" [disabled]="!selectedFile || fileUploaded">Upload file</button>
+    <div *ngIf="message" class="alert alert-info message" [class.alert-danger]="message.type===9">
+      <app-spinner *ngIf="uploading" [backColor]="'white'"></app-spinner>
+      {{ message.message }}
+      <p *ngIf="message.type===9">Please try again later.</p>
     </div>
 
+    <div *ngIf="messages.length && !fileUploaded && uploading">
+      <h4>Progress</h4>
+      <ul>
+        <li *ngFor='let message of messages'> {{message.message}} </li>
+      </ul>
+    </div>
+  </div>
 
+  <div class="step" [class.next]="fileUploaded && message.type === 8">
+    <h5 class="step-title">Step 3. Start validation.</h5>
+    <button class="btn btn-success" (click)="ValidateFile()" [disabled]="!fileUploaded">Start validation</button>
+  </div>
 
 </div>

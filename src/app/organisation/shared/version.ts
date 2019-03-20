@@ -1,6 +1,15 @@
 export interface Version {
+  id: string;
   slug: string;
+  'owner-slug': string;
+  'workspace-slug': string;
   title: string;
+  description: string;
+  md5: string[];
+  workspaceId: string;
+
+  // slug: string;
+  // title: string;
 }
 
   export interface Property {

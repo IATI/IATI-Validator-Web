@@ -8,6 +8,7 @@ import { OrganisationService } from './shared/organisation.service';
 import { WorkspaceListItemComponent } from './workspace-list-item/workspace-list-item.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { WorkspaceViewItemComponent } from './workspace-view-item/workspace-view-item.component';
+import { WorkspaceViewItemFileComponent } from './workspace-view-item-file/workspace-view-item-file.component';
 
 const routes: Routes = [
   { path: '', component: OrganisationComponent },
@@ -29,6 +30,12 @@ const routes: Routes = [
   providers: [
     OrganisationService,
   ],
-  declarations: [OrganisationComponent, WorkspaceListItemComponent, WorkspaceComponent, WorkspaceViewItemComponent]
+  declarations: [
+    OrganisationComponent,
+    WorkspaceListItemComponent,
+    WorkspaceComponent,
+    WorkspaceViewItemComponent,
+    WorkspaceViewItemFileComponent
+  ]
 })
 export class OrganisationModule { }

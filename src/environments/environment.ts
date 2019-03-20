@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://dwb-server.herokuapp.com',
-  apiDataworkBench: 'http://dev1.dataworkbench.io/api',
+  // apiDataworkBench: 'http://dev1.dataworkbench.io/api',
+  apiDataworkBench: 'http://localhost:3000/api',
 };

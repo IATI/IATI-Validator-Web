@@ -28,11 +28,6 @@ export interface Activity {
 }
 
 export interface Dqfs {
-  id: string;
-  publisher_name: string;
-  publisher_slug: string;
-  version_slug: string;
-  date_report: string;
   activities: Activity[];
 }
 

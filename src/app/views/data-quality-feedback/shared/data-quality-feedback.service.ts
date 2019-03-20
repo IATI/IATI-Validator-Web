@@ -1,3 +1,4 @@
+import { Organisation } from './../../../organisation/shared/organisation';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -9,49 +10,73 @@ import { environment } from './../../../../environments/environment';
 import { LogService } from '../../../core/logging/log.service';
 import { Source } from './source';
 import { Severity } from './severity';
-import { Feedback, Dqfs } from './feedback';
+import { Feedback, Dqfs, Activity } from './feedback';
+import { IatiDataset } from './../../../organisation/shared/iati-dataset';
+import { ReportInfo } from './report-info';
 
 
 @Injectable()
 export class DataQualityFeedbackService  {
-  // private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
-  private urlApis: string = environment.apiBaseUrl + '/dqfs';
+  private urlApiIatiFile: string = environment.apiDataworkBench + '/iati-files';
+  private urlApiIatiDataSet: string = environment.apiDataworkBench + '/iati-datasets';
+  private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
 
   constructor(private http: HttpClient,
               private logger: LogService) { }
 
-
-
-  getDqf(id: string): Observable<Dqfs> {
-    const url: string = this.urlApis + '/' + name + id;
-    this.logger.debug(url);
-
-    return this.http.get<Dqfs>(url).pipe(
-      tap(_ => this.logger.debug(`fetched dqfs id=${id}`)),
-      catchError(this.handleError<Dqfs>(`getDqf id=${id}`))
+  getActivities(md5: string): Observable<Dqfs> {
+    const container = 'dataworkbench-json';
+    const url: string = this.urlApiIatiFile + '/' + container + '/download/' + md5 + '.json';
+    //   /iati-files/{container}/download/{file}
+    return this.http.get<any>(url)
+    .pipe(
+      // tap(_ => this.log(`fetched iati file`)),
+      catchError(this.handleError('getIatiFile', undefined ))
     );
   }
 
+  getReportInfo(md5: string): Observable<ReportInfo> {
+    const  reportInfo: ReportInfo = {organisationName: '', fileName: '', organisationSlug: '' };
+
+    const url: string = this.urlApiIatiDataSet + '/findOne/' + '?filter[where][md5]=' + md5;
+    this.http.get<IatiDataset>(url)
+      .subscribe(
+        data => {
+          reportInfo.fileName = data.filename;
+          reportInfo.organisationSlug = data.publisher;
+          const urlPublisher: string = this.urlApiOrganisation + '/findOne/' + '?filter[where][slug]=' + data.publisher;
+          this.http.get<Organisation>(urlPublisher)
+            .subscribe(
+              datas => {
+                reportInfo.organisationName = datas.name;
+                return Observable.of(reportInfo);
+              }
+            );
+        }
+      );
+      return Observable.of(reportInfo);
+  }
+
+
+
   getSeverities(): Severity[] {
     return [
-      { id:  'error', slug: 'danger' , name: 'Errors', count: null, order: 1, show: true, types: []},
-      { id:  'warning', slug: 'warning' , name: 'Warnings', count: null,  order: 2, show: true, types: []},
-      { id:  'improvement', slug: 'info' , name: 'Improvements', count: null, order: 3,  show: true, types: []},
-      { id:  'optimisation', slug: 'success' , name: 'Optimisations', count: null, order: 4, show: true, types: []},
+      { id:  'error', slug: 'danger' , name: 'Errors', description: 'Errors make it hard or impossible to use the data.', count: null, order: 1, show: true, types: []},
+      { id:  'warning', slug: 'warning' , name: 'Warnings', description: 'Warnings indicate where the data can be more valuable.', count: null,  order: 2, show: true, types: []},
+      { id:  'improvement', slug: 'info' , name: 'Improvements', description: 'Improvements can make the data more useful.', count: null, order: 3,  show: true, types: []},
+      { id:  'optimisation', slug: 'success' , name: 'Optimisations', description: 'Optimisations can reduce the size of the data.', count: null, order: 4, show: true, types: []},
     ];
   }
 
   getSources(): Source[] {
     return [
-      { id:  'practice', slug: 'practice' , name: 'Common practice', count: null, order: 1, show: true},
-      { id:  'iati', slug: 'iati' , name: 'IATI', count: null,  order: 2, show: true},
-      { id:  'iati-doc', slug: 'iati-doc' , name: 'IATI documentation', count: null, order: 3,  show: true},
-      { id:  'minbuza', slug: 'minbuza' , name: 'Ministery of foreign affairs The Netherlands', count: null, order: 4, show: true},
+      { id:  'iati', slug: 'iati' , name: 'IATI Standard', count: null,  order: 1, show: true},
+      { id:  'minbuza', slug: 'minbuza' , name: 'Netherlands: Ministry of Foreign Affairs additional rules', count: null, order: 2, show: true},
+      { id:  'dfid', slug: 'dfid' , name: 'UK: Department for International Development (DFID) additional rules', count: null, order: 3, show: true},
+      { id:  'practice', slug: 'practice' , name: 'Common practice', count: null, order: 4, show: true},
+      { id:  'iati-doc', slug: 'iati-doc' , name: 'IATI Standard (additional)', count: null, order: 5,  show: true},
     ];
   }
-
-
-
 
   /**
    * Handle Http operation that failed.

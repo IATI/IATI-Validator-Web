@@ -1,7 +1,7 @@
 <div class="feedback-group">
   <div class="feedback-heading row">
-    <div class="col title-col">
-      <h4 class="title d-inline" (click)="collapse()">{{ activity.title }}</h4>
+    <div class="col title-col" (click)="collapse()">
+      <h4 class="title d-inline" >{{ activity.title }}</h4>
       <div class="d-inline float-right">
         <span class="identifier-link"><a href="{{getLinkDportal(activity.publisher, cleanIdentifier(activity.identifier))}}" target="_blank" >{{ cleanIdentifier(activity.identifier)}}</a></span>
         <span class="badge badge-danger">{{getIssueCount('danger')}}</span>
@@ -10,8 +10,11 @@
         <span class="badge badge-success">{{getIssueCount('success')}}</span>
       </div>
     </div>
-    <div class="col-auto collapse-col">
-        <button type="button" class="btn btn-outline-secondary collapser" (click)="collapse()"><span *ngIf="!isCollapsed">-</span><span *ngIf="isCollapsed">+</span></button>
+    <div class="col-auto collapse-col" (click)="collapse()">
+        <button type="button" class="btn btn-outline-secondary collapser" >
+          <span *ngIf="!isCollapsed"><img src="assets/icons/arrow_down_24.svg" alt="icon arrow down"></span>
+          <span *ngIf="isCollapsed" > <img src="assets/icons/arrow_up_24.svg" alt="icon arrow up"> </span>
+        </button>
     </div>
 
   </div>

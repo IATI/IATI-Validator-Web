@@ -1,3 +1,4 @@
+import { IatiDataset } from './iati-dataset';
 import { LogService } from './../../core/logging/log.service';
 import { Version } from './version';
 import { Injectable } from '@angular/core';
@@ -15,8 +16,10 @@ import { Workspace } from './workspace';
 @Injectable()
 export class OrganisationService {
   private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
-  private urlApiWorkspaces: string = environment.apiBaseUrl + '/workspaces';
-  private urlApiVersions: string = environment.apiBaseUrl + '/versions';
+  private urlApiWorkspaces: string = environment.apiDataworkBench + '/workspaces';
+  private urlApiVersions: string = environment.apiDataworkBench + '/versions';
+  private urlApiIatiDataset: string = environment.apiDataworkBench + '/iati-datasets';
+  private urlApiIatiFile: string = environment.apiDataworkBench + '/iati-files';
 
   constructor(private http: HttpClient,
               private logger: LogService) { }
@@ -40,8 +43,9 @@ getWorkspaces(organisation: string): Observable<Array<Workspace>> {
   );
 }
 
-getWorkspace(id: string): Observable<Workspace> {
-  const url: string = this.urlApiWorkspaces + '/' + id;
+getWorkspace(organisationSlug: string, workspaceSlug: string): Observable<Workspace> {
+  const url: string = this.urlApiWorkspaces + '/findOne?filter=' +
+    `{"where":{"and": [ {"owner-slug": "${organisationSlug}"}, {"slug": "${workspaceSlug}"}]}, "include": "versions"}`;
   this.log(url);
   return this.http.get<Workspace>(url)
   .pipe(
@@ -60,8 +64,9 @@ getVersions(workspaceid: string): Observable<Array<Version>> {
   );
 }
 
-getVersion(versionid: string): Observable<Version> {
-  const url: string = this.urlApiVersions + '?slug=' + versionid;
+getVersion(workspaceId: string, versionSlug: string): Observable<Version[]> {
+  const url: string = this.urlApiWorkspaces + '/' + workspaceId + '/versions?filter[where][slug]=' + versionSlug;
+
   this.log(url);
   return this.http.get<Version>(url)
   .pipe(
@@ -70,6 +75,28 @@ getVersion(versionid: string): Observable<Version> {
   );
 }
 
+getIatiDataset(md5: string): Observable<IatiDataset[]> {
+  const url: string = this.urlApiIatiDataset + '/?filter[where][md5]=' + md5;
+
+  this.log(url);
+  return this.http.get<IatiDataset>(url)
+  .pipe(
+    tap(_ => this.log(`fetched iati dataset`)),
+    catchError(this.handleError('getIatiDataset', undefined ))
+  );
+}
+
+getIatiFile(md5: string): Observable<any> {
+  const container = 'dataworkbench-json';
+  const url: string = this.urlApiIatiFile + '/' + container + '/download/' + md5 + '.json';
+  //   /iati-files/{container}/download/{file}
+  this.log(url);
+  return this.http.get<any>(url)
+  .pipe(
+    tap(_ => this.log(`fetched iati file`)),
+    catchError(this.handleError('getIatiFile', undefined ))
+  );
+}
 getEmptyWorkspace(): Workspace {
   const ws: Workspace = {
     id: '',
@@ -82,8 +109,21 @@ getEmptyWorkspace(): Workspace {
     'iati-publisherId': '',
     versions: []
   };
-
   return ws;
+}
+
+getEmptyVersion(): Version {
+  const vs: Version = {
+    id: '',
+    slug: '',
+    ['owner-slug']: '',
+    ['workspace-slug']: '',
+    title: '',
+    description: '',
+    md5: [],
+    workspaceId: ''
+  };
+  return vs;
 }
 
 private log(message: string) {

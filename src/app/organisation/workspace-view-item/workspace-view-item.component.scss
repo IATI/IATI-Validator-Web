@@ -1,7 +1,30 @@
-.view-type tbody {
-  cursor: pointer;
+@import "variables";
+
+// .view-type tbody {
+//   cursor: pointer;
+// }
+
+// .view-type {
+//   margin: 20px 0;
+// }
+
+.version-info {
+  text-align: right;
 }
 
-.view-type {
-  margin: 20px 0;
+.files {
+  // margin: 10px 10px;
+  border: 1px solid lightgray;
+  border-radius: $border-radius;
+}
+
+.files > .heading {
+  background-color: $gray-200;
+  padding: 6px 0;
+  font-weight: 700;
+}
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
 }

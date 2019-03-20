@@ -1,8 +1,7 @@
 <div class="filter">
   <ul class="list-group">
     <li class="list-group-item caption">
-      <div class="title">Sources</div>
-      <span *ngIf="allSelected()" class="show-label">Show/hide</span>
+      <div class="title">Guidelines</div>
       <span *ngIf="!allSelected()" class="show-label"><button type="button" class="btn btn-link" (click)="selectAll()">Select all</button></span>
     </li>
     <li *ngFor="let cat of sources" class="list-group-item">

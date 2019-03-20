@@ -23,14 +23,13 @@ import { cloneDeep } from 'lodash';
 })
 export class MainComponent implements OnInit, OnDestroy {
   isLoading = false;
-  dqfId = '';
+  md5 = '';
+  activityData: Activity[] = [];
   activities: Activity[] = [];
-  dqfs: Dqfs;
   severities: Severity[] = [];
   sources: Source[] = [];
   categories: Category[] = [];
   private loaderSubscription: Subscription;
-  // typeMessages: TypeSeverity[] = [];
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
     private logger: LogService,
@@ -41,7 +40,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.activateRoute
       .params
       .subscribe(params => {
-        this.dqfId = params['name'];
+        this.md5 = params['name'];
       });
 
   }
@@ -53,7 +52,7 @@ export class MainComponent implements OnInit, OnDestroy {
             });
     this.severities = this.dataQualityFeedbackService.getSeverities();
     this.sources = this.dataQualityFeedbackService.getSources();
-    this.loadDqfData(this.dqfId);
+    this.loadActivityData(this.md5);
   }
 
   ngOnDestroy() {
@@ -61,36 +60,34 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
 
-
-  loadDqfData(id: string) {
+  loadActivityData(md5: string) {
     this.loader.show();
-    this.dataQualityFeedbackService.getDqf(id)
+    this.dataQualityFeedbackService.getActivities(md5)
       .subscribe(
         data => {
-          this.dqfs = data;
-          // this.addCountContextFunctions();
-          if (this.dqfs === undefined) {
+          this.activityData = data.activities;
+          if (this.activityData === undefined) {
             this.loader.hide();
             return;
           }
           this.loadCategories();
-          this.loadTypeMessages(this.dqfs.activities);
+          this.loadTypeMessages(this.activityData);
           this.filterActivities();
 
           this.loader.hide();
         },
         error => {
-          this.logger.error('Error loadDqfData', error);
+          this.logger.error('Error loadActivityData', error);
           this.loader.hide();
         }
       );
   }
 
-  loadCategories() {
+   loadCategories() {
 
     const uniqueCat: {id: string, name: string}[] = [];
 
-    this.dqfs.activities.forEach( act => {
+    this.activityData.forEach( act => {
       act.feedback.forEach(fb => {
         if (uniqueCat.some(u => u.id === fb.category )) {
           // nothing
@@ -137,7 +134,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   filterActivities() {
     this.loader.show();
-    let filtered = cloneDeep(this.dqfs.activities);
+    let filtered = cloneDeep(this.activityData);
 
     // Filter feedback category
     filtered.forEach(act => {
@@ -269,12 +266,16 @@ export class MainComponent implements OnInit, OnDestroy {
     return count;
   }
 
-  // Set the count of the type-messages
+  // Set the count of the type-messages and sort types by count desc
   setTypeMessageCount() {
     this.severities.forEach(t => {
       t.types.forEach(m => {
         m.count = m.show ? this.getTypeMessageCount(m.id) : null ;
       });
+    });
+    // Sort Type messages inside severity. Type with more messages on top
+    this.severities.forEach(s => {
+      s.types.sort( (a, b) =>  b.count - a.count );
     });
   }
 
@@ -316,7 +317,7 @@ export class MainComponent implements OnInit, OnDestroy {
     } else if (message.rulesets.some(x => x.severity === 'info')) {
       return 'improvement';
     } else if (message.rulesets.some(x => x.severity === 'success')) {
-      return 'optimisation';
+      return 'notification';
     } else {
       return 'other';
     }
