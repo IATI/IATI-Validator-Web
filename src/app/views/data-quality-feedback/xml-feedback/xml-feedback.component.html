@@ -1,5 +1,5 @@
 <div class="xml-feedback">
-<h4>Overall Feedback</h4>
+<h4>File feedback</h4>
 <div class="feedback-heading row">
         <div class="col title-col" (click)="collapse()">
           <h5 class="title d-inline" ></h5>
@@ -19,4 +19,6 @@
         </div>
     
       </div>
-<app-feedback-item *ngFor="let fb of feedbackData" [feedback]="fb"></app-feedback-item></div>
+      <div class="feedback-items" [ngbCollapse]="isCollapsed">
+        <app-feedback-item *ngFor="let fb of feedbackData" [feedback]="fb"></app-feedback-item></div>
+      </div>
