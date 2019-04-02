@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  apiDataworkBench: 'https://9239879d-e1c3-4ad6-846a-fd8925283028.mock.pstmn.io/api',
   // apiDataworkBench: 'http://dev1.dataworkbench.io/api',
-  apiDataworkBench: 'http://localhost:3000/api',
+  // apiDataworkBench: 'http://localhost:3000/api',
 };

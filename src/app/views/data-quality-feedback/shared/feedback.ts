@@ -29,6 +29,7 @@ export interface Activity {
 
 export interface Dqfs {
   activities: Activity[];
+  feedback:Feedback[];
 }
 
 

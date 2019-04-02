@@ -32,9 +32,10 @@
       <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()"></app-filter-source>
       <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()"></app-filter-category>
     </div>
-    <div class="col-md-8 results">
-
-      <app-feedback [activityData]="activities"></app-feedback>
+    <div class="col-md-8 results"> 
+      <div *ngIf="companyFeedback"> <app-xml-feedback [feedbackData]="companyFeedback"></app-xml-feedback></div>
+    
+      <app-feedback [activityData]="activities" [data]="companyData"></app-feedback>
     </div>
   </div>
 </div>

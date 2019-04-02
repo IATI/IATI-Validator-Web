@@ -20,6 +20,7 @@ import { FilterTypeSeverityComponent } from './filter-type-severity/filter-type-
 import { FilterSeverityItemComponent } from './filter-severity-item/filter-severity-item.component';
 import { MainReportInfoComponent } from './main-report-info/main-report-info.component';
 import { SharedModule } from './../../shared/shared.module';
+import { XmlFeedbackComponent } from './xml-feedback/xml-feedback.component';
 
 const routes: Routes = [
   { path: ':name', component: MainComponent },
@@ -50,7 +51,8 @@ const routes: Routes = [
     FilterTypeMessageComponent,
     FilterTypeSeverityComponent,
     FilterSeverityItemComponent,
-    MainReportInfoComponent],
+    MainReportInfoComponent,
+    XmlFeedbackComponent],
     providers: [DataQualityFeedbackService]
 })
 export class DataQualityFeedbackModule { }

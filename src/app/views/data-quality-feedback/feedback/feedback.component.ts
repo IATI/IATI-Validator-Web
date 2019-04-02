@@ -11,6 +11,7 @@ import { Dqfs, Activity } from './../shared/feedback';
 })
 export class FeedbackComponent implements OnInit {
   @Input() activityData: Activity[];
+  @Input() data: Dqfs;
   @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent>;
   isCollapsed = false;
 

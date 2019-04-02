@@ -1,3 +1,7 @@
-<h4 class="title">Feedback  <span class="toggle-collapse"><button type="button" class="btn btn-link" (click)="toggleCollapse()">Collapse/Expand all</button></span></h4>
-<app-feedback-group *ngFor="let act of activityData" [activity]="act" ></app-feedback-group>
+<div class="feedback">
+<!-- <h4 class="title">Overall feedback</h4> -->
+<!-- <app-feedback-item *ngFor="let fb of data.feedback" [feedback]="fb"></app-feedback-item> -->
 
+<h4 class="title">Activity feedback <span class="toggle-collapse"><button type="button" class="btn btn-link"
+            (click)="toggleCollapse()">Collapse/Expand all</button></span></h4>
+<app-feedback-group *ngFor="let act of activityData" [activity]="act"></app-feedback-group></div>

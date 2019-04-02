@@ -1,7 +1,7 @@
 <div class="feedback-group">
   <div class="feedback-heading row">
     <div class="col title-col" (click)="collapse()">
-      <h4 class="title d-inline" >{{ activity.title }}</h4>
+      <h5 class="title d-inline" >{{ activity.title }}</h5>
       <div class="d-inline float-right">
         <span class="identifier-link"><a href="{{getLinkDportal(activity.publisher, cleanIdentifier(activity.identifier))}}" target="_blank" >{{ cleanIdentifier(activity.identifier)}}</a></span>
         <span class="badge badge-danger">{{getIssueCount('danger')}}</span>
