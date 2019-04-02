@@ -11,8 +11,15 @@
 
 .message {
   font-size: 16px;
-  font-weight: 700;
+  // font-weight: 700;
+  font-weight: 500;
   padding: 12px;
+
+  // New
+  color: black;
+  margin-bottom: 4px;
+  background-color: $gray-200; 
+
 }
 
 .feedback-list{
@@ -22,22 +29,24 @@
 .error {
   // background-color: $severity-error;
   border-left: 6px solid $severity-error;
-  color: black;
-  font-weight: 500;
-  margin-bottom: 4px;
-  background-color: $gray-200; 
 }
 .warning {
-  background-color: $severity-warning;
-  color: white;
+  // background-color: $severity-warning;
+  // color: white;
+
+  border-left: 6px solid $severity-warning;
 }
 .improvement {
-  background-color: $severity-improvement;
-  color: white;
+  // background-color: $severity-improvement;
+  //color: white;
+  border-left: 6px solid $severity-improvement;
+
 }
 .optimisation {
-  background-color: $severity-optimisations;
-  color: white;
+  // background-color: $severity-optimisations;
+  // color: white;
+
+  border-left: 6px solid $severity-optimisations;
 }
 
 .context {
