@@ -160,9 +160,6 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loader.show();
     let filtered = cloneDeep(this.activityData);
 
-    console.log('feedback filter', filtered);
-
-
     this.filterCompanyFeedback();
 
     // Filter feedback category

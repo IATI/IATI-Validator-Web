@@ -1,7 +1,7 @@
 <div class="feedback">
   <div class="category-label">{{feedback.label}}</div>
-  <ul>
-    <li *ngFor="let mes of feedback.messages" class="message {{getfeedbackColor(mes)}}"  >{{mes.text}} ({{mes.id}})
+  <ul class="feedback-list">
+    <li *ngFor="let mes of feedback.messages" class="message {{getfeedbackColor(mes)}}"  >{{mes.text}} <span class="message-id">({{mes.id}})</span>
       <ul [hidden]="mes.context.length===1 && mes.context[0].text===''">
         <li *ngFor="let con of mes.context" class="context">{{con.text}}</li>
       </ul>

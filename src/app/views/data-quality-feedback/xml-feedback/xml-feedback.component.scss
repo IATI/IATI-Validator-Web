@@ -1,11 +1,18 @@
+@import "variables";
 
+.xml-feedback{
+  margin: 0 0 10px 0;
+  border: 1px lightgray solid;
+  border-radius: $border-radius;
+  padding:10px;
+}
 
 .feedback-heading {
     font-weight: 700;
     font-size: 18px;
-    padding: 14px 0;
+    // padding: 14px 0;
     // background-color: rgba(0, 0, 0, 0.03);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    // border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     margin-left: 0;
     margin-right: 0;
     width: 100%;
@@ -17,6 +24,7 @@
   
   .title-col {
     padding-right: 0;
+    padding-left:0;
     cursor: pointer;
   }
   

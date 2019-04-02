@@ -15,9 +15,17 @@
   padding: 12px;
 }
 
+.feedback-list{
+  list-style-type:none;
+}
+
 .error {
-  background-color: $severity-error;
-  color: white;
+  // background-color: $severity-error;
+  border-left: 6px solid $severity-error;
+  color: black;
+  font-weight: 500;
+  margin-bottom: 4px;
+  background-color: $gray-200; 
 }
 .warning {
   background-color: $severity-warning;

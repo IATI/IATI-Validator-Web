@@ -28,14 +28,20 @@
   <div *ngIf="activityData!==undefined" class="row">
     <div class="col-md-4 filters">
       <h4>Filters</h4>
-      <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()"></app-filter-severity>
+      <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">
+      </app-filter-severity>
       <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()"></app-filter-source>
-      <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()"></app-filter-category>
+      <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()">
+      </app-filter-category>
     </div>
-    <div class="col-md-8 results"> 
-      <div *ngIf="companyFeedback"> <app-xml-feedback [feedbackData]="companyFeedback"></app-xml-feedback></div>
-    
-      <app-feedback [activityData]="activities" [data]="companyData"></app-feedback>
+    <div class="col-md-8 results">
+      <h4>Feedback</h4>
+      <div *ngIf="companyFeedback">
+        <app-xml-feedback [feedbackData]="companyFeedback"></app-xml-feedback>
+        <app-feedback [activityData]="activities" [feedbackData]="companyFeedback"></app-feedback>
+      </div>
+
+
     </div>
   </div>
 </div>
