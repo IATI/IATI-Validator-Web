@@ -11,14 +11,12 @@ import { Dqfs, Activity, Feedback } from './../shared/feedback';
 })
 export class FeedbackComponent implements OnInit {
   @Input() activityData: Activity[];
-  @Input() feedbackData: Feedback[];
   @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent>;
   isCollapsed = false;
 
   constructor(private logger: LogService) { }
 
   ngOnInit() {
-    console.log(this.feedbackData);
   }
 
   toggleCollapse() {

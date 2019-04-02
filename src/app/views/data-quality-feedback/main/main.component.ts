@@ -69,7 +69,7 @@ export class MainComponent implements OnInit, OnDestroy {
         data => {
           this.activityData = data.activities;
           this.companyFeedbackData = data.feedback;
-
+console.log(data);
           if (this.activityData === undefined || this.companyFeedbackData === undefined) {
             this.loader.hide();
             return;
