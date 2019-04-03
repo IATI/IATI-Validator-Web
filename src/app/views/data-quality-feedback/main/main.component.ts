@@ -67,6 +67,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.dataQualityFeedbackService.getActivities(md5)
       .subscribe(
         data => {
+          console.log(data);
           this.activityData = data.activities;
           this.companyFeedbackData = data.feedback;
           if (this.activityData === undefined || this.companyFeedbackData === undefined) {

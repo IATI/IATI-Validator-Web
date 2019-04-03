@@ -11,7 +11,7 @@
     <app-spinner [backColor]="'white'"></app-spinner>
     <span class="loading-text">Loading report...</span>
   </div>
-  <div *ngIf="activityData===undefined && !isLoading " class="alert alert-warning" role="alert">
+  <div *ngIf="activityData===undefined && companyFeedback===undefined && !isLoading " class="alert alert-warning" role="alert">
     <h2>No data found.</h2>
     <p>It looks like the url
       <strong> {{ md5 }}</strong> is not valid.</p>
@@ -25,7 +25,7 @@
     </ul>
   </div>
 
-  <div *ngIf="activityData!==undefined" class="row">
+  <div *ngIf="activityData!==undefined || companyFeedback" class="row">
     <div class="col-md-4 filters">
       <h4>Filters</h4>
       <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">

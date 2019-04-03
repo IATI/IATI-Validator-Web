@@ -19,7 +19,10 @@
   color: black;
   margin-bottom: 4px;
   background-color: $gray-200; 
+}
 
+.message-text{
+  white-space: pre-line;
 }
 
 .feedback-list{
