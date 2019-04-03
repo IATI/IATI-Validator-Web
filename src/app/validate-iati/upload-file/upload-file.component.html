@@ -17,9 +17,10 @@
 
     <div *ngIf="messages.length && !fileUploaded && uploading">
       <h4>Progress</h4>
-      <ul>
+      <span>{{message.message}}</span>
+      <!-- <ul>
         <li *ngFor='let message of messages'> {{message.message}} </li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 

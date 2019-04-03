@@ -68,6 +68,7 @@ export class MainComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           console.log(data);
+          //TODO: Check for file type?
           this.activityData = data.activities;
           this.companyFeedbackData = data.feedback;
           if (this.activityData === undefined || this.companyFeedbackData === undefined) {
