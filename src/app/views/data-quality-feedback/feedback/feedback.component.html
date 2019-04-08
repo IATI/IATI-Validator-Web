@@ -1,5 +1,13 @@
 <div class="feedback">
-    <h5 class="title">Feedback per activity<span class="toggle-collapse"><button type="button" class="btn btn-link"
+    <h5 class="title">{{title}}<span class="toggle-collapse"><button type="button" class="btn btn-link"
                 (click)="toggleCollapse()">Collapse/Expand all activities</button></span></h5>
-    <app-feedback-group *ngFor="let act of activityData" [activity]="act"></app-feedback-group>
+
+                <div *ngIf="activityData.length>0; else noActivityData">
+                        <app-feedback-group *ngFor="let act of activityData" [activity]="act"></app-feedback-group>
+
+                </div>
 </div>
+
+<ng-template #noActivityData>
+    <p>There is no activity feedback to display</p>
+</ng-template> 

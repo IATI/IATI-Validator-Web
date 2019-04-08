@@ -8,6 +8,7 @@ import { Feedback, Dqfs } from '../shared/feedback';
 })
 export class XmlFeedbackComponent implements OnInit {
   @Input() feedbackData: Feedback[];
+  @Input() title = '';
   public isCollapsed = false;
 
   constructor() { }

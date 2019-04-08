@@ -31,6 +31,8 @@ export class MainComponent implements OnInit, OnDestroy {
   severities: Severity[] = [];
   sources: Source[] = [];
   categories: Category[] = [];
+  public dqfs: Dqfs;
+  public filetype = '';
   private loaderSubscription: Subscription;
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
@@ -64,14 +66,36 @@ export class MainComponent implements OnInit, OnDestroy {
 
   loadActivityData(md5: string) {
     this.loader.show();
-    this.dataQualityFeedbackService.getActivities(md5)
+    this.dataQualityFeedbackService.getDataQualityFeedback(md5)
       .subscribe(
         data => {
-          console.log(data);
-          //TODO: Check for file type?
-          this.activityData = data.activities;
-          this.companyFeedbackData = data.feedback;
-          if (this.activityData === undefined || this.companyFeedbackData === undefined) {
+          //TODO: Check for filetype
+console.log(data);
+          this.filetype = data.filetype;
+          if (data.filetype = "iati-activities") {
+            if (data.activities) {
+              this.activityData = data.activities;
+            }
+            if (data.feedback) {
+              this.companyFeedbackData = data.feedback;
+            }
+          }
+
+          if (data.filetype = "iati-organisations") {
+            if (data.organisations) {
+              this.activityData = data.organisations;
+            }
+          }
+
+          if (data.filetype = "not-iati") {
+            if (data.feedback) {
+              this.companyFeedbackData = data.feedback;
+            }
+          }
+
+
+
+          if (this.activityData === undefined && this.companyFeedbackData === undefined) {
             this.loader.hide();
             return;
           }

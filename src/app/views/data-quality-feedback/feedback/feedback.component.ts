@@ -3,6 +3,7 @@ import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core
 import { FeedbackGroupComponent } from './../feedback-group/feedback-group.component';
 import { LogService } from './../../../core/logging/log.service';
 import { Dqfs, Activity, Feedback } from './../shared/feedback';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-feedback',
@@ -11,6 +12,7 @@ import { Dqfs, Activity, Feedback } from './../shared/feedback';
 })
 export class FeedbackComponent implements OnInit {
   @Input() activityData: Activity[];
+  @Input() title:string = '';
   @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent>;
   isCollapsed = false;
 

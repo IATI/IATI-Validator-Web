@@ -2,8 +2,8 @@
 
 <div class="feedback-heading row">
         <div class="col title-col" (click)="collapse()">
-          <h5 class="title d-inline" >Activity file feedback</h5>
-          <div class="d-inline float-right">
+          <h5 class="title d-inline" >{{title}}</h5>
+          <div class="d-inline float-right" *ngIf="feedbackData.length>0">
             <!-- <span class="identifier-link"><a href="{{getLinkDportal(activity.publisher, cleanIdentifier(activity.identifier))}}" target="_blank" >{{ cleanIdentifier(activity.identifier)}}</a></span> -->
             <span class="badge badge-danger">{{getIssueCount('danger')}}</span>
             <span class="badge badge-warning">{{getIssueCount('warning')}}</span>
@@ -19,6 +19,11 @@
         </div>
     
       </div>
-      <div class="feedback-items" [ngbCollapse]="isCollapsed">
-        <app-feedback-item *ngFor="let fb of feedbackData" [feedback]="fb"></app-feedback-item></div>
+      <div class="feedback-items" [ngbCollapse]="isCollapsed" *ngIf="feedbackData.length>0;else noFeedbackData">
+        <app-feedback-item *ngFor="let fb of feedbackData" [feedback]="fb"></app-feedback-item>
       </div>
+      </div>
+
+      <ng-template #noFeedbackData>
+        <p>There is no activity file feedback to display</p>
+      </ng-template>
