@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  apiDataworkBench: 'http://dev1.dataworkbench.io/api',
+  apiDataworkBench: 'http://testing.dataworkbench.io/api',
+  bucketnameSuffix: '-testing-d4d-dataworkbench',
 };

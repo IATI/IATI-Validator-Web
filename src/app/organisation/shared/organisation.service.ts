@@ -87,7 +87,7 @@ getIatiDataset(md5: string): Observable<IatiDataset[]> {
 }
 
 getIatiFile(md5: string): Observable<any> {
-  const container = 'dataworkbench-json';
+  const container = 'dataworkbench-json' + environment.bucketnameSuffix;
   const url: string = this.urlApiIatiFile + '/' + container + '/download/' + md5 + '.json';
   //   /iati-files/{container}/download/{file}
   this.log(url);
