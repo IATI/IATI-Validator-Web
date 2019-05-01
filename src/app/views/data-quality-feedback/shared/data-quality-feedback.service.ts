@@ -24,7 +24,7 @@ export class DataQualityFeedbackService  {
   constructor(private http: HttpClient,
               private logger: LogService) { }
 
-  getActivities(md5: string): Observable<Dqfs> {
+  getDataQualityFeedback(md5: string): Observable<Dqfs> {
     const container = 'dataworkbench-json';
     const url: string = this.urlApiIatiFile + '/' + container + '/download/' + md5 + '.json';
     //   /iati-files/{container}/download/{file}

@@ -1,0 +1,29 @@
+<div class="xml-feedback">
+
+<div class="feedback-heading row">
+        <div class="col title-col" (click)="collapse()">
+          <h5 class="title d-inline" >{{title}}</h5>
+          <div class="d-inline float-right" *ngIf="feedbackData.length>0">
+            <!-- <span class="identifier-link"><a href="{{getLinkDportal(activity.publisher, cleanIdentifier(activity.identifier))}}" target="_blank" >{{ cleanIdentifier(activity.identifier)}}</a></span> -->
+            <span class="badge badge-danger">{{getIssueCount('danger')}}</span>
+            <span class="badge badge-warning">{{getIssueCount('warning')}}</span>
+            <span class="badge badge-info">{{getIssueCount('info')}}</span>
+            <span class="badge badge-success">{{getIssueCount('success')}}</span>
+          </div>
+        </div>
+        <div class="col-auto collapse-col" (click)="collapse()">
+            <button type="button" class="btn btn-outline-secondary collapser" >
+              <span *ngIf="!isCollapsed"><img src="assets/icons/arrow_down_24.svg" alt="icon arrow down"></span>
+              <span *ngIf="isCollapsed" > <img src="assets/icons/arrow_up_24.svg" alt="icon arrow up"> </span>
+            </button>
+        </div>
+    
+      </div>
+      <div class="feedback-items" [ngbCollapse]="isCollapsed" *ngIf="feedbackData.length>0;else noFeedbackData">
+        <app-feedback-item *ngFor="let fb of feedbackData" [feedback]="fb"></app-feedback-item>
+      </div>
+      </div>
+
+      <ng-template #noFeedbackData>
+        <p>There is no activity file feedback to display</p>
+      </ng-template>

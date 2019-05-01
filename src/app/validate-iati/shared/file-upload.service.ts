@@ -55,6 +55,7 @@ export class FileUploadService {
 
   /** Return distinct message for sent, upload progress, & response events */
   private getEventMessage(event: HttpEvent<any>, file: File): Message {
+    console.log(event);
     switch (event.type) {
       case HttpEventType.Sent:
       const mes: Message = { message: `Uploading file "${file.name}" of size ${file.size}.`, type: MessageType.progress, progress: 0 } ;

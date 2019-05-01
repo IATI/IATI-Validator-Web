@@ -26,9 +26,13 @@ export class MainComponent implements OnInit, OnDestroy {
   md5 = '';
   activityData: Activity[] = [];
   activities: Activity[] = [];
+  companyFeedbackData: Feedback[];
+  companyFeedback: Feedback[];
   severities: Severity[] = [];
   sources: Source[] = [];
   categories: Category[] = [];
+  public dqfs: Dqfs;
+  public filetype = '';
   private loaderSubscription: Subscription;
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
@@ -47,9 +51,9 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loaderSubscription = this.loader.loaderState
-            .subscribe((state: LoaderState) => {
-                this.isLoading = state.show;
-            });
+      .subscribe((state: LoaderState) => {
+        this.isLoading = state.show;
+      });
     this.severities = this.dataQualityFeedbackService.getSeverities();
     this.sources = this.dataQualityFeedbackService.getSources();
     this.loadActivityData(this.md5);
@@ -62,16 +66,41 @@ export class MainComponent implements OnInit, OnDestroy {
 
   loadActivityData(md5: string) {
     this.loader.show();
-    this.dataQualityFeedbackService.getActivities(md5)
+    this.dataQualityFeedbackService.getDataQualityFeedback(md5)
       .subscribe(
         data => {
-          this.activityData = data.activities;
-          if (this.activityData === undefined) {
+          //TODO: Check for filetype
+console.log(data);
+          this.filetype = data.filetype;
+          if (data.filetype = "iati-activities") {
+            if (data.activities) {
+              this.activityData = data.activities;
+            }
+            if (data.feedback) {
+              this.companyFeedbackData = data.feedback;
+            }
+          }
+
+          if (data.filetype = "iati-organisations") {
+            if (data.organisations) {
+              this.activityData = data.organisations;
+            }
+          }
+
+          if (data.filetype = "not-iati") {
+            if (data.feedback) {
+              this.companyFeedbackData = data.feedback;
+            }
+          }
+
+
+
+          if (this.activityData === undefined && this.companyFeedbackData === undefined) {
             this.loader.hide();
             return;
           }
           this.loadCategories();
-          this.loadTypeMessages(this.activityData);
+          this.loadTypeMessages(this.activityData, this.companyFeedbackData);
           this.filterActivities();
 
           this.loader.hide();
@@ -83,40 +112,59 @@ export class MainComponent implements OnInit, OnDestroy {
       );
   }
 
-   loadCategories() {
+  loadCategories() {
 
-    const uniqueCat: {id: string, name: string}[] = [];
+    const uniqueCat: { id: string, name: string }[] = [];
 
-    this.activityData.forEach( act => {
+    this.activityData.forEach(act => {
       act.feedback.forEach(fb => {
-        if (uniqueCat.some(u => u.id === fb.category )) {
+        if (uniqueCat.some(u => u.id === fb.category)) {
           // nothing
         } else {
-          uniqueCat.push({ id: fb.category, name: fb.label  });
+          uniqueCat.push({ id: fb.category, name: fb.label });
         }
       });
     });
 
-    uniqueCat.forEach( u => {
-      this.categories.push({id: u.id, name: u.name, count: null, order: 0, show: true});
+    this.companyFeedbackData.forEach(element => {
+      if (uniqueCat.some(u => u.id === element.category)) {
+        // nothing
+      } else {
+        uniqueCat.push({ id: element.category, name: element.label });
+      }
     });
 
+    uniqueCat.forEach(u => {
+      this.categories.push({ id: u.id, name: u.name, count: null, order: 0, show: true });
+    });
   }
 
-  loadTypeMessages(activities: Activity[]) {
-    const types: {sev: string, id: string, text: string}[] = [];
+  loadTypeMessages(activities: Activity[], inCompanyFeedback: Feedback[]) {
+    const types: { sev: string, id: string, text: string }[] = [];
     // Get unique messages, with the highest level of severity
     activities.forEach(act => {
       act.feedback.forEach(fb => {
         fb.messages.forEach(mes => {
           if (!types.some(t => t.id === mes.id)) {
-            const newType: {sev: string, id: string, text: string} = {sev: '', id: '', text: ''} ;
+            const newType: { sev: string, id: string, text: string } = { sev: '', id: '', text: '' };
             newType.sev = this.getfeedbackSeverity(mes);
             newType.id = mes.id;
             newType.text = mes.text;
             types.push(newType);
           }
         });
+      });
+    });
+
+    inCompanyFeedback.forEach(fb => {
+      fb.messages.forEach(mes => {
+        if (!types.some(t => t.id === mes.id)) {
+          const newType: { sev: string, id: string, text: string } = { sev: '', id: '', text: '' };
+          newType.sev = this.getfeedbackSeverity(mes);
+          newType.id = mes.id;
+          newType.text = mes.text;
+          types.push(newType);
+        }
       });
     });
 
@@ -132,14 +180,18 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
 
+
   filterActivities() {
     this.loader.show();
     let filtered = cloneDeep(this.activityData);
+
+    this.filterCompanyFeedback();
 
     // Filter feedback category
     filtered.forEach(act => {
       act.feedback = act.feedback.filter(this.filterCategory);
     });
+
 
     // Filter messages that are not selected in source
     filtered.forEach(act => {
@@ -163,12 +215,14 @@ export class MainComponent implements OnInit, OnDestroy {
         fb.messages = fb.messages.filter(this.filterSeverity);
       });
     });
+
     // Filter feedback whitout messages
     filtered.forEach(act => {
       act.feedback = act.feedback.filter(fb => {
         return fb.messages.length > 0;
       });
     });
+
     // Filter activities without feedback
     filtered = filtered.filter(act => {
       return act.feedback.length > 0;
@@ -184,6 +238,38 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loader.hide();
   }
 
+  filterCompanyFeedback() {
+    let filteredFeedback = cloneDeep(this.companyFeedbackData);
+
+    // Filter feedback category
+    filteredFeedback = filteredFeedback.filter(this.filterCategory);
+
+
+    // Filter messages that are not selected in source
+    filteredFeedback.forEach(fb => {
+      fb.messages.forEach(mes => {
+        mes.rulesets = mes.rulesets.filter(this.filterSource);
+      });
+    });
+
+    // Filter type messages selected
+    filteredFeedback.forEach(fb => {
+      fb.messages = fb.messages.filter(this.filterTypeMessage);
+    });
+
+    // Filter messages with severity selected
+    filteredFeedback.forEach(fb => {
+      fb.messages = fb.messages.filter(this.filterSeverity);
+    })
+
+    // Filter feedback without messages
+    filteredFeedback = filteredFeedback.filter(fb => {
+      return fb.messages.length > 0;
+    });
+
+    // Filter activities without feedback
+    this.companyFeedback = filteredFeedback;
+  }
 
   filterSeverity = (message: Message) => {
     return message.rulesets.some(rs => {
@@ -201,13 +287,13 @@ export class MainComponent implements OnInit, OnDestroy {
 
   filterTypeMessage = (message: Message) => {
     // return this.typeMessages.some(t => t.types.some(m => m.show === true && m.id === message.id ) );
-    return this.severities.some(t => t.types.some(m => m.show === true && m.id === message.id ) );
+    return this.severities.some(t => t.types.some(m => m.show === true && m.id === message.id));
   }
 
   // Set the count of messages to the severity
   setSeverityCount() {
     this.severities.forEach(sev => {
-      sev.count = sev.show ? this.getIssueCount(sev.slug) : null ;
+      sev.count = sev.show ? this.getIssueCount(sev.slug) : null;
     });
   }
 
@@ -222,13 +308,21 @@ export class MainComponent implements OnInit, OnDestroy {
         });
       });
     });
+
+    this.companyFeedbackData.forEach(fb => {
+      fb.messages.forEach(mes => {
+        if (mes.rulesets.some(r => r.severity === type)) {
+          count += mes.context.length;
+        }
+      });
+    });
     return count;
   }
 
   // Set the count of messages to the sources
   setSourceCount() {
     this.sources.forEach(src => {
-      src.count = src.show ? this.getSourceCount(src.slug) : null ;
+      src.count = src.show ? this.getSourceCount(src.slug) : null;
     });
   }
 
@@ -243,12 +337,19 @@ export class MainComponent implements OnInit, OnDestroy {
         });
       });
     });
+    this.companyFeedbackData.forEach(fb => {
+      fb.messages.forEach(mes => {
+        if (mes.rulesets.some(r => r.src === type)) {
+          count += mes.context.length;
+        }
+      });
+    })
     return count;
   }
 
   setCategoryCount() {
     this.categories.forEach(cat => {
-      cat.count = cat.show ? this.getCategoryCount(cat.id) : null ;
+      cat.count = cat.show ? this.getCategoryCount(cat.id) : null;
     });
   }
 
@@ -263,6 +364,14 @@ export class MainComponent implements OnInit, OnDestroy {
         }
       });
     });
+
+    this.companyFeedbackData.forEach(fb => {
+      if (fb.category === id) {
+        fb.messages.forEach(mes => {
+          count += mes.context.length;
+        });
+      }
+    })
     return count;
   }
 
@@ -270,12 +379,12 @@ export class MainComponent implements OnInit, OnDestroy {
   setTypeMessageCount() {
     this.severities.forEach(t => {
       t.types.forEach(m => {
-        m.count = m.show ? this.getTypeMessageCount(m.id) : null ;
+        m.count = m.show ? this.getTypeMessageCount(m.id) : null;
       });
     });
     // Sort Type messages inside severity. Type with more messages on top
     this.severities.forEach(s => {
-      s.types.sort( (a, b) =>  b.count - a.count );
+      s.types.sort((a, b) => b.count - a.count);
     });
   }
 
@@ -288,6 +397,14 @@ export class MainComponent implements OnInit, OnDestroy {
             count += mes.context.length;
           }
         });
+      });
+    });
+
+    this.companyFeedbackData.forEach(fb => {
+      fb.messages.forEach(mes => {
+        if (mes.id === typeId) {
+          count += mes.context.length;
+        }
       });
     });
     return count;

@@ -20,6 +20,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   workspaceId = '';
   fileUploaded = false;
   uploading = false;
+  fetchUrl = '';
   message: Message ;
   messages: Message[] = [];
   messagesSub: Subscription;
@@ -46,6 +47,21 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   onFileChanged(event) {
     this.uploading = false;
     this.selectedFile = event.target.files[0];
+  }
+
+  onFetch(){
+    let blob = null;
+    let request = new XMLHttpRequest();
+    request.open('GET', this.fetchUrl);
+    request.responseType = 'blob';
+    request.onload = function() {
+      var reader = new FileReader();
+      reader.readAsDataURL(request.response);
+      reader.onload =  function(e){
+          console.log('DataURL:', e.target);
+      };
+  };
+  request.send();
   }
 
   UploadFile() {

@@ -1,3 +1,5 @@
+import { Organisation } from "../../../organisation/shared/organisation";
+
 export interface Ruleset {
   src: string;
   severity: string;
@@ -29,6 +31,9 @@ export interface Activity {
 
 export interface Dqfs {
   activities: Activity[];
+  feedback: Feedback[];
+  organisations: Activity[];
+  filetype: string;
 }
 
 
