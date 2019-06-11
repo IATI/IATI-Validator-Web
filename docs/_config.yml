@@ -1,0 +1,15 @@
+
+# Site settings
+title: IATI Data Validator Front-end
+email: rolf@drostan.org
+description: >
+  Front-end application for validation
+brand: DataWorkbench
+github: https://github.com/data4development/dataworkbench-frontend
+
+defaults:
+  -
+    values:
+      layout: "default"
+
+remote_theme: data4development/dataworkbench-jekyll-theme
