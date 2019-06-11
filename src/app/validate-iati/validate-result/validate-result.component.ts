@@ -109,10 +109,9 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   }
 
   rowClick(dataset: IatiTestdataset) {
-
     if (this.jsonUpdated(dataset)) {
       // Routerlink naar de view pagina
-      this.router.navigate(['view', 'dqf', dataset.md5]);
+      this.router.navigate(['view', 'dqf', dataset.id]);
     } else {
       // this.selectedMd5.emit(this.md5);
     }
