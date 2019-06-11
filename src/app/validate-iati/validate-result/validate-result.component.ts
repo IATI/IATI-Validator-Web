@@ -7,6 +7,7 @@ import { LogService } from '../../core/logging/log.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { timer } from 'rxjs/observable/timer';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-validate-result',
@@ -17,8 +18,9 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   workspaceId = '';
   uploadId = '';
   currentUrl = '';
-  iatiDatasetData: IatiTestdataset[] = [];
+  iatiDatasetData: IatiTestdataset;
   md5 = '';
+  environmentUrl = environment.apiDataworkBench;
   source = timer(100, 2000);
   subscribeTimer: Subscription;
   interval: any;
@@ -33,11 +35,9 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
       .subscribe(params => {
       //  this.workspaceId = params['id'];
         this.uploadId = params['id'];
-        console.log(this.uploadId);
       });
 
     this.subscribeTimer = this.source.subscribe(val => {
-      console.log(val);
       this.loadData();
       if (this.allDataHasJsonUpdated()) {
         logger.debug('unsubscribe');
@@ -67,7 +67,6 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
         this.iatiDatasetData = data;
-          console.log(data);
         },
         error => this.logger.error('Faild to load iati data', error),
         () => {
@@ -81,16 +80,19 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
 
     if (!this.iatiDatasetData) {
       return false;
-    } else if (this.iatiDatasetData.length === 0) {
-      return false;
-    } else {
-      return this.iatiDatasetData.every(x => this.jsonUpdated(x));
+    } 
+    // else if (this.iatiDatasetData.length === 0) {
+    //   return false;
+    // } 
+    else {
+      // return this.iatiDatasetData.every(x => this.jsonUpdated(x));
+      return this.jsonUpdated(this.iatiDatasetData);
     }
 
   }
 
-  jsonUpdated(dataset): boolean {
-    if (dataset['json-updated']) {
+  jsonUpdated(inDataset:IatiTestdataset): boolean {
+    if (this.iatiDatasetData['json-updated']) {
       return true;
     } else {
       return false;

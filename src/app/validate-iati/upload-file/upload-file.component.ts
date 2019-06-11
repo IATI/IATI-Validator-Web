@@ -77,7 +77,6 @@ export class UploadFileComponent implements OnInit, OnDestroy {
           if (msg.type === MessageType.done) {
             this.fileUploaded = true;
             // this.ValidateFile();
-            console.log(msg.uploadId);
             this.uploadId = msg.uploadId;
           }
         },
