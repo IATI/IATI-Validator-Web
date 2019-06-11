@@ -14,6 +14,7 @@ export class FilterSourceComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.sources);
   }
 
   allSelected(): boolean {

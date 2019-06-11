@@ -70,7 +70,6 @@ export class MainComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           //TODO: Check for filetype
-console.log(data);
           this.filetype = data.filetype;
           if (data.filetype = "iati-activities") {
             if (data.activities) {
@@ -278,7 +277,8 @@ console.log(data);
   }
 
   filterSource = (ruleset: Ruleset) => {
-    return this.sources.some(s => s.show === true && s.slug === ruleset.src);
+    //TODO: neater
+    return this.sources.some(s => s.show === true && s.slug === ruleset.src && s.id==='iati'); 
   }
 
   filterCategory = (feedback: Feedback) => {

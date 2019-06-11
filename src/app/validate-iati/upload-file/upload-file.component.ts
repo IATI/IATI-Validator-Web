@@ -21,6 +21,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   fileUploaded = false;
   uploading = false;
   fetchUrl = '';
+  uploadId = '';
   message: Message ;
   messages: Message[] = [];
   messagesSub: Subscription;
@@ -76,6 +77,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
           if (msg.type === MessageType.done) {
             this.fileUploaded = true;
             // this.ValidateFile();
+            this.uploadId = msg.uploadId;
           }
         },
         error => {
@@ -87,7 +89,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
   ValidateFile() {
-    this.router.navigate(['validate', this.workspaceId]);
+    // this.router.navigate(['validate', this.workspaceId]);
+    this.router.navigate(['validate', this.uploadId]);
   }
 
   ngOnDestroy() {

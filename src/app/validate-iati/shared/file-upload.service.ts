@@ -55,7 +55,6 @@ export class FileUploadService {
 
   /** Return distinct message for sent, upload progress, & response events */
   private getEventMessage(event: HttpEvent<any>, file: File): Message {
-    console.log(event);
     switch (event.type) {
       case HttpEventType.Sent:
       const mes: Message = { message: `Uploading file "${file.name}" of size ${file.size}.`, type: MessageType.progress, progress: 0 } ;
@@ -70,12 +69,12 @@ export class FileUploadService {
         return mes2;
 
       case HttpEventType.Response:
-        const mes3: Message = { message: `File "${file.name}" was completely uploaded!`, type: MessageType.done, progress: 100 } ;
+        const mes3: Message = { message: `File "${file.name}" was completely uploaded!`, type: MessageType.done, progress: 100, uploadId: event.body.id } ;
         return mes3;
 
       default:
       // tslint:disable-next-line:max-line-length
-      const mes4: Message = { message: `File "${file.name}" upload event: ${event.type}.`, type: MessageType.done, progress: 0 } ;
+      const mes4: Message = { message: `File "${file.name}" upload event: ${event.type}.`, type: MessageType.done, progress: 0} ;
         return mes4;
     }
   }
