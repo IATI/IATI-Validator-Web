@@ -13,11 +13,11 @@ sequenceDiagram
 	participant DS as Test datasets info
 	participant Storage
 	
-	note over FE, API: Step 1: select file
+	note over FE, Storage: Step 1: select file
 	activate FE
 	FE ->> FE: select file
 	
-	note over FE, API: Step 2: upload
+	note over FE, Storage: Step 2: upload
 	FE ->> FE: create workspace id $ws
 	FE ->>+ API: POST /api/test-datasets/upload?[options][ws]=$ws
 	
@@ -29,20 +29,33 @@ sequenceDiagram
 	
     API -->>- FE: dataset record
 	
-	note over FE, API: Step 3: validate
+	note over FE, Storage: Step 3: validate
 	
 	FE ->>- FE: go to /validate/$ws
 	
-	note over FE, API: Show results
+	note over FE, Storage: Show files overview
 	activate FE
-	
 	loop every 2 seconds
 		FE ->>+ API: GET /api/iati-testdatasets/?filter[where][tmpworkspaceId]=$ws
 		API ->>+ DS: get test dataset info
 		DS -->>- API: dataset info
 		API -->>- FE: dataset info
-	end
+		
+		FE ->> FE: update page
+	end	
+	deactivate FE
 	
+	note over FE, Storage: Show file validation results ($fileid)
+	activate FE
+	FE ->>+ API: get dataset info $fileid
+	API ->>+ DS: GET /api/iati-testdatasets for $fileid
+	DS -->>- API: dataset record
+	API -->>- FE: dataset record
+	
+	FE ->>+ API: get JSON file $fileid
+	API ->>+ Storage: get JSON file $fileid
+	Storage -->>- API: file
+	API -->>- FE: file
 	deactivate FE
 ```
 
@@ -54,7 +67,7 @@ The "store results" portion in the diagram is presented as a single action here,
 
 ```mermaid
 sequenceDiagram
-	participant V as Validator test ⎄files
+	participant V as Validator test files
 	participant API
 	participant DS as Test datasets info
 	participant Storage
@@ -82,7 +95,7 @@ sequenceDiagram
 			
 			API -->>- V: result
 		else do nothing
-			V ->> V: wait 10 seconds
+			V ->> V: wait 1 second
 		end
 		deactivate V
 	end
