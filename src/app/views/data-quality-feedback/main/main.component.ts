@@ -70,7 +70,6 @@ export class MainComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           //TODO: Check for filetype
-console.log(data);
           this.filetype = data.filetype;
           if (data.filetype = "iati-activities") {
             if (data.activities) {

@@ -6,7 +6,7 @@
       <!-- <h3 class="text-info">These results will be deleted after 21-3-2018 16:45</h3> -->
       <p>Bookmark this page to return to your results.
         <br> Your personal url is:
-        <a [routerLink]="['/validate', uploadId]"> /validate/{{ uploadId}} </a>
+        <a [routerLink]="['/validate', uploadId]"> {{environmentUrl}}/validate/{{ uploadId}} </a> <button class="btn btn-outline-primary btn-sm" (click)="copyTextToClipboard('text')">Copy</button>
       </p>
     </div>
   </div>
