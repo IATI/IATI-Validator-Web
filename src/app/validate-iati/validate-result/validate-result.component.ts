@@ -15,6 +15,7 @@ import { timer } from 'rxjs/observable/timer';
 })
 export class ValidateResultComponent implements OnInit, OnDestroy {
   workspaceId = '';
+  uploadId = '';
   currentUrl = '';
   iatiDatasetData: IatiTestdataset[] = [];
   md5 = '';
@@ -30,7 +31,9 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
     this.activateRoute
       .params
       .subscribe(params => {
-        this.workspaceId = params['id'];
+      //  this.workspaceId = params['id'];
+        this.uploadId = params['id'];
+        console.log(this.uploadId);
       });
 
     this.subscribeTimer = this.source.subscribe(val => {
@@ -48,9 +51,24 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    this.validatedIatiService.getIatiDataset(this.workspaceId)
+    // this.validatedIatiService.getIatiDataset(this.workspaceId)
+    //   .subscribe(
+    //     data => {
+    //     this.iatiDatasetData = data;
+    //       console.log(data);
+    //     },
+    //     error => this.logger.error('Faild to load iati data', error),
+    //     () => {
+    //       // Completed
+
+    //     }
+    //   );
+    this.validatedIatiService.getIatiDatasetById(this.uploadId)
       .subscribe(
-        data => this.iatiDatasetData = data,
+        data => {
+        this.iatiDatasetData = data;
+          console.log(data);
+        },
         error => this.logger.error('Faild to load iati data', error),
         () => {
           // Completed

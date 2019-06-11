@@ -26,7 +26,14 @@ export class ValidatedIatiService {
     );
   }
 
-
+  getIatiDatasetById(inUploadId): Observable<any> {
+    const url: string = this.urlApiIatiDataset +'/'+inUploadId;
+    console.log(url);
+    return this.http.get<any>(url).pipe(
+      tap(_ => this.logger.debug(`fetched iati dataset`)),
+      catchError(this.handleError('getIatiDataset', undefined))
+    );
+  }
 
   /**
    * Handle Http operation that failed.
