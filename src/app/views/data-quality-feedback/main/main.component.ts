@@ -24,6 +24,7 @@ import { cloneDeep } from 'lodash';
 export class MainComponent implements OnInit, OnDestroy {
   isLoading = false;
   md5 = '';
+  data = {};
   activityData: Activity[] = [];
   activities: Activity[] = [];
   companyFeedbackData: Feedback[];
@@ -69,6 +70,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.dataQualityFeedbackService.getDataQualityFeedback(md5)
       .subscribe(
         data => {
+          this.data = data;
           //TODO: Check for filetype
           this.filetype = data.filetype;
           if (data.filetype = "iati-activities") {

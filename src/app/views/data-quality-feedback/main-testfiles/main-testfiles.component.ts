@@ -24,6 +24,7 @@ import { cloneDeep } from 'lodash';
 export class MainTestfilesComponent implements OnInit {
   isLoading = false;
   fileName = '';
+  data = {};
   activityData: Activity[] = [];
   activities: Activity[] = [];
   companyFeedbackData: Feedback[];
@@ -40,11 +41,11 @@ export class MainTestfilesComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private loader: LoaderService,
     private location: Location) {
- 
+
   }
 
   ngOnInit() {
-   
+
     this.loaderSubscription = this.loader.loaderState
       .subscribe((state: LoaderState) => {
         this.isLoading = state.show;
@@ -54,15 +55,15 @@ export class MainTestfilesComponent implements OnInit {
 
 
     this.activateRoute
-    .params
-    .subscribe(params => {
-      this.fileName = params['id'];
+      .params
+      .subscribe(params => {
+        this.fileName = params['id'];
 
-      const theFileId = this.fileName.split(".").shift();
+        const theFileId = this.fileName.split(".").shift();
 
 
-      this.loadActivityData(theFileId);
-    });
+        this.loadActivityData(theFileId);
+      });
 
 
 
@@ -81,6 +82,7 @@ export class MainTestfilesComponent implements OnInit {
         data => {
           //TODO: Check for filetype
           console.log(data);
+          this.data = data;
           this.filetype = data.filetype;
           if (data.filetype = "iati-activities") {
             if (data.activities) {

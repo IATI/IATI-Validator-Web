@@ -22,6 +22,7 @@ import { MainReportInfoComponent } from './main-report-info/main-report-info.com
 import { SharedModule } from './../../shared/shared.module';
 import { XmlFeedbackComponent } from './xml-feedback/xml-feedback.component';
 import { MainTestfilesComponent } from './main-testfiles/main-testfiles.component';
+import { IatiInfoComponent } from './iati-info/iati-info.component';
 
 const routes: Routes = [
   { path: ':name', component: MainComponent },
@@ -55,7 +56,8 @@ const routes: Routes = [
     FilterSeverityItemComponent,
     MainReportInfoComponent,
     XmlFeedbackComponent,
-    MainTestfilesComponent],
+    MainTestfilesComponent,
+    IatiInfoComponent],
     providers: [DataQualityFeedbackService]
 })
 export class DataQualityFeedbackModule { }
