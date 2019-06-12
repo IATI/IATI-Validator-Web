@@ -1,7 +1,7 @@
+import { Component, OnInit } from '@angular/core';
 import { LoaderState } from './../../../core/loader/loader';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -17,13 +17,13 @@ import { LoaderService } from '../../../core/loader/loader.service';
 import { cloneDeep } from 'lodash';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  selector: 'app-main-testfiles',
+  templateUrl: './main-testfiles.component.html',
+  styleUrls: ['./main-testfiles.component.scss']
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainTestfilesComponent implements OnInit {
   isLoading = false;
-  md5 = '';
+  fileName = '';
   activityData: Activity[] = [];
   activities: Activity[] = [];
   companyFeedbackData: Feedback[];
@@ -40,33 +40,43 @@ export class MainComponent implements OnInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     private loader: LoaderService,
     private location: Location) {
-
-    this.activateRoute
-      .params
-      .subscribe(params => {
-        this.md5 = params['name'];
-      });
-
+ 
   }
 
   ngOnInit() {
+   
     this.loaderSubscription = this.loader.loaderState
       .subscribe((state: LoaderState) => {
         this.isLoading = state.show;
       });
     this.severities = this.dataQualityFeedbackService.getSeverities();
     this.sources = this.dataQualityFeedbackService.getSources();
-    this.loadActivityData(this.md5);
+
+
+    this.activateRoute
+    .params
+    .subscribe(params => {
+      this.fileName = params['id'];
+
+      const theFileId = this.fileName.split(".").shift();
+
+
+      this.loadActivityData(theFileId);
+    });
+
+
+
   }
 
   ngOnDestroy() {
     this.loaderSubscription.unsubscribe();
+
   }
 
 
-  loadActivityData(md5: string) {
+  loadActivityData(inId: string) {
     this.loader.show();
-    this.dataQualityFeedbackService.getDataQualityFeedback(md5)
+    this.dataQualityFeedbackService.getTestFilesDataQualityFeedbackById(inId)
       .subscribe(
         data => {
           //TODO: Check for filetype
@@ -462,6 +472,5 @@ export class MainComponent implements OnInit, OnDestroy {
   goBack() {
     this.location.back();
   }
-
 
 }

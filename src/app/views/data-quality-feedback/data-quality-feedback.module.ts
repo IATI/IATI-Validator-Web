@@ -21,9 +21,11 @@ import { FilterSeverityItemComponent } from './filter-severity-item/filter-sever
 import { MainReportInfoComponent } from './main-report-info/main-report-info.component';
 import { SharedModule } from './../../shared/shared.module';
 import { XmlFeedbackComponent } from './xml-feedback/xml-feedback.component';
+import { MainTestfilesComponent } from './main-testfiles/main-testfiles.component';
 
 const routes: Routes = [
   { path: ':name', component: MainComponent },
+  { path: 'test-files/:id', component: MainTestfilesComponent },
   { path: '', redirectTo: '/404dqf' , pathMatch: 'full' },
 ];
 
@@ -52,7 +54,8 @@ const routes: Routes = [
     FilterTypeSeverityComponent,
     FilterSeverityItemComponent,
     MainReportInfoComponent,
-    XmlFeedbackComponent],
+    XmlFeedbackComponent,
+    MainTestfilesComponent],
     providers: [DataQualityFeedbackService]
 })
 export class DataQualityFeedbackModule { }

@@ -37,9 +37,9 @@ export class DataQualityFeedbackService {
   }
 
   getTestFilesDataQualityFeedbackById(inId: string): Observable<Dqfs> {
-    const container = 'dataworkbench-json' + environment.bucketnameSuffix;
+    const container = 'dataworkbench-testjson' + environment.bucketnameSuffix;
     const url: string = this.urlApiIatiTestFile + '/' + container + '/download/' + inId + '.json';
-    //   /iati-files/{container}/download/{file}
+    //   /iati-testfiles/{container}/download/{file}
     return this.http.get<any>(url)
       .pipe(
         // tap(_ => this.log(`fetched iati file`)),

@@ -92,7 +92,7 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   }
 
   jsonUpdated(inDataset:IatiTestdataset): boolean {
-    if (this.iatiDatasetData['json-updated']) {
+    if (inDataset['json-updated']) {
       return true;
     } else {
       return false;
@@ -110,15 +110,10 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
 
   rowClick(dataset: IatiTestdataset) {
 
-let navigationExtras:NavigationExtras = {
-  queryParams:{
-    id: dataset.id
-  }
-}
 
     if (this.jsonUpdated(dataset)) {
       // Routerlink naar de view pagina
-      this.router.navigate(['view', 'dqf', dataset.id], navigationExtras);
+      this.router.navigate(['view', 'dqf', 'test-files',dataset.filename]);
     } else {
       // this.selectedMd5.emit(this.md5);
     }
