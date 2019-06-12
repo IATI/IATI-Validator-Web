@@ -1,5 +1,5 @@
 import { IatiTestdataset } from './../shared/iati-testdataset';
-import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
+import { ActivatedRoute, UrlSegment, Router, NavigationExtras } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ValidatedIatiService } from './../shared/validated-iati.service';
@@ -109,9 +109,16 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   }
 
   rowClick(dataset: IatiTestdataset) {
+
+let navigationExtras:NavigationExtras = {
+  queryParams:{
+    id: dataset.id
+  }
+}
+
     if (this.jsonUpdated(dataset)) {
       // Routerlink naar de view pagina
-      this.router.navigate(['view', 'dqf', dataset.id]);
+      this.router.navigate(['view', 'dqf', dataset.id], navigationExtras);
     } else {
       // this.selectedMd5.emit(this.md5);
     }

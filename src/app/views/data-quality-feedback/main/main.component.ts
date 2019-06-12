@@ -34,6 +34,7 @@ export class MainComponent implements OnInit, OnDestroy {
   public dqfs: Dqfs;
   public filetype = '';
   private loaderSubscription: Subscription;
+  private queryParamsSubscription: Subscription;
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
     private logger: LogService,
@@ -50,17 +51,42 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+   
     this.loaderSubscription = this.loader.loaderState
       .subscribe((state: LoaderState) => {
         this.isLoading = state.show;
       });
     this.severities = this.dataQualityFeedbackService.getSeverities();
     this.sources = this.dataQualityFeedbackService.getSources();
-    this.loadActivityData(this.md5);
+
+
+
+    this.queryParamsSubscription = this.activateRoute.queryParams.subscribe(params => {
+      const id = params['id'];
+      const md5 = params['md5'];
+      console.log(id);
+
+      if (md5) {
+        this.loadActivityData(this.md5);
+
+      } else if (id) {
+
+      } else if (id && md5) {
+
+      } else {
+
+      }
+
+    });
+
+
   }
 
   ngOnDestroy() {
     this.loaderSubscription.unsubscribe();
+    if (this.queryParamsSubscription) {
+      this.loaderSubscription.unsubscribe();
+    }
   }
 
 
