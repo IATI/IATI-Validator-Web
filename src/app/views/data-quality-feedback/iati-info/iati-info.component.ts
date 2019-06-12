@@ -11,7 +11,6 @@ export class IatiInfoComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.data);
   }
 
 }
