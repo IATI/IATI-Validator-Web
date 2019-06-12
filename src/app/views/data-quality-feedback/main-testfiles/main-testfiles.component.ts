@@ -80,6 +80,7 @@ export class MainTestfilesComponent implements OnInit {
       .subscribe(
         data => {
           //TODO: Check for filetype
+          console.log(data);
           this.filetype = data.filetype;
           if (data.filetype = "iati-activities") {
             if (data.activities) {
