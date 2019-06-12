@@ -15,6 +15,7 @@ import { TypeSeverity } from './../shared/type-severity';
 import { Dqfs, Activity, Feedback, Context, Message, Ruleset } from '../shared/feedback';
 import { LoaderService } from '../../../core/loader/loader.service';
 import { cloneDeep } from 'lodash';
+import { ValidatedIatiService } from '../../../validate-iati/shared/validated-iati.service';
 
 @Component({
   selector: 'app-main-testfiles',
@@ -36,6 +37,7 @@ export class MainTestfilesComponent implements OnInit {
   private loaderSubscription: Subscription;
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
+    private validatedIatiService: ValidatedIatiService,
     private logger: LogService,
     private activateRoute: ActivatedRoute,
     private loader: LoaderService,
@@ -56,12 +58,12 @@ export class MainTestfilesComponent implements OnInit {
     this.activateRoute
     .params
     .subscribe(params => {
-      this.fileName = params['id'];
 
-      const theFileId = this.fileName.split(".").shift();
-
-
-      this.loadActivityData(theFileId);
+this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDataSet=>{
+  const theFileId = iatiTestDataSet.fileid.split(".").shift();
+  this.fileName = iatiTestDataSet.filename;
+  this.loadActivityData(theFileId);
+})
     });
 
 

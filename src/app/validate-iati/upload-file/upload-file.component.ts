@@ -71,7 +71,6 @@ export class UploadFileComponent implements OnInit, OnDestroy {
 
     if (this.selectedFile) {
       this.uploading = true;
-      console.log(this.selectedFile);
       this.fileUploadService.uploadFile(this.selectedFile, this.workspaceId).subscribe(
         msg => {
           this.uploading = false;
