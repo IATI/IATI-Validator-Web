@@ -279,7 +279,8 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   filterSource = (ruleset: Ruleset) => {
-    return this.sources.some(s => s.show === true && s.slug === ruleset.src);
+    //TODO: neater
+    return this.sources.some(s => s.show === true && s.slug === ruleset.src && s.id==='iati'); 
   }
 
   filterCategory = (feedback: Feedback) => {
