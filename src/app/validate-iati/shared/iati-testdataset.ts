@@ -7,6 +7,7 @@ export interface IatiTestdataset {
   tmpworkspaceId: string;
   uploaded: Date;
   filename: string;
+  fileid: string;
   'feedback-updated': Date;
   'svrl-updated': Date;
   'json-updated': Date;
