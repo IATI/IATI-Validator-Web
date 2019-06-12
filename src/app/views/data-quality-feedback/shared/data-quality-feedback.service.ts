@@ -16,27 +16,39 @@ import { ReportInfo } from './report-info';
 
 
 @Injectable()
-export class DataQualityFeedbackService  {
+export class DataQualityFeedbackService {
   private urlApiIatiFile: string = environment.apiDataworkBench + '/iati-files';
+  private urlApiIatiTestFile: string = environment.apiDataworkBench + '/iati-testfiles';
   private urlApiIatiDataSet: string = environment.apiDataworkBench + '/iati-datasets';
   private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
 
   constructor(private http: HttpClient,
-              private logger: LogService) { }
+    private logger: LogService) { }
 
   getDataQualityFeedback(md5: string): Observable<Dqfs> {
     const container = 'dataworkbench-json' + environment.bucketnameSuffix;
     const url: string = this.urlApiIatiFile + '/' + container + '/download/' + md5 + '.json';
     //   /iati-files/{container}/download/{file}
     return this.http.get<any>(url)
-    .pipe(
-      // tap(_ => this.log(`fetched iati file`)),
-      catchError(this.handleError('getIatiFile', undefined ))
-    );
+      .pipe(
+        // tap(_ => this.log(`fetched iati file`)),
+        catchError(this.handleError('getIatiFile', undefined))
+      );
+  }
+
+  getTestFilesDataQualityFeedbackById(inId: string): Observable<Dqfs> {
+    const container = 'dataworkbench-testjson' + environment.bucketnameSuffix;
+    const url: string = this.urlApiIatiTestFile + '/' + container + '/download/' + inId + '.json';
+    //   /iati-testfiles/{container}/download/{file}
+    return this.http.get<any>(url)
+      .pipe(
+        // tap(_ => this.log(`fetched iati file`)),
+        catchError(this.handleError('getIatiFile', undefined))
+      );
   }
 
   getReportInfo(md5: string): Observable<ReportInfo> {
-    const  reportInfo: ReportInfo = {organisationName: '', fileName: '', organisationSlug: '' };
+    const reportInfo: ReportInfo = { organisationName: '', fileName: '', organisationSlug: '' };
 
     const url: string = this.urlApiIatiDataSet + '/findOne/' + '?filter[where][md5]=' + md5;
     this.http.get<IatiDataset>(url)
@@ -54,27 +66,27 @@ export class DataQualityFeedbackService  {
             );
         }
       );
-      return Observable.of(reportInfo);
+    return Observable.of(reportInfo);
   }
 
 
 
   getSeverities(): Severity[] {
     return [
-      { id:  'error', slug: 'danger' , name: 'Errors', description: 'Errors make it hard or impossible to use the data.', count: null, order: 1, show: true, types: []},
-      { id:  'warning', slug: 'warning' , name: 'Warnings', description: 'Warnings indicate where the data can be more valuable.', count: null,  order: 2, show: true, types: []},
-      { id:  'improvement', slug: 'info' , name: 'Improvements', description: 'Improvements can make the data more useful.', count: null, order: 3,  show: true, types: []},
-      { id:  'optimisation', slug: 'success' , name: 'Optimisations', description: 'Optimisations can reduce the size of the data.', count: null, order: 4, show: true, types: []},
+      { id: 'error', slug: 'danger', name: 'Errors', description: 'Errors make it hard or impossible to use the data.', count: null, order: 1, show: true, types: [] },
+      { id: 'warning', slug: 'warning', name: 'Warnings', description: 'Warnings indicate where the data can be more valuable.', count: null, order: 2, show: true, types: [] },
+      { id: 'improvement', slug: 'info', name: 'Improvements', description: 'Improvements can make the data more useful.', count: null, order: 3, show: true, types: [] },
+      { id: 'optimisation', slug: 'success', name: 'Optimisations', description: 'Optimisations can reduce the size of the data.', count: null, order: 4, show: true, types: [] },
     ];
   }
 
   getSources(): Source[] {
     return [
-      { id:  'iati', slug: 'iati' , name: 'IATI Standard', count: null,  order: 1, show: true},
-      { id:  'minbuza', slug: 'minbuza' , name: 'Netherlands: Ministry of Foreign Affairs additional rules', count: null, order: 2, show: true},
-      { id:  'dfid', slug: 'dfid' , name: 'UK: Department for International Development (DFID) additional rules', count: null, order: 3, show: true},
-      { id:  'practice', slug: 'practice' , name: 'Common practice', count: null, order: 4, show: true},
-      { id:  'iati-doc', slug: 'iati-doc' , name: 'IATI Standard (additional)', count: null, order: 5,  show: true},
+      { id: 'iati', slug: 'iati', name: 'IATI Standard', count: null, order: 1, show: true },
+      { id: 'minbuza', slug: 'minbuza', name: 'Netherlands: Ministry of Foreign Affairs additional rules', count: null, order: 2, show: true },
+      { id: 'dfid', slug: 'dfid', name: 'UK: Department for International Development (DFID) additional rules', count: null, order: 3, show: true },
+      { id: 'practice', slug: 'practice', name: 'Common practice', count: null, order: 4, show: true },
+      { id: 'iati-doc', slug: 'iati-doc', name: 'IATI Standard (additional)', count: null, order: 5, show: true },
     ];
   }
 
@@ -84,7 +96,7 @@ export class DataQualityFeedbackService  {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging

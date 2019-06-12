@@ -1,5 +1,5 @@
 import { IatiTestdataset } from './../shared/iati-testdataset';
-import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
+import { ActivatedRoute, UrlSegment, Router, NavigationExtras } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ValidatedIatiService } from './../shared/validated-iati.service';
@@ -20,7 +20,7 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   currentUrl = '';
   iatiDatasetData: IatiTestdataset;
   md5 = '';
-  environmentUrl = environment.apiDataworkBench;
+  environmentUrl = environment.baseUrl;
   source = timer(100, 2000);
   subscribeTimer: Subscription;
   interval: any;
@@ -92,7 +92,7 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   }
 
   jsonUpdated(inDataset:IatiTestdataset): boolean {
-    if (this.iatiDatasetData['json-updated']) {
+    if (inDataset['json-updated']) {
       return true;
     } else {
       return false;
@@ -102,7 +102,7 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   reportType(dataset): string {
     if (this.jsonUpdated(dataset)) {
       // Routerlink naar de view pagina
-      return 'Data Quality Report (click to view)';
+      return 'Validation finished (click to view)';
     } else {
       return '-';
     }
@@ -110,9 +110,10 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
 
   rowClick(dataset: IatiTestdataset) {
 
+
     if (this.jsonUpdated(dataset)) {
       // Routerlink naar de view pagina
-      this.router.navigate(['view', 'dqf', dataset.md5]);
+      this.router.navigate(['view', 'dqf', 'test-files',dataset.filename]);
     } else {
       // this.selectedMd5.emit(this.md5);
     }
@@ -120,6 +121,34 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscribeTimer.unsubscribe();
+  }
+
+
+   copyTextToClipboard() {
+    const txtArea = document.createElement("textarea");
+    const url = this.environmentUrl+'/validate/'+this.uploadId;
+    txtArea.id = 'txt';
+    txtArea.style.position = 'fixed';
+    txtArea.style.top = '0';
+    txtArea.style.left = '0';
+    txtArea.style.opacity = '0';
+    txtArea.value = url;
+    document.body.appendChild(txtArea);
+    txtArea.select();
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Copying text command was ' + url);
+      if (successful) {
+        return true;
+      }
+    } catch (err) {
+      console.log('Oops, unable to copy');
+    } finally {
+      document.body.removeChild(txtArea);
+    }
+    return false;
   }
 
 }
