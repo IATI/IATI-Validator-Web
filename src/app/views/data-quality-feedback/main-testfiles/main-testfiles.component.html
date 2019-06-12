@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div class="row alert alert-light">
+    <div class="col">
+      <h1>IATI Data Quality Feedback</h1>
+      <h4>{{fileName}}</h4>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="alert alert-info" role="alert">
+    <app-spinner [backColor]="'white'"></app-spinner>
+    <span class="loading-text">Loading report...</span>
+  </div>
+  <div *ngIf="activityData===undefined && companyFeedbackData===undefined && !isLoading " class="alert alert-warning" role="alert">
+    <h2>No data found.</h2>
+    <p>It looks like the url
+      <strong> {{ md5 }}</strong> is not valid.</p>
+    <ul>
+      <li (click)="goBack()">
+        <button type="button" class="btn btn-link">Go back to the previous page.</button>
+      </li>
+      <li>
+        <button routerLink="\" type="button" class="btn btn-link">Go to the home page.</button>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="activityData!==undefined || companyFeedbackData!==undefined" class="row">
+    <div class="col-md-4 filters">
+      <h4>Filters</h4>
+      <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">
+      </app-filter-severity>
+      <!-- <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()"></app-filter-source> -->
+      <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()">
+      </app-filter-category>
+    </div>
+    <div class="col-md-8 results">
+      <h4>Feedback</h4>
+      <div *ngIf="companyFeedback">
+        <div *ngIf="filetype==='iati-activities'">
+            <app-xml-feedback [feedbackData]="companyFeedback" [title]="'Activity file feedback'"></app-xml-feedback>
+            <app-feedback [activityData]="activities" [title]="'Feedback per activity'" ></app-feedback>
+        </div>
+       
+      </div>
+      <div *ngIf="filetype==='iati-organisations'" >
+          <app-feedback [activityData]="activities" [title]="'Organisation file feedback'"></app-feedback>
+      </div>
+      <div *ngIf="filetype==='not-iati'" >
+          <app-xml-feedback [feedbackData]="companyFeedback" [title]="'Not an IATI file'"></app-xml-feedback>
+        </div>
+      
+
+    </div>
+  </div>
+</div>
