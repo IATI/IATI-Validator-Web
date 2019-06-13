@@ -84,8 +84,11 @@ this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDat
         data => {
           //TODO: Check for filetype
           this.data = data;
+          
           this.filetype = data.filetype;
+          
           if (data.filetype === "iati-activities") {
+     
             if (data.activities) {
               this.activityData = data.activities;
             }
@@ -105,9 +108,6 @@ this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDat
               this.companyFeedbackData = data.feedback;
             }
           }
-
-
-
           if (this.activityData === undefined && this.companyFeedbackData === undefined) {
             this.loader.hide();
             return;
@@ -442,6 +442,8 @@ this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDat
   getfeedbackSeverity(message: Message): string {
     if (message.rulesets.some(x => x.severity === 'danger')) {
       return 'error';
+    } else if (message.rulesets.some(x => x.severity === 'critical')) {
+      return 'critical';
     } else if (message.rulesets.some(x => x.severity === 'warning')) {
       return 'warning';
     } else if (message.rulesets.some(x => x.severity === 'info')) {

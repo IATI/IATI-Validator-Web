@@ -25,8 +25,10 @@ export class FeedbackItemComponent implements OnInit {
   }
 
   getSeverity = (message: Message) => {
-    if (message.rulesets.some(x => x.severity === 'danger')) {
+    if (message.rulesets.some(x => x.severity === 'critical')) {
       return 1;
+    } else if (message.rulesets.some(x => x.severity === 'danger')) {
+      return 2;
     } else if (message.rulesets.some(x => x.severity === 'warning')) {
       return 2;
     } else if (message.rulesets.some(x => x.severity === 'info')) {
@@ -41,6 +43,8 @@ export class FeedbackItemComponent implements OnInit {
   getfeedbackColor(message: Message): string {
     if (message.rulesets.some(x => x.severity === 'danger')) {
       return 'error';
+    } else if (message.rulesets.some(x => x.severity === 'critical')) {
+      return 'critical';
     } else if (message.rulesets.some(x => x.severity === 'warning')) {
       return 'warning';
     } else if (message.rulesets.some(x => x.severity === 'info')) {

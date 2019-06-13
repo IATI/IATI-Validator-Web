@@ -29,6 +29,10 @@
   list-style-type:none;
 }
 
+.critical{
+  border-left: 6px solid $severity-critical;
+}
+
 .error {
   // background-color: $severity-error;
   border-left: 6px solid $severity-error;

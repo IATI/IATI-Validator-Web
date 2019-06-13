@@ -1,5 +1,9 @@
 @import "variables";
 
+.critical{
+  background-color: $severity-critical;
+  color:white; 
+}
 
 .error {
   background-color: $severity-error;

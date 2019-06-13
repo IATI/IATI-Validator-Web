@@ -10,6 +10,7 @@ $h6-font-size:                $font-size-base ;
 $background-title: rgba(0, 0, 0, 0.03);
 
 // For the DQF reports severity level
+$severity-critical:       $purple;
 $severity-error:          $red;
 $severity-warning:        $warning;
 $severity-improvement:    $info;
