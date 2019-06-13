@@ -27,8 +27,8 @@ export class MainComponent implements OnInit, OnDestroy {
   data = {};
   activityData: Activity[] = [];
   activities: Activity[] = [];
-  companyFeedbackData: Feedback[];
-  companyFeedback: Feedback[];
+  companyFeedbackData: Feedback[] = [];
+  companyFeedback: Feedback[] = [];
   severities: Severity[] = [];
   sources: Source[] = [];
   categories: Category[] = [];
@@ -73,6 +73,7 @@ export class MainComponent implements OnInit, OnDestroy {
           //TODO: Check for filetype
           this.data = data;
           this.filetype = data.filetype;
+  
           if (data.filetype === "iati-activities") {
             if (data.activities) {
               this.activityData = data.activities;
@@ -127,14 +128,16 @@ export class MainComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.companyFeedbackData.forEach(element => {
-      if (uniqueCat.some(u => u.id === element.category)) {
-        // nothing
-      } else {
-        uniqueCat.push({ id: element.category, name: element.label });
-      }
-    });
+  this.companyFeedbackData.forEach(element => {
+    if (uniqueCat.some(u => u.id === element.category)) {
+      // nothing
+    } else {
+      uniqueCat.push({ id: element.category, name: element.label });
+    }
+  });
 
+
+ 
     uniqueCat.forEach(u => {
       this.categories.push({ id: u.id, name: u.name, count: null, order: 0, show: true });
     });

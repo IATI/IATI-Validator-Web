@@ -28,8 +28,8 @@ export class MainTestfilesComponent implements OnInit {
   data = {};
   activityData: Activity[] = [];
   activities: Activity[] = [];
-  companyFeedbackData: Feedback[];
-  companyFeedback: Feedback[];
+  companyFeedbackData: Feedback[] = [];
+  companyFeedback: Feedback[]=[];
   severities: Severity[] = [];
   sources: Source[] = [];
   categories: Category[] = [];
