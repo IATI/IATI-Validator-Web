@@ -23,6 +23,7 @@ import { SharedModule } from './../../shared/shared.module';
 import { XmlFeedbackComponent } from './xml-feedback/xml-feedback.component';
 import { MainTestfilesComponent } from './main-testfiles/main-testfiles.component';
 import { IatiInfoComponent } from './iati-info/iati-info.component';
+import { ValidateIatiModule } from '../../validate-iati/validate-iati.module';
 
 const routes: Routes = [
   { path: ':name', component: MainComponent },
@@ -37,6 +38,7 @@ const routes: Routes = [
     FormsModule,
     NgbModule,
     SharedModule,
+    ValidateIatiModule
   ],
   exports: [
     RouterModule
