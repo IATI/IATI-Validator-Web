@@ -84,9 +84,11 @@ this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDat
         data => {
           //TODO: Check for filetype
           this.data = data;
-          console.log(data);
+          
           this.filetype = data.filetype;
-          if (data.filetype = "iati-activities") {
+          
+          if (data.filetype === "iati-activities") {
+     
             if (data.activities) {
               this.activityData = data.activities;
             }
@@ -95,20 +97,17 @@ this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDat
             }
           }
 
-          if (data.filetype = "iati-organisations") {
+          if (data.filetype === "iati-organisations") {
             if (data.organisations) {
               this.activityData = data.organisations;
             }
           }
 
-          if (data.filetype = "not-iati") {
+          if (data.filetype === "not-iati") {
             if (data.feedback) {
               this.companyFeedbackData = data.feedback;
             }
           }
-
-
-
           if (this.activityData === undefined && this.companyFeedbackData === undefined) {
             this.loader.hide();
             return;
