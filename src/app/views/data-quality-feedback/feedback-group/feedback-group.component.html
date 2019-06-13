@@ -4,6 +4,7 @@
       <h5 class="title d-inline" >{{ activity.title }}</h5>
       <div class="d-inline float-right">
         <span class="identifier-link"><a href="{{getLinkDportal(activity.publisher, cleanIdentifier(activity.identifier))}}" target="_blank" >{{ cleanIdentifier(activity.identifier)}}</a></span>
+        <span class="badge badge-critical">{{getIssueCount('critical')}}</span>
         <span class="badge badge-danger">{{getIssueCount('danger')}}</span>
         <span class="badge badge-warning">{{getIssueCount('warning')}}</span>
         <span class="badge badge-info">{{getIssueCount('info')}}</span>

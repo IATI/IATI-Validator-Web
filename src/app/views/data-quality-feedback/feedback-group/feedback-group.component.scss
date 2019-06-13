@@ -57,3 +57,8 @@
 .btn.collapser:focus, .btn.collapser.focus {
   box-shadow: none;
 }
+
+.badge-critical{
+  background-color: $severity-critical;
+  color:white;
+}
