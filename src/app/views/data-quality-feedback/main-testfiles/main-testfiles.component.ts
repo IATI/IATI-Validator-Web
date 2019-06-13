@@ -84,6 +84,7 @@ this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDat
         data => {
           //TODO: Check for filetype
           this.data = data;
+          console.log(data);
           this.filetype = data.filetype;
           if (data.filetype = "iati-activities") {
             if (data.activities) {
