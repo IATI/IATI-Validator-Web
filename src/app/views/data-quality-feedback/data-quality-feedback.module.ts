@@ -22,10 +22,11 @@ import { MainReportInfoComponent } from './main-report-info/main-report-info.com
 import { SharedModule } from './../../shared/shared.module';
 import { XmlFeedbackComponent } from './xml-feedback/xml-feedback.component';
 import { MainTestfilesComponent } from './main-testfiles/main-testfiles.component';
+import { IatiInfoComponent } from './iati-info/iati-info.component';
 import { ValidateIatiModule } from '../../validate-iati/validate-iati.module';
 
 const routes: Routes = [
-  { path: ':name', component: MainComponent },
+  { path: 'files/:name', component: MainComponent },
   { path: 'test-files/:id', component: MainTestfilesComponent },
   { path: '', redirectTo: '/404dqf' , pathMatch: 'full' },
 ];
@@ -57,7 +58,8 @@ const routes: Routes = [
     FilterSeverityItemComponent,
     MainReportInfoComponent,
     XmlFeedbackComponent,
-    MainTestfilesComponent],
+    MainTestfilesComponent,
+    IatiInfoComponent],
     providers: [DataQualityFeedbackService]
 })
 export class DataQualityFeedbackModule { }

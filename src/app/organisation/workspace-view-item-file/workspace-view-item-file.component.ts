@@ -56,7 +56,7 @@ export class WorkspaceViewItemFileComponent implements OnInit {
 
     if (this.jsonUpdated()) {
       // Routerlink naar de view pagina
-      this.router.navigate(['view', 'dqf', this.md5]);
+      this.router.navigate(['view', 'dqf', 'files', this.md5]);
     } else {
       this.selectedMd5.emit(this.md5);
     }

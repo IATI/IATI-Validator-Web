@@ -25,6 +25,7 @@ import { ValidatedIatiService } from '../../../validate-iati/shared/validated-ia
 export class MainTestfilesComponent implements OnInit {
   isLoading = false;
   fileName = '';
+  data = {};
   activityData: Activity[] = [];
   activities: Activity[] = [];
   companyFeedbackData: Feedback[];
@@ -42,11 +43,11 @@ export class MainTestfilesComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private loader: LoaderService,
     private location: Location) {
- 
+
   }
 
   ngOnInit() {
-   
+
     this.loaderSubscription = this.loader.loaderState
       .subscribe((state: LoaderState) => {
         this.isLoading = state.show;
@@ -82,8 +83,9 @@ this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDat
       .subscribe(
         data => {
           //TODO: Check for filetype
+          this.data = data;
           this.filetype = data.filetype;
-          if (data.filetype = "iati-activities") {
+          if (data.filetype === "iati-activities") {
             if (data.activities) {
               this.activityData = data.activities;
             }
@@ -92,13 +94,13 @@ this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDat
             }
           }
 
-          if (data.filetype = "iati-organisations") {
+          if (data.filetype === "iati-organisations") {
             if (data.organisations) {
               this.activityData = data.organisations;
             }
           }
 
-          if (data.filetype = "not-iati") {
+          if (data.filetype === "not-iati") {
             if (data.feedback) {
               this.companyFeedbackData = data.feedback;
             }
