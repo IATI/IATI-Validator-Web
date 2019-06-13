@@ -152,6 +152,7 @@ export class MainComponent implements OnInit, OnDestroy {
             newType.id = mes.id;
             newType.text = mes.text;
             types.push(newType);
+            console.log(types);
           }
         });
       });
