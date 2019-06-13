@@ -3,6 +3,7 @@
     <div class="col">
       <h1>IATI Data Quality Feedback</h1>
       <h4>{{fileName}}</h4>
+      <app-iati-info [data]="data"></app-iati-info>
     </div>
   </div>
 
@@ -13,7 +14,7 @@
   <div *ngIf="activityData===undefined && companyFeedbackData===undefined && !isLoading " class="alert alert-warning" role="alert">
     <h2>No data found.</h2>
     <p>It looks like the url
-    is not valid.</p>
+      is not valid.</p>
     <ul>
       <li (click)="goBack()">
         <button type="button" class="btn btn-link">Go back to the previous page.</button>
@@ -37,7 +38,7 @@
       <h4>Feedback</h4>
       <div *ngIf="companyFeedback">
         <div *ngIf="filetype==='iati-activities'">
-            <app-xml-feedback [feedbackData]="companyFeedback" [title]="'Activity file feedback'"></app-xml-feedback>
+            <app-xml-feedback [feedbackData]="companyFeedbackData" [title]="'Activity file feedback'"></app-xml-feedback>
             <app-feedback [activityData]="activities" [title]="'Feedback per activity'" ></app-feedback>
         </div>
        

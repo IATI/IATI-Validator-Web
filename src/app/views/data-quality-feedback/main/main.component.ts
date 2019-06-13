@@ -24,6 +24,7 @@ import { cloneDeep } from 'lodash';
 export class MainComponent implements OnInit, OnDestroy {
   isLoading = false;
   md5 = '';
+  data = {};
   activityData: Activity[] = [];
   activities: Activity[] = [];
   companyFeedbackData: Feedback[];
@@ -70,6 +71,7 @@ export class MainComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           //TODO: Check for filetype
+          this.data = data;
           this.filetype = data.filetype;
           if (data.filetype = "iati-activities") {
             if (data.activities) {
@@ -277,8 +279,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   filterSource = (ruleset: Ruleset) => {
-    //TODO: neater
-    return this.sources.some(s => s.show === true && s.slug === ruleset.src && s.id==='iati'); 
+    return this.sources.some(s => s.show === true && s.slug === ruleset.src);
   }
 
   filterCategory = (feedback: Feedback) => {
