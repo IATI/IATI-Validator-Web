@@ -70,8 +70,8 @@ export class MainComponent implements OnInit, OnDestroy {
     this.dataQualityFeedbackService.getDataQualityFeedback(md5)
       .subscribe(
         data => {
-          this.data = data;
           //TODO: Check for filetype
+          this.data = data;
           this.filetype = data.filetype;
           if (data.filetype = "iati-activities") {
             if (data.activities) {
@@ -152,7 +152,6 @@ export class MainComponent implements OnInit, OnDestroy {
             newType.id = mes.id;
             newType.text = mes.text;
             types.push(newType);
-            console.log(types);
           }
         });
       });
@@ -280,8 +279,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   filterSource = (ruleset: Ruleset) => {
-    //TODO: neater
-    return this.sources.some(s => s.show === true && s.slug === ruleset.src && s.id==='iati'); 
+    return this.sources.some(s => s.show === true && s.slug === ruleset.src);
   }
 
   filterCategory = (feedback: Feedback) => {

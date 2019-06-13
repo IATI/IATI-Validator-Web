@@ -1,2 +1,2 @@
 <p>
- Rules version: {{data.schemaVersion}} | IATI version: {{data.iatiVersion}}</p>
+ <span *ngIf="data.schemaVersion" >Rules version: {{data.schemaVersion}} </span><span *ngIf="data.iatiVersion"> | IATI version: {{data.iatiVersion}}</span> </p>
