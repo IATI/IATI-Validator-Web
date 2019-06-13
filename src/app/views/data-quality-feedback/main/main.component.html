@@ -39,7 +39,7 @@
       <h4>Feedback</h4>
       <div *ngIf="companyFeedback">
         <div *ngIf="filetype==='iati-activities'">
-            <app-xml-feedback [feedbackData]="companyFeedback" [title]="'Activity file feedback'"></app-xml-feedback>
+            <app-xml-feedback [feedbackData]="companyFeedbackData" [title]="'Activity file feedback'"></app-xml-feedback>
             <app-feedback [activityData]="activities" [title]="'Feedback per activity'" ></app-feedback>
         </div>
        
