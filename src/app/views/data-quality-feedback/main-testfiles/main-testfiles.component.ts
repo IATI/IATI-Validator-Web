@@ -442,6 +442,8 @@ this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDat
   getfeedbackSeverity(message: Message): string {
     if (message.rulesets.some(x => x.severity === 'danger')) {
       return 'error';
+    } else if (message.rulesets.some(x => x.severity === 'critical')) {
+      return 'critical';
     } else if (message.rulesets.some(x => x.severity === 'warning')) {
       return 'warning';
     } else if (message.rulesets.some(x => x.severity === 'info')) {

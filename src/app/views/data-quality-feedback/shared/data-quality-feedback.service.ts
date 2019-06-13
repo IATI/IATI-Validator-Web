@@ -72,12 +72,12 @@ export class DataQualityFeedbackService {
 
 
   getSeverities(): Severity[] {
-    return [
-      { id: 'critical', slug: 'critical', name: 'Critical Errors', description: 'Errors make it hard or impossible to use the data.', count: null, order: 1, show: true, types: [] },
-      { id: 'error', slug: 'danger', name: 'Errors', description: 'Errors make it hard or impossible to use the data.', count: null, order: 1, show: true, types: [] },
-      { id: 'warning', slug: 'warning', name: 'Warnings', description: 'Warnings indicate where the data can be more valuable.', count: null, order: 2, show: true, types: [] },
-      { id: 'improvement', slug: 'info', name: 'Improvements', description: 'Improvements can make the data more useful.', count: null, order: 3, show: true, types: [] },
-      { id: 'optimisation', slug: 'success', name: 'Optimisations', description: 'Optimisations can reduce the size of the data.', count: null, order: 4, show: true, types: [] },
+    return [ 
+      { id: 'critical', slug: 'critical', name: 'Critical', description: 'Files with critical errors will not be processed by the datastore', count: null, order: 1, show: true, types: [] },
+      { id: 'error', slug: 'danger', name: 'Errors', description: 'Errors make it hard or impossible to use the data.', count: null, order: 2, show: true, types: [] },
+      { id: 'warning', slug: 'warning', name: 'Warnings', description: 'Warnings indicate where the data can be more valuable.', count: null, order: 3, show: true, types: [] },
+      { id: 'improvement', slug: 'info', name: 'Improvements', description: 'Improvements can make the data more useful.', count: null, order: 4, show: true, types: [] },
+      { id: 'optimisation', slug: 'success', name: 'Optimisations', description: 'Optimisations can reduce the size of the data.', count: null, order: 5, show: true, types: [] },
     ];
   }
 
