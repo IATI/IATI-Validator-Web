@@ -39,7 +39,7 @@
       <h4>Feedback</h4>
       <div *ngIf="companyFeedback">
         <div *ngIf="filetype==='iati-activities'">
-            <app-xml-feedback [feedbackData]="companyFeedback" [title]="'Activity file feedback'"></app-xml-feedback>
+            <app-xml-feedback [feedbackData]="companyFeedbackData" [title]="'Activity file feedback'"></app-xml-feedback>
             <app-feedback [activityData]="activities" [title]="'Feedback per activity'" ></app-feedback>
         </div>
        
@@ -48,7 +48,7 @@
           <app-feedback [activityData]="activities" [title]="'Organisation file feedback'"></app-feedback>
       </div>
       <div *ngIf="filetype==='not-iati'" >
-          <app-xml-feedback [feedbackData]="companyFeedback" [title]="'Not an IATI file'"></app-xml-feedback>
+          <app-xml-feedback [feedbackData]="companyFeedbackData" [title]="'Not an IATI file'"></app-xml-feedback>
         </div>
       
 

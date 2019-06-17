@@ -27,8 +27,8 @@ export class MainComponent implements OnInit, OnDestroy {
   data = {};
   activityData: Activity[] = [];
   activities: Activity[] = [];
-  companyFeedbackData: Feedback[];
-  companyFeedback: Feedback[];
+  companyFeedbackData: Feedback[] = [];
+  companyFeedback: Feedback[] = [];
   severities: Severity[] = [];
   sources: Source[] = [];
   categories: Category[] = [];
@@ -73,7 +73,8 @@ export class MainComponent implements OnInit, OnDestroy {
           //TODO: Check for filetype
           this.data = data;
           this.filetype = data.filetype;
-          if (data.filetype = "iati-activities") {
+  
+          if (data.filetype === "iati-activities") {
             if (data.activities) {
               this.activityData = data.activities;
             }
@@ -82,13 +83,13 @@ export class MainComponent implements OnInit, OnDestroy {
             }
           }
 
-          if (data.filetype = "iati-organisations") {
+          if (data.filetype === "iati-organisations") {
             if (data.organisations) {
               this.activityData = data.organisations;
             }
           }
 
-          if (data.filetype = "not-iati") {
+          if (data.filetype === "not-iati") {
             if (data.feedback) {
               this.companyFeedbackData = data.feedback;
             }
@@ -127,14 +128,16 @@ export class MainComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.companyFeedbackData.forEach(element => {
-      if (uniqueCat.some(u => u.id === element.category)) {
-        // nothing
-      } else {
-        uniqueCat.push({ id: element.category, name: element.label });
-      }
-    });
+  this.companyFeedbackData.forEach(element => {
+    if (uniqueCat.some(u => u.id === element.category)) {
+      // nothing
+    } else {
+      uniqueCat.push({ id: element.category, name: element.label });
+    }
+  });
 
+
+ 
     uniqueCat.forEach(u => {
       this.categories.push({ id: u.id, name: u.name, count: null, order: 0, show: true });
     });
@@ -430,6 +433,8 @@ export class MainComponent implements OnInit, OnDestroy {
   getfeedbackSeverity(message: Message): string {
     if (message.rulesets.some(x => x.severity === 'danger')) {
       return 'error';
+    } else if (message.rulesets.some(x => x.severity === 'critical')) {
+      return 'critical';
     } else if (message.rulesets.some(x => x.severity === 'warning')) {
       return 'warning';
     } else if (message.rulesets.some(x => x.severity === 'info')) {
