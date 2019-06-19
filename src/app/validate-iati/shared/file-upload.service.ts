@@ -23,14 +23,14 @@ export class FileUploadService {
               private messagesService: MessagesService) { }
 
 
-  uploadFile(file: File, workspaceId: string) {//TODO:remove workspace id
+  uploadFile(file: File) {
     if (!file) { return; }
-    if (!workspaceId) {return; }//TODO: Remove
+ 
 
     this.messagesService.clear();
 
     // workspaceid moet je meegeven via de options in de REST URL
-    const url = this.urlApiFileUpUpload + '?[options][ws]=' + workspaceId;//TODO: remove workspaceID
+    const url = this.urlApiFileUpUpload;
     const uploadData = new FormData();
     uploadData.append('file', file, file.name);
 
