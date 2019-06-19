@@ -67,11 +67,11 @@ export class UploadFileComponent implements OnInit, OnDestroy {
 
   UploadFile() {
     this.workspaceId = Math.random().toString(36).substring(2);
-    const url = this.urlApiFileUpUpload + '?[options][ws]=' + this.workspaceId;
+    const url = this.urlApiFileUpUpload + '?[options][ws]=' + this.workspaceId;//TODO: optional: can be removed
 
     if (this.selectedFile) {
       this.uploading = true;
-      this.fileUploadService.uploadFile(this.selectedFile, this.workspaceId).subscribe(
+      this.fileUploadService.uploadFile(this.selectedFile, this.workspaceId).subscribe( //TODO: remove workspaceID
         msg => {
           this.uploading = false;
           if (msg.type === MessageType.done) {
