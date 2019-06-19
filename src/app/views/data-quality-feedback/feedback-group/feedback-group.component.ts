@@ -10,6 +10,7 @@ import { Dqfs, Activity } from './../shared/feedback';
 })
 export class FeedbackGroupComponent implements OnInit {
   @Input() activity: Activity;
+  @Input() dqfs:Dqfs; 
 
   public isCollapsed = false;
 
@@ -23,7 +24,11 @@ export class FeedbackGroupComponent implements OnInit {
   }
 
   getLinkDportal(publisher, activity) {
-    return `http://d-portal.org/ctrack.html?publisher=${publisher}#view=act&aid=${activity}`;
+    if(this.dqfs && this.dqfs.filetype==='iati-organisations'){
+      return `http://d-portal.org/ctrack.html?publisher=${publisher}`
+    }else{   return `http://d-portal.org/ctrack.html?publisher=${publisher}#view=act&aid=${activity}`;
+  }
+
   }
 
   getIssueCount(type): number {

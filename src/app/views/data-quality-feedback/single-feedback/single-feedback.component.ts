@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Feedback, Dqfs } from '../shared/feedback';
 
 @Component({
-  selector: 'app-xml-feedback',
-  templateUrl: './xml-feedback.component.html',
-  styleUrls: ['./xml-feedback.component.scss']
+  selector: 'app-single-feedback',
+  templateUrl: './single-feedback.component.html',
+  styleUrls: ['./single-feedback.component.scss']
 })
-export class XmlFeedbackComponent implements OnInit {
+export class SingleFeedbackComponent implements OnInit {
   @Input() feedbackData: Feedback[];
   @Input() title = '';
   public isCollapsed = false;

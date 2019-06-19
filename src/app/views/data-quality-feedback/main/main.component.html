@@ -40,17 +40,18 @@
     <div class="col-md-8 results">
       <h4>Feedback</h4>
       <div *ngIf="companyFeedback">
+        <!-- Determine which components to display -->
         <div *ngIf="filetype==='iati-activities'">
-          <app-xml-feedback [feedbackData]="companyFeedbackData" [title]="'Activity file feedback'"></app-xml-feedback>
-          <app-feedback [activityData]="activities" [title]="'Feedback per activity'"></app-feedback>
+          <app-single-feedback [feedbackData]="companyFeedbackData" [title]="'Activity file feedback'"></app-single-feedback>
+          <app-multi-feedback [activityData]="activities" [title]="'Feedback per activity'" [dqfs]="data"></app-multi-feedback>
         </div>
 
       </div>
       <div *ngIf="filetype==='iati-organisations'">
-        <app-feedback [activityData]="activities" [title]="'Organisation file feedback'"></app-feedback>
+        <app-multi-feedback [activityData]="activities" [title]="'Organisation file feedback'" [dqfs]="data"></app-multi-feedback>
       </div>
       <div *ngIf="filetype==='not-iati'">
-        <app-xml-feedback [feedbackData]="companyFeedbackData" [title]="'Not an IATI file'"></app-xml-feedback>
+        <app-single-feedback [feedbackData]="companyFeedbackData" [title]="'Not an IATI file'"></app-single-feedback>
       </div>
 
 
