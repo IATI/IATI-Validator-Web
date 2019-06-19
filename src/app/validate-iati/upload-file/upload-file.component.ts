@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs/Subscription';
 import { FileUploadService } from './../shared/file-upload.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { LogService } from './../../core/logging/log.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
@@ -22,24 +22,24 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   uploading = false;
   fetchUrl = '';
   uploadId = '';
-  message: Message ;
+  message: Message;
   messages: Message[] = [];
   messagesSub: Subscription;
 
   private urlApiFileUpUpload: string = environment.apiDataworkBench + '/iati-testdatasets/upload';
   constructor(private http: HttpClient,
-              private logger: LogService,
-              private router: Router,
-              private fileUploadService:  FileUploadService,
-              public messageService: MessagesService) { }
+    private logger: LogService,
+    private router: Router,
+    private fileUploadService: FileUploadService,
+    public messageService: MessagesService) { }
 
-    ngOnInit() {
+  ngOnInit() {
 
     this.messagesSub = this.messageService.messages
       .subscribe(
         (messages: Message[]) => {
           this.messages = messages;
-          this.message = messages[messages.length - 1] ;
+          this.message = messages[messages.length - 1];
         }
       );
 
@@ -50,19 +50,19 @@ export class UploadFileComponent implements OnInit, OnDestroy {
     this.selectedFile = event.target.files[0];
   }
 
-  onFetch(){
+  onFetch() {
     let blob = null;
     let request = new XMLHttpRequest();
     request.open('GET', this.fetchUrl);
     request.responseType = 'blob';
-    request.onload = function() {
+    request.onload = function () {
       var reader = new FileReader();
       reader.readAsDataURL(request.response);
-      reader.onload =  function(e){
-          console.log('DataURL:', e.target);
+      reader.onload = function (e) {
+        console.log('DataURL:', e.target);
       };
-  };
-  request.send();
+    };
+    request.send();
   }
 
   UploadFile() {
@@ -90,6 +90,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
 
   ValidateFile() {
     // this.router.navigate(['validate', this.workspaceId]);
+    
+
     this.router.navigate(['validate', this.uploadId]);
   }
 

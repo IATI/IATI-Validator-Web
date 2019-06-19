@@ -15,6 +15,9 @@ import { TypeSeverity } from './../shared/type-severity';
 import { Dqfs, Activity, Feedback, Context, Message, Ruleset } from '../shared/feedback';
 import { LoaderService } from '../../../core/loader/loader.service';
 import { cloneDeep } from 'lodash';
+import { ValidatedIatiService } from '../../../validate-iati/shared/validated-iati.service';
+import { Observable } from 'rxjs/Observable';
+
 
 @Component({
   selector: 'app-main',
@@ -25,6 +28,8 @@ export class MainComponent implements OnInit, OnDestroy {
   isLoading = false;
   md5 = '';
   data = {};
+  fileName = '';
+  isTestfiles = false;
   activityData: Activity[] = [];
   activities: Activity[] = [];
   companyFeedbackData: Feedback[] = [];
@@ -35,18 +40,16 @@ export class MainComponent implements OnInit, OnDestroy {
   public dqfs: Dqfs;
   public filetype = '';
   private loaderSubscription: Subscription;
+  private paramsSubscription: Subscription;
+  private qParamsSubscription: Subscription;
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
+    private validatedIatiService: ValidatedIatiService,
     private logger: LogService,
     private activateRoute: ActivatedRoute,
     private loader: LoaderService,
     private location: Location) {
 
-    this.activateRoute
-      .params
-      .subscribe(params => {
-        this.md5 = params['name'];
-      });
 
   }
 
@@ -57,61 +60,100 @@ export class MainComponent implements OnInit, OnDestroy {
       });
     this.severities = this.dataQualityFeedbackService.getSeverities();
     this.sources = this.dataQualityFeedbackService.getSources();
-    this.loadActivityData(this.md5);
+
+    this.paramsSubscription = this.activateRoute
+      .params
+      .subscribe(params => {
+        this.qParamsSubscription = this.activateRoute.queryParams.subscribe(
+          qParams => {
+            this.isTestfiles = qParams.isTestfiles;
+
+            if (qParams.isTestfiles) {
+              this.validatedIatiService.getIatiDatasetById(params['name']).subscribe(iatiTestDataSet => {
+
+                const theFileId = iatiTestDataSet.fileid.split(".").shift();
+                this.fileName = iatiTestDataSet.filename;
+                this.setActivityData(theFileId, qParams.isTestfiles);
+              })
+            } else {
+              this.md5 = params['name'];
+              this.setActivityData(this.md5, qParams.isTestfiles);
+            }
+          }
+        );
+
+      });
+
+
+
   }
 
   ngOnDestroy() {
     this.loaderSubscription.unsubscribe();
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+
+    }
+    if (this.qParamsSubscription) {
+      this.qParamsSubscription.unsubscribe();
+
+    }
   }
 
 
-  loadActivityData(md5: string) {
+  setActivityData(md5: string, isTestfiles: boolean) {
     this.loader.show();
-    this.dataQualityFeedbackService.getDataQualityFeedback(md5)
-      .subscribe(
-        data => {
-          //TODO: Check for filetype
-          this.data = data;
-          this.filetype = data.filetype;
-  
-          if (data.filetype === "iati-activities") {
-            if (data.activities) {
-              this.activityData = data.activities;
-            }
-            if (data.feedback) {
-              this.companyFeedbackData = data.feedback;
-            }
+    this.loadData(md5, isTestfiles).subscribe(
+      data => {
+        //TODO: Check for filetype
+        this.data = data;
+        this.filetype = data.filetype;
+        if (data.filetype === "iati-activities") {
+          if (data.activities) {
+            this.activityData = data.activities;
           }
-
-          if (data.filetype === "iati-organisations") {
-            if (data.organisations) {
-              this.activityData = data.organisations;
-            }
+          if (data.feedback) {
+            this.companyFeedbackData = data.feedback;
           }
-
-          if (data.filetype === "not-iati") {
-            if (data.feedback) {
-              this.companyFeedbackData = data.feedback;
-            }
-          }
-
-
-
-          if (this.activityData === undefined && this.companyFeedbackData === undefined) {
-            this.loader.hide();
-            return;
-          }
-          this.loadCategories();
-          this.loadTypeMessages(this.activityData, this.companyFeedbackData);
-          this.filterActivities();
-
-          this.loader.hide();
-        },
-        error => {
-          this.logger.error('Error loadActivityData', error);
-          this.loader.hide();
         }
-      );
+
+        if (data.filetype === "iati-organisations") {
+          if (data.organisations) {
+            this.activityData = data.organisations;
+          }
+        }
+
+        if (data.filetype === "not-iati") {
+          if (data.feedback) {
+            this.companyFeedbackData = data.feedback;
+          }
+        }
+
+
+
+        if (this.activityData === undefined && this.companyFeedbackData === undefined) {
+          this.loader.hide();
+          return;
+        }
+        this.loadCategories();
+        this.loadTypeMessages(this.activityData, this.companyFeedbackData);
+        this.filterActivities();
+
+        this.loader.hide();
+      },
+      error => {
+        this.logger.error('Error loadActivityData', error);
+        this.loader.hide();
+      }
+    );
+  }
+
+  loadData(inIdOrMd5: string, isTestfiles: boolean): Observable<Dqfs> {
+    if (isTestfiles) {
+      return this.dataQualityFeedbackService.getTestFilesDataQualityFeedbackById(inIdOrMd5)
+    } else {
+      return this.dataQualityFeedbackService.getDataQualityFeedback(inIdOrMd5)
+    }
   }
 
   loadCategories() {
@@ -128,16 +170,16 @@ export class MainComponent implements OnInit, OnDestroy {
       });
     });
 
-  this.companyFeedbackData.forEach(element => {
-    if (uniqueCat.some(u => u.id === element.category)) {
-      // nothing
-    } else {
-      uniqueCat.push({ id: element.category, name: element.label });
-    }
-  });
+    this.companyFeedbackData.forEach(element => {
+      if (uniqueCat.some(u => u.id === element.category)) {
+        // nothing
+      } else {
+        uniqueCat.push({ id: element.category, name: element.label });
+      }
+    });
 
 
- 
+
     uniqueCat.forEach(u => {
       this.categories.push({ id: u.id, name: u.name, count: null, order: 0, show: true });
     });
