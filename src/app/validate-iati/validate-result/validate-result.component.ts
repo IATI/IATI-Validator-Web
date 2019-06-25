@@ -68,6 +68,7 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
         this.iatiDatasetData = data;
+        console.log(this.iatiDatasetData);
         //TODO: check for status
         },
         error => this.logger.error('Faild to load iati data', error),
