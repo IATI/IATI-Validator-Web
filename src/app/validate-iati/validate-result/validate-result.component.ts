@@ -24,7 +24,6 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   source = timer(100, 2000);
   subscribeTimer: Subscription;
   interval: any;
-  uploadStatus = 'uploading';
 
   constructor(private activateRoute: ActivatedRoute,
     private router: Router,
@@ -68,8 +67,6 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
         this.iatiDatasetData = data;
-        console.log(this.iatiDatasetData);
-        //TODO: check for status
         },
         error => this.logger.error('Faild to load iati data', error),
         () => {

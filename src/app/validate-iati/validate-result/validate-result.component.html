@@ -35,7 +35,7 @@
           </div>
           <div class="col-12 col-md">
             <span *ngIf="jsonUpdated(iatiDatasetData); else elseBlock" > <button type="button" class="btn btn-link dqf-button">{{ reportType(iatiDatasetData) }}</button> </span>
-            <ng-template #elseBlock> <span>
+            <ng-template #elseBlock> <span *ngIf="iatiDatasetData">
               <!-- <app-spinner-circle></app-spinner-circle>  -->
               {{iatiDatasetData.status}}</span> </ng-template>
           </div>
