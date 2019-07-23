@@ -112,8 +112,15 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
 
 
     if (this.jsonUpdated(dataset)) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'isTestfiles': true,
+        }
+      };
+
+
       // Routerlink naar de view pagina
-      this.router.navigate(['view', 'dqf', 'test-files',this.uploadId]);
+      this.router.navigate(['view', 'dqf', 'files',this.uploadId], navigationExtras);
     } else {
       // this.selectedMd5.emit(this.md5);
     }

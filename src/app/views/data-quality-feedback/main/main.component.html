@@ -2,7 +2,8 @@
   <div class="row alert alert-light">
     <div class="col">
       <h1>IATI Data Quality Feedback</h1>
-      <app-main-report-info [md5]="md5"></app-main-report-info>
+      <app-main-report-info *ngIf="!isTestfiles;else showFileName" [md5]="md5"></app-main-report-info>
+      <ng-template #showFileName><h3>{{fileName}}</h3></ng-template>
       <app-iati-info [data]="data"></app-iati-info>
 
     </div>
@@ -12,7 +13,8 @@
     <app-spinner [backColor]="'white'"></app-spinner>
     <span class="loading-text">Loading report...</span>
   </div>
-  <div *ngIf="activityData===undefined && companyFeedbackData===undefined && !isLoading " class="alert alert-warning" role="alert">
+  <div *ngIf="activityData===undefined && companyFeedbackData===undefined && !isLoading " class="alert alert-warning"
+    role="alert">
     <h2>No data found.</h2>
     <p>It looks like the url
       <strong> {{ md5 }}</strong> is not valid.</p>
@@ -31,26 +33,27 @@
       <h4>Filters</h4>
       <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">
       </app-filter-severity>
-        <!-- <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()"></app-filter-source> -->
+      <!-- <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()"></app-filter-source> -->
       <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()">
       </app-filter-category>
     </div>
     <div class="col-md-8 results">
       <h4>Feedback</h4>
       <div *ngIf="companyFeedback">
+        <!-- Determine which components to display -->
         <div *ngIf="filetype==='iati-activities'">
-            <app-xml-feedback [feedbackData]="companyFeedbackData" [title]="'Activity file feedback'"></app-xml-feedback>
-            <app-feedback [activityData]="activities" [title]="'Feedback per activity'" ></app-feedback>
+          <app-single-feedback [feedbackData]="companyFeedbackData" [title]="'Activity file feedback'"></app-single-feedback>
+          <app-multi-feedback [activityData]="activities" [title]="'Feedback per activity'" [dqfs]="data"></app-multi-feedback>
         </div>
-       
+
       </div>
-      <div *ngIf="filetype==='iati-organisations'" >
-          <app-feedback [activityData]="activities" [title]="'Organisation file feedback'"></app-feedback>
+      <div *ngIf="filetype==='iati-organisations'">
+        <app-multi-feedback [activityData]="activities" [title]="'Organisation file feedback'" [dqfs]="data"></app-multi-feedback>
       </div>
-      <div *ngIf="filetype==='not-iati'" >
-          <app-xml-feedback [feedbackData]="companyFeedbackData" [title]="'Not an IATI file'"></app-xml-feedback>
-        </div>
-      
+      <div *ngIf="filetype==='not-iati'">
+        <app-single-feedback [feedbackData]="companyFeedbackData" [title]="'Not an IATI file'"></app-single-feedback>
+      </div>
+
 
     </div>
   </div>
