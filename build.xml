@@ -3,7 +3,8 @@
   
   <property file="docker.properties"/>
   <property name="repo" value="localbuild"/>
-  <property name="tag" value="0.0.0"/>    
+  <property name="tag" value="0.0.0"/>
+  <property name="node_env" value="prod"/>  
   
   <target name="build" description="Docker build image for next version">
     <echo message="version ${tag}"></echo>

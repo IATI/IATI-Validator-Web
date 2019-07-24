@@ -1,6 +1,8 @@
-
 # Multistage Angular build, taken from:
 # https://medium.com/@avatsaev/create-efficient-angular-docker-images-with-multi-stage-builds-907e2be3008d
+
+# To be adapted in the cluster or runtime config
+# ----------
 
 ### STAGE 1: Build ###
 
@@ -8,9 +10,9 @@
 FROM node:8-alpine as validator-front-end-builder
 
 # Optional --build-arg location= <path> to run the app from a different path on the server
-# Optional --build-arg NODE_ENV= <env> to build a different environment (default test).
+# Optional --build-arg NODE_ENV= <env> to build a different environment (default prod).
 ARG location=iati-feedback/
-ARG NODE_ENV=test
+ARG NODE_ENV=prod
 
 COPY package.json package-lock.json ./
 
