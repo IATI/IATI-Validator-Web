@@ -17,7 +17,6 @@ import { ReportInfo } from './report-info';
 
 @Injectable()
 export class DataQualityFeedbackService {
-  private urlApiIatiFile: string = environment.apiDataworkBench + '/iati-files';
   private urlApiIatiTestFile: string = environment.apiDataworkBench + '/iati-testfiles';
   private urlApiIatiDataSet: string = environment.apiDataworkBench + '/iati-datasets';
   private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
@@ -27,7 +26,7 @@ export class DataQualityFeedbackService {
 
   getDataQualityFeedback(md5: string): Observable<Dqfs> {
     const container = 'dataworkbench-json' + environment.bucketnameSuffix;
-    const url: string = this.urlApiIatiFile + '/' + container + '/download/' + md5 + '.json';
+    const url: string = environment.apiDataworkBench + '/iati-files/file/json/' + md5 + '.json';
     //   /iati-files/{container}/download/{file}
     return this.http.get<any>(url)
       .pipe(
@@ -38,7 +37,7 @@ export class DataQualityFeedbackService {
 
   getTestFilesDataQualityFeedbackById(inId: string): Observable<Dqfs> {
     const container = 'dataworkbench-testjson' + environment.bucketnameSuffix;
-    const url: string = this.urlApiIatiTestFile + '/' + container + '/download/' + inId + '.json';
+    const url: string = environment.apiDataworkBench + '/iati-testfiles/file/json/' + inId + '.json';
     //   /iati-testfiles/{container}/download/{file}
     return this.http.get<any>(url)
       .pipe(
