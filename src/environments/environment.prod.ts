@@ -1,6 +1,6 @@
 export const environment = {
-  baseUrl:'http://www.dataworkbench.io',
+  baseUrl:'http://stage.bz.dataworkbench.io',
   production: true,
-  apiDataworkBench: 'http://www.dataworkbench.io/api',
+  apiDataworkBench: 'http://stage.bz.dataworkbench.io/api/v1',
   bucketnameSuffix: '-production-d4d-dataworkbench',
 };
