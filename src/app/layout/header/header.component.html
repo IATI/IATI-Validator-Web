@@ -1,4 +1,41 @@
-<div id="header">
+<div id="header" class="header">
   <!--<app-navbar-top></app-navbar-top>-->
   <app-navbar></app-navbar>
+  <div class="container main-title-container">
+    <h2 class="main-title">IATI Data Qualtiy Feedback</h2>
+  </div>
+</div>
+<div class="container">
+  <div class="submenu">
+    <div class="submenu__item">
+      <span class="submenu__separate">|</span>
+      <a
+        routerLink="/"
+        class="submenu__link"
+        (click)="activeTab='feadback'"
+        [ngClass]="{'submenu__link--active': activeTab === 'feadback'}">
+        IATI Feedback
+      </a>
+    </div>
+    <div class="submenu__item">
+      <span class="submenu__separate">|</span>
+      <a
+        routerLink="/validate"
+        class="submenu__link"
+        (click)="activeTab='validate'"
+        [ngClass]="{'submenu__link--active': activeTab === 'validate'}">
+        Validate IATI
+      </a>
+    </div>
+    <div class="submenu__item">
+      <span class="submenu__separate">|</span>
+      <a
+        routerLink="/organisations"
+        class="submenu__link"
+        (click)="activeTab='organisations'"
+        [ngClass]="{'submenu__link--active': activeTab === 'organisations'}">
+        Browse public IATI
+      </a>
+    </div>
+  </div>
 </div>

@@ -1,8 +1,23 @@
+.home-container {
+  padding-top: 30px;
+  padding-bottom: 50px;
+
+  .iati-data-title {
+    @media (max-width: 768px) {
+      font-size: 50px;
+    }
+  }
+}
+
 .options {
   display: flex;
   flex-wrap: wrap;
   //compensate for the margin of the boxes
   margin: -10px;
+
+  @media (max-width: 768px) {
+    margin: 0;
+  }
 }
 
 .validate, .browse {
@@ -11,8 +26,14 @@
   flex-direction: column;
   padding: 20px;
   margin: 10px;
+  box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.15);
+  background-color: #fff;
 }
 
 .optionbutton {
-  margin-top:auto;
-  }
+  margin-top: auto;
+  white-space: normal;
+  border-radius: 0;
+  margin-left: auto;
+  margin-right: auto;
+}

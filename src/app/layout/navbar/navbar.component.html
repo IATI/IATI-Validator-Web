@@ -1,16 +1,49 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="/">DataWorkbench</a>
-  <button class="navbar-toggler" type="button"
-      (click)="isCollapsed = !isCollapsed"
-      [attr.aria-expanded]="!isCollapsed"
-   data-toggle="collapse"  aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<nav class="navbar navbar-light">
+  <div class="navbar__header">
+    <a class="navbar-brand" href="/"></a>
+    <button class="navbar-toggler" type="button"
+        (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="!isCollapsed"
+     data-toggle="collapse"  aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>  
+  </div>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngbCollapse]="isCollapsed">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/">IATI Feedback</a>
-      <a class="nav-item nav-link" routerLink="/validate" routerLinkActive="active" (click)="isCollapsed=true" >Validate IATI</a>
-      <a class="nav-item nav-link" routerLink="/organisations" routerLinkActive="active" (click)="isCollapsed=true" >Browse public IATI</a>
+    <div class="navbar-menu">
+      <a
+        class="navbar-menu__item nav-link"
+        href="http://iatistandard.org/about/">
+        About
+      </a>
+      <a
+        class="navbar-menu__item nav-link"
+        href="http://iatistandard.org/iati-standard/"
+      >
+        IATI Standard
+      </a>
+      <a
+        class="navbar-menu__item nav-link"
+        href="http://iatistandard.org/using-data/"
+      >
+        Using Data
+      </a>
+      <a
+        class="navbar-menu__item nav-link"
+        href="http://iatistandard.org/using-data/"
+      >
+        Guidance & Support
+      </a>
+      <a
+        class="navbar-menu__item nav-link"
+        href="http://iatistandard.org/using-data/"
+      >
+        Community
+      </a>
     </div>
+  </div>
+  <div class="navbar-sudmenu">
+    <a href="http://iatistandard.org/news/" class="navbar-sudmenu__item">News</a>
+    <a href="http://iatistandard.org/events/" class="navbar-sudmenu__item">Events</a>
+    <a href="http://iatistandard.org/contact/" class="navbar-sudmenu__item">Contect</a>
   </div>
 </nav>
