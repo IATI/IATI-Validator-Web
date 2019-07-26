@@ -131,7 +131,7 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   }
 
 
-   copyTextToClipboard() {
+   copyTextToClipboard(text) {
     const txtArea = document.createElement("textarea");
     const url = this.environmentUrl+'/validate/'+this.uploadId;
     txtArea.id = 'txt';

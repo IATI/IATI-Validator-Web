@@ -34,8 +34,9 @@ export interface Dqfs {
   feedback: Feedback[];
   organisations: Activity[];
   filetype: string;
-  schemaVersion:string;
-  iatiVersion:string;
+  schemaVersion: string;
+  iatiVersion: string;
+  filename: string;
 }
 
 
