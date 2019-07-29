@@ -16,7 +16,7 @@ import { MessagesService } from './messages.service';
 
 @Injectable()
 export class FileUploadService {
-  private urlApiFileUpUpload: string = environment.apiDataworkBench + '/iati-testdatasets/upload';
+  private urlApiFileUpUpload: string = window.__env.apiDataworkBench + '/iati-testdatasets/upload';
 
   constructor(private http: HttpClient,
               private logger: LogService,

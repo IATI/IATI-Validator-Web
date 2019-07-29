@@ -15,10 +15,11 @@ import { Workspace } from './workspace';
 
 @Injectable()
 export class OrganisationService {
-  private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
-  private urlApiWorkspaces: string = environment.apiDataworkBench + '/workspaces';
-  private urlApiVersions: string = environment.apiDataworkBench + '/versions';
-  private urlApiIatiDataset: string = environment.apiDataworkBench + '/iati-datasets';
+  private urlApiOrganisation: string = window.__env.apiDataworkBench + '/iati-publishers';
+  private urlApiWorkspaces: string = window.__env.apiDataworkBench + '/workspaces';
+  private urlApiVersions: string = window.__env.apiDataworkBench + '/versions';
+  private urlApiIatiDataset: string = window.__env.apiDataworkBench + '/iati-datasets';
+  private urlApiIatiFile: string = window.__env.apiDataworkBench + '/iati-files';
 
   constructor(private http: HttpClient,
               private logger: LogService) { }
@@ -86,8 +87,7 @@ getIatiDataset(md5: string): Observable<IatiDataset[]> {
 }
 
 getIatiFile(md5: string): Observable<any> {
-  const container = 'dataworkbench-json' + environment.bucketnameSuffix;
-  const url: string = environment.apiDataworkBench + '/iati-files/file/json/' + md5 + '.json';
+  const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';;
   //   /iati-files/{container}/download/{file}
   this.log(url);
   return this.http.get<any>(url)
