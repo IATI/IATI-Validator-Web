@@ -10,10 +10,10 @@ $h6-font-size:                $font-size-base ;
 $background-title: rgba(0, 0, 0, 0.03);
 
 // For the DQF reports severity level
-$severity-critical:       $purple;
-$severity-error:          $red;
-$severity-warning:        $warning;
-$severity-improvement:    $info;
-$severity-optimisations:  $success;
+$severity-critical:       $iati-wind;
+$severity-error:          $iati-sunset;
+$severity-warning:        $iati-sunrise;
+$severity-improvement:    $iati-air;
+$severity-optimisations:  $iati-land;
 
 $border-radius:               .15rem ;
