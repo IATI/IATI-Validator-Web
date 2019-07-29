@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { XmlFeedbackComponent } from './xml-feedback.component';
+import { FeedbackComponent } from './multi-feedback.component';
 
-describe('XmlFeedbackComponent', () => {
-  let component: XmlFeedbackComponent;
-  let fixture: ComponentFixture<XmlFeedbackComponent>;
+describe('FeedbackComponent', () => {
+  let component: FeedbackComponent;
+  let fixture: ComponentFixture<FeedbackComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ XmlFeedbackComponent ]
+      declarations: [ FeedbackComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(XmlFeedbackComponent);
+    fixture = TestBed.createComponent(FeedbackComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
