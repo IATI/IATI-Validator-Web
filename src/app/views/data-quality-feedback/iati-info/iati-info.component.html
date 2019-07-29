@@ -1,3 +1,7 @@
 <h3>{{data.filename}}</h3>
 <p>
- <span *ngIf="data.schemaVersion" >Rules version: {{data.schemaVersion}} </span><span *ngIf="data.iatiVersion"> | IATI version: {{data.iatiVersion}}</span> </p>
+ <span *ngIf="data.schemaVersion" >Rules version: {{data.schemaVersion}} </span>
+ <span *ngIf="data.iatiVersion"> | IATI version: {{data.iatiVersion}}</span>
+ <span *ngIf="data.filetype"> | Type: {{data.filetype}}</span>
+ <span *ngIf="data.feedbackUpdated"> | updated: {{data.feedbackUpdated}}</span>
+</p>
