@@ -1,0 +1,124 @@
+.clearfix {
+  overflow: auto;
+}
+.footer {
+  background-color: #155366;
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 10px;
+
+    @media (max-width: 1150px) {
+      flex-direction: column;
+    }
+  }
+
+  .footer-content__brand {
+    width: 300px;
+    height: 70px;
+    background-image: url('../../../assets/svg/logo-white.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    @media (max-width: 1150px) {
+      width: auto;
+    }
+  }
+
+  .footer-content__block {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .footer-content__list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .useful-list__link-block {
+    &> .useful-list__link {
+      color: #fff;
+      text-decoration: underline;
+    }
+  }
+  .footer-content__title {
+    font-size: 1.6rem;
+    margin-bottom: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    font-weight: 800;
+  }
+
+  .footer-content__sign-up {
+    font-size: 14px;
+  }
+  
+  .sign-up-email__title {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .sign-up-email__form {
+    display: flex
+  }
+
+  .sign-up-email__input {
+    background-color: #fff;
+    min-height: 44px;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .sign-up-email__button {
+    padding: 15px;
+  }
+
+  .footer-meta {
+    padding: 25px 15px;
+    overflow: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 1px solid #1e7590;
+  }
+
+  .footer-meta__copyright {
+    display: inline-block;
+    float: left;
+    color: #fff;
+    font-size: 1.4rem;
+  }
+  
+  .meta-social {
+    float: right;
+  }
+
+  .meta-social__link {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    margin-left: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-indent: -9999px;
+
+    
+    &--twitter {
+      background-image: url('../../../assets/svg/twitter-icon.svg');
+    }
+    &--facebook {
+      background-image: url('../../../assets/svg/facebook-icon.svg');
+    }
+    &--linkedin {
+      background-image: url('../../../assets/svg/linkedin-icon.svg');
+    }
+    &--youtube {
+      background-image: url('../../../assets/svg/youtube-icon.svg');
+    }
+  }
+}
+
+

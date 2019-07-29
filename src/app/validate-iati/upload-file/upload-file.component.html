@@ -9,7 +9,7 @@
   <div class="step" [class.next]="selectedFile!==undefined && !fileUploaded">
     <h5 class="step-title">Step 2. Upload your IATI file.</h5>
     <div *ngIf="selectedFile" class="name-file">File: {{selectedFile.name}}</div>
-    <button class="btn btn-success" (click)="UploadFile()" [disabled]="!selectedFile || fileUploaded">Upload file</button>
+    <button class="btn btn-success iati-button border-radius-none" (click)="UploadFile()" [disabled]="!selectedFile || fileUploaded">Upload file</button>
     <div *ngIf="message" class="alert alert-info message" [class.alert-danger]="message.type===9">
       <app-spinner *ngIf="uploading" [backColor]="'white'"></app-spinner>
       {{ message.message }}
@@ -27,7 +27,7 @@
 
   <div class="step" [class.next]="fileUploaded && message.type === 8">
     <h5 class="step-title">Step 3. Start validation.</h5>
-    <button class="btn btn-success" (click)="ValidateFile()" [disabled]="!fileUploaded">Start validation</button>
+    <button class="btn btn-success iati-button border-radius-none" (click)="ValidateFile()" [disabled]="!fileUploaded">Start validation</button>
   </div>
 
 </div>

@@ -5,8 +5,17 @@
   margin: 24px;
   border: 1px solid lightgray;
   max-width: 500px;
+  font-size: 1.5em;
   color: $gray-600;
   border-radius: $border-radius;
+
+  &:first-child {
+    overflow: auto;
+  }
+}
+
+.step-title {
+  font-size: 1em;
 }
 
 .next {
