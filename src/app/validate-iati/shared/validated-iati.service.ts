@@ -10,7 +10,7 @@ import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class ValidatedIatiService {
-  private urlApiIatiDataset: string = environment.apiDataworkBench + '/iati-testdatasets';
+  private urlApiIatiDataset: string = window.__env.apiDataworkBench + '/iati-testdatasets';
 
   constructor(private logger: LogService,
               private http: HttpClient) { }

@@ -4,7 +4,6 @@ import { Router, NavigationExtras } from '@angular/router';
 import { LogService } from './../../core/logging/log.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
-import { environment } from './../../../environments/environment';
 import { UploadResponse } from './../shared/uploadResponse';
 import { MessagesService } from './../shared/messages.service';
 import { Message } from '../shared/message';
@@ -26,7 +25,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
   messagesSub: Subscription;
 
-  private urlApiFileUpUpload: string = environment.apiDataworkBench + '/iati-testdatasets/upload';
+  private urlApiFileUpUpload: string = window.__env.apiDataworkBench + '/iati-testdatasets/upload';
   constructor(private http: HttpClient,
     private logger: LogService,
     private router: Router,
