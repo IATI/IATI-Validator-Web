@@ -7,11 +7,10 @@ $ml: 1150px;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 2em;
+  margin-top: 4em;
   margin-bottom: 4em;
   background-color: #fff;
-  padding: 2em;
-  padding-bottom: 1.5em;
+  padding: 2em 3em;
   -webkit-box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.15);
   flex-wrap: nowrap;
@@ -36,9 +35,9 @@ $ml: 1150px;
 
   .navbar-menu {
     display: flex;
-    margin-top: 2rem;
+    margin-top: 3.9rem;
     transition: 2s ease;
-
+    justify-content: flex-end;
 
     @media (max-width: $ml) {
       flex-direction: column;
@@ -52,7 +51,7 @@ $ml: 1150px;
     position: relative;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-size: 18px;
+    font-size: 1.4rem;
     margin-left: 20px;
     padding: 0;
 
@@ -136,10 +135,10 @@ $ml: 1150px;
     }
   }
 
-  .navbar-sudmenu {
+  .navbar-submenu {
     display: flex;
     position: absolute;
-    padding: 20px 25px;
+    padding: 1em 3em 1em 2em;
     top: 0;
     right: 0;
     background-color: #E3E3E3;
@@ -154,6 +153,7 @@ $ml: 1150px;
     color: #121212;
     margin-left: 25px;
     text-decoration: none;
+    font-size: 1.4rem;
 
     &:first-child {
       margin-left: 0;

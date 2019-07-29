@@ -1,6 +1,11 @@
+html {
+  font-size: 62.5%;
+}
+
 body {
   font-family: sans-serif;
   background-color: #F6F6F6;
+  font-size: 0.9375rem;
 }
 
 .jumbotron {
@@ -11,4 +16,17 @@ body {
 
 .border-radius-none {
   border-radius: 0!important;
+}
+
+h1 {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+p, li {
+  font-size: 1.5em;
+}
+
+a {
+  font-size: 1em;
 }

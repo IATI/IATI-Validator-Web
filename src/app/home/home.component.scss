@@ -28,6 +28,13 @@
   margin: 10px;
   box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.15);
   background-color: #fff;
+  border-top: 5px solid #06dbe4!important;
+}
+
+.validate__title,
+.browse__title {
+  font-size: 2.4rem;
+  font-weight: bold;
 }
 
 .optionbutton {
@@ -37,3 +44,10 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.jumbotron {
+  .lead {
+    font-size: 1.5em;
+  }
+}
+
