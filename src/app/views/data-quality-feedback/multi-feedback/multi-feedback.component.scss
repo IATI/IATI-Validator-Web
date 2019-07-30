@@ -5,6 +5,19 @@
 .toggle-collapse {
   float: right;
   margin-right: -10px;
+
+  .btn {
+
+  }
+}
+
+.feedback-title {
+  font-size: 1.5em;
+
+  .btn.btn-link {
+    font-size: 1em;
+    margin-top: -10px;
+  }
 }
 
 .feedback{
