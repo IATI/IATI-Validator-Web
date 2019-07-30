@@ -16,19 +16,3 @@
 <div class="type-messages" [ngbCollapse]="isCollapsed">
   <app-filter-type-message *ngFor="let mes of type.types" [typeMessage]="mes" (selectedChanged)="selectionChanged()"></app-filter-type-message>
 </div>
-
-
-<!-- <div class="type-group">
-    <div class="type-heading row">
-      <div class="col title-col">
-        <h4 class="title d-inline" (click)="collapse()">{{ type.severity }}</h4>
-      </div>
-      <div class="col-auto collapse-col">
-          <button type="button" class="btn btn-outline-secondary collapser" (click)="collapse()"><span *ngIf="!isCollapsed">-</span><span *ngIf="isCollapsed">+</span></button>
-      </div>
-    </div>
-
-    <div class="type-messages" [ngbCollapse]="isCollapsed">
-      <app-filter-type-message *ngFor="let mes of type.types" [typeMessage]="mes" ></app-filter-type-message>
-    </div>
-  </div> -->

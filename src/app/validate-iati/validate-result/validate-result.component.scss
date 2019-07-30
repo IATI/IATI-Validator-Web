@@ -21,7 +21,7 @@
   padding: 3px 0;
   margin-right: 0;
   margin-left: 0;
-
+  font-size: 1.5em;
 }
 .row.dqf {
   cursor: pointer;
@@ -35,4 +35,10 @@
 
 .dqf-button {
   padding: 0;
+}
+
+.result-validation {
+  * {
+    font-size: 1.5em;
+  }
 }
