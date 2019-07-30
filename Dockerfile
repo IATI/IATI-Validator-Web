@@ -1,7 +1,9 @@
 # Multistage Angular build, taken from:
 # https://medium.com/@avatsaev/create-efficient-angular-docker-images-with-multi-stage-builds-907e2be3008d
 
-# To be adapted in the cluster or runtime config
+# To be adapted in the cluster or runtime config:
+# - the file src/env.js is injected in the container
+#   via cluster/deploy/properties/env.js to inform the client about the server to contact
 # ----------
 
 ### STAGE 1: Build ###
