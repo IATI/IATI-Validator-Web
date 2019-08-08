@@ -7,7 +7,7 @@ import { Dqfs } from '../shared/feedback';
   styleUrls: ['./iati-info.component.scss']
 })
 export class IatiInfoComponent implements OnInit {
-@Input() data:Dqfs;
+@Input() data: Dqfs;
   constructor() { }
 
   ngOnInit() {

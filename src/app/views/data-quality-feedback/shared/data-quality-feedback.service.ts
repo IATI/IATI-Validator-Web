@@ -6,7 +6,6 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import 'rxjs/add/observable/of';
 
-import { environment } from './../../../../environments/environment';
 import { LogService } from '../../../core/logging/log.service';
 import { Source } from './source';
 import { Severity } from './severity';
@@ -17,16 +16,16 @@ import { ReportInfo } from './report-info';
 
 @Injectable()
 export class DataQualityFeedbackService {
-  private urlApiIatiTestFile: string = environment.apiDataworkBench + '/iati-testfiles';
-  private urlApiIatiDataSet: string = environment.apiDataworkBench + '/iati-datasets';
-  private urlApiOrganisation: string = environment.apiDataworkBench + '/iati-publishers';
+  private urlApiIatiFile: string = window.__env.apiDataworkBench + '/iati-files';
+  private urlApiIatiTestFile: string = window.__env.apiDataworkBench + '/iati-testfiles';
+  private urlApiIatiDataSet: string = window.__env.apiDataworkBench + '/iati-datasets';
+  private urlApiOrganisation: string = window.__env.apiDataworkBench + '/iati-publishers';
 
   constructor(private http: HttpClient,
     private logger: LogService) { }
 
   getDataQualityFeedback(md5: string): Observable<Dqfs> {
-    const container = 'dataworkbench-json' + environment.bucketnameSuffix;
-    const url: string = environment.apiDataworkBench + '/iati-files/file/json/' + md5 + '.json';
+    const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';
     //   /iati-files/{container}/download/{file}
     return this.http.get<any>(url)
       .pipe(
@@ -36,8 +35,7 @@ export class DataQualityFeedbackService {
   }
 
   getTestFilesDataQualityFeedbackById(inId: string): Observable<Dqfs> {
-    const container = 'dataworkbench-testjson' + environment.bucketnameSuffix;
-    const url: string = environment.apiDataworkBench + '/iati-testfiles/file/json/' + inId + '.json';
+    const url: string = this.urlApiIatiTestFile + '/file/json/' + inId + '.json';
     //   /iati-testfiles/{container}/download/{file}
     return this.http.get<any>(url)
       .pipe(

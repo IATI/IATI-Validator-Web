@@ -11,7 +11,7 @@ import { LogService } from '../../core/logging/log.service';
 
 @Injectable()
 export class OrganisationsService {
-  private organisationsUrl = environment.apiDataworkBench;
+  private organisationsUrl = window.__env.apiDataworkBench;
 
   constructor(private http: HttpClient,
               private logger: LogService) { }

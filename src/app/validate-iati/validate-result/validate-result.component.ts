@@ -20,7 +20,7 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   currentUrl = '';
   iatiDatasetData: IatiTestdataset;
   md5 = '';
-  environmentUrl = environment.baseUrl;
+  environmentUrl = window.__env.baseUrl;
   source = timer(100, 2000);
   subscribeTimer: Subscription;
   interval: any;
@@ -131,7 +131,7 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   }
 
 
-   copyTextToClipboard() {
+   copyTextToClipboard(text) {
     const txtArea = document.createElement("textarea");
     const url = this.environmentUrl+'/validate/'+this.uploadId;
     txtArea.id = 'txt';
