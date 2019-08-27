@@ -18,8 +18,7 @@ sequenceDiagram
 	FE ->> FE: select file
 	
 	note over FE, Storage: Step 2: upload
-	FE ->> FE: create workspace id $ws
-	FE ->>+ API: POST /api/test-datasets/upload?[options][ws]=$ws
+	FE ->>+ API: POST /api/test-datasets/upload
 	
 	API -->>+ Storage: upload
 	Storage -->>- API: unique filename
@@ -31,12 +30,12 @@ sequenceDiagram
 	
 	note over FE, Storage: Step 3: validate
 	
-	FE ->>- FE: go to /validate/$ws
+	FE ->>- FE: go to /validate/$datasetid
 	
 	note over FE, Storage: Show files overview
 	activate FE
 	loop every 2 seconds
-		FE ->>+ API: GET /api/iati-testdatasets/?filter[where][tmpworkspaceId]=$ws
+		FE ->>+ API: GET /api/iati-testdatasets/$datasetid
 		API ->>+ DS: get test dataset info
 		DS -->>- API: dataset info
 		API -->>- FE: dataset info
