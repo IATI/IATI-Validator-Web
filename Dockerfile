@@ -13,7 +13,7 @@ FROM node:8-alpine as validator-front-end-builder
 
 # Optional --build-arg location= <path> to run the app from a different path on the server
 # Optional --build-arg NODE_ENV= <env> to build a different environment (default prod).
-ARG location=iati-feedback/
+ARG location=/
 ARG NODE_ENV=prod
 
 COPY package.json package-lock.json ./
@@ -33,7 +33,7 @@ RUN $(npm bin)/ng build -e $NODE_ENV --base-href=/$location
 FROM nginx:alpine
 
 # Optional --build-arg location=<path> to run the app from a different path on the server
-ARG location=iati-feedback/
+ARG location=/
 
 COPY nginx.conf /tmp
 RUN envsubst '$location' < /tmp/nginx.conf > /etc/nginx/conf.d/default.conf && rm /tmp/nginx.conf
