@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light">
   <div class="navbar__header">
-    <a class="navbar-brand" href="/"></a>
+    <a class="navbar-brand" href="https://iatistandard.org" title="To the main IATI Standard website"></a>
     <button class="navbar-toggler" type="button"
         (click)="isCollapsed = !isCollapsed"
         [attr.aria-expanded]="!isCollapsed"
@@ -11,39 +11,31 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngbCollapse]="isCollapsed">
     <div class="navbar-menu">
       <a
+        routerLink="/"
         class="navbar-menu__item nav-link"
-        href="https://iatistandard.org/about/">
-        About
+        (click)="activeTab='feedback'"
+        [ngClass]="{'submenu__link--active': activeTab === 'feedback'}">
+        Home
       </a>
       <a
         class="navbar-menu__item nav-link"
-        href="https://iatistandard.org/iati-standard/"
-      >
-        IATI Standard
+        href="/about/">
+        About Validator
       </a>
       <a
+        routerLink="/validate"
         class="navbar-menu__item nav-link"
-        href="https://iatistandard.org/using-data/"
-      >
-        Using Data
+        (click)="activeTab='validate'"
+        [ngClass]="{'submenu__link--active': activeTab === 'validate'}">
+        Check data
       </a>
       <a
+        routerLink="/organisations"
         class="navbar-menu__item nav-link"
-        href="https://iatistandard.org/using-data/"
-      >
-        Guidance & Support
-      </a>
-      <a
-        class="navbar-menu__item nav-link"
-        href="https://iatistandard.org/using-data/"
-      >
-        Community
+        (click)="activeTab='organisations'"
+        [ngClass]="{'submenu__link--active': activeTab === 'organisations'}">
+        Public data viewer
       </a>
     </div>
-  </div>
-  <div class="navbar-submenu">
-    <a href="https://iatistandard.org/news/" class="navbar-sudmenu__item">News</a>
-    <a href="https://iatistandard.org/events/" class="navbar-sudmenu__item">Events</a>
-    <a href="https://iatistandard.org/contact/" class="navbar-sudmenu__item">Contact</a>
   </div>
 </nav>

@@ -26,6 +26,18 @@
     }
   }
 
+  .footer-content__poweredby {
+    width: 300px;
+    height: 50px;
+    background-image: url('../../../assets/svg/data4development-white.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    @media (max-width: 1150px) {
+      width: auto;
+    }
+  }
+
   .footer-content__block {
     display: flex;
     flex-direction: column;
@@ -50,6 +62,10 @@
     letter-spacing: 1px;
     color: #fff;
     font-weight: 800;
+  }
+
+  .footer-content__text {
+    color: #fff;
   }
 
   .footer-content__sign-up {
