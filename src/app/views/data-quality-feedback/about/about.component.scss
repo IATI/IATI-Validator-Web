@@ -1,13 +1,11 @@
 @import 'variables';
 
-.about__top-title {
-    font-size: 30px;
-}
 .about-container {
     max-width: 1088px;
     margin: 0 auto;
     .about-content {
-        margin: 45px 0 0;
+        margin: 45px 0;
+        padding: 0 30px;
     }
     .about-content__title {
         font-size: $h3-font-size;
@@ -16,7 +14,6 @@
     }
     .about-content__description {
         .list-item {
-            // margin: 0 1rem 1rem;
             .list-item-style {
                 margin: 0 1rem;
             }
