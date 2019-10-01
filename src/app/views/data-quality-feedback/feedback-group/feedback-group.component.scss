@@ -24,6 +24,9 @@
 .title-col {
   padding-right: 0;
   cursor: pointer;
+  .title-col__title-label {
+    font-size: 1.3rem;
+  }
 }
 
 // .collapse-col {

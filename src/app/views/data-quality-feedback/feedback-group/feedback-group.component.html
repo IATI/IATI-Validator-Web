@@ -1,6 +1,7 @@
 <div class="feedback-group">
   <div class="feedback-heading row">
     <div class="col title-col" (click)="collapse()">
+      <div class="title-col__title-label">Activity title</div>
       <h5 class="feedback-group-title title d-inline" >{{ activity.title }}</h5>
       <div class="d-inline float-right">
         <span class="identifier-link"><a href="{{getLinkDportal(activity.publisher, cleanIdentifier(activity.identifier))}}" target="_blank" (click)="$event.stopPropagation()">{{ cleanIdentifier(activity.identifier)}}</a></span>
