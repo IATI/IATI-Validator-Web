@@ -52,15 +52,17 @@
     }
   }
   .footer-content__title {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     margin-bottom: 0.75em;
-    text-transform: lowercase;
+    text-transform: uppercase;
     letter-spacing: 1px;
     color: #fff;
     font-weight: 800;
     &.title-logo {
       margin: 0 15px 0 0;
       letter-spacing: 0;
+      font-size: 1.5em;
+      font-weight: 400;
     }
   }
 
