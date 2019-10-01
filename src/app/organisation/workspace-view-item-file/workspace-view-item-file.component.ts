@@ -46,7 +46,7 @@ export class WorkspaceViewItemFileComponent implements OnInit {
   reportType(): string {
     if (this.jsonUpdated()) {
       // Routerlink naar de view pagina
-      return 'Data Quality Report (click to view)';
+      return 'File Validation report (click to view)';
     } else {
       return '-';
     }
