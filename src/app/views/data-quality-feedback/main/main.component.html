@@ -42,7 +42,7 @@
       <div *ngIf="companyFeedback">
         <!-- Determine which components to display -->
         <div *ngIf="filetype==='iati-activities'">
-          <app-single-feedback [feedbackData]="companyFeedbackData" [title]="'Activity file feedback'"></app-single-feedback>
+          <app-single-feedback [feedbackData]="companyFeedback" [title]="'Activity file feedback'"></app-single-feedback>
           <app-multi-feedback [activityData]="activities" [title]="'Feedback per activity'" [dqfs]="data"></app-multi-feedback>
         </div>
 
