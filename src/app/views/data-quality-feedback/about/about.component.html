@@ -1,0 +1,96 @@
+<div class="about-container">
+  <!-- <h2 class="about__top-title">About</h2> -->
+  <section class="about-content">
+    <!-- <h6 class="about-content__title">Test tile until content available</h6> -->
+    <p class="about-content__description">
+      The IATI Validator checks if IATI data complies with the rules and guidance in the IATI Standard. Find information
+      on how to improve the quality of development and humanitarian IATI data on resources and results to ensure it is
+      accessible and useful.
+    </p>
+  </section>
+  <section class="about-content">
+    <h3 class="about-content__title">How does the IATI Validator work?</h3>
+    <div class="about-content__description">
+      <p class="about-content__description">There are two ways to use the IATI Validator.</p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span> Anyone can upload their
+        IATI data files to be checked before publishing them.</p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span> Anyone can check all IATI
+        data files that have been published.</p>
+      <p class="about-content__description">The IATI Validator undertakes multiple layers of checks to identify where
+        data does not comply with the IATI Standard. The Validator provides messages to indicate where errors have
+        occurred and what needs to be changed.</p>
+    </div>
+  </section>
+  <section class="about-content">
+    <h3 class="about-content__title">What happens when the IATI Validator identifies invalid data?</h3>
+    <p class="about-content__description">An error or a warning message is displayed for each occurrence of an error,
+      identifying what data needs to be corrected and where it occurs in the data file. A count of errors is also
+      displayed which shows how many times an error is repeated throughout a file. For example, if all activities in a
+      dataset have omitted activity dates, then the user will see a count of this repeated error as well as the location
+      of each error.</p>
+  </section>
+  <section class="about-content">
+    <h3 class="about-content__title">What help and support can publishers access to correct their data?</h3>
+    <p class="about-content__description">When data requires correcting, an actionable error or warning message will be
+      displayed. In the near future, the IATI Validator will be updated to provide specific instructions on how to
+      correct data. For additional support using the IATI Validator, please refer to:</p>
+    <div class="about-content__description">
+      <p class="about-content__description list-item"><span class="list-item-style">-</span> IATI Technical Team
+        helpdesk: <a href="mailto:support@iatistandard.org">support@iatistandard.org</a></p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span> Sign-up to webinars held by
+        the IATI Technical Team on how to use the IATI Validator. Details of upcoming webinars can be found at <a
+          href="https://iatistandard.org/en/events/">IATI Events</a>.</p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span> Post questions to IATI’s
+        community on the forum: <a href="https://discuss.iatistandard.org/c/community-zone/data-quality">IATI
+          Discuss</a>.</p>
+    </div>
+  </section>
+  <section class="about-content">
+    <h3 class="about-content__title">Specifically what checks will be made to IATI datafiles?</h3>
+    <p class="about-content__description">The IATI Validator run checks on datafiles against version 2 of the IATI
+      Standard Schema and Rulesets.</p>
+    <p class="about-content__description set-title">Check 1: Schema Validation</p>
+    <p class="about-content__description">The IATI Validator checks if data adheres to the format set out in the IATI
+      XML Schema. The IATI Schema provides the exact order and structure that organisations should provide their XML in.
+      Full information about the IATI Schema can be found on <a
+        href="http://reference.iatistandard.org/203/schema/">IATI’s Reference site</a>.</p>
+    <p class="about-content__description set-title">Check 2: Rulesets Validation</p>
+    <p class="about-content__description">The IATI Validator also checks if the data follows IATI’s Rulesets. These
+      checks provide a more detailed review of the quality of data. All <a
+        href="http://reference.iatistandard.org/203/rulesets/">IATI Rulesets</a> can be found on the IATI Reference
+      Site.</p>
+  </section>
+  <section class="about-content">
+    <h3 class="about-content__title">Does the IATI Validator check if datasets have complied with a donor’s requirement
+      to publish data to the IATI Standard?</h3>
+    <p class="about-content__description">No. Different donors have their own specific set of data requirements for
+      their grantees that are additional to the IATI Standard rules. Organisations need to refer to their donor’s
+      guidance and more information can be found on <a
+        href="https://iatistandard.org/en/guidance/preparing-data/donors-reporting-requirements/">IATI Guidance</a>.</p>
+  </section>
+  <section class="about-content">
+    <h3 class="about-content__title">Can I use the IATI validator to understand what score my organisation will achieve
+      in the Aid Transparency Index?</h3>
+    <p class="about-content__description">The <a href="https://www.publishwhatyoufund.org/the-index/">Aid Transparency
+        Index</a> (ATI) is managed by <a href="https://www.publishwhatyoufund.org/">Publish What You Fund</a>, which
+      uses its own methodology to assess the transparency of organisations’ data. Therefore the IATI Validator does not
+      check data against the ATI methodology. Organisations who will be assessed in the next Index should refer to
+      Publish What You Fund for more information about their upcoming methodology. If needed, IATI publishers are
+      welcome to email the IATI Technical Team for support: <a
+        href="mailto:support@iatistandard.org">support@iatistandard.org</a>.</p>
+  </section>
+  <section class="about-content">
+    <h3 class="about-content__title">Can I link another IATI tool to the IATI Validator?</h3>
+    <p class="about-content__description">Yes. The IATI Validator provides a stand-alone service offering API endpoints
+      for both the IATI Standard Schema and Ruleset validation. Please see IATI Validator User Documentation for more
+      information on how to link other tools to the IATI Validator API. </p>
+  </section>
+  <section class="about-content">
+    <h3 class="about-content__title">What is the tech stack powering the service?</h3>
+    <p class="about-content__description">The IATI Validator is a Java powered application that internally uses Ant for
+      the workflow and SaxonHE for data processing, to take full advantage of its built-in XML and XSLT functionalities.
+      Schematron Validation Reporting Language (SVRL) is the rule-based validation language of choice for making
+      assertions about the presence or absence of patterns in XML trees It can be run and deployed as a Docker
+      container. More information can be found in the <a href="https://developer.data4development.nl/IATI-data-validator/">IATI Validator User Documentation</a>.</p>
+  </section>
+</div>

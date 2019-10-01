@@ -23,6 +23,7 @@ import { SingleFeedbackComponent } from './single-feedback/single-feedback.compo
 import { IatiInfoComponent } from './iati-info/iati-info.component';
 import { ValidateIatiModule } from '../../validate-iati/validate-iati.module';
 import { MultiFeedbackComponent } from './multi-feedback/multi-feedback.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   { path: 'files/:name', component: MainComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
   ],
   declarations: [
     MainComponent,
+    // AboutComponent,
     FilterSeverityComponent,
     FilterSourceComponent,
     FilterTypeComponent,
