@@ -7,7 +7,7 @@
     <div *ngIf="hasValidLogo()" class="col-md-3 h-100">
       <img  [src]="organisationData?.logo" class="organisation-logo img-fluid">
     </div>
-    <div class="col" [ngClass]="{'col-md-9': hasValidLogo()}" >
+    <div class="col" [ngClass]="{'col-md-9': hasValidLogo()}" *ngIf="organisationData?.description">
       <h3>Description</h3>
       <p>{{ organisationData?.description }}</p>
     </div>

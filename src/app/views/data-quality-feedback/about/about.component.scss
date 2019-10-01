@@ -1,0 +1,25 @@
+@import 'variables';
+
+.about-container {
+    max-width: 1088px;
+    margin: 0 auto;
+    .about-content {
+        margin: 45px 0;
+        padding: 0 30px;
+    }
+    .about-content__title {
+        font-size: $h3-font-size;
+        font-weight: bold;
+        margin: 20px 0;
+    }
+    .about-content__description {
+        .list-item {
+            .list-item-style {
+                margin: 0 1rem;
+            }
+        }
+        &.set-title {
+            text-decoration: underline;
+        }
+    }
+}
