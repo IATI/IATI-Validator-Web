@@ -6,7 +6,7 @@
       <span class="message-id d-inline float-right">
         {{mes.id}}
         <span *ngFor="let ruleset of mes.rulesets">
-          <a [hidden]="ruleset.href==null" href="{{ruleset.href}}" target="_blank">(see guidance)</a>
+          <a [hidden]="ruleset.href==null" href="{{ruleset.href}}" target="_blank" title="Open guidance in a new window">(see guidance)</a>
         </span>
       </span>
       <ul [hidden]="mes.context.length===1 && mes.context[0].text===''">
