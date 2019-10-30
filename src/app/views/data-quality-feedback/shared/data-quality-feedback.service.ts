@@ -109,10 +109,10 @@ export class DataQualityFeedbackService {
         types: []
       },
       {
-        id: 'optimisation',
+        id: 'notification',
         slug: 'success',
-        name: 'Optimisations',
-        description: 'Optimisations can reduce the size of the data.',
+        name: 'Notifications',
+        description: 'Notifications are for your information.',
         count: null,
         order: 5,
         show: true,
