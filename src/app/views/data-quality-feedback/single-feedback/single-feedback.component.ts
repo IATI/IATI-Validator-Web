@@ -18,7 +18,6 @@ export class SingleFeedbackComponent implements OnInit {
 
   getIssueCount(type): number {
     let count = 0;
-    
 
     this.feedbackData.forEach(fb => {
       fb.messages.forEach(mes => {
