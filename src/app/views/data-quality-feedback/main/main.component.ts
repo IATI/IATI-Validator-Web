@@ -100,25 +100,20 @@ export class MainComponent implements OnInit, OnDestroy {
       data => {
         // TODO: Check for filetype
         this.data = data;
+        if (data.feedback) {
+          this.companyFeedbackData = data.feedback;
+        }
+
         this.filetype = data.filetype;
         if (data.filetype === 'iati-activities') {
           if (data.activities) {
             this.activityData = data.activities;
-          }
-          if (data.feedback) {
-            this.companyFeedbackData = data.feedback;
           }
         }
 
         if (data.filetype === 'iati-organisations') {
           if (data.organisations) {
             this.activityData = data.organisations;
-          }
-        }
-
-        if (data.filetype === 'not-iati') {
-          if (data.feedback) {
-            this.companyFeedbackData = data.feedback;
           }
         }
 

@@ -48,7 +48,8 @@
 
       </div>
       <div *ngIf="filetype==='iati-organisations'">
-        <app-multi-feedback [activityData]="activities" [title]="'Organisation file feedback'" [dqfs]="data"></app-multi-feedback>
+        <app-single-feedback [feedbackData]="companyFeedback" [title]="'Organisation file feedback'"></app-single-feedback>
+        <app-multi-feedback [activityData]="activities" [title]="'Organisation feedback'" [dqfs]="data"></app-multi-feedback>
       </div>
       <div *ngIf="filetype==='not-iati'">
         <app-single-feedback [feedbackData]="companyFeedbackData" [title]="'Not an IATI file'"></app-single-feedback>
