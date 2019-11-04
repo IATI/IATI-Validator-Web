@@ -8,7 +8,8 @@
   margin-bottom: 5em;
   padding-top: 15em;
   padding-bottom: 2.5em;
-  margin-top: -15.5em;
+  /* margin-top from -15.5em to add spacing for testing header */
+  margin-top: -12.5em;
   position: relative;
 
   &:after {
@@ -64,4 +65,51 @@
     color: #0f7864;
     text-decoration: underline;
   }
+}
+
+.iBXooL {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 30px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(199, 66, 57);
+    z-index: 99;
+}
+
+.iLlyNt {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    color: rgb(199, 66, 57);
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    font-weight: bold;
+    margin-right: 5px;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.iUzJmb {
+    color: white;
+    font-size: 1.6em;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.71;
+    letter-spacing: 0.2px;
+    text-align: center;
+
+    a {
+      color: white;
+      text-decoration: underline;
+    }
 }
