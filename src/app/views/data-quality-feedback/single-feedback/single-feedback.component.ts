@@ -9,6 +9,8 @@ import { Feedback, Dqfs } from '../shared/feedback';
 export class SingleFeedbackComponent implements OnInit {
   @Input() feedbackData: Feedback[];
   @Input() title = '';
+  @Input() item = 'activity';
+  @Input() items = 'activities';
   public isCollapsed = false;
 
   constructor() { }

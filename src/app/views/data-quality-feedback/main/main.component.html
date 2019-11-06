@@ -42,14 +42,14 @@
       <div *ngIf="companyFeedback">
         <!-- Determine which components to display -->
         <div *ngIf="filetype==='iati-activities'">
-          <app-single-feedback [feedbackData]="companyFeedback" [title]="'Activity file feedback'"></app-single-feedback>
-          <app-multi-feedback [activityData]="activities" [title]="'Feedback per activity'" [dqfs]="data"></app-multi-feedback>
+          <app-single-feedback [feedbackData]="companyFeedback" [title]="'Activity file feedback'" [item]="'activity'" [items]="'activities'"></app-single-feedback>
+          <app-multi-feedback [activityData]="activities" [title]="'Feedback per activity'" [item]="'activity'" [items]="'activities'" [dqfs]="data"></app-multi-feedback>
         </div>
 
       </div>
       <div *ngIf="filetype==='iati-organisations'">
-        <app-single-feedback [feedbackData]="companyFeedback" [title]="'Organisation file feedback'"></app-single-feedback>
-        <app-multi-feedback [activityData]="activities" [title]="'Organisation feedback'" [dqfs]="data"></app-multi-feedback>
+        <app-single-feedback [feedbackData]="companyFeedback" [title]="'Organisation file feedback'" [item]="'organisation'" [items]="'organisations'" ></app-single-feedback>
+        <app-multi-feedback [activityData]="activities" [title]="'Organisation feedback'" [item]="'organisation'" [items]="'organisations'" [dqfs]="data"></app-multi-feedback>
       </div>
       <div *ngIf="filetype==='not-iati'">
         <app-single-feedback [feedbackData]="companyFeedbackData" [title]="'Not an IATI file'"></app-single-feedback>
