@@ -74,7 +74,7 @@ export class DataQualityFeedbackService {
       { id: 'error', slug: 'danger', name: 'Errors', description: 'Errors make it hard or impossible to use the data.', count: null, order: 2, show: true, types: [] },
       { id: 'warning', slug: 'warning', name: 'Warnings', description: 'Warnings indicate where the data can be more valuable.', count: null, order: 3, show: true, types: [] },
       { id: 'improvement', slug: 'info', name: 'Improvements', description: 'Improvements can make the data more useful.', count: null, order: 4, show: true, types: [] },
-      { id: 'optimisation', slug: 'success', name: 'Optimisations', description: 'Optimisations can reduce the size of the data.', count: null, order: 5, show: true, types: [] },
+      { id: 'notification', slug: 'success', name: 'Notifications', description: 'Notifications are for your information.', count: null, order: 5, show: true, types: [] },
     ];
   }
 
