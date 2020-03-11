@@ -65,11 +65,9 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
   UploadFile() {
-  //  this.workspaceId = Math.random().toString(36).substring(2);
-
     if (this.selectedFile) {
       this.uploading = true;
-      this.fileUploadService.uploadFile(this.selectedFile).subscribe( 
+      this.fileUploadService.uploadFile(this.selectedFile).subscribe(
         msg => {
           this.uploading = false;
           if (msg.type === MessageType.done) {
@@ -87,9 +85,6 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
   ValidateFile() {
-    // this.router.navigate(['validate', this.workspaceId]);
-    
-
     this.router.navigate(['validate', this.uploadId]);
   }
 

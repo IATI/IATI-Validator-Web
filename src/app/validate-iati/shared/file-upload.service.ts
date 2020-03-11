@@ -25,7 +25,6 @@ export class FileUploadService {
 
   uploadFile(file: File) {
     if (!file) { return; }
- 
 
     this.messagesService.clear();
 
@@ -69,7 +68,7 @@ export class FileUploadService {
         return mes2;
 
       case HttpEventType.Response:
-        const mes3: Message = { message: `File "${file.name}" was completely uploaded!`, type: MessageType.done, progress: 100, uploadId: event.body.id } ;
+        const mes3: Message = { message: `File "${file.name}" was successfully uploaded!`, type: MessageType.done, progress: 100, uploadId: event.body.id };
         return mes3;
 
       default:
