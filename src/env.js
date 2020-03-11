@@ -6,5 +6,5 @@
 
   // Whether or not to enable debug mode
   // Setting this to false will disable console output
-  window.__env.apiDataworkBench = 'https://9239879d-e1c3-4ad6-846a-fd8925283028.mock.pstmn.io/api';
+  window.__env.apiDataworkBench = 'https://9239879d-e1c3-4ad6-846a-fd8925283028.mock.pstmn.io/api/v1';
 }(this));
