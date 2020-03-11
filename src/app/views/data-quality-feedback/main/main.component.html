@@ -31,11 +31,9 @@
   <div *ngIf="activityData!==undefined || companyFeedbackData!==undefined" class="row">
     <div class="col-md-4 filters">
       <h4>Filters</h4>
-      <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">
-      </app-filter-severity>
-      <!-- <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()"></app-filter-source> -->
-      <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()">
-      </app-filter-category>
+      <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()"></app-filter-severity>
+      <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()"></app-filter-source>
+      <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()"></app-filter-category>
     </div>
     <div class="col-md-8 results">
       <h4>Feedback</h4>
