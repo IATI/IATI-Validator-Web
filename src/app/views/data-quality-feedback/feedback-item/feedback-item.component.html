@@ -1,7 +1,14 @@
 <div class="feedback">
   <div class="category-label">{{feedback.label}}</div>
   <ul class="feedback-list">
-    <li *ngFor="let mes of feedback.messages" class="message {{getfeedbackColor(mes)}}"   ><span class="message-text" >{{mes.text}}</span> <span class="message-id">({{mes.id}})</span>
+    <li *ngFor="let mes of feedback.messages" class="message {{getfeedbackColor(mes)}}"   >
+      <span class="message-text" >{{mes.text}}</span>
+      <span class="message-id d-inline float-right">
+        {{mes.id}}
+        <span *ngFor="let ruleset of mes.rulesets">
+          <a [hidden]="ruleset.href==null" href="{{ruleset.href}}" target="_blank" title="Open guidance in a new window">(see guidance)</a>
+        </span>
+      </span>
       <ul [hidden]="mes.context.length===1 && mes.context[0].text===''">
         <li *ngFor="let con of mes.context" class="context">{{con.text}}</li>
       </ul>

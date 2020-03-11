@@ -1,11 +1,11 @@
 <div class="filter">
   <ul class="list-group">
     <li class="list-group-item caption">
-      <div class="title">Category</div>
+      <div class="title">View by category</div>
       <span *ngIf="!allSelected()" class="show-label"><button type="button" class="btn btn-link" (click)="selectAll()">Select all</button></span>
     </li>
     <li *ngFor="let cat of categories" class="list-group-item">
-      <span class="severity-count">{{cat.count}}</span>
+      <span class="severity-count">{{cat.count}} x</span>
       <span [class.unselected]="!cat.show">{{ cat.name }}</span>
       <span class="select">
         <app-checkbox [(checked)]="cat.show" [name]="'filterCat' + cat.name" (checkedChange)="selectionChanged()"></app-checkbox>

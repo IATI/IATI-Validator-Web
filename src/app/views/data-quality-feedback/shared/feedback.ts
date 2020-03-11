@@ -36,6 +36,7 @@ export interface Dqfs {
   filetype: string;
   schemaVersion: string;
   iatiVersion: string;
+  feedbackUpdated: string;
   filename: string;
 }
 

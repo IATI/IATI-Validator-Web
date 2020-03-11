@@ -1,13 +1,17 @@
 <div class="feedback">
-    <h5 class="title">{{title}}<span class="toggle-collapse"><button type="button" class="btn btn-link"
-                (click)="toggleCollapse()">Collapse/Expand all activities</button></span></h5>
-
-                <div *ngIf="activityData.length>0; else noActivityData">
-                        <app-feedback-group *ngFor="let act of activityData" [activity]="act" [dqfs]="dqfs"></app-feedback-group>
-
-                </div>
+    <h5 class="title feedback-title">
+        {{title}}
+        <span class="toggle-collapse">
+            <button type="button" class="btn btn-link" (click)="toggleCollapse()">
+                Collapse/expand all {{items}}
+            </button>
+        </span>
+    </h5>
+    <div *ngIf="activityData.length>0; else noActivityData">
+        <app-feedback-group *ngFor="let act of activityData" [activity]="act" [item]="item" [items]="items" [dqfs]="dqfs"></app-feedback-group>
+    </div>
 </div>
 
 <ng-template #noActivityData>
-    <p>There is no activity feedback to display</p>
+    <p>There is no feedback to display</p>
 </ng-template> 

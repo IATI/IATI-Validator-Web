@@ -10,7 +10,9 @@ import { Dqfs, Activity } from './../shared/feedback';
 })
 export class FeedbackGroupComponent implements OnInit {
   @Input() activity: Activity;
-  @Input() dqfs:Dqfs; 
+  @Input() item: 'activity';
+  @Input() items: 'activities';
+  @Input() dqfs: Dqfs;
 
   public isCollapsed = false;
 
@@ -20,15 +22,15 @@ export class FeedbackGroupComponent implements OnInit {
   }
 
   collapse() {
-    this.isCollapsed = ! this.isCollapsed;
+    this.isCollapsed = !this.isCollapsed;
   }
 
-  getLinkDportal(publisher, activity) {
-    if(this.dqfs && this.dqfs.filetype==='iati-organisations'){
-      return `http://d-portal.org/ctrack.html?publisher=${publisher}`
-    }else{   return `http://d-portal.org/ctrack.html?publisher=${publisher}#view=act&aid=${activity}`;
-  }
-
+  getLinkDportal(publisher: string, activity: string) {
+    if (this.dqfs && this.dqfs.filetype === 'iati-organisations') {
+      return `http://d-portal.org/ctrack.html?publisher=${encodeURIComponent(publisher)}`;
+    } else {
+      return `http://d-portal.org/ctrack.html?publisher=${encodeURIComponent(publisher)}#view=act&aid=${encodeURIComponent(activity)}`;
+    }
   }
 
   getIssueCount(type): number {
@@ -48,7 +50,7 @@ export class FeedbackGroupComponent implements OnInit {
   // Delete the part from and after the line break.
   cleanIdentifier(identifier: string): string {
     const newLineFound = identifier.indexOf('\n');
-    if ( newLineFound >= 0 ) {
+    if (newLineFound >= 0) {
       return identifier.substring(0, newLineFound);
     } else {
       return identifier;

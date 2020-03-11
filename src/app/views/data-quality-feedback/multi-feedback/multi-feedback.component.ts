@@ -13,6 +13,8 @@ import { Title } from '@angular/platform-browser';
 export class MultiFeedbackComponent implements OnInit {
   @Input() activityData: Activity[];
   @Input() title:string = '';
+  @Input() item:string = 'activity';
+  @Input() items:string = 'activities';
   @Input() dqfs:Dqfs;
   @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent>;
   isCollapsed = false;
