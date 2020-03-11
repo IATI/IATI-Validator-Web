@@ -2,14 +2,14 @@
 
 <div class="feedback-heading row">
         <div class="col title-col" (click)="collapse()">
-          <h5 class="title d-inline" >{{title}}</h5>
+          <h5 class="feedback-single-title title d-inline" >{{title}}</h5>
           <div class="d-inline float-right" *ngIf="feedbackData.length>0">
             <!-- <span class="identifier-link"><a href="{{getLinkDportal(activity.publisher, cleanIdentifier(activity.identifier))}}" target="_blank" >{{ cleanIdentifier(activity.identifier)}}</a></span> -->
-            <span class="badge badge-critical">{{getIssueCount('critical')}}</span>
-            <span class="badge badge-danger">{{getIssueCount('danger')}}</span>
-            <span class="badge badge-warning">{{getIssueCount('warning')}}</span>
-            <span class="badge badge-info">{{getIssueCount('info')}}</span>
-            <span class="badge badge-success">{{getIssueCount('success')}}</span>
+            <span class="badge badge-critical" *ngIf="getIssueCount('critical')>0">{{getIssueCount('critical')}}</span>
+            <span class="badge badge-danger" *ngIf="getIssueCount('danger')>0">{{getIssueCount('danger')}}</span>
+            <span class="badge badge-warning" *ngIf="getIssueCount('warning')>0">{{getIssueCount('warning')}}</span>
+            <span class="badge badge-info" *ngIf="getIssueCount('info')>0">{{getIssueCount('info')}}</span>
+            <span class="badge badge-success" *ngIf="getIssueCount('success')>0">{{getIssueCount('success')}}</span>
           </div>
         </div>
         <div class="col-auto collapse-col" (click)="collapse()">
@@ -26,5 +26,5 @@
       </div>
 
       <ng-template #noFeedbackData>
-        <p>There is no activity file feedback to display</p>
+        <p>There is no {{item}} file feedback to display</p>
       </ng-template>

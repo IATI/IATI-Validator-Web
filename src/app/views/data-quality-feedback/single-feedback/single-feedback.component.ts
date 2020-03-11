@@ -9,6 +9,8 @@ import { Feedback, Dqfs } from '../shared/feedback';
 export class SingleFeedbackComponent implements OnInit {
   @Input() feedbackData: Feedback[];
   @Input() title = '';
+  @Input() item = 'activity';
+  @Input() items = 'activities';
   public isCollapsed = false;
 
   constructor() { }
@@ -18,7 +20,6 @@ export class SingleFeedbackComponent implements OnInit {
 
   getIssueCount(type): number {
     let count = 0;
-    
 
     this.feedbackData.forEach(fb => {
       fb.messages.forEach(mes => {

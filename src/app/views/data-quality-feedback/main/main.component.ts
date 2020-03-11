@@ -49,8 +49,6 @@ export class MainComponent implements OnInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     private loader: LoaderService,
     private location: Location) {
-
-
   }
 
   ngOnInit() {
@@ -71,21 +69,17 @@ export class MainComponent implements OnInit, OnDestroy {
             if (qParams.isTestfiles) {
               this.validatedIatiService.getIatiDatasetById(params['name']).subscribe(iatiTestDataSet => {
 
-                const theFileId = iatiTestDataSet.fileid.split(".").shift();
+                const theFileId = iatiTestDataSet.fileid.split('.').shift();
                 this.fileName = iatiTestDataSet.filename;
                 this.setActivityData(theFileId, qParams.isTestfiles);
-              })
+              });
             } else {
               this.md5 = params['name'];
               this.setActivityData(this.md5, qParams.isTestfiles);
             }
           }
         );
-
       });
-
-
-
   }
 
   ngOnDestroy() {
@@ -100,36 +94,28 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
-
   setActivityData(md5: string, isTestfiles: boolean) {
     this.loader.show();
     this.loadData(md5, isTestfiles).subscribe(
       data => {
-        //TODO: Check for filetype
+        // TODO: Check for filetype
         this.data = data;
+        if (data.feedback) {
+          this.companyFeedbackData = data.feedback;
+        }
+
         this.filetype = data.filetype;
-        if (data.filetype === "iati-activities") {
+        if (data.filetype === 'iati-activities') {
           if (data.activities) {
             this.activityData = data.activities;
           }
-          if (data.feedback) {
-            this.companyFeedbackData = data.feedback;
-          }
         }
 
-        if (data.filetype === "iati-organisations") {
+        if (data.filetype === 'iati-organisations') {
           if (data.organisations) {
             this.activityData = data.organisations;
           }
         }
-
-        if (data.filetype === "not-iati") {
-          if (data.feedback) {
-            this.companyFeedbackData = data.feedback;
-          }
-        }
-
-
 
         if (this.activityData === undefined && this.companyFeedbackData === undefined) {
           this.loader.hide();
@@ -150,9 +136,9 @@ export class MainComponent implements OnInit, OnDestroy {
 
   loadData(inIdOrMd5: string, isTestfiles: boolean): Observable<Dqfs> {
     if (isTestfiles) {
-      return this.dataQualityFeedbackService.getTestFilesDataQualityFeedbackById(inIdOrMd5)
+      return this.dataQualityFeedbackService.getTestFilesDataQualityFeedbackById(inIdOrMd5);
     } else {
-      return this.dataQualityFeedbackService.getDataQualityFeedback(inIdOrMd5)
+      return this.dataQualityFeedbackService.getDataQualityFeedback(inIdOrMd5);
     }
   }
 
@@ -225,8 +211,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   }
 
-
-
   filterActivities() {
     this.loader.show();
     let filtered = cloneDeep(this.activityData);
@@ -237,7 +221,6 @@ export class MainComponent implements OnInit, OnDestroy {
     filtered.forEach(act => {
       act.feedback = act.feedback.filter(this.filterCategory);
     });
-
 
     // Filter messages that are not selected in source
     filtered.forEach(act => {
@@ -290,7 +273,6 @@ export class MainComponent implements OnInit, OnDestroy {
     // Filter feedback category
     filteredFeedback = filteredFeedback.filter(this.filterCategory);
 
-
     // Filter messages that are not selected in source
     filteredFeedback.forEach(fb => {
       fb.messages.forEach(mes => {
@@ -306,7 +288,7 @@ export class MainComponent implements OnInit, OnDestroy {
     // Filter messages with severity selected
     filteredFeedback.forEach(fb => {
       fb.messages = fb.messages.filter(this.filterSeverity);
-    })
+    });
 
     // Filter feedback without messages
     filteredFeedback = filteredFeedback.filter(fb => {
@@ -343,12 +325,12 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
-  getIssueCount(type): number {
+  getIssueCount(severity): number {
     let count = 0;
     this.activities.forEach(act => {
       act.feedback.forEach(fb => {
         fb.messages.forEach(mes => {
-          if (mes.rulesets.some(r => r.severity === type)) {
+          if (mes.rulesets.some(r => r.severity === severity)) {
             count += mes.context.length;
           }
         });
@@ -357,7 +339,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.companyFeedbackData.forEach(fb => {
       fb.messages.forEach(mes => {
-        if (mes.rulesets.some(r => r.severity === type)) {
+        if (mes.rulesets.some(r => r.severity === severity)) {
           count += mes.context.length;
         }
       });
@@ -389,7 +371,7 @@ export class MainComponent implements OnInit, OnDestroy {
           count += mes.context.length;
         }
       });
-    })
+    });
     return count;
   }
 
@@ -417,7 +399,7 @@ export class MainComponent implements OnInit, OnDestroy {
           count += mes.context.length;
         });
       }
-    })
+    });
     return count;
   }
 
