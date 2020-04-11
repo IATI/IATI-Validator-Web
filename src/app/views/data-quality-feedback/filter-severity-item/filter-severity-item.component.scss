@@ -2,11 +2,11 @@
 
 .critical{
   background-color: $severity-critical;
-  color:white; 
+  color:white;
 }
 
 .error {
-  background-color: $severity-error;
+  background-color: #f73357;
   color: white;
 }
 .warning {
@@ -18,7 +18,7 @@
   color: white;
 }
 .notification {
-  background-color: $severity-notifications;
+  background-color: #e3e3e3;
   color: white;
 }
 

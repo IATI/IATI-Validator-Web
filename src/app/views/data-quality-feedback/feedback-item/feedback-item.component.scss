@@ -18,7 +18,7 @@
   // New
   color: black;
   margin-bottom: 4px;
-  background-color: $gray-200; 
+  background-color: $gray-200;
 }
 
 .message-text{
@@ -34,8 +34,8 @@
 }
 
 .error {
-  // background-color: $severity-error;
-  border-left: 6px solid $severity-error;
+  // background-color: #f73357;
+  border-left: 6px solid #f73357;
 }
 .warning {
   // background-color: $severity-warning;
@@ -50,10 +50,10 @@
 
 }
 .notification {
-  // background-color: $severity-notifications;
+  // background-color: #e3e3e3;
   // color: white;
 
-  border-left: 6px solid $severity-notifications;
+  border-left: 6px solid #e3e3e3;
 }
 
 .context {

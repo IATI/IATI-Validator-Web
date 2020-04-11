@@ -19,18 +19,22 @@
 }
 
 .error {
-  background-color: $severity-error;
+  // background-color: $severity-error;
+  background-color: #f73357;
   color: white;
 }
 .warning {
-  background-color: $severity-warning;
+  // background-color: $severity-warning;
+  background-color: #ff7264;
   color: white;
 }
 .improvement {
-  background-color: $severity-improvement;
+  // background-color: $severity-improvement;
+  background-color: #06dbe4;
   color: white;
 }
 .notification {
-  background-color: $severity-notifications;
+  // background-color: $severity-notifications;
+  background-color: #e3e3e3;
   color: white;
 }

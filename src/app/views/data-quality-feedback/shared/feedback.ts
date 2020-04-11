@@ -1,5 +1,3 @@
-import { Organisation } from "../../../organisation/shared/organisation";
-
 export interface Ruleset {
   src: string;
   severity: string;

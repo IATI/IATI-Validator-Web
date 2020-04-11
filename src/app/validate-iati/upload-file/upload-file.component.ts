@@ -49,12 +49,12 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
   onFetch() {
-    let blob = null;
-    let request = new XMLHttpRequest();
+    const blob = null;
+    const request = new XMLHttpRequest();
     request.open('GET', this.fetchUrl);
     request.responseType = 'blob';
     request.onload = function () {
-      var reader = new FileReader();
+      const reader = new FileReader();
       reader.readAsDataURL(request.response);
       reader.onload = function (e) {
         console.log('DataURL:', e.target);

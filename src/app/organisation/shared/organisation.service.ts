@@ -87,7 +87,7 @@ getIatiDataset(md5: string): Observable<IatiDataset[]> {
 }
 
 getIatiFile(md5: string): Observable<any> {
-  const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';;
+  const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';
   //   /iati-files/{container}/download/{file}
   this.log(url);
   return this.http.get<any>(url)

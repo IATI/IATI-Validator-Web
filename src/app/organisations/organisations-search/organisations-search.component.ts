@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef, Renderer } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
-import { OrganisationsService } from './../shared/organisations.service';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { FormControl } from '@angular/forms';
+import { OrganisationsService } from './../shared/organisations.service';
 
 @Component({
   selector: 'app-organisations-search',

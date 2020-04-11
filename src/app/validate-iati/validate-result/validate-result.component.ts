@@ -80,18 +80,14 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
 
     if (!this.iatiDatasetData) {
       return false;
-    } 
-    // else if (this.iatiDatasetData.length === 0) {
-    //   return false;
-    // } 
-    else {
+    } else {
       // return this.iatiDatasetData.every(x => this.jsonUpdated(x));
       return this.jsonUpdated(this.iatiDatasetData);
     }
 
   }
 
-  jsonUpdated(inDataset:IatiTestdataset): boolean {
+  jsonUpdated(inDataset: IatiTestdataset): boolean {
     if (inDataset['json-updated']) {
       return true;
     } else {
@@ -120,7 +116,7 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
 
 
       // Routerlink naar de view pagina
-      this.router.navigate(['view', 'dqf', 'files',this.uploadId], navigationExtras);
+      this.router.navigate(['view', 'dqf', 'files', this.uploadId], navigationExtras);
     } else {
       // this.selectedMd5.emit(this.md5);
     }
@@ -131,9 +127,9 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   }
 
 
-   copyTextToClipboard(text) {
-    const txtArea = document.createElement("textarea");
-    const url = this.environmentUrl+'/validate/'+this.uploadId;
+   copyTextToClipboard(_) {
+    const txtArea = document.createElement('textarea');
+    const url = this.environmentUrl + '/validate/' + this.uploadId;
     txtArea.id = 'txt';
     txtArea.style.position = 'fixed';
     txtArea.style.top = '0';
@@ -142,10 +138,9 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
     txtArea.value = url;
     document.body.appendChild(txtArea);
     txtArea.select();
-  
+
     try {
-      var successful = document.execCommand('copy');
-      var msg = successful ? 'successful' : 'unsuccessful';
+      const successful = document.execCommand('copy');
       console.log('Copying text command was ' + url);
       if (successful) {
         return true;
