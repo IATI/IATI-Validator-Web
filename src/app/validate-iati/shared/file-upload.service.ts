@@ -23,15 +23,19 @@ export class FileUploadService {
               private messagesService: MessagesService) { }
 
 
-  uploadFile(file: File) {
-    if (!file) { return; }
+  uploadFiles(files: File[]) {
+    if (Array.isArray(files) && !files.length) {
+      return;
+    }
 
     this.messagesService.clear();
 
-    // workspaceid moet je meegeven via de options in de REST URL
     const url = this.urlApiFileUpUpload;
     const uploadData = new FormData();
-    uploadData.append('file', file, file.name);
+    for (const file of files) {
+      console.log('file: ', file);
+      uploadData.append('files', file, file.name);
+    }
 
     // Create the request object that POSTs the file to an upload endpoint.
     // The `reportProgress` option tells HttpClient to listen and return
@@ -43,11 +47,11 @@ export class FileUploadService {
     // The `HttpClient.request` API produces a raw event stream
     // which includes start (sent), progress, and response events.
     return this.http.request(req).pipe(
-      map(event => this.getEventMessage(event, file)),
-      tap(message => this.addProgressMessages(message.type, message.message, message.progress)),
+      // map(event => this.getEventMessage(event, file)),
+      // tap(message => this.addProgressMessages(message.type, message.message, message.progress)),
       last(), // return last (completed) message to caller
       retry(3), // retry a failed request up to 3 times
-      catchError(this.handleError(file))
+      catchError(this.handleError(files))
     );
 
   }
@@ -90,16 +94,16 @@ export class FileUploadService {
    * When no `UploadInterceptor` and no server,
    * you'll end up here in the error handler.
    */
-  private handleError(file: File) {
-    const userMessage = `${file.name} upload failed.`;
+  private handleError(files: File[]) {
+    const userMessage = `${files[0].name} upload failed.`;
 
     return (error: HttpErrorResponse) => {
       // TODO: send the error to remote logging infrastructure
       this.logger.error('Error file-upload service', error); // log to console instead
 
-      const errorMessage = (error.error instanceof Error) ?
-                      error.error.message :
-                      `server returned code ${error.status} with body "${error.error}"`;
+      const errorMessage = error.error instanceof Error
+        ? error.error.message
+        : `server returned code ${error.status} with body "${error.error}"`;
 
       const message: Message = {type: MessageType.error, message: userMessage, progress: -1 };
 

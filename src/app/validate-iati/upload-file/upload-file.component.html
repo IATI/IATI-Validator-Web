@@ -1,15 +1,50 @@
 <h4>Upload your IATI file and receive validation feedback.</h4>
 <div>
-  <div class="step" [class.next]="!selectedFile">
-    <h5 class="step-title">Step 1. Select your IATI file.</h5>
-    <input type="file" (change)="onFileChanged($event)" accept=".xml" [disabled]="fileUploaded || uploading">
-    <!-- <span>Input URL:</span><input type="text" [disabled]="fileUploaded || uploading" [(ngModel)]="fetchUrl"> <button (click)="onFetch()">Fetch</button> -->
+  <div class="step" [class.next]="selectedFiles.length">
+    <h5 class="step-title">Step 1. Select your IATI files.</h5>
+    <div class="row">
+      <section *ngIf="selectedFiles.length" class="col selected-files" >
+        <p *ngFor="let file of selectedFiles" class="file-name-p">
+          {{file.name}}
+        </p>
+      </section>
+      <section class="col">
+        <ng-container *ngIf="!selectedFiles.length; else clearState">
+          <label class="btn btn-success iati-button border-radius-none" for="file-upload">
+            Browse
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            (change)="onFileChanged($event)"
+            accept=".xml"
+            [disabled]="fileUploaded || uploading"
+            multiple
+          >
+        </ng-container>
+        <ng-template #clearState>
+          <button
+            class="btn btn-success iati-button border-radius-none"
+            (click)="clearFiles()"
+            [disabled]="fileUploaded || uploading"
+          >
+            Clear
+          </button>
+        </ng-template>
+      </section>
+    </div>
   </div>
 
-  <div class="step" [class.next]="selectedFile!==undefined && !fileUploaded">
+  <div class="step" [class.next]="selectedFiles.length && !fileUploaded">
     <h5 class="step-title">Step 2. Upload your IATI file.</h5>
     <div *ngIf="selectedFile" class="name-file">File: {{selectedFile.name}}</div>
-    <button class="btn btn-success iati-button border-radius-none" (click)="UploadFile()" [disabled]="!selectedFile || fileUploaded">Upload file</button>
+    <button
+      class="btn btn-success iati-button border-radius-none"
+      (click)="UploadFile()"
+      [disabled]="!selectedFiles.length || fileUploaded"
+    >
+      Upload
+    </button>
     <div *ngIf="message" class="alert alert-info message" [class.alert-danger]="message.type===9">
       <app-spinner *ngIf="uploading" [backColor]="'white'"></app-spinner>
       {{ message.message }}
@@ -19,15 +54,12 @@
     <div *ngIf="messages.length && !fileUploaded && uploading">
       <h4>Progress</h4>
       <span>{{message.message}}</span>
-      <!-- <ul>
-        <li *ngFor='let message of messages'> {{message.message}} </li>
-      </ul> -->
     </div>
   </div>
 
   <div class="step" [class.next]="fileUploaded && message.type === 8">
     <h5 class="step-title">Step 3. Start validation.</h5>
-    <button class="btn btn-success iati-button border-radius-none" (click)="ValidateFile()" [disabled]="!fileUploaded">Start validation</button>
+    <button class="btn btn-success iati-button border-radius-none" (click)="ValidateFile()" [disabled]="!fileUploaded">Validate</button>
   </div>
 
 </div>

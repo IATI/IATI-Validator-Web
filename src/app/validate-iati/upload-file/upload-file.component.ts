@@ -1,10 +1,10 @@
-import { Subscription } from 'rxjs/Subscription';
-import { FileUploadService } from './../shared/file-upload.service';
-import { Router, NavigationExtras } from '@angular/router';
-import { LogService } from './../../core/logging/log.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
-import { UploadResponse } from './../shared/uploadResponse';
+import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
+
+import { FileUploadService } from './../shared/file-upload.service';
+import { LogService } from './../../core/logging/log.service';
 import { MessagesService } from './../shared/messages.service';
 import { Message } from '../shared/message';
 import { MessageType } from '../shared/message-type.enum';
@@ -15,7 +15,7 @@ import { MessageType } from '../shared/message-type.enum';
   styleUrls: ['./upload-file.component.scss']
 })
 export class UploadFileComponent implements OnInit, OnDestroy {
-  selectedFile: File;
+  selectedFiles: File[] = [];
   workspaceId = '';
   fileUploaded = false;
   uploading = false;
@@ -25,14 +25,15 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
   messagesSub: Subscription;
 
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     private logger: LogService,
     private router: Router,
     private fileUploadService: FileUploadService,
-    public messageService: MessagesService) { }
+    public messageService: MessagesService
+  ) { }
 
   ngOnInit() {
-
     this.messagesSub = this.messageService.messages
       .subscribe(
         (messages: Message[]) => {
@@ -40,12 +41,11 @@ export class UploadFileComponent implements OnInit, OnDestroy {
           this.message = messages[messages.length - 1];
         }
       );
-
   }
 
   onFileChanged(event) {
     this.uploading = false;
-    this.selectedFile = event.target.files[0];
+    this.selectedFiles = event.target.files;
   }
 
   onFetch() {
@@ -64,14 +64,13 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
   UploadFile() {
-    if (this.selectedFile) {
+    if (this.selectedFiles.length) {
       this.uploading = true;
-      this.fileUploadService.uploadFile(this.selectedFile).subscribe(
+      this.fileUploadService.uploadFiles(this.selectedFiles).subscribe(
         msg => {
           this.uploading = false;
           if (msg.type === MessageType.done) {
             this.fileUploaded = true;
-            // this.ValidateFile();
             this.uploadId = msg.uploadId;
           }
         },
@@ -91,4 +90,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
     this.messagesSub.unsubscribe();
   }
 
+
+  clearFiles() {
+    this.selectedFiles = [];
+  }
 }

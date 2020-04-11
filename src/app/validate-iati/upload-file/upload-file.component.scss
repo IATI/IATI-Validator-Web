@@ -12,6 +12,22 @@
   &:first-child {
     overflow: auto;
   }
+
+  .row {
+    max-width: 100%;
+  }
+
+  .selected-files {
+    padding: 1em;
+    margin-left: 0.5em;
+    border: 2px solid #06dbe4;
+    border-radius: 6px;
+  }
+
+  .file-name-p {
+    font-size: 1.2em;
+    margin-bottom: 0;
+  }
 }
 
 .step-title {
@@ -34,4 +50,8 @@
 
 .message {
   margin: 16px 0;
+}
+
+#file-upload {
+  display: none;
 }
