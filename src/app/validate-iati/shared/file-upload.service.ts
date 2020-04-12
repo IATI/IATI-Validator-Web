@@ -1,14 +1,11 @@
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import {
-  HttpClient, HttpEvent, HttpEventType, HttpProgressEvent,
-  HttpRequest, HttpResponse, HttpErrorResponse
+  HttpClient, HttpEvent, HttpEventType,
+  HttpRequest, HttpErrorResponse
 } from '@angular/common/http';
 import { of } from 'rxjs/observable/of';
-import { catchError, last, map, tap, retry } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
+import { catchError, last, retry, tap } from 'rxjs/operators';
 
-import { environment } from './../../../environments/environment';
 import { LogService } from './../../core/logging/log.service';
 import { MessageType } from './message-type.enum';
 import { Message } from './message';
@@ -17,10 +14,13 @@ import { MessagesService } from './messages.service';
 @Injectable()
 export class FileUploadService {
   private urlApiFileUpUpload: string = window.__env.apiDataworkBench + '/iati-testfiles/file/source';
+  private urlApiUrlsUpload: string = window.__env.apiDataworkBench + '/iati-testfiles/urls/source';
 
-  constructor(private http: HttpClient,
-              private logger: LogService,
-              private messagesService: MessagesService) { }
+  constructor(
+    private http: HttpClient,
+    private logger: LogService,
+    private messagesService: MessagesService
+  ) { }
 
 
   uploadFiles(files: File[]) {
@@ -47,8 +47,11 @@ export class FileUploadService {
     // The `HttpClient.request` API produces a raw event stream
     // which includes start (sent), progress, and response events.
     return this.http.request(req).pipe(
+      // TODO: uncomment
+
       // map(event => this.getEventMessage(event, file)),
       // tap(message => this.addProgressMessages(message.type, message.message, message.progress)),
+
       last(), // return last (completed) message to caller
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError(files))
@@ -119,5 +122,18 @@ export class FileUploadService {
     this.messagesService.add(mes);
   }
 
-
+  fetchFilesByUrls(remoteFile: { name: string, url: string }) {
+    return this.http.post<any>(this.urlApiUrlsUpload, JSON.stringify({
+      remoteFile
+    }),
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      responseType: 'json'
+    })
+    .subscribe((res) => {
+      console.log('res: ', res);
+    });
+  }
 }

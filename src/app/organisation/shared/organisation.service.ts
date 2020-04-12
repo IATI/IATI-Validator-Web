@@ -21,9 +21,11 @@ export class OrganisationService {
   private urlApiIatiDataset: string = window.__env.apiDataworkBench + '/iati-datasets';
   private urlApiIatiFile: string = window.__env.apiDataworkBench + '/iati-files';
 
-  constructor(private http: HttpClient,
-              private logger: LogService) { }
-              // ttp://dev1.dataworkbench.io/api/iati-publishers/findOne?filter[where][slug]=cordaid
+  constructor(
+    private http: HttpClient,
+    private logger: LogService
+  ) { }
+  // ttp://dev1.dataworkbench.io/api/iati-publishers/findOne?filter[where][slug]=cordaid
   getOrganisation(name: string): Observable<Organisation> {
     const url: string = this.urlApiOrganisation + '/findOne?filter[where][slug]=' + name + '&filter[include]=workspaces';
     this.log(url);

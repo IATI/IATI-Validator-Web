@@ -5,12 +5,6 @@
     border: 1px solid lightgray;
     color: $gray-600;
   }
-
-  .iati-file-label {
-    color: #fff;
-    background-color: #00c497;
-    border-color: #00c497;
-  }
 }
 
 .step {
@@ -57,14 +51,8 @@
   color: inherit;
 }
 
-.name-file {
-  font-weight: 700;
-}
-
-.message {
-  margin: 16px 0;
-}
-
-#file-upload {
-  display: none;
+.file-name,
+.urls-input {
+  padding: 5px;
+  margin-bottom: 10px;
 }

@@ -1,0 +1,43 @@
+<h4>URL</h4>
+<div [class.disable]="mode !== 'both' && mode === 'local'">
+  <div class="step next">
+    <h5 class="step-title">or add a web address of an online files</h5>
+    <input
+      (change)="this.fileName = $event.target.value"
+      class="file-name"
+      placeholder="enter file name"
+      [disabled]="mode !== 'both' && mode === 'local'"
+    />
+    <input
+      (change)="setUrl($event)"
+      class="urls-input"
+      placeholder="enter web address"
+      [disabled]="mode !== 'both' && mode === 'local'"
+    />
+  </div>
+
+  <div class="step" [class.next]="url.length">
+    <h5 class="step-title">fetch the files from the web</h5>
+    <button
+      class="btn btn-success iati-button border-radius-none"
+      [disabled]="!url.length"
+      (click)="fetchFiles()"
+    >
+      Fetch
+    </button>
+  </div>
+
+  <div
+    class="step"
+    [class.next]=""
+  >
+    <h5 class="step-title"> </h5>
+    <button
+      class="btn btn-success iati-button border-radius-none"
+      (click)="ValidateFile()"
+      [disabled]="true"
+    >
+      Validate
+    </button>
+  </div>
+</div>

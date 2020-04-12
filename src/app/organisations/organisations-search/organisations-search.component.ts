@@ -18,7 +18,10 @@ export class OrganisationsSearchComponent implements OnInit {
 
   @Output() search = new EventEmitter<string>();
 
-  constructor(private organisationService: OrganisationsService, private renderer: Renderer) { }
+  constructor(
+    private organisationService: OrganisationsService,
+    private renderer: Renderer
+  ) { }
 
   ngOnInit() {
     // Set focus on search field
@@ -26,10 +29,10 @@ export class OrganisationsSearchComponent implements OnInit {
 
     // Subscribe to changes in the search field and emit a search after 400 ms.
     this.term.valueChanges
-              .debounceTime(300)
-              .distinctUntilChanged()
-              .subscribe(searchValue => this.searchOrganisations());
-              // .subscribe(t => this.search.emit(t));
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .subscribe(searchValue => this.searchOrganisations());
+      // .subscribe(t => this.search.emit(t));
   }
 
   searchOrganisations() {

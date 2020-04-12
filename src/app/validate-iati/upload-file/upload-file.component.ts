@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { LogService } from './../../core/logging/log.service';
 import { MessagesService } from './../shared/messages.service';
 import { Message } from '../shared/message';
 import { MessageType } from '../shared/message-type.enum';
+import { Mode } from '../validate-iati';
 
 @Component({
   selector: 'app-upload-file',
@@ -15,6 +16,11 @@ import { MessageType } from '../shared/message-type.enum';
   styleUrls: ['./upload-file.component.scss']
 })
 export class UploadFileComponent implements OnInit, OnDestroy {
+  @Output() setActiveMode = new EventEmitter<Mode>();
+  @Output() clear = new EventEmitter<void>();
+
+  @Input() mode: Mode;
+
   selectedFiles: File[] = [];
   workspaceId = '';
   fileUploaded = false;
@@ -26,17 +32,18 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   messagesSub: Subscription;
 
   constructor(
-    private http: HttpClient,
-    private logger: LogService,
-    private router: Router,
-    private fileUploadService: FileUploadService,
-    public messageService: MessagesService
+    private readonly http: HttpClient,
+    private readonly logger: LogService,
+    private readonly router: Router,
+    private readonly fileUploadService: FileUploadService,
+    public readonly messageService: MessagesService
   ) { }
 
   ngOnInit() {
     this.messagesSub = this.messageService.messages
       .subscribe(
         (messages: Message[]) => {
+          console.log('messages: ', messages);
           this.messages = messages;
           this.message = messages[messages.length - 1];
         }
@@ -45,6 +52,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
 
   onFileChanged(event) {
     this.uploading = false;
+    this.setActiveMode.emit(Mode.local);
     this.selectedFiles = event.target.files;
   }
 
@@ -92,6 +100,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
 
 
   clearFiles() {
+    this.clear.emit();
     this.selectedFiles = [];
   }
 }
