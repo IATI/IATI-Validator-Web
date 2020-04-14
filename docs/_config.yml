@@ -5,7 +5,7 @@ email: rolf@drostan.org
 description: >
   Front-end application for validation
 brand: DataWorkbench
-github: https://github.com/data4development/dataworkbench-frontend
+github: data4development/dataworkbench-frontend
 
 defaults:
   -
