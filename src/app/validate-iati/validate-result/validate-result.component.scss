@@ -46,14 +46,26 @@ p {
 
 .another-files {
   margin-bottom: 2em;
+  font-size: 18px;
 }
 
 button, .btn {
   font-size: 1em;
+  height: 40px;
+  max-height: 40px;
+
+  &:disabled {
+    &:hover {
+      color: #fff;
+      background-color: #00c497;
+      border-color: #00c497;
+      cursor: initial;
+    }
+  }
 }
 
 .validation-result__footer {
-  font-size: 16px;
+  font-size: 18px;
 
   button, .btn {
     font-size: 0.6em;
@@ -72,4 +84,15 @@ button, .btn {
 
 .saved-email {
   margin-right: 1em;
+}
+
+.email-form {
+  .ng-invalid.ng-touched {
+    border-color: red;
+    color: red;
+
+    &::placeholder {
+      color: red;
+    }
+  }
 }

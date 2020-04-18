@@ -2,7 +2,7 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { timer } from 'rxjs/observable/timer';
-// import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { IatiTestdataset } from './../shared/iati-testdataset';
 import { ValidatedIatiService } from './../shared/validated-iati.service';
@@ -23,18 +23,24 @@ export class ValidateResultComponent implements OnDestroy {
   source = timer(100, 2000);
   subscribeTimer: Subscription;
   interval: any;
-
-  email = '';
   emailMode: 'saved' | 'edit' | 'draft' = 'draft';
 
-  // form = this.fb.control('');
+  newEmail = this.fb.control('', [Validators.required, Validators.email]);
+  newForm: FormGroup = this.fb.group({
+    email: this.newEmail,
+  });
+
+  email = this.fb.control('', [Validators.required, Validators.email]);
+  form: FormGroup = this.fb.group({
+    email: this.email,
+  });
 
   constructor(
     private readonly activateRoute: ActivatedRoute,
     private readonly router: Router,
     private readonly validatedIatiService: ValidatedIatiService,
     private readonly logger: LogService,
-    // private readonly fb: FormBuilder
+    private readonly fb: FormBuilder
   ) {
 
     this.activateRoute
@@ -71,12 +77,12 @@ export class ValidateResultComponent implements OnDestroy {
     if (!this.iatiDatasetDatas) {
       return false;
     } else {
-      return this.jsonUpdated(this.iatiDatasetDatas);
+      return this.iatiDatasetDatas.every(iatiDatasetData => this.jsonUpdated(iatiDatasetData));
     }
 
   }
 
-  jsonUpdated(inDataset: IatiTestdataset[]): boolean {
+  jsonUpdated(inDataset: IatiTestdataset): boolean {
     if (inDataset['json-updated']) {
       return true;
     } else {
@@ -92,15 +98,16 @@ export class ValidateResultComponent implements OnDestroy {
     }
   }
 
-  rowClick(dataset: IatiTestdataset) {
-    if (this.jsonUpdated([dataset])) {
+  rowClick(dataset: IatiTestdataset, id: string) {
+    console.log('click: ', id);
+    if (this.jsonUpdated(dataset)) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           'isTestfiles': true,
         }
       };
 
-      this.router.navigate(['view', 'dqf', 'files', this.uploadId], navigationExtras);
+      this.router.navigate(['view', 'dqf', 'files', id], navigationExtras);
     } else {
       // this.selectedMd5.emit(this.md5);
     }
@@ -133,6 +140,28 @@ export class ValidateResultComponent implements OnDestroy {
   }
 
   saveEmailAddress() {
+    // TODO: added api call
+    if (this.form.valid) {
+      this.emailMode = 'saved';
+    }
+  }
+
+  editEmail() {
+    this.newEmail.setValue(this.email.value);
+    this.emailMode = 'edit';
+  }
+
+  updateEmail() {
+    // TODO: added api call
+    if (this.newForm.valid) {
+      this.email.setValue(this.newEmail.value);
+      this.newEmail.reset();
+      this.emailMode = 'saved';
+    }
+  }
+
+  returnViewMode() {
+    this.newEmail.reset();
     this.emailMode = 'saved';
   }
 

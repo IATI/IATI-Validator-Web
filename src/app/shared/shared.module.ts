@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerCircleComponent } from './spinner-circle/spinner-circle.component';
@@ -17,6 +17,7 @@ import { SpinnerCircleComponent } from './spinner-circle/spinner-circle.componen
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     SpinnerComponent,
@@ -25,6 +26,7 @@ import { SpinnerCircleComponent } from './spinner-circle/spinner-circle.componen
   exports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     SpinnerComponent,
     SpinnerCircleComponent
   ]

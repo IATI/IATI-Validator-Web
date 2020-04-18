@@ -11,30 +11,32 @@
           {{file.name}}
         </p>
       </section>
-      <section class="col">
-        <ng-container *ngIf="!selectedFiles.length; else clearState">
-          <label class="btn btn-success iati-button border-radius-none iati-file-label" for="file-upload">
-            Browse
-          </label>
-          <input
-            id="file-upload"
-            type="file"
-            (change)="onFileChanged($event)"
-            accept=".xml"
-            [disabled]="!isActiveStep('1') || mode !== 'both' && mode === 'urls'"
-            multiple
-          >
-        </ng-container>
-        <ng-template #clearState>
-          <button
-            class="btn btn-success iati-button border-radius-none"
-            (click)="clearFiles()"
-            [disabled]="!isActiveStep('1')"
-          >
-            Clear
-          </button>
-        </ng-template>
-      </section>
+      <ng-container *ngIf="!isActiveStep('3')">
+        <section class="col">
+          <ng-container *ngIf="!selectedFiles.length; else clearState">
+            <label class="btn btn-success iati-button border-radius-none iati-file-label" for="file-upload">
+              Browse
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              (change)="onFileChanged($event)"
+              accept=".xml"
+              [disabled]="!isActiveStep('1') || mode !== 'both' && mode === 'urls'"
+              multiple
+            >
+          </ng-container>
+          <ng-template #clearState>
+            <button
+              class="btn btn-success iati-button border-radius-none"
+              (click)="clearFiles()"
+              [disabled]="!isActiveStep('1')"
+            >
+              Clear
+            </button>
+          </ng-template>
+        </section>
+      </ng-container>
     </div>
   </div>
 
@@ -43,25 +45,32 @@
     [class.next]="isActiveStep('2')"
   >
     <h5 class="step-title">Step 2. Upload your IATI file(s).</h5>
-    <!-- TODO: ask Rolf about it in new flow -->
-    <div *ngIf="selectedFile" class="name-file">File: {{selectedFile.name}}</div>
     <button
+      *ngIf="!isActiveStep('3')"
       class="btn btn-success iati-button border-radius-none"
       (click)="UploadFile()"
       [disabled]="!isActiveStep('2')"
     >
       Upload
     </button>
-    <!-- TODO: make progress bar -->
-    <div *ngIf="isActiveStep('2') && uploading" class="alert alert-info message" [class.alert-danger]="message.type===9">
-      <app-spinner *ngIf="uploading" [backColor]="'white'"></app-spinner>
-      {{ message.message }}
-      <p *ngIf="message.type===9">Please try again later.</p>
-    </div>
 
-    <div *ngIf="isActiveStep('2') && uploading">
-      <h4>Progress</h4>
-      <span>{{message.message}}</span>
+    <div
+      *ngIf="requestStatus !== 'draft'"
+      class="alert alert-info message"
+      [class.alert-danger]="requestStatus === 'error'"
+    >
+      <ng-container [ngSwitch]="requestStatus">
+        <ng-container *ngSwitchCase="'error'">
+          File(s) uploading failed. Check your files and try again.
+        </ng-container>
+        <ng-container *ngSwitchCase="'success'">
+          File(s) have been uploaded successfully
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <app-spinner [backColor]="'white'"></app-spinner>
+          Your files are uploading now. Large files could uploading more than few minutes.
+        </ng-container>
+      </ng-container>
     </div>
   </div>
 
@@ -77,12 +86,6 @@
     >
       Validate
     </button>
-    <!-- <button
-      class="btn btn-success iati-button border-radius-none"
-      [disabled]="!isActiveStep('3')"
-    >
-      Validate
-  </button> -->
   </div>
 
 </div>

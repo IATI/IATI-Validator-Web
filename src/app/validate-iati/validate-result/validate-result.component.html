@@ -27,7 +27,7 @@
 
     <ng-container *ngFor="let iatiDatasetData of iatiDatasetDatas">
       <div class="wrapper">
-        <div class="row" (click)="rowClick(iatiDatasetData)" [class.dqf]="jsonUpdated(iatiDatasetData)"  >
+        <div class="row" (click)="rowClick(iatiDatasetData, iatiDatasetData.id)" [class.dqf]="jsonUpdated(iatiDatasetData)"  >
           <div class="col-12 col-md">
             {{ iatiDatasetData.filename }}
           </div>
@@ -35,7 +35,9 @@
             {{ iatiDatasetData.uploaded | date:'yyyy-MM-dd HH:mm (z)' }}
           </div>
           <div class="col-12 col-md">
-            <span *ngIf="jsonUpdated(iatiDatasetData); else elseBlock" > <button type="button" class="btn btn-link dqf-button">{{ reportType(iatiDatasetData) }}</button> </span>
+            <span *ngIf="jsonUpdated(iatiDatasetData); else elseBlock" >
+              <button type="button" class="btn btn-link dqf-button">{{ reportType(iatiDatasetData) }}</button>
+            </span>
             <ng-template #elseBlock>
               <span *ngIf="iatiDatasetData">{{iatiDatasetData.status}}</span>
             </ng-template>
@@ -67,20 +69,21 @@
         Enter your email address to receive a notification
       </p>
       <div class="row">
-        <!-- <form> -->
+        <form class="email-form" [formGroup]="form" (submit)="saveEmailAddress($event)">
           <input
             type="email"
-            [(ngModel)]="email"
+            [formControl]="email"
             class="urls-input"
             placeholder="your email address"
           />
           <button
             class="btn btn-success iati-button border-radius-none"
-            (click)="saveEmailAddress()"
+            type="submit"
+            [disabled]="form.invalid"
           >
             Add email address
           </button>
-        <!-- </form> -->
+        </form>
       </div>
     </ng-container>
 
@@ -89,9 +92,10 @@
         Send a notification to this address
       </p>
       <div class="row">
-        <span class="saved-email">{{email}}</span>
+        <span class="saved-email">{{email.value}}</span>
         <button
           class="btn btn-success iati-button border-radius-none"
+          (click)="editEmail()"
         >
           Edit email address
         </button>
@@ -103,22 +107,27 @@
         Enter your email address to receive a notification
       </p>
       <div class="row">
-        <input
-          type="email"
-          [(ngModel)]="email"
-          class="urls-input"
-          placeholder="your email address"
-        />
-        <button
-          class="btn btn-success iati-button border-radius-none"
-        >
-          Save
-        </button>
-        <button
-          class="btn btn-success iati-button border-radius-none"
-        >
-          Cancel
-        </button>
+        <form class="email-form" [formGroup]="newForm" (submit)="updateEmail()">
+          <input
+            type="email"
+            [formControl]="newEmail"
+            class="urls-input"
+            placeholder="your email address"
+          />
+          <button
+            class="btn btn-success iati-button border-radius-none"
+            type="submit"
+            [disabled]="newForm.invalid || !newForm.touched"
+          >
+            Save
+          </button>
+          <button
+            class="btn btn-success iati-button border-radius-none"
+            (click)="returnViewMode()"
+          >
+            Cancel
+          </button>
+        </form>
       </div>
     </ng-container>
   </div>
