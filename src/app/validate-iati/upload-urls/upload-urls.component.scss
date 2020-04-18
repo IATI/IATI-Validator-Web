@@ -4,6 +4,7 @@
   .step {
     border: 1px solid lightgray;
     color: $gray-600;
+    box-shadow: initial;
   }
 }
 
@@ -35,6 +36,19 @@
     font-size: 1.2em;
     margin-bottom: 0;
   }
+
+  &:not(.next) {
+    h5 {
+      user-select: none;
+    }
+
+    .iati-button:hover {
+      color: #fff;
+      background-color: #00c497;
+      border-color: #00c497;
+      cursor: initial;
+    }
+  }
 }
 
 .step-title {
@@ -55,4 +69,9 @@
 .urls-input {
   padding: 5px;
   margin-bottom: 10px;
+}
+
+.incorrect-urls-warning {
+  font-size: 1em;
+  color: $yellow;
 }

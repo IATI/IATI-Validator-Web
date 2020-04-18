@@ -3,28 +3,29 @@
 
   <div class="row">
     <div class="col">
-      <!-- <h3 class="text-info">These results will be deleted after 21-3-2018 16:45</h3> -->
-      <p>Bookmark this page to return to your results.
+      <p class="link-paragraph">
+        Bookmark this page to return to your results.
         <br> Your personal url is:
-        <a [routerLink]="['/validate', uploadId]"> {{environmentUrl}}/iati-feedback/validate/{{ uploadId}} </a> <button class="btn btn-outline-primary btn-sm ml-2" (click)="copyTextToClipboard('text')">Copy url</button>
+        <a [routerLink]="['/validate', uploadId]"> {{environmentUrl}}/iati-feedback/validate/{{ uploadId}} </a>
+        <button class="btn btn-outline-primary btn-sm ml-2 copy-url-btn" (click)="copyTextToClipboard('text')">Copy url</button>
       </p>
     </div>
   </div>
 
-    <div *ngIf="iatiDatasetData" class="files">
-      <div class="row heading">
-        <div class="col-12 col-md">
-          File name
-        </div>
-        <div class="col-12 col-md d-none d-md-block">
-          Uploaded
-        </div>
-        <div class="col-12 col-md d-none d-md-block">
-          Report status
-        </div>
+  <div *ngIf="iatiDatasetDatas.length" class="files">
+    <div class="row heading">
+      <div class="col-12 col-md">
+        File name
       </div>
+      <div class="col-12 col-md d-none d-md-block">
+        Uploaded
+      </div>
+      <div class="col-12 col-md d-none d-md-block">
+        Report status
+      </div>
+    </div>
 
-
+    <ng-container *ngFor="let iatiDatasetData of iatiDatasetDatas">
       <div class="wrapper">
         <div class="row" (click)="rowClick(iatiDatasetData)" [class.dqf]="jsonUpdated(iatiDatasetData)"  >
           <div class="col-12 col-md">
@@ -35,34 +36,90 @@
           </div>
           <div class="col-12 col-md">
             <span *ngIf="jsonUpdated(iatiDatasetData); else elseBlock" > <button type="button" class="btn btn-link dqf-button">{{ reportType(iatiDatasetData) }}</button> </span>
-            <ng-template #elseBlock> <span *ngIf="iatiDatasetData">
-              <!-- <app-spinner-circle></app-spinner-circle>  -->
-              {{iatiDatasetData.status}}</span> </ng-template>
+            <ng-template #elseBlock>
+              <span *ngIf="iatiDatasetData">{{iatiDatasetData.status}}</span>
+            </ng-template>
           </div>
           <div class="col-12 d-md-none"><hr></div>
-
         </div>
       </div>
-      <!-- <div *ngFor="let ds of iatiDatasetData"  class="wrapper">
-        <div class="row" (click)="rowClick(ds)" [class.dqf]="jsonUpdated(ds)"  >
-          <div class="col-12 col-md">
-            {{ ds?.filename }}
-          </div>
-          <div class="col-12 col-md">
-            {{ ds?.uploaded | date:'yyyy-MM-dd HH:mm (z)' }}
-          </div>
-          <div class="col-12 col-md">
-            <span *ngIf="jsonUpdated(ds); else elseBlock" > <button type="button" class="btn btn-link dqf-button">{{ reportType(ds) }}</button> </span>
-            <ng-template #elseBlock> <span><app-spinner-circle></app-spinner-circle> Loading your report... please wait a moment.</span> </ng-template>
-          </div>
-          <div class="col-12 d-md-none"><hr></div>
-
-        </div>
-
-      </div> -->
-
-    </div>
-
-
-
+    </ng-container>
   </div>
+
+  <div class="row another-files">
+    <p>
+      You can add more files to your personal workspace. Your workspace and the files in it will be deleted 72 hours after all files have been processed.
+    </p>
+    <button
+      class="btn btn-success iati-button border-radius-none"
+      (click)="addMoreFiles()"
+    >
+      Add another file(s)
+    </button>
+  </div>
+
+  <div class="column validation-result__footer">
+    <p>
+      Processing a large amount of data can take some time. The Validator can send you a notification once all validation reports are ready.
+    </p>
+    <ng-container *ngIf="emailMode === 'draft'">
+      <p>
+        Enter your email address to receive a notification
+      </p>
+      <div class="row">
+        <!-- <form> -->
+          <input
+            type="email"
+            [(ngModel)]="email"
+            class="urls-input"
+            placeholder="your email address"
+          />
+          <button
+            class="btn btn-success iati-button border-radius-none"
+            (click)="saveEmailAddress()"
+          >
+            Add email address
+          </button>
+        <!-- </form> -->
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="emailMode === 'saved'">
+      <p>
+        Send a notification to this address
+      </p>
+      <div class="row">
+        <span class="saved-email">{{email}}</span>
+        <button
+          class="btn btn-success iati-button border-radius-none"
+        >
+          Edit email address
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="emailMode === 'edit'">
+      <p>
+        Enter your email address to receive a notification
+      </p>
+      <div class="row">
+        <input
+          type="email"
+          [(ngModel)]="email"
+          class="urls-input"
+          placeholder="your email address"
+        />
+        <button
+          class="btn btn-success iati-button border-radius-none"
+        >
+          Save
+        </button>
+        <button
+          class="btn btn-success iati-button border-radius-none"
+        >
+          Cancel
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</div>

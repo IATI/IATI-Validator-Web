@@ -4,6 +4,8 @@
   .step {
     border: 1px solid lightgray;
     color: $gray-600;
+    opacity: 0.5;
+    box-shadow: initial;
   }
 
   .iati-file-label {
@@ -40,6 +42,19 @@
   .file-name-p {
     font-size: 1.2em;
     margin-bottom: 0;
+  }
+
+  &:not(.next) {
+    h5 {
+      user-select: none;
+    }
+
+    .iati-button:hover {
+      color: #fff;
+      background-color: #00c497;
+      border-color: #00c497;
+      cursor: initial;
+    }
   }
 }
 

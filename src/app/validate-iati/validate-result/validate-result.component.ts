@@ -1,39 +1,45 @@
-import { IatiTestdataset } from './../shared/iati-testdataset';
-import { ActivatedRoute, UrlSegment, Router, NavigationExtras } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { timer } from 'rxjs/observable/timer';
+// import { FormBuilder } from '@angular/forms';
 
+import { IatiTestdataset } from './../shared/iati-testdataset';
 import { ValidatedIatiService } from './../shared/validated-iati.service';
 import { LogService } from '../../core/logging/log.service';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
-import { timer } from 'rxjs/observable/timer';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-validate-result',
   templateUrl: './validate-result.component.html',
   styleUrls: ['./validate-result.component.scss']
 })
-export class ValidateResultComponent implements OnInit, OnDestroy {
+export class ValidateResultComponent implements OnDestroy {
   workspaceId = '';
   uploadId = '';
   currentUrl = '';
-  iatiDatasetData: IatiTestdataset;
+  iatiDatasetDatas: IatiTestdataset[] = [];
   md5 = '';
   environmentUrl = window.__env.baseUrl;
   source = timer(100, 2000);
   subscribeTimer: Subscription;
   interval: any;
 
-  constructor(private activateRoute: ActivatedRoute,
-    private router: Router,
-    private validatedIatiService: ValidatedIatiService,
-    private logger: LogService) {
+  email = '';
+  emailMode: 'saved' | 'edit' | 'draft' = 'draft';
+
+  // form = this.fb.control('');
+
+  constructor(
+    private readonly activateRoute: ActivatedRoute,
+    private readonly router: Router,
+    private readonly validatedIatiService: ValidatedIatiService,
+    private readonly logger: LogService,
+    // private readonly fb: FormBuilder
+  ) {
 
     this.activateRoute
       .params
       .subscribe(params => {
-      //  this.workspaceId = params['id'];
         this.uploadId = params['id'];
       });
 
@@ -46,48 +52,31 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
-    // this.loadData();
+  ngOnDestroy() {
+    this.subscribeTimer.unsubscribe();
   }
 
   loadData() {
-    // this.validatedIatiService.getIatiDataset(this.workspaceId)
-    //   .subscribe(
-    //     data => {
-    //     this.iatiDatasetData = data;
-    //       console.log(data);
-    //     },
-    //     error => this.logger.error('Faild to load iati data', error),
-    //     () => {
-    //       // Completed
-
-    //     }
-    //   );
-    this.validatedIatiService.getIatiDatasetById(this.uploadId)
+    this.validatedIatiService.getIatiDataset(this.uploadId)
       .subscribe(
         data => {
-        this.iatiDatasetData = data;
+          this.iatiDatasetDatas = data;
         },
-        error => this.logger.error('Faild to load iati data', error),
-        () => {
-          // Completed
-
-        }
+        error => this.logger.error('Faild to load iati data', error)
       );
   }
 
   allDataHasJsonUpdated(): boolean {
 
-    if (!this.iatiDatasetData) {
+    if (!this.iatiDatasetDatas) {
       return false;
     } else {
-      // return this.iatiDatasetData.every(x => this.jsonUpdated(x));
-      return this.jsonUpdated(this.iatiDatasetData);
+      return this.jsonUpdated(this.iatiDatasetDatas);
     }
 
   }
 
-  jsonUpdated(inDataset: IatiTestdataset): boolean {
+  jsonUpdated(inDataset: IatiTestdataset[]): boolean {
     if (inDataset['json-updated']) {
       return true;
     } else {
@@ -97,7 +86,6 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
 
   reportType(dataset): string {
     if (this.jsonUpdated(dataset)) {
-      // Routerlink naar de view pagina
       return 'Validation finished (click to view)';
     } else {
       return '-';
@@ -105,27 +93,18 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
   }
 
   rowClick(dataset: IatiTestdataset) {
-
-
-    if (this.jsonUpdated(dataset)) {
+    if (this.jsonUpdated([dataset])) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           'isTestfiles': true,
         }
       };
 
-
-      // Routerlink naar de view pagina
       this.router.navigate(['view', 'dqf', 'files', this.uploadId], navigationExtras);
     } else {
       // this.selectedMd5.emit(this.md5);
     }
   }
-
-  ngOnDestroy() {
-    this.subscribeTimer.unsubscribe();
-  }
-
 
    copyTextToClipboard(_) {
     const txtArea = document.createElement('textarea');
@@ -153,4 +132,15 @@ export class ValidateResultComponent implements OnInit, OnDestroy {
     return false;
   }
 
+  saveEmailAddress() {
+    this.emailMode = 'saved';
+  }
+
+  addMoreFiles() {
+    this.router.navigate(['/validate'], {
+      queryParams: {
+        tmpWorkspaceId: this.uploadId,
+      }
+    });
+  }
 }

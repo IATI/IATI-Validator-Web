@@ -3,24 +3,19 @@
   <div class="step next">
     <h5 class="step-title">or add a web address of an online files</h5>
     <input
-      (change)="this.fileName = $event.target.value"
-      class="file-name"
-      placeholder="enter file name"
-      [disabled]="mode !== 'both' && mode === 'local'"
-    />
-    <input
       (change)="setUrl($event)"
       class="urls-input"
       placeholder="enter web address"
       [disabled]="mode !== 'both' && mode === 'local'"
     />
+    <p class="incorrect-urls-warning" *ngIf="incorrectUrls.length">You have incorrect web address: {{incorrectUrls}}</p>
   </div>
 
-  <div class="step" [class.next]="url.length">
+  <div class="step" [class.next]="urls.length">
     <h5 class="step-title">fetch the files from the web</h5>
     <button
       class="btn btn-success iati-button border-radius-none"
-      [disabled]="!url.length"
+      [disabled]="!urls.length"
       (click)="fetchFiles()"
     >
       Fetch
