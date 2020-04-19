@@ -1,5 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { of } from 'rxjs/observable/of';
@@ -42,6 +41,7 @@ export class UploadUrlsComponent implements OnInit {
     } else {
       this.incorrectUrls = '';
       this.clear.emit();
+      this.activeStep = ['1'];
     }
 
     this.urls = $event.target.value;
@@ -52,7 +52,7 @@ export class UploadUrlsComponent implements OnInit {
     const correctUrls = serializedUrls.filter(this.validateUrl);
     this.incorrectUrls = serializedUrls.filter(url => !this.validateUrl(url)).join(', ');
 
-    if (correctUrls.length) {
+    if (correctUrls.length && !this.incorrectUrls.length) {
       const [firstUrl] = correctUrls;
       const otherUrls = correctUrls.slice(1);
       const handleError = error => {
