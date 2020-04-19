@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class FileUploadService {
   private urlApiFileUpUpload: string = window.__env.apiDataworkBench + '/iati-testfiles/file/source';
-  private urlApiUrlsUpload: string = window.__env.apiDataworkBench + '/iati-testfiles/urls/source';
+  private urlApiUrlsUpload: string = window.__env.apiDataworkBench + '/iati-testfiles/url/source';
 
   workspaceId = '';
 
@@ -32,18 +32,17 @@ export class FileUploadService {
     ) as any;
   }
 
-  fetchFilesByUrls(urls: string[]) {
-    return this.http.post<any>(this.urlApiUrlsUpload, JSON.stringify({
-      urls
+  fetchFileByUrl(urls: string, tmpWorkspaceId?: string) {
+    const url = tmpWorkspaceId ? `${this.urlApiUrlsUpload}?tmpWorkspaceId=${tmpWorkspaceId}` : this.urlApiUrlsUpload;
+
+    return this.http.post<any>(url, JSON.stringify({
+      url: urls
     }),
     {
       headers: {
         'Content-Type': 'application/json'
       },
       responseType: 'json'
-    })
-    .subscribe((res) => {
-      console.log('res: ', res);
     });
   }
 

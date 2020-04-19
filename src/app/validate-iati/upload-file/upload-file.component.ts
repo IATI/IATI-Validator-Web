@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { of } from 'rxjs/observable/of';
 import { Router } from '@angular/router';
 
 import { FileUploadService } from './../shared/file-upload.service';
 import { LogService } from './../../core/logging/log.service';
 import { Mode } from '../validate-iati';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-upload-file',
@@ -86,6 +85,7 @@ export class UploadFileComponent implements OnInit {
   clearFiles() {
     this.clear.emit();
     this.selectedFiles = [];
+    this.activeStep = ['1'];
   }
 
   isActiveStep(step: string): boolean {
