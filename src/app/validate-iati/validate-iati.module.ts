@@ -10,6 +10,7 @@ import { ValidateResultComponent } from './validate-result/validate-result.compo
 import { FileUploadService } from './shared/file-upload.service';
 import { MessagesService } from './shared/messages.service';
 import { ValidatedIatiService } from './shared/validated-iati.service';
+import { UploadUrlsComponent } from './upload-urls/upload-urls.component';
 
 const routes: Routes = [
   { path: '', component: ValidateComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
     ValidateComponent,
     UploadFileComponent,
     ValidateResultComponent,
+    UploadUrlsComponent,
   ],
   providers: [
     FileUploadService,

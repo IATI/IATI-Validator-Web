@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';  
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 
 import { FeedbackGroupComponent } from '../feedback-group/feedback-group.component';
 import { LogService } from '../../../core/logging/log.service';
@@ -10,25 +10,19 @@ import { Title } from '@angular/platform-browser';
   templateUrl: './multi-feedback.component.html',
   styleUrls: ['./multi-feedback.component.scss']
 })
-export class MultiFeedbackComponent implements OnInit {
+export class MultiFeedbackComponent {
   @Input() activityData: Activity[];
-  @Input() title:string = '';
-  @Input() item:string = 'activity';
-  @Input() items:string = 'activities';
-  @Input() dqfs:Dqfs;
+  @Input() title = '';
+  @Input() item = 'activity';
+  @Input() items = 'activities';
+  @Input() dqfs: Dqfs;
   @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent>;
   isCollapsed = false;
 
-  constructor(private logger: LogService) { }
-
-  ngOnInit() {
-  }
+  constructor() { }
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
     this.groups.forEach(x => x.isCollapsed = this.isCollapsed);
   }
-
-
-
 }

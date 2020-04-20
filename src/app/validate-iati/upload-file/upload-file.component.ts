@@ -1,94 +1,102 @@
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { forkJoin } from 'rxjs/observable/forkJoin';
+import { of } from 'rxjs/observable/of';
+import { Router } from '@angular/router';
+
 import { FileUploadService } from './../shared/file-upload.service';
-import { Router, NavigationExtras } from '@angular/router';
 import { LogService } from './../../core/logging/log.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
-import { UploadResponse } from './../shared/uploadResponse';
-import { MessagesService } from './../shared/messages.service';
-import { Message } from '../shared/message';
-import { MessageType } from '../shared/message-type.enum';
+import { Mode } from '../validate-iati';
 
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
   styleUrls: ['./upload-file.component.scss']
 })
-export class UploadFileComponent implements OnInit, OnDestroy {
-  selectedFile: File;
-  workspaceId = '';
-  fileUploaded = false;
-  uploading = false;
-  fetchUrl = '';
-  uploadId = '';
-  message: Message;
-  messages: Message[] = [];
-  messagesSub: Subscription;
+export class UploadFileComponent implements OnInit {
+  @Output() setActiveMode = new EventEmitter<Mode>();
+  @Output() clear = new EventEmitter<void>();
 
-  constructor(private http: HttpClient,
-    private logger: LogService,
-    private router: Router,
-    private fileUploadService: FileUploadService,
-    public messageService: MessagesService) { }
+  @Input() mode: Mode;
+
+  selectedFiles: File[] = [];
+  workspaceId = '';
+  tmpWorkspaceId = '';
+  fileUploaded = false;
+  requestStatus: 'pending' | 'draft' | 'success' | 'error' = 'draft';
+  fetchUrl = '';
+
+  activeStep = ['1'];
+
+  constructor(
+    private readonly logger: LogService,
+    private readonly router: Router,
+    private readonly fileUploadService: FileUploadService,
+  ) { }
 
   ngOnInit() {
-
-    this.messagesSub = this.messageService.messages
-      .subscribe(
-        (messages: Message[]) => {
-          this.messages = messages;
-          this.message = messages[messages.length - 1];
-        }
-      );
-
+    this.tmpWorkspaceId = this.router.parseUrl(this.router.url).queryParams.tmpWorkspaceId;
   }
 
   onFileChanged(event) {
-    this.uploading = false;
-    this.selectedFile = event.target.files[0];
+    this.requestStatus = 'draft';
+    this.setActiveMode.emit(Mode.local);
+    this.selectedFiles = event.target.files;
+    this.activeStep.push('2');
   }
 
-  onFetch() {
-    let blob = null;
-    let request = new XMLHttpRequest();
-    request.open('GET', this.fetchUrl);
-    request.responseType = 'blob';
-    request.onload = function () {
-      var reader = new FileReader();
-      reader.readAsDataURL(request.response);
-      reader.onload = function (e) {
-        console.log('DataURL:', e.target);
-      };
+  UploadFile(): void {
+    const files = Array.prototype.slice.call(this.selectedFiles);
+    const [firstFile] = files;
+    const otherFiles = files.slice(1);
+    const handleError = error => {
+      console.log('error: ', error);
+      // this.logger.debug('Error message component: ', error);
+      this.requestStatus = 'error';
     };
-    request.send();
-  }
 
-  UploadFile() {
-    if (this.selectedFile) {
-      this.uploading = true;
-      this.fileUploadService.uploadFile(this.selectedFile).subscribe(
-        msg => {
-          this.uploading = false;
-          if (msg.type === MessageType.done) {
-            this.fileUploaded = true;
-            // this.ValidateFile();
-            this.uploadId = msg.uploadId;
-          }
+    if (files.length)  {
+      this.requestStatus = 'pending';
+
+      this.fileUploadService.uploadFile(firstFile, this.tmpWorkspaceId)
+        .subscribe(
+          (response: HttpResponse<any>) => {
+            const tmpWorkspaceId = this.tmpWorkspaceId || response.body.tmpworkspaceId;
+
+            this.parallelUpload(otherFiles, tmpWorkspaceId)
+              .subscribe(
+                () => {
+                  this.tmpWorkspaceId = tmpWorkspaceId;
+                  this.activeStep = ['3'];
+                  this.requestStatus = 'success';
+                },
+                handleError
+              );
         },
-        error => {
-          this.logger.debug('Error message component: ', error);
-          this.uploading = false;
-        }
+        handleError
       );
     }
   }
 
   ValidateFile() {
-    this.router.navigate(['validate', this.uploadId]);
+    this.router.navigate(['validate', this.tmpWorkspaceId]);
   }
 
-  ngOnDestroy() {
-    this.messagesSub.unsubscribe();
+  clearFiles() {
+    this.clear.emit();
+    this.selectedFiles = [];
+    this.activeStep = ['1'];
   }
 
+  isActiveStep(step: string): boolean {
+    return this.activeStep.includes(step);
+  }
+
+  private parallelUpload(files: File[], tmpWorkspaceId: string) {
+    if (!files.length) {
+      return of('skip' as any);
+    }
+
+    return forkJoin(files.map(file => this.fileUploadService.uploadFile(file, tmpWorkspaceId)) as any);
+  }
 }

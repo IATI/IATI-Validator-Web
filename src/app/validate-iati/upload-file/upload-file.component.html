@@ -1,33 +1,91 @@
 <h4>Upload your IATI file and receive validation feedback.</h4>
-<div>
-  <div class="step" [class.next]="!selectedFile">
-    <h5 class="step-title">Step 1. Select your IATI file.</h5>
-    <input type="file" (change)="onFileChanged($event)" accept=".xml" [disabled]="fileUploaded || uploading">
-    <!-- <span>Input URL:</span><input type="text" [disabled]="fileUploaded || uploading" [(ngModel)]="fetchUrl"> <button (click)="onFetch()">Fetch</button> -->
+<div [class.disable]="mode !== 'both' && mode === 'urls'">
+  <div
+    class="step"
+    [class.next]="isActiveStep('1')"
+  >
+    <h5 class="step-title">Step 1. Select your IATI file(s).</h5>
+    <div class="row">
+      <section *ngIf="selectedFiles.length" class="col selected-files" >
+        <p *ngFor="let file of selectedFiles" class="file-name-p">
+          {{file.name}}
+        </p>
+      </section>
+      <ng-container *ngIf="!isActiveStep('3')">
+        <section class="col">
+          <ng-container *ngIf="!selectedFiles.length; else clearState">
+            <label class="btn btn-success iati-button border-radius-none iati-file-label" for="file-upload">
+              Browse
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              (change)="onFileChanged($event)"
+              accept=".xml"
+              [disabled]="!isActiveStep('1') || mode !== 'both' && mode === 'urls'"
+              multiple
+            >
+          </ng-container>
+          <ng-template #clearState>
+            <button
+              class="btn btn-success iati-button border-radius-none"
+              (click)="clearFiles()"
+              [disabled]="!isActiveStep('1')"
+            >
+              Clear
+            </button>
+          </ng-template>
+        </section>
+      </ng-container>
+    </div>
   </div>
 
-  <div class="step" [class.next]="selectedFile!==undefined && !fileUploaded">
-    <h5 class="step-title">Step 2. Upload your IATI file.</h5>
-    <div *ngIf="selectedFile" class="name-file">File: {{selectedFile.name}}</div>
-    <button class="btn btn-success iati-button border-radius-none" (click)="UploadFile()" [disabled]="!selectedFile || fileUploaded">Upload file</button>
-    <div *ngIf="message" class="alert alert-info message" [class.alert-danger]="message.type===9">
-      <app-spinner *ngIf="uploading" [backColor]="'white'"></app-spinner>
-      {{ message.message }}
-      <p *ngIf="message.type===9">Please try again later.</p>
-    </div>
+  <div
+    class="step"
+    [class.next]="isActiveStep('2')"
+  >
+    <h5 class="step-title">Step 2. Upload your IATI file(s).</h5>
+    <button
+      *ngIf="!isActiveStep('3')"
+      class="btn btn-success iati-button border-radius-none"
+      (click)="UploadFile()"
+      [disabled]="!isActiveStep('2')"
+    >
+      Upload
+    </button>
 
-    <div *ngIf="messages.length && !fileUploaded && uploading">
-      <h4>Progress</h4>
-      <span>{{message.message}}</span>
-      <!-- <ul>
-        <li *ngFor='let message of messages'> {{message.message}} </li>
-      </ul> -->
+    <div
+      *ngIf="requestStatus !== 'draft'"
+      class="alert alert-info message"
+      [class.alert-danger]="requestStatus === 'error'"
+    >
+      <ng-container [ngSwitch]="requestStatus">
+        <ng-container *ngSwitchCase="'error'">
+          File(s) uploading failed. Check your files and try again.
+        </ng-container>
+        <ng-container *ngSwitchCase="'success'">
+          File(s) have been uploaded successfully
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <app-spinner [backColor]="'white'"></app-spinner>
+          Your files are uploading now. Large files could uploading more than few minutes.
+        </ng-container>
+      </ng-container>
     </div>
   </div>
 
-  <div class="step" [class.next]="fileUploaded && message.type === 8">
+  <div
+    class="step"
+    [class.next]="isActiveStep('3')"
+  >
     <h5 class="step-title">Step 3. Start validation.</h5>
-    <button class="btn btn-success iati-button border-radius-none" (click)="ValidateFile()" [disabled]="!fileUploaded">Start validation</button>
+    <button
+      class="btn btn-success iati-button border-radius-none"
+      (click)="ValidateFile()"
+      [disabled]="!isActiveStep('3')"
+    >
+      Validate
+    </button>
   </div>
 
 </div>

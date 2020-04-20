@@ -12,8 +12,10 @@ import { of } from 'rxjs/observable/of';
 export class ValidatedIatiService {
   private urlApiIatiDataset: string = window.__env.apiDataworkBench + '/iati-testdatasets';
 
-  constructor(private logger: LogService,
-              private http: HttpClient) { }
+  constructor(
+    private logger: LogService,
+    private http: HttpClient
+  ) { }
 
   getIatiDataset(workspaceId: string): Observable<IatiTestdataset[]> {
     const url: string = this.urlApiIatiDataset + '/?filter[where][tmpworkspaceId]=' + workspaceId;
@@ -27,7 +29,7 @@ export class ValidatedIatiService {
   }
 
   getIatiDatasetById(inUploadId): Observable<IatiTestdataset> {
-    const url: string = this.urlApiIatiDataset +'/'+inUploadId;
+    const url: string = this.urlApiIatiDataset + '/' + inUploadId;
     return this.http.get<any>(url).pipe(
       tap(_ => this.logger.debug(`fetched iati dataset`)),
       catchError(this.handleError('getIatiDataset', undefined))
@@ -45,7 +47,6 @@ export class ValidatedIatiService {
 
       // TODO: send the error to remote logging
       this.logger.error(error);
-      // console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       // this.log(`${operation} failed: ${error.message}`);

@@ -1,9 +1,9 @@
 @import "variables";
 
 .files {
-  // margin: 10px 10px;
   border: 1px solid lightgray;
   border-radius: $border-radius;
+  margin-bottom: 5em;
 }
 
 .files > .heading {
@@ -11,11 +11,6 @@
   padding: 6px 0;
   font-weight: 700;
 }
-
-// .row {
-//   margin-right: 0;
-//   margin-left: 0;
-// }
 
 .row {
   padding: 3px 0;
@@ -37,8 +32,67 @@
   padding: 0;
 }
 
-// .result-validation {
-//   * {
-//     font-size: 1.5em;
-//   }
-// }
+p {
+  font-size: 1em;
+}
+
+.link-paragraph {
+  font-size: 1.5em;
+}
+
+.result-validation {
+  padding-bottom: 5em;
+}
+
+.another-files {
+  margin-bottom: 2em;
+  font-size: 18px;
+}
+
+button, .btn {
+  font-size: 1em;
+  height: 40px;
+  max-height: 40px;
+
+  &:disabled {
+    &:hover {
+      color: #fff;
+      background-color: #00c497;
+      border-color: #00c497;
+      cursor: initial;
+    }
+  }
+}
+
+.validation-result__footer {
+  font-size: 18px;
+
+  button, .btn {
+    font-size: 0.6em;
+  }
+
+  input {
+    margin-right: 1em;
+    padding: 5px 10px;
+    font-size: 0.75em;
+  }
+}
+
+.copy-url-btn {
+  font-size: 0.5em;
+}
+
+.saved-email {
+  margin-right: 1em;
+}
+
+.email-form {
+  .ng-invalid.ng-touched {
+    border-color: red;
+    color: red;
+
+    &::placeholder {
+      color: red;
+    }
+  }
+}

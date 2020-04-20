@@ -124,8 +124,22 @@ export class DataQualityFeedbackService {
   getSources(): Source[] {
     return [
       { id: 'iati', slug: 'iati', name: 'IATI Standard', count: null, order: 1, show: true },
-      { id: 'minbuza', slug: 'minbuza', name: 'Netherlands: Ministry of Foreign Affairs additional rules', count: null, order: 2, show: true },
-      { id: 'dfid', slug: 'dfid', name: 'UK: Department for International Development (DFID) additional rules', count: null, order: 3, show: true },
+      {
+        id: 'minbuza',
+        slug: 'minbuza',
+        name: 'Netherlands: Ministry of Foreign Affairs additional rules',
+        count: null,
+        order: 2,
+        show: true
+      },
+      {
+        id: 'dfid',
+        slug: 'dfid',
+        name: 'UK: Department for International Development (DFID) additional rules',
+        count: null,
+        order: 3,
+        show: true
+      },
       { id: 'practice', slug: 'practice', name: 'Common practice', count: null, order: 4, show: true },
       { id: 'iati-doc', slug: 'iati-doc', name: 'IATI Standard (additional)', count: null, order: 5, show: true },
     ];

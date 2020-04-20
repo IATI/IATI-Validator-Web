@@ -3,6 +3,17 @@
 
   <div class="row">
     <div class="col">
-      <app-upload-file></app-upload-file>
+      <app-upload-file
+        (setActiveMode)="setActiveMode($event)"
+        (clear)="clear()"
+        [mode]="mode"
+      ></app-upload-file>
+    </div>
+    <div class="col">
+      <app-upload-urls
+        (setActiveMode)="setActiveMode($event)"
+        (clear)="clear()"
+        [mode]="mode"
+      ></app-upload-urls>
     </div>
   </div>

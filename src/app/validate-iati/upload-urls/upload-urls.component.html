@@ -1,0 +1,55 @@
+<div class="urls-upload" [class.disable]="mode !== 'both' && mode === 'local'">
+  <div class="step" [class.next]="isActiveStep('1')">
+    <h5 class="step-title">or add a web address of an online files</h5>
+    <input
+      (change)="setUrl($event)"
+      class="urls-input"
+      placeholder="enter web address"
+      [disabled]="!isActiveStep('1') || mode !== 'both' && mode === 'local'"
+    />
+    <p class="incorrect-urls-warning" *ngIf="incorrectUrls.length">You have incorrect web address: "{{incorrectUrls}}"</p>
+  </div>
+
+  <div class="step" [class.next]="isActiveStep('2')">
+    <h5 class="step-title">fetch the files from the web</h5>
+    <button
+      class="btn btn-success iati-button border-radius-none"
+      [disabled]="!isActiveStep('2')"
+      (click)="fetchFiles()"
+    >
+      Fetch
+    </button>
+    <div
+      *ngIf="requestStatus !== 'draft'"
+      class="alert alert-info message"
+      [class.alert-danger]="requestStatus === 'error'"
+    >
+      <ng-container [ngSwitch]="requestStatus">
+        <ng-container *ngSwitchCase="'error'">
+          File(s) uploading failed. Check your files and try again.
+        </ng-container>
+        <ng-container *ngSwitchCase="'success'">
+          File(s) have been uploaded successfully
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <app-spinner [backColor]="'white'"></app-spinner>
+          Your files are uploading now. Large files could uploading more than few minutes.
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div
+    class="step"
+    [class.next]="isActiveStep('3')"
+  >
+    <h5 class="step-title"> </h5>
+    <button
+      class="btn btn-success iati-button border-radius-none"
+      (click)="ValidateFile()"
+      [disabled]="!isActiveStep('3')"
+    >
+      Validate
+    </button>
+  </div>
+</div>
