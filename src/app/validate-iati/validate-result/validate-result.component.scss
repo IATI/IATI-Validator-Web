@@ -44,13 +44,18 @@ p {
   padding-bottom: 5em;
 }
 
-.another-files {
+.content-block {
   margin-bottom: 2em;
-  font-size: 18px;
+  font-size: 1.5em;
+
+  input {
+    margin-right: 1em;
+    padding: 5px 10px;
+    font-size: 0.75em;
+  }
 }
 
 button, .btn {
-  font-size: 1em;
   height: 40px;
   max-height: 40px;
 
@@ -62,24 +67,6 @@ button, .btn {
       cursor: initial;
     }
   }
-}
-
-.validation-result__footer {
-  font-size: 18px;
-
-  button, .btn {
-    font-size: 0.6em;
-  }
-
-  input {
-    margin-right: 1em;
-    padding: 5px 10px;
-    font-size: 0.75em;
-  }
-}
-
-.copy-url-btn {
-  font-size: 0.5em;
 }
 
 .saved-email {
