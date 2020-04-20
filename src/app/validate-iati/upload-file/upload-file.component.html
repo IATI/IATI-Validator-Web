@@ -4,7 +4,7 @@
     class="step"
     [class.next]="isActiveStep('1')"
   >
-    <h5 class="step-title">Step 1. Select your IATI file(s).</h5>
+    <h5 class="step-title">Step 1: Select your IATI files</h5>
     <div class="row">
       <section *ngIf="selectedFiles.length" class="col selected-files" >
         <p *ngFor="let file of selectedFiles" class="file-name-p">
@@ -44,7 +44,7 @@
     class="step"
     [class.next]="isActiveStep('2')"
   >
-    <h5 class="step-title">Step 2. Upload your IATI file(s).</h5>
+    <h5 class="step-title">Step 2: Upload your IATI files</h5>
     <button
       *ngIf="!isActiveStep('3')"
       class="btn btn-success iati-button border-radius-none"
@@ -78,7 +78,7 @@
     class="step"
     [class.next]="isActiveStep('3')"
   >
-    <h5 class="step-title">Step 3. Start validation.</h5>
+    <h5 class="step-title">Step 3: Start validating your files</h5>
     <button
       class="btn btn-success iati-button border-radius-none"
       (click)="ValidateFile()"

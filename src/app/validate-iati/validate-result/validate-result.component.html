@@ -1,15 +1,15 @@
 <div class="container result-validation">
-  <h1>File validation results</h1>
+  <h1>Validation results</h1>
 
   <div class="row">
     <div class="col">
-      <p class="link-paragraph">
-        Bookmark this page to return to your results.
-        <br> Your personal url is:
-        <a [routerLink]="['/validate', uploadId]"> {{environmentUrl}}/iati-feedback/validate/{{ uploadId}} </a>
-        <button class="btn btn-outline-primary btn-sm ml-2 copy-url-btn" (click)="copyTextToClipboard('text')">Copy url</button>
-      </p>
-    </div>
+      Your personal workspace is here:
+      <br>
+      <a [routerLink]="['/validate', uploadId]"> {{environmentUrl}}/iati-feedback/validate/{{ uploadId}} </a>
+      <button class="btn btn-outline-primary btn-sm ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
+    </p>
+    <p>This is where you can see your ‘Validation Results’.</p>
+    <p>You can ‘Copy the address’ of your personal workplace and access the results later.</p>
   </div>
 
   <div *ngIf="iatiDatasetDatas.length" class="files">
@@ -50,23 +50,25 @@
 
   <div class="row another-files">
     <p>
-      You can add more files to your personal workspace. Your workspace and the files in it will be deleted 72 hours after all files have been processed.
+      If you want to validate more files, you have the option to do so by clicking “Add more files”.
     </p>
+    <p>Please note that your personal workspace and the files will be deleted 72 hours after uploading and processing all files.</p>
     <button
       class="btn btn-success iati-button border-radius-none"
       (click)="addMoreFiles()"
     >
-      Add another file(s)
+      Add more files
     </button>
   </div>
 
   <div class="column validation-result__footer">
     <p>
-      Processing a large amount of data can take some time. The Validator can send you a notification once all validation reports are ready.
+      If you have added multiple files and are processing a large amount of data, this can take some time. 
+      You can choose the option below for the validator to send you a notification via email once all the validation reports are ready.
     </p>
     <ng-container *ngIf="emailMode === 'draft'">
       <p>
-        Enter your email address to receive a notification
+        Enter your email below. Your email will not be shared with anyone and will be removed when your personal workspace is deleted.
       </p>
       <div class="row">
         <form class="email-form" [formGroup]="form" (submit)="saveEmailAddress($event)">
@@ -89,7 +91,7 @@
 
     <ng-container *ngIf="emailMode === 'saved'">
       <p>
-        Send a notification to this address
+        Send a notification to this address:
       </p>
       <div class="row">
         <span class="saved-email">{{email.value}}</span>

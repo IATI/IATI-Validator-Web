@@ -1,6 +1,6 @@
 <div class="urls-upload" [class.disable]="mode !== 'both' && mode === 'local'">
   <div class="step" [class.next]="isActiveStep('1')">
-    <h5 class="step-title">or add a web address of an online files</h5>
+    <h5 class="step-title">Step 1: Add a web address (URL) of your IATI XMLfile</h5>
     <input
       (change)="setUrl($event)"
       class="urls-input"
@@ -11,7 +11,7 @@
   </div>
 
   <div class="step" [class.next]="isActiveStep('2')">
-    <h5 class="step-title">fetch the files from the web</h5>
+    <h5 class="step-title">Step 2: Fetch the files from the web</h5>
     <button
       class="btn btn-success iati-button border-radius-none"
       [disabled]="!isActiveStep('2')"
@@ -43,7 +43,7 @@
     class="step"
     [class.next]="isActiveStep('3')"
   >
-    <h5 class="step-title"> </h5>
+    <h5 class="step-title">Step 3: Start validating your files</h5>
     <button
       class="btn btn-success iati-button border-radius-none"
       (click)="ValidateFile()"
