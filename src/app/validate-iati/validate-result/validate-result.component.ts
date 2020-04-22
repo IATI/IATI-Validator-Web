@@ -73,13 +73,11 @@ export class ValidateResultComponent implements OnDestroy {
   }
 
   allDataHasJsonUpdated(): boolean {
-
     if (!this.iatiDatasetDatas) {
       return false;
     } else {
-      return this.iatiDatasetDatas.every(iatiDatasetData => this.jsonUpdated(iatiDatasetData));
+      return this.iatiDatasetDatas.some(iatiDatasetData => this.jsonUpdated(iatiDatasetData));
     }
-
   }
 
   jsonUpdated(inDataset: IatiTestdataset): boolean {

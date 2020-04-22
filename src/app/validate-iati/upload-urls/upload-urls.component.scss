@@ -23,7 +23,7 @@
   padding: 12px;
   margin: 24px;
   border: 1px solid lightgray;
-  height: 101px;
+  min-height: 101px;
   max-width: 500px;
   font-size: 1.5em;
   color: $gray-600;
@@ -60,6 +60,10 @@
       border-color: #00c497;
       cursor: initial;
     }
+  }
+
+  .alert-info {
+    margin-top: 20px;
   }
 }
 
