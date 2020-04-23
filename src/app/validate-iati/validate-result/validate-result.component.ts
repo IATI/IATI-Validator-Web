@@ -51,6 +51,7 @@ export class ValidateResultComponent implements OnDestroy {
 
     this.subscribeTimer = this.source.subscribe(val => {
       this.loadData();
+
       if (this.allDataHasJsonUpdated()) {
         logger.debug('unsubscribe');
         this.subscribeTimer.unsubscribe();
@@ -73,10 +74,10 @@ export class ValidateResultComponent implements OnDestroy {
   }
 
   allDataHasJsonUpdated(): boolean {
-    if (!this.iatiDatasetDatas) {
+    if (!this.iatiDatasetDatas.length) {
       return false;
     } else {
-      return this.iatiDatasetDatas.some(iatiDatasetData => this.jsonUpdated(iatiDatasetData));
+      return this.iatiDatasetDatas.every(iatiDatasetData => this.jsonUpdated(iatiDatasetData));
     }
   }
 
@@ -97,7 +98,7 @@ export class ValidateResultComponent implements OnDestroy {
   }
 
   rowClick(dataset: IatiTestdataset, id: string) {
-    console.log('click: ', id);
+    console.log('navigate to report details: ', dataset.filename, dataset['json-updated']);
     if (this.jsonUpdated(dataset)) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -141,6 +142,7 @@ export class ValidateResultComponent implements OnDestroy {
     // TODO: added api call
     if (this.form.valid) {
       this.emailMode = 'saved';
+      this.validatedIatiService.sendEmail(this.uploadId, this.email.value).subscribe();
     }
   }
 
@@ -153,6 +155,7 @@ export class ValidateResultComponent implements OnDestroy {
     // TODO: added api call
     if (this.newForm.valid) {
       this.email.setValue(this.newEmail.value);
+      this.validatedIatiService.sendEmail(this.uploadId, this.newEmail.value).subscribe();
       this.newEmail.reset();
       this.emailMode = 'saved';
     }
