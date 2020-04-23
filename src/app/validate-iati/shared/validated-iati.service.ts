@@ -10,6 +10,7 @@ import { of } from 'rxjs/observable/of';
 @Injectable()
 export class ValidatedIatiService {
   private urlApiIatiDataset: string = window.__env.apiDataworkBench + '/iati-testdatasets';
+  private urlApiTmpWorkspace = (id) => `${window.__env.apiDataworkBench}/iati-testworkspaces/${id}`;
 
   constructor(
     private logger: LogService,
@@ -53,6 +54,14 @@ export class ValidatedIatiService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  sendEmail(id: string, email: string) {
+    return this.http.patch(this.urlApiTmpWorkspace(id), {
+      email
+    }).pipe(
+      catchError(this.handleError('sendEmail', undefined))
+    );
   }
 
 }

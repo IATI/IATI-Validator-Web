@@ -142,6 +142,7 @@ export class ValidateResultComponent implements OnDestroy {
     // TODO: added api call
     if (this.form.valid) {
       this.emailMode = 'saved';
+      this.validatedIatiService.sendEmail(this.uploadId, this.email.value).subscribe();
     }
   }
 
@@ -154,6 +155,7 @@ export class ValidateResultComponent implements OnDestroy {
     // TODO: added api call
     if (this.newForm.valid) {
       this.email.setValue(this.newEmail.value);
+      this.validatedIatiService.sendEmail(this.uploadId, this.newEmail.value).subscribe();
       this.newEmail.reset();
       this.emailMode = 'saved';
     }
