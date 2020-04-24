@@ -48,7 +48,6 @@ export class UploadFileComponent implements OnInit {
   UploadFile(): void {
     const files = Array.prototype.slice.call(this.selectedFiles);
     const handleError = error => {
-      console.log('error: ', error);
       // this.logger.debug('Error message component: ', error);
       this.requestStatus = 'error';
     };
@@ -60,8 +59,6 @@ export class UploadFileComponent implements OnInit {
         .subscribe(
           (response: HttpResponse<any>) => {
             const tmpWorkspaceId = response.body.id;
-
-            console.log('using workspace', tmpWorkspaceId);
 
             this.parallelUpload(files, tmpWorkspaceId)
               .subscribe(

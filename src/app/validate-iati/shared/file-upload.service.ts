@@ -18,7 +18,6 @@ export class FileUploadService {
   checkWorkspaceId(tmpWorkspaceId?: string): Observable<HttpResponse<any>> {
     if (!tmpWorkspaceId) {
       // create a new iati-testworkspace
-      console.log('new workspace');
       const req = new HttpRequest('POST', this.urlApiTestworkspace, '{}');
 
       return this.http.request(req).pipe(
@@ -27,7 +26,6 @@ export class FileUploadService {
       ) as any;
     } else {
       // check existing workspace
-      console.log('existing workspace');
       const req = new HttpRequest('GET', this.urlApiTestworkspace + '/' + tmpWorkspaceId);
 
       return this.http.request(req).pipe(
