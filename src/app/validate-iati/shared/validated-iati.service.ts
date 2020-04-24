@@ -36,6 +36,16 @@ export class ValidatedIatiService {
     );
   }
 
+  // TODO: replace any
+  getTmpWorkspace(workspaceId: string): any {
+    const url: string = this.urlApiTmpWorkspace(workspaceId);
+
+    return this.http.get(url).pipe(
+      catchError(this.handleError('getTmpWorkspace', undefined))
+    );
+
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

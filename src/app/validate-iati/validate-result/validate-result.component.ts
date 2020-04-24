@@ -64,10 +64,15 @@ export class ValidateResultComponent implements OnDestroy {
   }
 
   loadData() {
-    this.validatedIatiService.getIatiDataset(this.uploadId)
+    this.validatedIatiService.getTmpWorkspace(this.uploadId)
       .subscribe(
         data => {
-          this.iatiDatasetDatas = data;
+          if (!this.email.value && data.email) {
+            this.email.setValue( data.email);
+            this.emailMode = 'saved';
+          }
+          // this;
+          this.iatiDatasetDatas = data.datasets;
         },
         error => this.logger.error('Faild to load iati data', error)
       );
@@ -98,17 +103,8 @@ export class ValidateResultComponent implements OnDestroy {
   }
 
   rowClick(dataset: IatiTestdataset, id: string) {
-    console.log('navigate to report details: ', dataset.filename, dataset['json-updated']);
     if (this.jsonUpdated(dataset)) {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          'isTestfiles': true,
-        }
-      };
-
-      this.router.navigate(['view', 'dqf', 'files', id], navigationExtras);
-    } else {
-      // this.selectedMd5.emit(this.md5);
+      window.open(window.location.origin + '/view/dqf/files/' + id, '_blank');
     }
   }
 
@@ -172,5 +168,15 @@ export class ValidateResultComponent implements OnDestroy {
         tmpWorkspaceId: this.uploadId,
       }
     });
+  }
+
+  removeEmail() {
+    this.validatedIatiService.sendEmail(this.uploadId, null).subscribe(
+      () => {
+        this.newEmail.reset();
+        this.email.reset();
+        this.emailMode = 'draft';
+      }
+    );
   }
 }
