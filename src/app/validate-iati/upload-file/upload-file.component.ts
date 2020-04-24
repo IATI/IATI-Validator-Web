@@ -47,10 +47,7 @@ export class UploadFileComponent implements OnInit {
 
   UploadFile(): void {
     const files = Array.prototype.slice.call(this.selectedFiles);
-    const [firstFile] = files;
-    const otherFiles = files.slice(1);
     const handleError = error => {
-      console.log('error: ', error);
       // this.logger.debug('Error message component: ', error);
       this.requestStatus = 'error';
     };
@@ -58,12 +55,12 @@ export class UploadFileComponent implements OnInit {
     if (files.length)  {
       this.requestStatus = 'pending';
 
-      this.fileUploadService.uploadFile(firstFile, this.tmpWorkspaceId)
+      this.fileUploadService.checkWorkspaceId(this.tmpWorkspaceId)
         .subscribe(
           (response: HttpResponse<any>) => {
-            const tmpWorkspaceId = this.tmpWorkspaceId || response.body.tmpworkspaceId;
+            const tmpWorkspaceId = response.body.id;
 
-            this.parallelUpload(otherFiles, tmpWorkspaceId)
+            this.parallelUpload(files, tmpWorkspaceId)
               .subscribe(
                 () => {
                   this.tmpWorkspaceId = tmpWorkspaceId;
@@ -72,9 +69,9 @@ export class UploadFileComponent implements OnInit {
                 },
                 handleError
               );
-        },
-        handleError
-      );
+          },
+          handleError
+        );
     }
   }
 
