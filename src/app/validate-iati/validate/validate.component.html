@@ -1,5 +1,7 @@
 <div class="container">
-  <a class="back-link" *ngIf="tmpWorkspaceId" [routerLink]="['/validate', tmpWorkspaceId]" >Return to workspace</a>
+  <div class="content-block" *ngIf="tmpWorkspaceId">
+    <a [routerLink]="['/validate', tmpWorkspaceId]" >&lt;&lt; Return to your workspace</a>
+  </div>
   <h1>Check data</h1>
 
   <div class="row">

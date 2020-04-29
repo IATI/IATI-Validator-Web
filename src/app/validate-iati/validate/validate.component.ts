@@ -11,6 +11,7 @@ import { Mode } from '../validate-iati';
 export class ValidateComponent implements OnInit {
   mode: Mode;
   tmpWorkspaceId: string;
+  environmentUrl = window.__env.baseUrl;
 
   constructor(private readonly router: Router) {
     this.tmpWorkspaceId = this.router.parseUrl(this.router.url).queryParams.tmpWorkspaceId;

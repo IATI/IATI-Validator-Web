@@ -104,7 +104,13 @@ export class ValidateResultComponent implements OnDestroy {
 
   rowClick(dataset: IatiTestdataset, id: string) {
     if (this.jsonUpdated(dataset)) {
-      window.open(window.location.origin + '/view/dqf/files/' + id + '?isTestfiles=true', '_blank');
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'isTestfiles': true,
+        }
+      };
+
+      this.router.navigate(['view', 'dqf', 'files', id], navigationExtras);
     }
   }
 

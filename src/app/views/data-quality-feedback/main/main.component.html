@@ -1,7 +1,9 @@
 <div class="container-fluid">
+  <div class="content-block" *ngIf="tmpWorkspaceId">
+    <a [routerLink]="['/validate', tmpWorkspaceId]" >&lt;&lt; Return to your workspace</a>
+  </div>
   <div class="row alert alert-light">
     <div class="col">
-      <a class="back_link" *ngIf="data.tmpworkspaceId" [routerLink]="['/validate', data.tmpworkspaceId]" >Return to workspace</a>
       <h1>File validation report</h1>
       <app-main-report-info *ngIf="!isTestfiles;else showFileName" [md5]="md5"></app-main-report-info>
       <ng-template #showFileName><h3>{{fileName}}</h3></ng-template>
