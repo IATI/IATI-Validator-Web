@@ -94,6 +94,14 @@ export class ValidateResultComponent implements OnDestroy {
     }
   }
 
+  hasSourceUrl(inDataset: IatiTestdataset): boolean {
+    if (inDataset['sourceUrl']) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   reportType(dataset): string {
     if (this.jsonUpdated(dataset)) {
       return 'Validation finished (click to view)';

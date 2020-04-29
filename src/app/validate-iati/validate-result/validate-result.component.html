@@ -29,7 +29,12 @@
       <div class="wrapper">
         <div class="row" (click)="rowClick(iatiDatasetData, iatiDatasetData.id)" [class.dqf]="jsonUpdated(iatiDatasetData)"  >
           <div class="col-12 col-md">
-            {{ iatiDatasetData.filename }}
+            <span *ngIf="hasSourceUrl(iatiDatasetData); else elseBlock2" >
+              {{ iatiDatasetData.sourceUrl }}
+            </span>
+            <ng-template #elseBlock2>
+              {{ iatiDatasetData.filename }}
+            </ng-template>
           </div>
           <div class="col-12 col-md">
             {{ iatiDatasetData.uploaded | date:'yyyy-MM-dd HH:mm (z)' }}
