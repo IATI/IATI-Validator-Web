@@ -52,18 +52,19 @@ export class FileUploadService {
     ) as any;
   }
 
-  fetchFileByUrl(urls: string, tmpWorkspaceId?: string) {
-    const url = tmpWorkspaceId ? `${this.urlApiUrlsUpload}?tmpWorkspaceId=${tmpWorkspaceId}` : this.urlApiUrlsUpload;
+  fetchFileByUrl(fileUrl: string, tmpWorkspaceId?: string) {
+    const url = tmpWorkspaceId ? `${this.urlApiTestWorkspace}/${tmpWorkspaceId}/url/source` : this.urlApiUrlsUpload;
 
-    return this.http.post<any>(url, JSON.stringify({
-      url: urls
-    }),
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      responseType: 'json'
-    });
+    return this.http.post<any>(
+      url,
+      JSON.stringify({ url: fileUrl }),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        responseType: 'json'
+      }
+    );
   }
 
   setWorkspaceId(id: string) {
