@@ -7,7 +7,7 @@
       placeholder="enter web address"
       [disabled]="!isActiveStep('1') || mode !== 'both' && mode === 'local'"
     />
-    <p class="incorrect-urls-warning" *ngIf="incorrectUrls.length">You have incorrect web address: "{{incorrectUrls}}"</p>
+    <p class="incorrect-urls-warning" *ngIf="incorrectUrls.length">You have one or more incorrect web addresses: "{{incorrectUrls}}"</p>
   </div>
 
   <div class="step" [class.next]="isActiveStep('2')">

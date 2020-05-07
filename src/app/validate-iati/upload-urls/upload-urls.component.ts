@@ -48,9 +48,9 @@ export class UploadUrlsComponent implements OnInit {
   }
 
   fetchFiles() {
-    const serializedUrls = this.urls.split(',').map(url => url.trim());
+    const serializedUrls = this.urls.split('|').map(url => url.trim());
     const correctUrls = serializedUrls.filter(this.validateUrl);
-    this.incorrectUrls = serializedUrls.filter(url => !this.validateUrl(url)).join(', ');
+    this.incorrectUrls = serializedUrls.filter(url => !this.validateUrl(url)).join(' | ');
 
     if (correctUrls.length && !this.incorrectUrls.length) {
       const urls = correctUrls.slice();
