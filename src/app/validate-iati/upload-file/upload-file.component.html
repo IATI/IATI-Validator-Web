@@ -4,7 +4,7 @@
     class="step"
     [class.next]="isActiveStep('1')"
   >
-    <h5 class="step-title">Step 1: Select your IATI files</h5>
+    <h5 class="step-title">Step 1: Select your IATI files. You can select multiple files at the same time.</h5>
     <div class="row">
       <section *ngIf="selectedFiles.length" class="col selected-files" >
         <p *ngFor="let file of selectedFiles" class="file-name-p">

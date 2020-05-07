@@ -1,6 +1,6 @@
 <div class="urls-upload" [class.disable]="mode !== 'both' && mode === 'local'">
   <div class="step" [class.next]="isActiveStep('1')">
-    <h5 class="step-title">Step 1: Add a web address (URL) of your IATI XMLfile</h5>
+    <h5 class="step-title">Step 1: Add a web address (URL) of your IATI XMLfile. You can add multiple files by seperating them with |</h5>
     <input
       (change)="setUrl($event)"
       class="urls-input"
