@@ -42,7 +42,7 @@ export class FileUploadService {
 
     const url = tmpWorkspaceId ? `${this.urlApiTestWorkspace}/${tmpWorkspaceId}/file/source` : this.urlApiFileUpUpload;
     const uploadData = new FormData();
-    uploadData.append('files', file, file.name);
+    uploadData.append('file', file, file.name);
 
     const req = new HttpRequest('POST', url, uploadData);
 
