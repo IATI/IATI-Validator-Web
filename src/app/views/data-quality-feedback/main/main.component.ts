@@ -30,6 +30,7 @@ export class MainComponent implements OnInit, OnDestroy {
   data = {};
   fileName = '';
   isTestfiles = false;
+  tmpWorkspaceId = '';
   activityData: Activity[] = [];
   activities: Activity[] = [];
   companyFeedbackData: Feedback[] = [];
@@ -71,6 +72,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
                 const theFileId = iatiTestDataSet.fileid.split('.').shift();
                 this.fileName = iatiTestDataSet.filename;
+                this.tmpWorkspaceId = iatiTestDataSet.tmpworkspaceId;
                 this.setActivityData(theFileId, qParams.isTestfiles);
               });
             } else {

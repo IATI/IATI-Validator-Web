@@ -48,13 +48,12 @@ export class UploadUrlsComponent implements OnInit {
   }
 
   fetchFiles() {
-    const serializedUrls = this.urls.split(',').map(url => url.trim());
+    const serializedUrls = this.urls.split('|').map(url => url.trim());
     const correctUrls = serializedUrls.filter(this.validateUrl);
-    this.incorrectUrls = serializedUrls.filter(url => !this.validateUrl(url)).join(', ');
+    this.incorrectUrls = serializedUrls.filter(url => !this.validateUrl(url)).join(' | ');
 
     if (correctUrls.length && !this.incorrectUrls.length) {
-      const [firstUrl] = correctUrls;
-      const otherUrls = correctUrls.slice(1);
+      const urls = correctUrls.slice();
       const handleError = error => {
         console.log('error: ', error);
         this.requestStatus = 'error';
@@ -62,19 +61,17 @@ export class UploadUrlsComponent implements OnInit {
 
       this.requestStatus = 'pending';
 
-      this.fileUploadService.fetchFileByUrl(firstUrl, this.tmpWorkspaceId)
+      this.fileUploadService.checkWorkspaceId(this.tmpWorkspaceId)
         .subscribe(
           (response: any) => {
-            console.log('response: ', response);
-            const tmpWorkspaceId = this.tmpWorkspaceId || response.tmpworkspaceId;
+            const tmpWorkspaceId = response.body.id;
 
-            this.parallelUpload(otherUrls, tmpWorkspaceId)
+            this.parallelUpload(urls, tmpWorkspaceId)
               .subscribe(
                 () => {
                   this.tmpWorkspaceId = tmpWorkspaceId;
                   this.activeStep = ['3'];
                   this.requestStatus = 'success';
-                  console.log('end');
                 },
                 handleError
               );

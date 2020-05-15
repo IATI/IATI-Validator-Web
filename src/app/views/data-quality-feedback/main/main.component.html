@@ -1,4 +1,7 @@
 <div class="container-fluid">
+  <div class="content-block" *ngIf="tmpWorkspaceId">
+    <a [routerLink]="['/validate', tmpWorkspaceId]" >&lt;&lt; Return to your workspace</a>
+  </div>
   <div class="row alert alert-light">
     <div class="col">
       <h1>File validation report</h1>

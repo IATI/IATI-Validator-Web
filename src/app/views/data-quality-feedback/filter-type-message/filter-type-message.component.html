@@ -1,7 +1,7 @@
-<li class="list-group-item">
-    <span class="severity-count">{{typeMessage.count}} x</span>
-    <span [class.unselected]="!typeMessage?.show">{{ typeMessage.text }}</span>
-    <span class="select">
-      <app-checkbox [(checked)]="typeMessage.show" [name]="'filterTypeMsg' + typeMessage.text" (checkedChange)="selectionChanged()"></app-checkbox>
-    </span>
-  </li>
+<li *ngIf="typeMessage" class="list-group-item">
+  <span class="severity-count">{{typeMessage.count}} x</span>
+  <span [class.unselected]="!typeMessage?.show">{{ typeMessage.text}}</span>
+  <span class="select">
+    <app-checkbox [(checked)]="typeMessage.show" [name]="'filterTypeMsg' + typeMessage.text + typeMessage.id" (checkedChange)="selectionChanged()"></app-checkbox>
+  </span>
+</li>

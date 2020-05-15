@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Mode } from '../validate-iati';
 
@@ -9,8 +10,12 @@ import { Mode } from '../validate-iati';
 })
 export class ValidateComponent implements OnInit {
   mode: Mode;
+  tmpWorkspaceId: string;
+  environmentUrl = window.__env.baseUrl;
 
-  constructor() { }
+  constructor(private readonly router: Router) {
+    this.tmpWorkspaceId = this.router.parseUrl(this.router.url).queryParams.tmpWorkspaceId;
+  }
 
   ngOnInit() {
   }

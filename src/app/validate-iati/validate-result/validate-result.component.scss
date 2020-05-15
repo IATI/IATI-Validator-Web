@@ -30,6 +30,8 @@
 
 .dqf-button {
   padding: 0;
+  font-size: 1em;
+  height: 1em !important;
 }
 
 p {
@@ -74,6 +76,7 @@ button, .btn {
 }
 
 .email-form {
+  margin-right: 20px;
   .ng-invalid.ng-touched {
     border-color: red;
     color: red;

@@ -5,8 +5,8 @@
     <p>
       Your personal workspace is here:
       <br>
-      <a [routerLink]="['/validate', uploadId]"> {{environmentUrl}}/iati-feedback/validate/{{ uploadId}} </a>
-      <button class="btn btn-outline-primary btn-sm ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
+      <a [routerLink]="['/validate', uploadId]">{{environmentUrl}}/iati-feedback/validate/{{uploadId}}</a>
+      <button class="btn btn-outline-primary ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
     </p>
     <p>This is where you can see your ‘Validation Results’.</p>
     <p>You can ‘Copy the address’ of your personal workplace and access the results later.</p>
@@ -29,7 +29,12 @@
       <div class="wrapper">
         <div class="row" (click)="rowClick(iatiDatasetData, iatiDatasetData.id)" [class.dqf]="jsonUpdated(iatiDatasetData)"  >
           <div class="col-12 col-md">
-            {{ iatiDatasetData.filename }}
+            <span *ngIf="hasSourceUrl(iatiDatasetData); else elseBlock2" >
+              {{ iatiDatasetData.sourceUrl }}
+            </span>
+            <ng-template #elseBlock2>
+              {{ iatiDatasetData.filename }}
+            </ng-template>
           </div>
           <div class="col-12 col-md">
             {{ iatiDatasetData.uploaded | date:'yyyy-MM-dd HH:mm (z)' }}
@@ -106,7 +111,6 @@
       <p>
         Enter your email address to receive a notification
       </p>
-      <div class="row">
         <form class="email-form" [formGroup]="newForm" (submit)="updateEmail()">
           <input
             type="email"
@@ -128,7 +132,12 @@
             Cancel
           </button>
         </form>
-      </div>
+        <button
+          class="btn btn-success iati-button border-radius-none"
+          (click)="removeEmail()"
+        >
+          Remove
+        </button>
     </ng-container>
   </div>
 </div>

@@ -51,6 +51,7 @@ export class ValidateResultComponent implements OnDestroy {
 
     this.subscribeTimer = this.source.subscribe(val => {
       this.loadData();
+
       if (this.allDataHasJsonUpdated()) {
         logger.debug('unsubscribe');
         this.subscribeTimer.unsubscribe();
@@ -63,27 +64,38 @@ export class ValidateResultComponent implements OnDestroy {
   }
 
   loadData() {
-    this.validatedIatiService.getIatiDataset(this.uploadId)
+    this.validatedIatiService.getTmpWorkspace(this.uploadId)
       .subscribe(
         data => {
-          this.iatiDatasetDatas = data;
+          if (!this.email.value && data.email) {
+            this.email.setValue( data.email);
+            this.emailMode = 'saved';
+          }
+          // this;
+          this.iatiDatasetDatas = data.datasets;
         },
         error => this.logger.error('Faild to load iati data', error)
       );
   }
 
   allDataHasJsonUpdated(): boolean {
-
-    if (!this.iatiDatasetDatas) {
+    if (!this.iatiDatasetDatas.length) {
       return false;
     } else {
       return this.iatiDatasetDatas.every(iatiDatasetData => this.jsonUpdated(iatiDatasetData));
     }
-
   }
 
   jsonUpdated(inDataset: IatiTestdataset): boolean {
     if (inDataset['json-updated']) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  hasSourceUrl(inDataset: IatiTestdataset): boolean {
+    if (inDataset['sourceUrl']) {
       return true;
     } else {
       return false;
@@ -99,7 +111,6 @@ export class ValidateResultComponent implements OnDestroy {
   }
 
   rowClick(dataset: IatiTestdataset, id: string) {
-    console.log('click: ', id);
     if (this.jsonUpdated(dataset)) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -108,8 +119,6 @@ export class ValidateResultComponent implements OnDestroy {
       };
 
       this.router.navigate(['view', 'dqf', 'files', id], navigationExtras);
-    } else {
-      // this.selectedMd5.emit(this.md5);
     }
   }
 
@@ -143,6 +152,7 @@ export class ValidateResultComponent implements OnDestroy {
     // TODO: added api call
     if (this.form.valid) {
       this.emailMode = 'saved';
+      this.validatedIatiService.sendEmail(this.uploadId, this.email.value).subscribe();
     }
   }
 
@@ -155,6 +165,7 @@ export class ValidateResultComponent implements OnDestroy {
     // TODO: added api call
     if (this.newForm.valid) {
       this.email.setValue(this.newEmail.value);
+      this.validatedIatiService.sendEmail(this.uploadId, this.newEmail.value).subscribe();
       this.newEmail.reset();
       this.emailMode = 'saved';
     }
@@ -171,5 +182,15 @@ export class ValidateResultComponent implements OnDestroy {
         tmpWorkspaceId: this.uploadId,
       }
     });
+  }
+
+  removeEmail() {
+    this.validatedIatiService.sendEmail(this.uploadId, null).subscribe(
+      () => {
+        this.newEmail.reset();
+        this.email.reset();
+        this.emailMode = 'draft';
+      }
+    );
   }
 }
