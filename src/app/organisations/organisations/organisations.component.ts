@@ -21,8 +21,22 @@ export class OrganisationsComponent implements OnInit {
               private logger: LogService,
               private loader: LoaderService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.searchOrganisation('');
+
+    if (window.__env.stagePass === null) {
+      return;
+    }
+
+    let password = null;
+
+    const getPass = async () => {
+      password = window.prompt('Please enter the passphrase to enter the staging site.', '');
+    };
+
+    while (password !== window.__env.stagePass) {
+      await getPass();
+    }
   }
 
   searchOrganisation(name: string) {

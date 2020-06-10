@@ -24,9 +24,22 @@ export class OrganisationComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.LoadOrganisation(this.name);
-    // this.LoadWorkSpaces(this.name);
+
+    if (window.__env.stagePass === null) {
+      return;
+    }
+
+    let password = null;
+
+    const getPass = async () => {
+      password = window.prompt('Please enter the passphrase to enter the staging site.', '');
+    };
+
+    while (password !== window.__env.stagePass) {
+      await getPass();
+    }
   }
 
   LoadOrganisation(name: string) {
