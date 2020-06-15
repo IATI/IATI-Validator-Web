@@ -36,7 +36,7 @@ export class WorkspaceViewItemFileComponent implements OnInit {
   }
 
   jsonUpdated(): boolean {
-    if (this.iatiDatasetData) {
+    if (this.iatiDatasetData['json-updated']) {
       return true;
     } else {
       return false;
