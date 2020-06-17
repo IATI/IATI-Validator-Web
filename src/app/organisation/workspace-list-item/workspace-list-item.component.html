@@ -5,8 +5,8 @@
     <div class="mycard-title">
         {{workspace.title}}
     </div>
-    <div class="mycard-body">
-        <p class="card-text">{{workspace.description}}</p>
+    <div class="mycard-body"><p>
+        <p class="card-text"><b>{{workspace.description}}</b></p><p>Files are processed initially in order of "First downloaded" - the next in the queue was first downloaded at <b>{{ queueNextDate | date:'yyyy-MM-dd HH:mm (z)' }}</b>.<br/>Subsequently, the validation reports refresh every 48 hours, approximately.</p>
         <app-workspace-view-item  [workspaceId]="workspace.id" [versionSlug]="'current'" ></app-workspace-view-item>
     </div>
 

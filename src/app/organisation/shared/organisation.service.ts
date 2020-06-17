@@ -88,6 +88,20 @@ getIatiDataset(md5: string): Observable<IatiDataset[]> {
   );
 }
 
+getNextInQueue(): Observable<IatiDataset[]> {
+  const url: string = this.urlApiIatiDataset
+  + '/?filter={"limit": 1,"where": {"and": [{"or": [{"json-updated": '
+  + '{"exists": false}},{"svrl-updated": {"exists": false}}]},{"or": '
+  + '[{"processing": {"exists": false}}]}]},"order": "downloaded ASC"}';
+
+  this.log(url);
+  return this.http.get<IatiDataset>(url)
+  .pipe(
+    tap(_ => this.log(`fetched iati dataset`)),
+    catchError(this.handleError('getIatiDataset', undefined ))
+  );
+}
+
 getIatiFile(md5: string): Observable<any> {
   const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';
   //   /iati-files/{container}/download/{file}
