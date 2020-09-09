@@ -72,14 +72,6 @@ export class OrganisationComponent implements OnInit, OnDestroy {
     }
   }
 
-  // LoadWorkSpaces(name: string) {
-  //    this.organisationService.getWorkspaces(name)
-  //     .subscribe(
-  //       data => this.workspaces = data , // success path
-  //       error => this.error = error // error path
-  //     );
-  // }
-
   ngOnDestroy() {
   }
 

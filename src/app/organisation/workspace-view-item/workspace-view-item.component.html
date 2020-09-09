@@ -1,8 +1,8 @@
-<div *ngIf="versionData === undefined">
-  <p>No version data found.</p>
+<div *ngIf="files === undefined">
+  <p>No files found.</p>
 </div>
 
-<div *ngIf="versionData !== undefined" class="result-validation-table">
+<div *ngIf="files !== undefined" class="result-validation-table">
   <div class="files">
     <div class="row heading">
       <div class="col-12 col-md">
@@ -18,7 +18,7 @@
         Validation report available
       </div>
     </div>
-    <app-workspace-view-item-file *ngFor="let m of versionData.md5" [md5]="m" (selectedMd5)="md5Selected($event)"> </app-workspace-view-item-file>
+    <app-workspace-view-item-file *ngFor="let m of files" [md5]="m.md5" (selectedMd5)="md5Selected($event)"> </app-workspace-view-item-file>
   </div>
 
 </div>
