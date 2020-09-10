@@ -99,11 +99,8 @@ getIatiDataset(md5: string): Observable<IatiDataset[]> {
   );
 }
 
-getNextInQueue(): Observable<IatiDataset[]> {
-  const url: string = this.urlApiIatiDataset
-  + '/?filter={"limit": 1,"where": {"and": [{"or": [{"json-updated": '
-  + '{"exists": false}},{"svrl-updated": {"exists": false}}]},{"or": '
-  + '[{"processing": {"exists": false}}]}]},"order": "downloaded ASC"}';
+getNextInQueue(): Observable<IatiDataset> {
+  const url: string = window.__env.apiDataworkBench + '/queue/next';
 
   this.log(url);
   return this.http.get<IatiDataset>(url)

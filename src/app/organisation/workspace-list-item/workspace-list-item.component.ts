@@ -18,8 +18,8 @@ export class WorkspaceListItemComponent implements OnInit {
 
   ngOnInit() {
     this.organisationService.getNextInQueue().subscribe(iatiTestDataSet => {
-      if (typeof iatiTestDataSet[0] !== 'undefined') {
-        this.queueNextDate = iatiTestDataSet[0].downloaded;
+      if (typeof iatiTestDataSet !== 'undefined') {
+        this.queueNextDate = iatiTestDataSet.downloaded;
       } else {
         this.queueNextDate = null;
       }
