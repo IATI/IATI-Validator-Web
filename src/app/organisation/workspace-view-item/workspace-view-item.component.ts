@@ -1,7 +1,6 @@
 import { LogService } from './../../core/logging/log.service';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Version } from '../shared/version';
 import { OrganisationService } from '../shared/organisation.service';
 
 @Component({
@@ -13,7 +12,8 @@ export class WorkspaceViewItemComponent implements OnInit, OnChanges {
   @Input() workspaceId = '';
   @Input() versionSlug = '';
 
-  versionData: Version = this.organisationService.getEmptyVersion();
+  files = [];
+  publisher = null;
 
   viewData = [] ;
   previousViewType = '';
@@ -21,7 +21,9 @@ export class WorkspaceViewItemComponent implements OnInit, OnChanges {
 
   constructor(private router: Router,
               private organisationService: OrganisationService,
-              private logger: LogService) {
+              private logger: LogService,
+              private activatedRoute: ActivatedRoute) {
+                this.publisher = activatedRoute.snapshot.url[0].path;
                }
 
   ngOnInit() {
@@ -32,61 +34,17 @@ export class WorkspaceViewItemComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.logger.debug('ngOnChanges', changes);
-    this.loadVersionData();
-
-    // if (changes.versionSlug) {
-    //   this.logger.debug('Changes versionsluig');
-    //   if ( changes.versionSlug.currentValue !== changes.versionSlug.previousValue) {
-    //     this.loadVersionData();
-    //   }
-    // }
+    this.getFileData();
   }
 
-  loadVersionData() {
-    this.logger.debug('LoadVersionData');
-    if (this.workspaceId === undefined || this.workspaceId === '') {
-      return;
-    }
-
-    if (this.versionSlug  === '' || this.versionSlug === 'latest' ) {
-      this.versionData = undefined;
-    } else {
-      this.organisationService.getVersion(this.workspaceId, this.versionSlug)
+  getFileData() {
+      this.organisationService.getFileDataForPublisher(this.publisher)
       .subscribe(
         data => {
-          this.versionData = data[0];
-
-          // BW 12-3-2018: Temporary disable this code until we can get this info
-          // from the workbench api.
-          // Sort views by type
-          // this.versionData.views.sort(function(a, b) {
-          //   if (a.type < b.type) {
-          //     return -1;
-          //   }
-          //   if (a.type > b.type) {
-          //     return 1;
-          //   }
-          //   // type is equal
-          //   return 0;
-          // });
-
-          // // transform the versionData, so that it is grouped by type
-          // this.viewData.length = 0;
-          // let previousView = '';
-          // let indexCurrent = 0;
-          // for (const view of this.versionData.views) {
-          //   if (view.type !== previousView) {
-          //     this.viewData.push({ type: view.type, typeName: view.type_name, views: [] });
-          //   }
-          //   indexCurrent = this.viewData.length - 1;
-          //   this.viewData[indexCurrent].views.push(view);
-          //   previousView = view.type;
-          // }
-
+          this.files = data;
         } ,
         error => this.error = error
       );
-    }
   }
 
   rowClick(viewType: string, item: string) {

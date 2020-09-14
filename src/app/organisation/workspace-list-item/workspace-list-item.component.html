@@ -5,8 +5,13 @@
     <div class="mycard-title">
         {{workspace.title}}
     </div>
-    <div class="mycard-body">
-        <p class="card-text">{{workspace.description}}</p>
+    <div class="mycard-body"><p>
+        <p class="card-text"><b>{{workspace.description}}</b></p>
+        <p>Files are processed initially in order of "First downloaded" - 
+          <span *ngIf="queueNextDate != null">the next in the queue was first downloaded at <b>{{ queueNextDate | date:'yyyy-MM-dd HH:mm (z)' }}.</b></span>
+          <span *ngIf="queueNextDate === null">the queue is presently empty.</span>
+        </p>
+        <p>Please note that it will take some time for all the validation reports to show on this page. Please come back later to check the progress.</p>
         <app-workspace-view-item  [workspaceId]="workspace.id" [versionSlug]="'current'" ></app-workspace-view-item>
     </div>
 
