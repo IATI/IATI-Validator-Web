@@ -77,8 +77,30 @@ getVersion(workspaceId: string, versionSlug: string): Observable<Version[]> {
   );
 }
 
+getFileDataForPublisher(publisher: string): Observable<Version[]> {
+  const url: string = this.urlApiIatiDataset + '/?filter[where][publisher]=' + publisher;
+
+  this.log(url);
+  return this.http.get<Version>(url)
+  .pipe(
+    tap(_ => this.log(`fetched version`)),
+    catchError(this.handleError('getVersion', undefined ))
+  );
+}
+
 getIatiDataset(md5: string): Observable<IatiDataset[]> {
   const url: string = this.urlApiIatiDataset + '/?filter[where][md5]=' + md5;
+
+  this.log(url);
+  return this.http.get<IatiDataset>(url)
+  .pipe(
+    tap(_ => this.log(`fetched iati dataset`)),
+    catchError(this.handleError('getIatiDataset', undefined ))
+  );
+}
+
+getNextInQueue(): Observable<IatiDataset> {
+  const url: string = window.__env.apiDataworkBench + '/queue/next';
 
   this.log(url);
   return this.http.get<IatiDataset>(url)

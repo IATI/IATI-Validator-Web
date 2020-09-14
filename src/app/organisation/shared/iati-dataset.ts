@@ -6,6 +6,7 @@ export interface IatiDataset {
   publisher: string;
   filename: string;
   updated: Date;
+  downloaded: Date;
   'svrl-updated': Date;
   'json-updated': Date;
 }

@@ -18,19 +18,6 @@ export class ValidateComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if (window.__env.stagePass === null) {
-      return;
-    }
-
-    let password = null;
-
-    const getPass = async () => {
-      password = window.prompt('Please enter the passphrase to enter the staging site.', '');
-    };
-
-    while (password !== window.__env.stagePass) {
-      await getPass();
-    }
   }
 
   setActiveMode(mode: Mode) {

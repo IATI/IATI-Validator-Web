@@ -26,20 +26,6 @@ export class OrganisationComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.LoadOrganisation(this.name);
-
-    if (window.__env.stagePass === null) {
-      return;
-    }
-
-    let password = null;
-
-    const getPass = async () => {
-      password = window.prompt('Please enter the passphrase to enter the staging site.', '');
-    };
-
-    while (password !== window.__env.stagePass) {
-      await getPass();
-    }
   }
 
   LoadOrganisation(name: string) {
@@ -60,14 +46,6 @@ export class OrganisationComponent implements OnInit, OnDestroy {
       }
     }
   }
-
-  // LoadWorkSpaces(name: string) {
-  //    this.organisationService.getWorkspaces(name)
-  //     .subscribe(
-  //       data => this.workspaces = data , // success path
-  //       error => this.error = error // error path
-  //     );
-  // }
 
   ngOnDestroy() {
   }

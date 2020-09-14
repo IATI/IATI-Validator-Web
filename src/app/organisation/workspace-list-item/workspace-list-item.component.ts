@@ -1,5 +1,7 @@
 import { Workspace } from './../shared/workspace';
+import { OrganisationService } from './../../organisation/shared/organisation.service';
 import { Component, OnInit, Input } from '@angular/core';
+
 
 @Component({
   selector: 'app-workspace-list-item',
@@ -8,10 +10,19 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class WorkspaceListItemComponent implements OnInit {
   @Input() workspace: Workspace;
+  queueNextDate = null;
 
-  constructor() { }
+  constructor(
+    private readonly organisationService: OrganisationService,
+  ) { }
 
   ngOnInit() {
+    this.organisationService.getNextInQueue().subscribe(iatiTestDataSet => {
+      if (typeof iatiTestDataSet !== 'undefined') {
+        this.queueNextDate = iatiTestDataSet.downloaded;
+      } else {
+        this.queueNextDate = null;
+      }
+    });
   }
-
 }
