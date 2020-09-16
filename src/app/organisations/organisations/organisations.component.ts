@@ -6,7 +6,6 @@ import { Organisation } from '../shared/organisation';
 import { Observable } from 'rxjs/Observable';
 import { LogService } from '../../core/logging/log.service';
 
-
 @Component({
   selector: 'app-organisations',
   templateUrl: './organisations.component.html',

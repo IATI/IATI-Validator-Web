@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GtagModule } from 'angular-gtag';
 
 
 import { DataQualityFeedbackService } from './shared/data-quality-feedback.service';
@@ -37,7 +38,8 @@ const routes: Routes = [
     FormsModule,
     NgbModule,
     SharedModule,
-    ValidateIatiModule
+    ValidateIatiModule,
+    GtagModule
   ],
   exports: [
     RouterModule
