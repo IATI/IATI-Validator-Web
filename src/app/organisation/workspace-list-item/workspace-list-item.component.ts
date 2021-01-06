@@ -11,18 +11,26 @@ import { Component, OnInit, Input } from '@angular/core';
 export class WorkspaceListItemComponent implements OnInit {
   @Input() workspace: Workspace;
   queueNextDate = null;
+  queueLength = null;
 
   constructor(
     private readonly organisationService: OrganisationService,
   ) { }
 
   ngOnInit() {
-    this.organisationService.getNextInQueue().subscribe(iatiTestDataSet => {
-      if (typeof iatiTestDataSet !== 'undefined') {
-        this.queueNextDate = iatiTestDataSet.downloaded;
-      } else {
-        this.queueNextDate = null;
+    this.organisationService.getNextInQueue().subscribe(iatiDataSet => {
+      if (iatiDataSet == null) {
+        return;
       }
+      if ('received' in iatiDataSet) {
+        this.queueNextDate = iatiDataSet.received;
+      } else if ('downloaded' in iatiDataSet) {
+        this.queueNextDate = iatiDataSet.downloaded;
+      }
+    });
+
+    this.organisationService.getQueueLength().subscribe(length => {
+      this.queueLength = length;
     });
   }
 }
