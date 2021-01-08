@@ -4,8 +4,8 @@
       {{ iatiDatasetData?.filename }}
     </div>
     <div class="col-12 col-md">
-      <span *ngIf="iatiDatasetData.received">{{ iatiDatasetData.received | date:'yyyy-MM-dd HH:mm:ss.SSS (z)' }}</span>
-      <span *ngIf=" ! iatiDatasetData.received">Data unavailable</span>
+      <span *ngIf="iatiDatasetData.received">{{ iatiDatasetData.received | date:'yyyy-MM-dd HH:mm (z)' }}</span>
+      <span *ngIf=" ! iatiDatasetData.received">Received before mid-January 2021</span>
     </div>
     <div class="col-12 col-md">
       {{ (iatiDatasetData ? iatiDatasetData['json-updated'] : '') | date:'yyyy-MM-dd HH:mm (z)' }}
