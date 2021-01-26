@@ -5,10 +5,8 @@
   <div class="row alert alert-light">
     <div class="col">
       <h1>File validation report</h1>
-      <app-main-report-info *ngIf="!isTestfiles;else showFileName" [md5]="md5"></app-main-report-info>
-      <ng-template #showFileName><h3>{{fileName}}</h3></ng-template>
+      <app-main-report-info [id]="dataset.id"></app-main-report-info>
       <app-iati-info [data]="data"></app-iati-info>
-
     </div>
   </div>
 

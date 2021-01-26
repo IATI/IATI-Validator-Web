@@ -16,6 +16,7 @@ import { Dqfs, Activity, Feedback, Context, Message, Ruleset } from '../shared/f
 import { LoaderService } from '../../../core/loader/loader.service';
 import { cloneDeep } from 'lodash';
 import { ValidatedIatiService } from '../../../validate-iati/shared/validated-iati.service';
+import { OrganisationService } from '../../../organisation/shared/organisation.service';
 import { Observable } from 'rxjs/Observable';
 
 
@@ -25,8 +26,8 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
+  dataset = null;
   isLoading = false;
-  md5 = '';
   data = {};
   fileName = '';
   isTestfiles = false;
@@ -46,6 +47,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
     private validatedIatiService: ValidatedIatiService,
+    private organisationService: OrganisationService,
     private logger: LogService,
     private activateRoute: ActivatedRoute,
     private loader: LoaderService,
@@ -68,16 +70,15 @@ export class MainComponent implements OnInit, OnDestroy {
             this.isTestfiles = qParams.isTestfiles;
 
             if (qParams.isTestfiles) {
-              this.validatedIatiService.getIatiDatasetById(params['name']).subscribe(iatiTestDataSet => {
+              this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDataSet => {
 
                 const theFileId = iatiTestDataSet.fileid.split('.').shift();
                 this.fileName = iatiTestDataSet.filename;
                 this.tmpWorkspaceId = iatiTestDataSet.tmpworkspaceId;
-                this.setActivityData(theFileId, qParams.isTestfiles);
+                this.loadData(theFileId, qParams.isTestfiles);
               });
             } else {
-              this.md5 = params['name'];
-              this.setActivityData(this.md5, qParams.isTestfiles);
+              this.loadData(params['id'], qParams.isTestfiles);
             }
           }
         );
@@ -96,52 +97,64 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
-  setActivityData(md5: string, isTestfiles: boolean) {
+  loadData(id: string, isTestfiles: boolean) {
     this.loader.show();
-    this.loadData(md5, isTestfiles).subscribe(
-      data => {
-        // TODO: Check for filetype
-        this.data = data;
-        if (data.feedback) {
-          this.companyFeedbackData = data.feedback;
-        }
 
-        this.filetype = data.filetype;
-        if (data.filetype === 'iati-activities') {
-          if (data.activities) {
-            this.activityData = data.activities;
-          }
-        }
-
-        if (data.filetype === 'iati-organisations') {
-          if (data.organisations) {
-            this.activityData = data.organisations;
-          }
-        }
-
-        if (this.activityData === undefined && this.companyFeedbackData === undefined) {
-          this.loader.hide();
-          return;
-        }
-        this.loadCategories();
-        this.loadTypeMessages(this.activityData, this.companyFeedbackData);
-        this.filterActivities();
-
-        this.loader.hide();
-      },
-      error => {
-        this.logger.error('Error loadActivityData', error);
-        this.loader.hide();
-      }
-    );
+    if (isTestfiles) {
+      this.dataQualityFeedbackService.getTestFilesDataQualityFeedbackById(id).subscribe(data => {
+            this.dataset = data;
+            this.dataset['filename'] = this.fileName;
+            this.setData(data);
+          },
+          error => {
+            this.logger.error('Error loadActivityData', error);
+            this.loader.hide();
+    });
+    } else {
+      this.organisationService.getIatiDatasetById(id).subscribe(iatiDataSet => {
+          this.dataset = iatiDataSet[0];
+          this.dataQualityFeedbackService.getDataQualityFeedback(iatiDataSet[0].md5).subscribe(
+            data => {
+              this.setData(data);
+            },
+            error => {
+              this.logger.error('Error loadActivityData', error);
+              this.loader.hide();
+            }
+          );
+      });
+    }
   }
 
-  loadData(inIdOrMd5: string, isTestfiles: boolean): Observable<Dqfs> {
-    if (isTestfiles) {
-      return this.dataQualityFeedbackService.getTestFilesDataQualityFeedbackById(inIdOrMd5);
-    } else {
-      return this.dataQualityFeedbackService.getDataQualityFeedback(inIdOrMd5);
+  setData(data: any) {
+    this.data = data;
+    this.fileName = this.dataset.filename;
+    if (data.feedback) {
+      this.companyFeedbackData = data.feedback;
     }
+
+    this.filetype = data.filetype;
+    if (data.filetype === 'iati-activities') {
+      if (data.activities) {
+        this.activityData = data.activities;
+      }
+    }
+
+    if (data.filetype === 'iati-organisations') {
+      if (data.organisations) {
+        this.activityData = data.organisations;
+      }
+    }
+
+    if (this.activityData === undefined && this.companyFeedbackData === undefined) {
+      this.loader.hide();
+      return;
+    }
+    this.loadCategories();
+    this.loadTypeMessages(this.activityData, this.companyFeedbackData);
+    this.filterActivities();
+
+    this.loader.hide();
   }
 
   loadCategories() {

@@ -99,6 +99,17 @@ getIatiDataset(md5: string): Observable<IatiDataset[]> {
   );
 }
 
+getIatiDatasetById(id: string): Observable<IatiDataset> {
+  const url: string = this.urlApiIatiDataset + '/?filter[where][id]=' + id;
+
+  this.log(url);
+  return this.http.get<IatiDataset>(url)
+  .pipe(
+    tap(_ => this.log(`fetched iati dataset`)),
+    catchError(this.handleError('getIatiDataset', undefined ))
+  );
+}
+
 getNextInQueue(): Observable<IatiDataset> {
   const url: string = window.__env.apiDataworkBench + '/queue/next';
 

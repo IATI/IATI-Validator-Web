@@ -27,7 +27,7 @@ import { MultiFeedbackComponent } from './multi-feedback/multi-feedback.componen
 import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
-  { path: 'files/:name', component: MainComponent },
+  { path: 'files/:id', component: MainComponent },
   { path: '', redirectTo: '/404dqf' , pathMatch: 'full' },
 ];
 
