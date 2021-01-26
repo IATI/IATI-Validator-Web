@@ -18,7 +18,7 @@
         Validation report available
       </div>
     </div>
-    <app-workspace-view-item-file *ngFor="let m of files" [md5]="m.md5" (selectedMd5)="md5Selected($event)"> </app-workspace-view-item-file>
+    <app-workspace-view-item-file *ngFor="let m of files" [iatiDatasetData]="m" (selectedMd5)="md5Selected($event)"></app-workspace-view-item-file>
   </div>
 
 </div>
