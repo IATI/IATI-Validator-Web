@@ -10,18 +10,18 @@ import { DataQualityFeedbackService } from './../shared/data-quality-feedback.se
   styleUrls: ['./main-report-info.component.scss']
 })
 export class MainReportInfoComponent implements OnInit {
-  @Input() md5 = '';
+  @Input() id = '';
   reportInfo: ReportInfo  = {organisationName: '', fileName: '', organisationSlug: '' };
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
               private logger: LogService) { }
 
   ngOnInit() {
-    this.loadData(this.md5);
+    this.loadData(this.id);
   }
 
-  loadData(md5: string) {
-    this.dataQualityFeedbackService.getReportInfo(md5).subscribe(
+  loadData(id: string) {
+    this.dataQualityFeedbackService.getReportInfo(id).subscribe(
       data => {
         this.reportInfo = data;
       }

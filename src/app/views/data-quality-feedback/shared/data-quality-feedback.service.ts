@@ -44,10 +44,10 @@ export class DataQualityFeedbackService {
       );
   }
 
-  getReportInfo(md5: string): Observable<ReportInfo> {
+  getReportInfo(id: string): Observable<ReportInfo> {
     const reportInfo: ReportInfo = { organisationName: '', fileName: '', organisationSlug: '' };
 
-    const url: string = this.urlApiIatiDataSet + '/findOne/' + '?filter[where][md5]=' + md5;
+    const url: string = this.urlApiIatiDataSet + '/findOne/' + '?filter[where][id]=' + id;
     this.http.get<IatiDataset>(url)
       .subscribe(
         data => {

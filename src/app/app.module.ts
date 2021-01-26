@@ -13,6 +13,7 @@ import { LayoutModule } from './layout/layout.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AboutComponent } from './views/data-quality-feedback/about/about.component';
 import { GtagModule } from 'angular-gtag';
+import { OrganisationService } from './organisation/shared/organisation.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,9 @@ import { GtagModule } from 'angular-gtag';
     SharedModule,
     LayoutModule,
     AppRoutingModule,
+  ],
+  providers: [
+    OrganisationService
   ],
   exports: [
     CoreModule,
