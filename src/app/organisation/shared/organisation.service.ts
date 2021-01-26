@@ -102,11 +102,20 @@ getIatiDataset(md5: string): Observable<IatiDataset[]> {
 getNextInQueue(): Observable<IatiDataset> {
   const url: string = window.__env.apiDataworkBench + '/queue/next';
 
-  this.log(url);
   return this.http.get<IatiDataset>(url)
   .pipe(
     tap(_ => this.log(`fetched iati dataset`)),
     catchError(this.handleError('getIatiDataset', undefined ))
+  );
+}
+
+getQueueLength(): Observable<any> {
+  const url: string = window.__env.apiDataworkBench + '/queue/length';
+
+  return this.http.get<any>(url)
+  .pipe(
+    tap(_ => this.log(`fetched queue length`)),
+    catchError(this.handleError('getQueueLength', undefined ))
   );
 }
 

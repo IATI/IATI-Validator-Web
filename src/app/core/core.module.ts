@@ -8,12 +8,14 @@ import { LogService } from './logging/log.service';
 import { LogPublishersService } from './logging/log-publishers.service';
 import { LoaderComponent } from './loader/loader.component';
 import { LoaderService } from './loader/loader.service';
+import { GtagModule } from 'angular-gtag';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpModule,
     NgbModule,
+    GtagModule,
   ],
   exports: [
     LoaderComponent

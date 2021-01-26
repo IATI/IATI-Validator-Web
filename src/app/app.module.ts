@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { LayoutModule } from './layout/layout.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AboutComponent } from './views/data-quality-feedback/about/about.component';
+import { GtagModule } from 'angular-gtag';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AboutComponent } from './views/data-quality-feedback/about/about.compon
     PageNotFoundComponent,
   ],
   imports: [
+    GtagModule.forRoot({ trackingId: 'UA-110230511-9', trackPageviews: true }),
     BrowserModule,
     NgbModule.forRoot(),
     HttpClientModule,
