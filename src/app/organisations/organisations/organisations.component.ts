@@ -49,7 +49,7 @@ export class OrganisationsComponent implements OnInit {
       // return all organisations
       this.filteredOrganisations = this.organisations.slice(0)
                                       .sort((a, b) => {
-                                        // tslint:disable-next-line:max-line-length
+                                        // eslint-disable-next-line max-len
                                         return (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase()) ;
                                       });
     } else {
@@ -57,7 +57,7 @@ export class OrganisationsComponent implements OnInit {
       this.filteredOrganisations = this.organisations
                                       .filter((org) => new RegExp(name, 'gi').test(org.name))
                                       .sort((a, b) => {
-                                        // tslint:disable-next-line:max-line-length
+                                        // eslint-disable-next-line max-len
                                         return (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase()) ;
                                       });
     }

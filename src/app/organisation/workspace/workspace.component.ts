@@ -56,7 +56,7 @@ export class WorkspaceComponent implements OnInit {
               // TODO: get latest modified version. Now it is the first item in the array.
               // This must be the item with the youngest last_modified date.
               this.versionSlug = this.versions[0].slug;
-              // tslint:disable-next-line:max-line-length
+              // eslint-disable-next-line max-len
               this.router.navigate(['organisation', this.organisationSlug, 'ws', this.workspaceSlug, this.versionSlug], { skipLocationChange: false, replaceUrl: true });
             }
           }
@@ -68,7 +68,7 @@ export class WorkspaceComponent implements OnInit {
       if (this.versionSlug !== versionNew) {
         this.versionSlug = versionNew;
       }
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       this.router.navigate(['organisation', this.organisationSlug, 'ws', this.workspaceSlug, this.versionSlug], { skipLocationChange: false });
     }
 
