@@ -73,12 +73,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "ng lint"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.ts": [
-      "ng lint"
+    "src/**/*.ts": [
+      "eslint"
     ]
   }
 }
