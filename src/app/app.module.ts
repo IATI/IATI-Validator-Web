@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -24,7 +24,7 @@ import { GtagModule } from 'angular-gtag';
   imports: [
     GtagModule.forRoot({ trackingId: 'UA-110230511-9', trackPageviews: true }),
     BrowserModule,
-    // NgbModule.forRoot(),
+    NgbModule,
     // HttpClientModule,
     // CoreModule,
     // SharedModule,
