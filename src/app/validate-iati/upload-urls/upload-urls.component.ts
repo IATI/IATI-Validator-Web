@@ -66,7 +66,7 @@ export class UploadUrlsComponent implements OnInit {
           (response: any) => {
             const tmpWorkspaceId = response.body.id;
 
-            this.parallelUpload(urls, tmpWorkspaceId)
+            (this.parallelUpload(urls, tmpWorkspaceId) as any)
               .subscribe(
                 () => {
                   this.tmpWorkspaceId = tmpWorkspaceId;
@@ -85,7 +85,7 @@ export class UploadUrlsComponent implements OnInit {
     return this.activeStep.includes(step);
   }
 
-  ValidateFile() {
+  validateFile() {
     this.router.navigate(['validate', this.tmpWorkspaceId]);
   }
 

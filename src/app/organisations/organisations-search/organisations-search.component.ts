@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef, Renderer2 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import 'rxjs/add/operator/debounceTime';
@@ -15,20 +15,19 @@ import { OrganisationsService } from './../shared/organisations.service';
 export class OrganisationsSearchComponent implements OnInit {
   @ViewChild('searchInput') searchInput: ElementRef;
   term = new FormControl();
-
-  @Output() search = new EventEmitter<string>();
+  search;
 
   constructor(
     private organisationService: OrganisationsService,
-    private renderer: Renderer
+    private renderer: Renderer2
   ) { }
 
   ngOnInit() {
     // Set focus on search field
-    this.renderer.invokeElementMethod(this.searchInput.nativeElement, 'focus');
+    (this.searchInput.nativeElement as any)['focus'].apply(this.searchInput.nativeElement);
 
     // Subscribe to changes in the search field and emit a search after 400 ms.
-    this.term.valueChanges
+    (this.term.valueChanges as any)
       .debounceTime(300)
       .distinctUntilChanged()
       .subscribe(searchValue => this.searchOrganisations());

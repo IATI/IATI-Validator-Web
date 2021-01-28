@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { OrganisationsService } from './../shared/organisations.service';
 import { Organisation } from '../shared/organisation';
-import { Observable } from 'rxjs/Observable';
 import { LogService } from '../../core/logging/log.service';
 
 @Component({
@@ -32,7 +31,9 @@ export class OrganisationsComponent implements OnInit {
       // get organisations from the web api
       this.organisationService.getOrganisations()
         .subscribe(org => this.organisations = org,
-          error => {console.log(error); this.isSearching = false; this.loader.hide(); },
+          error => {
+            console.log(error); this.isSearching = false; this.loader.hide();
+          },
           () => {
             // finished fetching organisations from web api, filter the organisations by name
             this.filterOrganisations(name);
@@ -48,18 +49,18 @@ export class OrganisationsComponent implements OnInit {
     if (name === null || !name.trim()) {
       // return all organisations
       this.filteredOrganisations = this.organisations.slice(0)
-                                      .sort((a, b) => {
-                                        // eslint-disable-next-line max-len
-                                        return (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase()) ;
-                                      });
+        .sort((a, b) =>
+          // eslint-disable-next-line max-len
+          (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase())
+        );
     } else {
       // filter organisations and save in filteredOrganisations
       this.filteredOrganisations = this.organisations
-                                      .filter((org) => new RegExp(name, 'gi').test(org.name))
-                                      .sort((a, b) => {
-                                        // eslint-disable-next-line max-len
-                                        return (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase()) ;
-                                      });
+        .filter((org) => new RegExp(name, 'gi').test(org.name))
+        .sort((a, b) =>
+          // eslint-disable-next-line max-len
+          (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase())
+        );
     }
     this.isSearching = false;
     this.loader.hide();

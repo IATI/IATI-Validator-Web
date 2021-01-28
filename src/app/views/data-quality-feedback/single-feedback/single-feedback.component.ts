@@ -7,7 +7,7 @@ import { Feedback, Dqfs } from '../shared/feedback';
   styleUrls: ['./single-feedback.component.scss']
 })
 export class SingleFeedbackComponent implements OnInit {
-  @Input() feedbackData: Feedback[];
+  @Input() feedbackData: Feedback[] = [];
   @Input() title = '';
   @Input() item = 'activity';
   @Input() items = 'activities';
@@ -18,7 +18,7 @@ export class SingleFeedbackComponent implements OnInit {
   ngOnInit() {
   }
 
-  getIssueCount(type): number {
+  getIssueCount(type: string): number {
     let count = 0;
 
     this.feedbackData.forEach(fb => {

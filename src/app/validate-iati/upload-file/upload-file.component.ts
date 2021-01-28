@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-import { of } from 'rxjs/observable/of';
+import { forkJoin, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { FileUploadService } from './../shared/file-upload.service';
@@ -45,7 +44,7 @@ export class UploadFileComponent implements OnInit {
     this.activeStep.push('2');
   }
 
-  UploadFile(): void {
+  uploadFile(): void {
     const files = Array.prototype.slice.call(this.selectedFiles);
     const handleError = error => {
       // this.logger.debug('Error message component: ', error);
@@ -75,7 +74,7 @@ export class UploadFileComponent implements OnInit {
     }
   }
 
-  ValidateFile() {
+  validateFile() {
     this.router.navigate(['validate', this.tmpWorkspaceId]);
   }
 

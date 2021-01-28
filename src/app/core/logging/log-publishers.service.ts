@@ -10,13 +10,13 @@ import { LogPublisher, LogConsole,   } from './log-publishers';
 // ****************************************************
 @Injectable()
 export class LogPublishersService {
+  // Public properties
+  publishers: LogPublisher[] = [];
+
   constructor(private http: Http) {
     // Build publishers arrays
     this.buildPublishers();
   }
-
-  // Public properties
-  publishers: LogPublisher[] = [];
 
   // *************************
   // Public methods

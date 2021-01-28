@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { OrganisationService } from './../shared/organisation.service';
 import { LogService } from '../../core/logging/log.service';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./workspace-view-item-file.component.scss']
 })
 export class WorkspaceViewItemFileComponent {
-  @Output() selectedMd5: EventEmitter<String> = new EventEmitter<String>() ;
+  @Output() selectedMd5: EventEmitter<string> = new EventEmitter<string>() ;
   @Input()iatiDatasetData: IatiDataset;
 
   constructor(private organisationService: OrganisationService,

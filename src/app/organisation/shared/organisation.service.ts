@@ -3,9 +3,8 @@ import { LogService } from './../../core/logging/log.service';
 import { Version } from './version';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import 'rxjs/add/observable/of';
 
 import { environment } from './../../../environments/environment';
@@ -35,7 +34,7 @@ export class OrganisationService {
     );
   }
 
-getWorkspaces(organisation: string): Observable<Array<Workspace>> {
+getWorkspaces(organisation: string): Observable<Workspace[]> {
   const url: string = this.urlApiWorkspaces + '?organisation_id=' + organisation;
   this.log(url);
   return this.http.get<Workspace[]>(url)
@@ -56,7 +55,7 @@ getWorkspace(organisationSlug: string, workspaceSlug: string): Observable<Worksp
   );
 }
 
-getVersions(workspaceid: string): Observable<Array<Version>> {
+getVersions(workspaceid: string): Observable<Version[]> {
   const url: string = this.urlApiVersions + '?workspace_id=' + workspaceid;
   this.log(url);
   return this.http.get<Version[]>(url)
@@ -178,10 +177,11 @@ private log(message: string) {
   /**
    * Handle Http operation that failed.
    * Let the app continue.
+   *
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging

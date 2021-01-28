@@ -11,18 +11,18 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./multi-feedback.component.scss']
 })
 export class MultiFeedbackComponent {
-  @Input() activityData: Activity[];
+  @Input() activityData: Activity[] = [];
   @Input() title = '';
   @Input() item = 'activity';
   @Input() items = 'activities';
-  @Input() dqfs: Dqfs;
-  @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent>;
+  @Input() dqfs: Dqfs | undefined; // TODO: verify undefined type
+  @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent> | undefined; // TODO: verify undefined type
   isCollapsed = false;
 
   constructor() { }
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
-    this.groups.forEach(x => x.isCollapsed = this.isCollapsed);
+    this.groups?.forEach(x => x.isCollapsed = this.isCollapsed);
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export interface Version {
   id: string;
   slug: string;
@@ -35,4 +36,3 @@ export interface Version {
   //     last_modified: Date ;
   //     views: View[];
   // }
-

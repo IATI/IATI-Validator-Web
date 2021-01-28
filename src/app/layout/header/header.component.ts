@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
 
   constructor() { }
 
-  @Input('title') title: string;
+  // @Input('title') title: string;
 
   ngOnInit() {
     this.activeTab = window.location.pathname.substr(1);

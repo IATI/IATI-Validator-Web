@@ -1,4 +1,5 @@
-﻿import { Observable } from 'rxjs/Observable';
+﻿/* eslint-disable max-classes-per-file,no-shadow,@typescript-eslint/naming-convention */
+import { Observable } from 'rxjs';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -96,9 +97,9 @@ export class LogWebApi extends LogPublisher {
   // Add log entry to back end data store
   log(entry: LogEntry): Observable<boolean> {
     const headers = new Headers({ 'Content-Type': 'application/json' });
-    const options = new RequestOptions({ headers: headers });
+    const options = new RequestOptions({ headers });
 
-    return this.http.post(this.location, entry, options)
+    return (this.http.post(this.location, entry, options) as any)
       .map(response => response.json())
       .catch(this.handleErrors);
   }

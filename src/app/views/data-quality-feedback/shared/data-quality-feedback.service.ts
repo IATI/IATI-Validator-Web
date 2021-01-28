@@ -1,15 +1,14 @@
 import { Organisation } from './../../../organisation/shared/organisation';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import 'rxjs/add/observable/of';
 
 import { LogService } from '../../../core/logging/log.service';
 import { Source } from './source';
 import { Severity } from './severity';
-import { Feedback, Dqfs, Activity } from './feedback';
+import { Dqfs } from './feedback';
 import { IatiDataset } from './../../../organisation/shared/iati-dataset';
 import { ReportInfo } from './report-info';
 
@@ -30,7 +29,7 @@ export class DataQualityFeedbackService {
     return this.http.get<any>(url)
       .pipe(
         // tap(_ => this.log(`fetched iati file`)),
-        catchError(this.handleError('getIatiFile', undefined))
+        catchError(this.handleError('getIatiFile', undefined) as any)
       );
   }
 
@@ -40,7 +39,7 @@ export class DataQualityFeedbackService {
     return this.http.get<any>(url)
       .pipe(
         // tap(_ => this.log(`fetched iati file`)),
-        catchError(this.handleError('getIatiFile', undefined))
+        catchError(this.handleError('getIatiFile', undefined) as any)
       );
   }
 
@@ -50,20 +49,20 @@ export class DataQualityFeedbackService {
     const url: string = this.urlApiIatiDataSet + '/findOne/' + '?filter[where][id]=' + id;
     this.http.get<IatiDataset>(url)
       .subscribe(
-        data => {
+        (data: any) => {
           reportInfo.fileName = data.filename;
           reportInfo.organisationSlug = data.publisher;
           const urlPublisher: string = this.urlApiOrganisation + '/findOne/' + '?filter[where][slug]=' + data.publisher;
           this.http.get<Organisation>(urlPublisher)
             .subscribe(
-              datas => {
+              (datas: any) => {
                 reportInfo.organisationName = datas.name;
-                return Observable.of(reportInfo);
+                return of(reportInfo);
               }
             );
         }
       );
-    return Observable.of(reportInfo);
+    return of(reportInfo);
   }
 
   getSeverities(): Severity[] {
@@ -148,6 +147,7 @@ export class DataQualityFeedbackService {
   /**
    * Handle Http operation that failed.
    * Let the app continue.
+   *
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */

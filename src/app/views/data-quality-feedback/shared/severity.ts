@@ -1,10 +1,10 @@
 import { TypeMessage } from './type-message';
-export class Severity {
+export interface Severity {
   id: string;
   slug: string;
   name: string;
   description: string;
-  count: number;
+  count: number | null;
   order: number;
   show: boolean;
   types: TypeMessage[];
