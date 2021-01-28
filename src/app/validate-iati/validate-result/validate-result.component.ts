@@ -1,7 +1,6 @@
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { timer } from 'rxjs/observable/timer';
+import { Subscription, timer } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { IatiTestdataset } from './../shared/iati-testdataset';
@@ -114,7 +113,7 @@ export class ValidateResultComponent implements OnDestroy {
     if (this.jsonUpdated(dataset)) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          'isTestfiles': true,
+          isTestfiles: true,
         }
       };
 

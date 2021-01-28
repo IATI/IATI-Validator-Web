@@ -17,12 +17,10 @@ export class FeedbackItemComponent implements OnInit {
 
   sortData = () =>  {
     // Sort the messages based on severity
-     this.feedback.messages.sort(this.compareSeverity);
-  }
+    this.feedback.messages.sort(this.compareSeverity);
+  };
 
-  compareSeverity = (a: Message, b: Message) => {
-    return this.getSeverity(a) - this.getSeverity(b);
-  }
+  compareSeverity = (a: Message, b: Message) => this.getSeverity(a) - this.getSeverity(b);
 
   getSeverity = (message: Message) => {
     if (message.rulesets.some(x => x.severity === 'critical')) {
@@ -38,7 +36,7 @@ export class FeedbackItemComponent implements OnInit {
     } else {
       return 9;
     }
-  }
+  };
 
   getfeedbackColor(message: Message): string {
     if (message.rulesets.some(x => x.severity === 'danger')) {

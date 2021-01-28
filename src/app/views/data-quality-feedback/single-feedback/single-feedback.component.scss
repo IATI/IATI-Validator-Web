@@ -1,4 +1,4 @@
-@import "variables";
+@import "../../../../styles/variables";
 
 .xml-feedback{
   margin: 0 0 10px 0;
@@ -17,30 +17,30 @@
     margin-right: 0;
     width: 100%;
   }
-  
+
   // .feedback-heading  h4 {
   //   cursor: pointer;
   // }
-  
+
   .title-col {
     padding-right: 0;
     padding-left:0;
     cursor: pointer;
   }
-  
+
   // .collapse-col {
   //   margin-left: 0;
   // }
-  
+
   .identifier-link {
     font-size: 16px;
     margin-right: 8px;
   }
-  
+
   .feedback-items {
     padding: 14px;
   }
-  
+
   .btn.collapser {
     margin-left: 12px;
     padding: 0;
@@ -51,11 +51,11 @@
     opacity: .5;
     border-style: none;
   }
-  
+
   .btn.collapser:hover {
     background-color: inherit;
   }
-  
+
   .btn.collapser:focus, .btn.collapser.focus {
     box-shadow: none;
   }

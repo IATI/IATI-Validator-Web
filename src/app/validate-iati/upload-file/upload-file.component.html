@@ -48,7 +48,7 @@
     <button
       *ngIf="!isActiveStep('3')"
       class="btn btn-success iati-button border-radius-none"
-      (click)="UploadFile()"
+      (click)="uploadFile()"
       [disabled]="!isActiveStep('2')"
     >
       Upload
@@ -81,7 +81,7 @@
     <h5 class="step-title">Step 3: Start validating your files</h5>
     <button
       class="btn btn-success iati-button border-radius-none"
-      (click)="ValidateFile()"
+      (click)="validateFile()"
       [disabled]="!isActiveStep('3')"
     >
       Validate
