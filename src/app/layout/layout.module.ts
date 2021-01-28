@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GtagModule } from 'angular-gtag';
 // import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-// import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -17,10 +17,10 @@ import { HeaderComponent } from './header/header.component';
   ],
   exports: [
     HeaderComponent,
-    // NavbarComponent,
+    NavbarComponent,
     // FooterComponent
   ],
   // declarations: [HeaderComponent, NavbarComponent, FooterComponent],
-  declarations: [HeaderComponent]
+  declarations: [HeaderComponent, NavbarComponent]
 })
 export class LayoutModule { }
