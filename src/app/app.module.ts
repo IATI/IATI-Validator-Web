@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 // import { SharedModule } from './shared/shared.module';
 // import { HomeComponent } from './home/home.component';
-// import { LayoutModule } from './layout/layout.module';
+import { LayoutModule } from './layout/layout.module';
 // import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 // import { AboutComponent } from './views/data-quality-feedback/about/about.component';
 import { GtagModule } from 'angular-gtag';
@@ -28,7 +28,7 @@ import { GtagModule } from 'angular-gtag';
     // HttpClientModule,
     // CoreModule,
     // SharedModule,
-    // LayoutModule,
+    LayoutModule,
     AppRoutingModule,
   ],
   providers: [
