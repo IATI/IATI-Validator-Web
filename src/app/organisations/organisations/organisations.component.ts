@@ -27,7 +27,7 @@ export class OrganisationsComponent implements OnInit {
     this.logger.debug('Start searching organisations', name);
     this.isSearching = true;
     this.loader.show();
-    if (this.organisations === undefined || this.organisations.length === 0) {
+    if (!this.organisations || this.organisations.length === 0) {
       // get organisations from the web api
       this.organisationService.getOrganisations()
         .subscribe(org => this.organisations = org,

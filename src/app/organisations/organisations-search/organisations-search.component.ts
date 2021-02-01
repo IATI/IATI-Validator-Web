@@ -14,8 +14,8 @@ import { OrganisationsService } from './../shared/organisations.service';
 })
 export class OrganisationsSearchComponent implements OnInit {
   @ViewChild('searchInput') searchInput: ElementRef;
+  @Output() search = new EventEmitter<string>();
   term = new FormControl();
-  search;
 
   constructor(
     private organisationService: OrganisationsService,
