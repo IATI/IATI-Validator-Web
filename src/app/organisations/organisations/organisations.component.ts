@@ -46,7 +46,7 @@ export class OrganisationsComponent implements OnInit {
   }
 
   filterOrganisations(name: string) {
-    if (name === null || !name.trim()) {
+    if (!name || !name.trim()) {
       // return all organisations
       this.filteredOrganisations = this.organisations.slice(0)
         .sort((a, b) =>

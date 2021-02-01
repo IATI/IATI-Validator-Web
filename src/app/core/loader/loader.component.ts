@@ -13,7 +13,7 @@ export class LoaderComponent implements OnInit, OnDestroy {
 
   show = false;
 
-  private subscription: Subscription;
+  private subscription!: Subscription;
 
   constructor(private loaderService: LoaderService) { }
 
