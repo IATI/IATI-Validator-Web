@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
-import { last, retry } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { last, retry } from 'rxjs/operators';
 
 @Injectable()
 export class FileUploadService {

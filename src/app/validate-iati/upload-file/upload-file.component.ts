@@ -1,11 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { forkJoin, of } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
 
-import { FileUploadService } from './../shared/file-upload.service';
-import { LogService } from './../../core/logging/log.service';
 import { Mode } from '../validate-iati';
+import { LogService } from './../../core/logging/log.service';
+import { FileUploadService } from './../shared/file-upload.service';
+
 
 @Component({
   selector: 'app-upload-file',
@@ -51,7 +52,7 @@ export class UploadFileComponent implements OnInit {
       this.requestStatus = 'error';
     };
 
-    if (files.length)  {
+    if (files.length) {
       this.requestStatus = 'pending';
 
       this.fileUploadService.checkWorkspaceId(this.tmpWorkspaceId)

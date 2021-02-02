@@ -1,10 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { of } from 'rxjs/observable/of';
 
-import { FileUploadService } from './../shared/file-upload.service';
 import { Mode } from '../validate-iati';
+import { FileUploadService } from './../shared/file-upload.service';
+
 
 @Component({
   selector: 'app-upload-urls',
@@ -75,9 +76,9 @@ export class UploadUrlsComponent implements OnInit {
                 },
                 handleError
               );
-        },
-        handleError
-      );
+          },
+          handleError
+        );
     }
   }
 
