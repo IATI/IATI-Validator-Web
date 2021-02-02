@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerCircleComponent } from './spinner-circle/spinner-circle.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { AutofocusDirective } from './autofocus.directive';
+
 
 /*
   Do declare components, directives, and pipes in a shared module when those items will be
@@ -21,14 +22,16 @@ import { SpinnerCircleComponent } from './spinner-circle/spinner-circle.componen
   ],
   declarations: [
     SpinnerComponent,
-    SpinnerCircleComponent
+    SpinnerCircleComponent,
+    AutofocusDirective
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     SpinnerComponent,
-    SpinnerCircleComponent
+    SpinnerCircleComponent,
+    AutofocusDirective
   ]
 })
 export class SharedModule { }

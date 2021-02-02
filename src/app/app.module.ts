@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
-// import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { LayoutModule } from './layout/layout.module';
 // import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -27,7 +27,7 @@ import { OrganisationService } from './organisation/shared/organisation.service'
     NgbModule,
     HttpClientModule,
     CoreModule,
-    // SharedModule,
+    SharedModule,
     LayoutModule,
     AppRoutingModule,
   ],
