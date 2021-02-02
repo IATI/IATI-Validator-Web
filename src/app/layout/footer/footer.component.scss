@@ -3,7 +3,7 @@
 }
 .footer {
   background-color: #155366;
-  
+
   .footer-content {
     display: flex;
     justify-content: space-between;
@@ -96,13 +96,13 @@
   .footer-content__sign-up {
     font-size: 14px;
   }
-  
+
   .sign-up-email__title {
     color: #fff;
     font-size: 18px;
     margin-bottom: 5px;
   }
-  
+
   .sign-up-email__form {
     display: flex
   }
@@ -132,7 +132,7 @@
     color: #fff;
     font-size: 1.4rem;
   }
-  
+
   .meta-social {
     float: right;
   }
@@ -146,7 +146,7 @@
     background-repeat: no-repeat;
     text-indent: -9999px;
 
-    
+
     &--twitter {
       background-image: url('../../../assets/svg/twitter-icon.svg');
     }
@@ -161,5 +161,3 @@
     }
   }
 }
-
-

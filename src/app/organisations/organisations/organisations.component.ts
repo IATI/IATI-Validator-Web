@@ -1,9 +1,9 @@
-import { LoaderService } from './../../core/loader/loader.service';
 import { Component, OnInit } from '@angular/core';
-
-import { OrganisationsService } from './../shared/organisations.service';
-import { Organisation } from '../shared/organisation';
 import { LogService } from '../../core/logging/log.service';
+import { Organisation } from '../shared/organisation';
+import { LoaderService } from './../../core/loader/loader.service';
+import { OrganisationsService } from './../shared/organisations.service';
+
 
 @Component({
   selector: 'app-organisations',
@@ -16,8 +16,8 @@ export class OrganisationsComponent implements OnInit {
   isSearching = false;
 
   constructor(private organisationService: OrganisationsService,
-              private logger: LogService,
-              private loader: LoaderService) { }
+    private logger: LogService,
+    private loader: LoaderService) { }
 
   async ngOnInit() {
     this.searchOrganisation('');
@@ -27,7 +27,7 @@ export class OrganisationsComponent implements OnInit {
     this.logger.debug('Start searching organisations', name);
     this.isSearching = true;
     this.loader.show();
-    if (this.organisations === undefined || this.organisations.length === 0) {
+    if (!this.organisations || this.organisations.length === 0) {
       // get organisations from the web api
       this.organisationService.getOrganisations()
         .subscribe(org => this.organisations = org,
@@ -46,7 +46,7 @@ export class OrganisationsComponent implements OnInit {
   }
 
   filterOrganisations(name: string) {
-    if (name === null || !name.trim()) {
+    if (!name || !name.trim()) {
       // return all organisations
       this.filteredOrganisations = this.organisations.slice(0)
         .sort((a, b) =>

@@ -10,8 +10,6 @@ export class HeaderComponent implements OnInit {
 
   constructor() { }
 
-  // @Input('title') title: string;
-
   ngOnInit() {
     this.activeTab = window.location.pathname.substr(1);
   }

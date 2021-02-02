@@ -1,11 +1,12 @@
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription, timer } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Subscription, timer } from 'rxjs';
 
-import { IatiTestdataset } from './../shared/iati-testdataset';
-import { ValidatedIatiService } from './../shared/validated-iati.service';
 import { LogService } from '../../core/logging/log.service';
+import { IatiTestDataset } from './../shared/iati-testdataset';
+import { ValidatedIatiService } from './../shared/validated-iati.service';
+
 
 @Component({
   selector: 'app-validate-result',
@@ -16,7 +17,7 @@ export class ValidateResultComponent implements OnDestroy {
   workspaceId = '';
   uploadId = '';
   currentUrl = '';
-  iatiDatasetDatas: IatiTestdataset[] = [];
+  iatiDatasetDatas: IatiTestDataset[] = [];
   md5 = '';
   environmentUrl = window.__env.baseUrl;
   source = timer(100, 2000);
@@ -67,7 +68,7 @@ export class ValidateResultComponent implements OnDestroy {
       .subscribe(
         data => {
           if (!this.email.value && data.email) {
-            this.email.setValue( data.email);
+            this.email.setValue(data.email);
             this.emailMode = 'saved';
           }
           // this;
@@ -85,31 +86,19 @@ export class ValidateResultComponent implements OnDestroy {
     }
   }
 
-  jsonUpdated(inDataset: IatiTestdataset): boolean {
-    if (inDataset['json-updated']) {
-      return true;
-    } else {
-      return false;
-    }
+  jsonUpdated(inDataset: IatiTestDataset): boolean {
+    return !!inDataset['json-updated'];
   }
 
-  hasSourceUrl(inDataset: IatiTestdataset): boolean {
-    if (inDataset['sourceUrl']) {
-      return true;
-    } else {
-      return false;
-    }
+  hasSourceUrl(inDataset: IatiTestDataset): boolean {
+    return !!inDataset.sourceUrl;
   }
 
   reportType(dataset): string {
-    if (this.jsonUpdated(dataset)) {
-      return 'Validation finished (click to view)';
-    } else {
-      return '-';
-    }
+    return this.jsonUpdated(dataset) ? 'Validation finished (click to view)' : '-';
   }
 
-  rowClick(dataset: IatiTestdataset, id: string) {
+  rowClick(dataset: IatiTestDataset, id: string) {
     if (this.jsonUpdated(dataset)) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -121,7 +110,7 @@ export class ValidateResultComponent implements OnDestroy {
     }
   }
 
-   copyTextToClipboard(_) {
+  copyTextToClipboard(_) {
     const txtArea = document.createElement('textarea');
     const url = this.environmentUrl + '/validate/' + this.uploadId;
     txtArea.id = 'txt';
