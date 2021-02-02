@@ -9,8 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { LayoutModule } from './layout/layout.module';
-// import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-// import { AboutComponent } from './views/data-quality-feedback/about/about.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AboutComponent } from './views/data-quality-feedback/about/about.component';
 import { GtagModule } from 'angular-gtag';
 import { OrganisationService } from './organisation/shared/organisation.service';
 
@@ -18,8 +18,8 @@ import { OrganisationService } from './organisation/shared/organisation.service'
   declarations: [
     AppComponent,
     HomeComponent,
-    // AboutComponent,
-    // PageNotFoundComponent,
+    AboutComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     GtagModule.forRoot({ trackingId: 'UA-110230511-9', trackPageviews: true }),
