@@ -1,4 +1,4 @@
-export interface IatiTestdataset {
+export interface IatiTestDataset {
   id: string;
   name: string;
   type: string;
@@ -8,6 +8,8 @@ export interface IatiTestdataset {
   uploaded: Date;
   filename: string;
   fileid: string;
+  sourceUrl?: string;
+  status?: string; // TODO: find out actual type of this field - this was infered
   'feedback-updated': Date;
   'svrl-updated': Date;
   'json-updated': Date;

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { IatiTestdataset } from './iati-testdataset';
+import { IatiTestDataset } from './iati-testdataset';
 import { LogService } from '../../core/logging/log.service';
 import { tap, catchError } from 'rxjs/operators';
 
@@ -15,19 +15,19 @@ export class ValidatedIatiService {
     private http: HttpClient
   ) { }
 
-  getIatiDataset(workspaceId: string): Observable<IatiTestdataset[]> {
+  getIatiDataset(workspaceId: string): Observable<IatiTestDataset[]> {
     const url: string = this.urlApiIatiDataset + '/?filter[where][tmpworkspaceId]=' + workspaceId;
 
     this.logger.debug(url);
 
-    return this.http.get<IatiTestdataset>(url)
+    return this.http.get<IatiTestDataset>(url)
       .pipe(
         tap(_ => this.logger.debug(`fetched iati dataset`)),
-        catchError(this.handleError('getIatiDataset', undefined ))
+        catchError(this.handleError('getIatiDataset', undefined))
       ) as any;
   }
 
-  getIatiDatasetById(inUploadId: string): Observable<IatiTestdataset> {
+  getIatiDatasetById(inUploadId: string): Observable<IatiTestDataset> {
     const url: string = this.urlApiIatiDataset + '/' + inUploadId;
     return this.http.get<any>(url)
       .pipe(

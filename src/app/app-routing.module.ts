@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'organisations', loadChildren: () => import('./organisations/organisations.module').then(m => m.OrganisationsModule) },
   // {path: 'organisation', loadChildren: 'app/organisation/organisation.module#OrganisationModule'},
   // {path: 'view/dqf', loadChildren: 'app/views/data-quality-feedback/data-quality-feedback.module#DataQualityFeedbackModule'},
-  // {path: 'validate', loadChildren: 'app/validate-iati/validate-iati.module#ValidateIatiModule'},
+  {path: 'validate', loadChildren: () => import('./validate-iati/validate-iati.module').then(m => m.ValidateIatiModule) },
   // {path: 'about', component: AboutComponent},
   // Catch all route
   { path: '**', component: PageNotFoundComponent }
