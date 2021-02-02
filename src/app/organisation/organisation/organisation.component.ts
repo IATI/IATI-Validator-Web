@@ -45,6 +45,8 @@ export class OrganisationComponent implements OnInit, OnDestroy {
         return (this.organisationData.logo !== '');
       }
     }
+
+    return false;
   }
 
   ngOnDestroy() {

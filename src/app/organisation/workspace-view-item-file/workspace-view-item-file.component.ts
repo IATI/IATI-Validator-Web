@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./workspace-view-item-file.component.scss']
 })
 export class WorkspaceViewItemFileComponent {
-  @Output() selectedMd5: EventEmitter<string> = new EventEmitter<string>() ;
-  @Input()iatiDatasetData: IatiDataset;
+  @Output() selectedMd5: EventEmitter<string> = new EventEmitter<string>();
+  @Input() iatiDatasetData: IatiDataset;
 
   constructor(private organisationService: OrganisationService,
     private logger: LogService,
@@ -35,8 +35,7 @@ export class WorkspaceViewItemFileComponent {
     }
   }
 
-  rowClick(viewType: string, item: string) {
-
+  rowClick() {
     if (this.jsonUpdated()) {
       // Routerlink naar de view pagina
       this.router.navigate(['view', 'dqf', 'files', this.iatiDatasetData.id]);

@@ -11,8 +11,12 @@ const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   // Lazy loading feature moduels
   { path: 'organisations', loadChildren: () => import('./organisations/organisations.module').then(m => m.OrganisationsModule) },
-  // {path: 'organisation', loadChildren: 'app/organisation/organisation.module#OrganisationModule'},
-  // {path: 'view/dqf', loadChildren: 'app/views/data-quality-feedback/data-quality-feedback.module#DataQualityFeedbackModule'},
+  { path: 'organisation', loadChildren: () => import('./organisation/organisation.module').then(m => m.OrganisationModule) },
+  {
+    path: 'view/dqf',
+    loadChildren: () => import('./views/data-quality-feedback/data-quality-feedback.module')
+      .then(m => m.DataQualityFeedbackModule)
+  },
   {path: 'validate', loadChildren: () => import('./validate-iati/validate-iati.module').then(m => m.ValidateIatiModule) },
   {path: 'about', component: AboutComponent},
   // Catch all route

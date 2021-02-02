@@ -1,6 +1,8 @@
-import { Workspace } from './../shared/workspace';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { IatiDataset } from '../shared/iati-dataset';
 import { OrganisationService } from './../../organisation/shared/organisation.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Workspace } from './../shared/workspace';
 
 
 @Component({
@@ -18,13 +20,13 @@ export class WorkspaceListItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.organisationService.getNextInQueue().subscribe(iatiDataSet => {
-      if (iatiDataSet == null) {
+    this.organisationService.getNextInQueue().subscribe((iatiDataSet: IatiDataset) => {
+      if (!iatiDataSet) {
         return;
       }
-      if ('received' in iatiDataSet) {
+      if (typeof iatiDataSet.received !== 'undefined') {
         this.queueNextDate = iatiDataSet.received;
-      } else if ('downloaded' in iatiDataSet) {
+      } else if (typeof iatiDataSet.downloaded !== 'undefined') {
         this.queueNextDate = iatiDataSet.downloaded;
       }
     });
