@@ -1,5 +1,5 @@
-<div class="urls-upload" [class.disable]="mode !== 'both' && mode === 'local'">
-  <div class="step" [class.next]="isActiveStep('1')">
+<div class="urls-upload" [ngClass]="{'disable': mode !== 'both' && mode === 'local'}">
+  <div class="step" [ngClass]="{'next': isActiveStep('1')}">
     <h5 class="step-title">Step 1: Add a web address (URL) of your IATI XMLfile. You can add multiple files by seperating them with |</h5>
     <input
       (change)="setUrl($event)"
@@ -10,7 +10,7 @@
     <p class="incorrect-urls-warning" *ngIf="incorrectUrls.length">You have one or more incorrect web addresses: "{{incorrectUrls}}"</p>
   </div>
 
-  <div class="step" [class.next]="isActiveStep('2')">
+  <div class="step" [ngClass]="{'next': isActiveStep('2')}">
     <h5 class="step-title">Step 2: Fetch the files from the web</h5>
     <button
       class="btn btn-success iati-button border-radius-none"
@@ -22,7 +22,7 @@
     <div
       *ngIf="requestStatus !== 'draft'"
       class="alert alert-info message"
-      [class.alert-danger]="requestStatus === 'error'"
+      [ngClass]="{'alert-danger': requestStatus === 'error'}"
     >
       <ng-container [ngSwitch]="requestStatus">
         <ng-container *ngSwitchCase="'error'">
@@ -39,10 +39,7 @@
     </div>
   </div>
 
-  <div
-    class="step"
-    [class.next]="isActiveStep('3')"
-  >
+  <div class="step" [ngClass]="{'next': isActiveStep('3')}">
     <h5 class="step-title">Step 3: Start validating your files</h5>
     <button
       class="btn btn-success iati-button border-radius-none"

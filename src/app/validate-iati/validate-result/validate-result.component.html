@@ -27,7 +27,7 @@
 
     <ng-container *ngFor="let iatiDatasetData of iatiDatasetDatas">
       <div class="wrapper">
-        <div class="row" (click)="rowClick(iatiDatasetData, iatiDatasetData.id)" [class.dqf]="jsonUpdated(iatiDatasetData)"  >
+        <div class="row" (click)="rowClick(iatiDatasetData, iatiDatasetData.id)" [ngClass]="{'dqf': jsonUpdated(iatiDatasetData)}"  >
           <div class="col-12 col-md">
             <span *ngIf="hasSourceUrl(iatiDatasetData); else elseBlock2" >
               {{ iatiDatasetData.sourceUrl }}

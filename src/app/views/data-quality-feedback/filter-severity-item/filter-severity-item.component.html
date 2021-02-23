@@ -1,7 +1,7 @@
-<li class="list-group-item" [className]="'list-group-item ' + severity.id" [class.hidden]="severity.types.length===0">
+<li class="list-group-item" [className]="'list-group-item ' + severity.id" [ngClass]="{'hidden': severity.types.length===0}">
   <div class="severity-heading row">
     <div class="col title-col" (click)="collapse()">
-      <span [class.unselected]="!severity.show"> {{ severity.name }}: {{ severity.types.length }} types</span>
+      <span ngClass="{'unselected':!severity.show}"> {{ severity.name }}: {{ severity.types.length }} types</span>
       <span *ngIf="!allSelected()" class="badge badge-light text-danger float-right messages-selected-count"> ({{ totalTypesSelected() }} of {{ totalTypes() }} messages selected.) </span>
       <!-- <span class="select">
         <app-checkbox [(checked)]="severity.show" [name]="'filterSev' + severity.name" (checkedChange)="selectionChanged()"></app-checkbox>
@@ -27,4 +27,3 @@
   </li>
   <app-filter-type-message *ngFor="let mes of severity.types" [typeMessage]="mes" (selectedChanged)="selectionChanged()"></app-filter-type-message>
 </div>
-  

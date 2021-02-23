@@ -53,7 +53,6 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loaderSubscription = this.loader.loaderState
       .subscribe((state: LoaderState) => {
         this.isLoading = state.show;
-        console.log('is Loading', this.isLoading);
       });
     this.severities = this.dataQualityFeedbackService.getSeverities();
     this.sources = this.dataQualityFeedbackService.getSources();

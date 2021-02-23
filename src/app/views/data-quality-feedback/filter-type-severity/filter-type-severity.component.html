@@ -1,8 +1,8 @@
-<li class="list-group-item" [className]="'list-group-item ' + type.severity" [class.hidden]="type.types.length===0">
+<li class="list-group-item" [className]="'list-group-item ' + type.severity" [ngClass]="{'hidden': type.types.length===0}">
   <div class="type-heading row">
     <div class="col title-col" (click)="collapse()">
       <span class="severity-count">{{type.count}}</span>
-      <span [class.unselected]="!type.show">{{ type.severity }}</span>
+      <span [ngClass]="{'unselected': !type.show}">{{ type.severity }}</span>
     </div>
     <div class="col-auto collapse-col">
       <button type="button" class="btn btn-outline-light collapser" (click)="collapse()">

@@ -20,7 +20,7 @@ export class FilterSeverityItemComponent implements OnInit {
   }
 
   collapse() {
-    this.isCollapsed = ! this.isCollapsed;
+    this.isCollapsed = !this.isCollapsed;
   }
 
   allSelected(): boolean {
@@ -50,8 +50,8 @@ export class FilterSeverityItemComponent implements OnInit {
 
     this.severity.types.forEach(x => {
       if (x.show === true) {
- count++ ;
-}
+        count++;
+      }
     });
     return count;
   }
