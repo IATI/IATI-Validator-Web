@@ -11,8 +11,8 @@ import { Activity, Dqfs } from '../shared/feedback';
 export class MultiFeedbackComponent {
   @Input() activityData: Activity[] = [];
   @Input() title = '';
-  @Input() item = 'activity';
-  @Input() items = 'activities';
+  @Input() item: 'activity' | 'organisation' = 'activity';
+  @Input() items: 'activities' | 'organisations' = 'activities';
   @Input() dqfs: Dqfs | undefined; // TODO: verify undefined type
   @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent> | undefined; // TODO: verify undefined type
   isCollapsed = false;

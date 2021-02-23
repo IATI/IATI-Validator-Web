@@ -24,7 +24,7 @@ import { Source } from './../shared/source';
 export class MainComponent implements OnInit, OnDestroy {
   dataset = null;
   isLoading = false;
-  data = {};
+  data: Dqfs = {} as Dqfs;
   fileName = '';
   isTestfiles = false;
   tmpWorkspaceId = '';
@@ -54,6 +54,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loaderSubscription = this.loader.loaderState
       .subscribe((state: LoaderState) => {
         this.isLoading = state.show;
+        console.log('is Loading', this.isLoading);
       });
     this.severities = this.dataQualityFeedbackService.getSeverities();
     this.sources = this.dataQualityFeedbackService.getSources();
@@ -110,6 +111,7 @@ export class MainComponent implements OnInit, OnDestroy {
     });
     } else {
       this.organisationService.getIatiDatasetById(id).subscribe(iatiDataSet => {
+        if (iatiDataSet && iatiDataSet.length) {
           this.dataset = iatiDataSet[0];
           this.dataQualityFeedbackService.getDataQualityFeedback(iatiDataSet[0].md5).subscribe(
             data => {
@@ -120,6 +122,13 @@ export class MainComponent implements OnInit, OnDestroy {
               this.loader.hide();
             }
           );
+        } else {
+          // FIXME: check if there's a better handle for a "no dataset" situation
+          this.activityData = undefined;
+          this.companyFeedbackData = undefined;
+          this.loader.hide();
+
+        }
       });
     }
   }
