@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-import { of } from 'rxjs/observable/of';
+import { forkJoin, of } from 'rxjs';
 
 import { Mode } from '../validate-iati';
 import { FileUploadService } from './../shared/file-upload.service';

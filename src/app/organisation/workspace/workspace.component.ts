@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Event, NavigationEnd, RouterLink } from '@angular/router';
-import 'rxjs/add/operator/filter';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { OrganisationService } from '../shared/organisation.service';
 import { Organisation } from './../shared/organisation';

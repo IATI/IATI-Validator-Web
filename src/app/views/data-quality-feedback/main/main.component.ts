@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { cloneDeep } from 'lodash';
 import { Subscription } from 'rxjs';
 import { LoaderService } from '../../../core/loader/loader.service';
 import { OrganisationService } from '../../../organisation/shared/organisation.service';
@@ -235,7 +234,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   filterActivities() {
     this.loader.show();
-    let filtered = cloneDeep(this.activityData);
+    let filtered = JSON.parse(JSON.stringify(this.activityData));
 
     this.filterCompanyFeedback();
 
@@ -286,7 +285,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   filterCompanyFeedback() {
-    let filteredFeedback = cloneDeep(this.companyFeedbackData);
+    let filteredFeedback = JSON.parse(JSON.stringify(this.companyFeedbackData));
 
     // Filter feedback category
     filteredFeedback = filteredFeedback.filter(this.filterCategory);

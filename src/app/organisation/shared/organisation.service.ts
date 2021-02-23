@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import 'rxjs/add/observable/of';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from './../../../environments/environment';
 import { LogService } from './../../core/logging/log.service';

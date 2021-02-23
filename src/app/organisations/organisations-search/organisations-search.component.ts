@@ -1,10 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/distinctUntilChanged';
-
 @Component({
   selector: 'app-organisations-search',
   templateUrl: './organisations-search.component.html',
