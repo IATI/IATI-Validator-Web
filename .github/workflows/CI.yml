@@ -26,3 +26,9 @@ jobs:
         npm run lint
       env:
         CI: true
+
+    - name: Run build
+      run: |
+        npm run build
+      env:
+        CI: true
