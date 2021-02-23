@@ -28,7 +28,7 @@
     </ul>
   </div>
 
-  <div *ngIf="(activityData!==undefined || companyFeedbackData!==undefined) && !isLoading" class="alert alert-row">
+  <div *ngIf="(activityData!==undefined || companyFeedbackData!==undefined) && !isLoading" class="row">
     <div class="col-md-4 filters">
       <h4>Filters</h4>
       <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">
