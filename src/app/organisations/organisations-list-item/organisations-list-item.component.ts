@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./organisations-list-item.component.scss']
 })
 export class OrganisationsListItemComponent implements OnInit {
-  @Input() organisation: Organisation ;
+  @Input() organisation!: Organisation ;
 
   constructor() { }
 

@@ -1,7 +1,7 @@
 <div class="search-container">
   <div class="organisation-search-form">
     <!-- <input type="text" #searchInput class="search-input" placeholder="Organisation name" (keyup)="searchOrganisations(searchInput.value)" [(ngModel)]="searchInputTerm"> -->
-    <input type="text" #searchInput class="search-input" placeholder="Organisation name" [formControl]="term" >
+    <input type="text" #searchInput class="search-input" placeholder="Organisation name" [formControl]="term" appAutofocus>
     <button class="btn btn-primary iati-button" (click)="searchOrganisations()">Search</button>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <div *ngIf="iatiDatasetData" class="wrapper">
-  <div class="row" (click)="rowClick()" [class.dqf]="jsonUpdated()"  >
+  <div class="row" (click)="rowClick()" [ngClass]="{'dqf': jsonUpdated()}"  >
     <div class="col-12 col-md">
       {{ iatiDatasetData?.filename }}
     </div>
@@ -18,5 +18,3 @@
 
   </div>
 </div>
-
-

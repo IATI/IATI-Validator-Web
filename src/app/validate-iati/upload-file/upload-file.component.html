@@ -1,9 +1,6 @@
 <h4>Upload your IATI file and receive validation feedback.</h4>
-<div [class.disable]="mode !== 'both' && mode === 'urls'">
-  <div
-    class="step"
-    [class.next]="isActiveStep('1')"
-  >
+<div [ngClass]="{'disable': mode !== 'both' && mode === 'urls'}">
+  <div class="step" [ngClass]="{'next': isActiveStep('1')}">
     <h5 class="step-title">Step 1: Select your IATI files. You can select multiple files at the same time.</h5>
     <div class="row">
       <section *ngIf="selectedFiles.length" class="col selected-files" >
@@ -40,15 +37,12 @@
     </div>
   </div>
 
-  <div
-    class="step"
-    [class.next]="isActiveStep('2')"
-  >
+  <div class="step" [ngClass]="{'next': isActiveStep('2')}">
     <h5 class="step-title">Step 2: Upload your IATI files</h5>
     <button
       *ngIf="!isActiveStep('3')"
       class="btn btn-success iati-button border-radius-none"
-      (click)="UploadFile()"
+      (click)="uploadFile()"
       [disabled]="!isActiveStep('2')"
     >
       Upload
@@ -57,7 +51,7 @@
     <div
       *ngIf="requestStatus !== 'draft'"
       class="alert alert-info message"
-      [class.alert-danger]="requestStatus === 'error'"
+      [ngClass]="{'alert-danger': requestStatus === 'error'}"
     >
       <ng-container [ngSwitch]="requestStatus">
         <ng-container *ngSwitchCase="'error'">
@@ -76,12 +70,12 @@
 
   <div
     class="step"
-    [class.next]="isActiveStep('3')"
+    [ngClass]="{'next': isActiveStep('3')}"
   >
     <h5 class="step-title">Step 3: Start validating your files</h5>
     <button
       class="btn btn-success iati-button border-radius-none"
-      (click)="ValidateFile()"
+      (click)="validateFile()"
       [disabled]="!isActiveStep('3')"
     >
       Validate

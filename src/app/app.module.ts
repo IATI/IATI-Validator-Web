@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -25,7 +24,7 @@ import { OrganisationService } from './organisation/shared/organisation.service'
   imports: [
     GtagModule.forRoot({ trackingId: 'UA-110230511-9', trackPageviews: true }),
     BrowserModule,
-    NgbModule.forRoot(),
+    NgbModule,
     HttpClientModule,
     CoreModule,
     SharedModule,

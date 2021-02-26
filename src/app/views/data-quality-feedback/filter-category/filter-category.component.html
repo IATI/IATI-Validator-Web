@@ -6,7 +6,7 @@
     </li>
     <li *ngFor="let cat of categories" class="list-group-item">
       <span class="severity-count">{{cat.count}} x</span>
-      <span [class.unselected]="!cat.show">{{ cat.name }}</span>
+      <span [ngClass]="{'unselected': !cat.show}">{{ cat.name }}</span>
       <span class="select">
         <app-checkbox [(checked)]="cat.show" [name]="'filterCat' + cat.name" (checkedChange)="selectionChanged()"></app-checkbox>
       </span>

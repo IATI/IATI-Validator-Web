@@ -24,7 +24,7 @@ export class WorkspaceViewItemComponent implements OnInit, OnChanges {
               private logger: LogService,
               private activatedRoute: ActivatedRoute) {
                 this.publisher = activatedRoute.snapshot.url[0].path;
-               }
+              }
 
   ngOnInit() {
     // Loading version data in ngOnChanges, which also fires when the page loads
@@ -52,7 +52,7 @@ export class WorkspaceViewItemComponent implements OnInit, OnChanges {
     this.router.navigate(['view', viewType, item] );
   }
 
-  md5Selected(md5: String) {
+  md5Selected(md5: string) {
     this.logger.debug('Selected md5: ', md5);
   }
 

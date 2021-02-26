@@ -1,9 +1,7 @@
-import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
-
+import { Component, Input, QueryList, ViewChildren } from '@angular/core';
 import { FeedbackGroupComponent } from '../feedback-group/feedback-group.component';
-import { LogService } from '../../../core/logging/log.service';
-import { Dqfs, Activity, Feedback } from '../shared/feedback';
-import { Title } from '@angular/platform-browser';
+import { Activity, Dqfs } from '../shared/feedback';
+
 
 @Component({
   selector: 'app-multi-feedback',
@@ -11,18 +9,18 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./multi-feedback.component.scss']
 })
 export class MultiFeedbackComponent {
-  @Input() activityData: Activity[];
+  @Input() activityData: Activity[] = [];
   @Input() title = '';
-  @Input() item = 'activity';
-  @Input() items = 'activities';
-  @Input() dqfs: Dqfs;
-  @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent>;
+  @Input() item: 'activity' | 'organisation' = 'activity';
+  @Input() items: 'activities' | 'organisations' = 'activities';
+  @Input() dqfs: Dqfs | undefined; // TODO: verify undefined type
+  @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent> | undefined; // TODO: verify undefined type
   isCollapsed = false;
 
   constructor() { }
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
-    this.groups.forEach(x => x.isCollapsed = this.isCollapsed);
+    this.groups?.forEach(x => x.isCollapsed = this.isCollapsed);
   }
 }

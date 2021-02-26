@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: ':name', component: OrganisationComponent },
   { path: ':organisation/ws/:workspace', component: WorkspaceComponent },
   { path: ':organisation/ws/:workspace/:version', component: WorkspaceComponent },
-  { path: '', redirectTo: '/404dqf' , pathMatch: 'full' },
+  { path: '', redirectTo: '/404dqf', pathMatch: 'full' },
 ];
 
 @NgModule({
