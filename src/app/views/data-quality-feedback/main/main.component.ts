@@ -1,23 +1,18 @@
-import { LoaderState } from './../../../core/loader/loader';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
-import { LogService } from './../../../core/logging/log.service';
-import { DataQualityFeedbackService } from './../shared/data-quality-feedback.service';
-import { Severity } from '../shared/severity';
-import { Source } from './../shared/source';
-import { Category } from './../shared/category';
-import { TypeMessage } from './../shared/type-message';
-import { TypeSeverity } from './../shared/type-severity';
-import { Dqfs, Activity, Feedback, Context, Message, Ruleset } from '../shared/feedback';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { LoaderService } from '../../../core/loader/loader.service';
-import { cloneDeep } from 'lodash';
-import { ValidatedIatiService } from '../../../validate-iati/shared/validated-iati.service';
 import { OrganisationService } from '../../../organisation/shared/organisation.service';
-import { Observable } from 'rxjs/Observable';
+import { ValidatedIatiService } from '../../../validate-iati/shared/validated-iati.service';
+import { Activity, Dqfs, Feedback, Message, Ruleset } from '../shared/feedback';
+import { Severity } from '../shared/severity';
+import { LoaderState } from './../../../core/loader/loader';
+import { LogService } from './../../../core/logging/log.service';
+import { Category } from './../shared/category';
+import { DataQualityFeedbackService } from './../shared/data-quality-feedback.service';
+import { Source } from './../shared/source';
+
 
 
 @Component({
@@ -28,7 +23,7 @@ import { Observable } from 'rxjs/Observable';
 export class MainComponent implements OnInit, OnDestroy {
   dataset = null;
   isLoading = false;
-  data = {};
+  data: Dqfs = {} as Dqfs;
   fileName = '';
   isTestfiles = false;
   tmpWorkspaceId = '';
@@ -39,11 +34,11 @@ export class MainComponent implements OnInit, OnDestroy {
   severities: Severity[] = [];
   sources: Source[] = [];
   categories: Category[] = [];
-  public dqfs: Dqfs;
+  public dqfs: Dqfs | undefined;
   public filetype = '';
-  private loaderSubscription: Subscription;
-  private paramsSubscription: Subscription;
-  private qParamsSubscription: Subscription;
+  private loaderSubscription: Subscription | undefined;
+  private paramsSubscription: Subscription | undefined;
+  private qParamsSubscription: Subscription | undefined;
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
     private validatedIatiService: ValidatedIatiService,
@@ -75,7 +70,7 @@ export class MainComponent implements OnInit, OnDestroy {
                 const theFileId = iatiTestDataSet.fileid.split('.').shift();
                 this.fileName = iatiTestDataSet.filename;
                 this.tmpWorkspaceId = iatiTestDataSet.tmpworkspaceId;
-                this.loadData(theFileId, qParams.isTestfiles);
+                this.loadData(theFileId as string, qParams.isTestfiles);
               });
             } else {
               this.loadData(params['id'], qParams.isTestfiles);
@@ -86,7 +81,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.loaderSubscription.unsubscribe();
+    this.loaderSubscription?.unsubscribe();
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
 
@@ -102,8 +97,10 @@ export class MainComponent implements OnInit, OnDestroy {
 
     if (isTestfiles) {
       this.dataQualityFeedbackService.getTestFilesDataQualityFeedbackById(id).subscribe(data => {
-            this.dataset = data;
-            this.dataset['filename'] = this.fileName;
+            this.dataset = data as any;
+            if (this.dataset) {
+              (this.dataset as any)['filename'] = this.fileName;
+            }
             this.setData(data);
           },
           error => {
@@ -112,6 +109,7 @@ export class MainComponent implements OnInit, OnDestroy {
     });
     } else {
       this.organisationService.getIatiDatasetById(id).subscribe(iatiDataSet => {
+        if (iatiDataSet && iatiDataSet.length) {
           this.dataset = iatiDataSet[0];
           this.dataQualityFeedbackService.getDataQualityFeedback(iatiDataSet[0].md5).subscribe(
             data => {
@@ -122,6 +120,13 @@ export class MainComponent implements OnInit, OnDestroy {
               this.loader.hide();
             }
           );
+        } else {
+          // FIXME: check if there's a better handle for a "no dataset" situation
+          this.activityData = undefined;
+          this.companyFeedbackData = undefined;
+          this.loader.hide();
+
+        }
       });
     }
   }
@@ -159,7 +164,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   loadCategories() {
 
-    const uniqueCat: { id: string, name: string }[] = [];
+    const uniqueCat: { id: string; name: string }[] = [];
 
     this.activityData.forEach(act => {
       act.feedback.forEach(fb => {
@@ -187,13 +192,13 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   loadTypeMessages(activities: Activity[], inCompanyFeedback: Feedback[]) {
-    const types: { sev: string, id: string, text: string }[] = [];
+    const types: { sev: string; id: string; text: string }[] = [];
     // Get unique messages, with the highest level of severity
     activities.forEach(act => {
       act.feedback.forEach(fb => {
         fb.messages.forEach(mes => {
           if (!types.some(t => t.id === mes.id)) {
-            const newType: { sev: string, id: string, text: string } = { sev: '', id: '', text: '' };
+            const newType: { sev: string; id: string; text: string } = { sev: '', id: '', text: '' };
             newType.sev = this.getfeedbackSeverity(mes);
             newType.id = mes.id;
             newType.text = mes.text;
@@ -206,7 +211,7 @@ export class MainComponent implements OnInit, OnDestroy {
     inCompanyFeedback.forEach(fb => {
       fb.messages.forEach(mes => {
         if (!types.some(t => t.id === mes.id)) {
-          const newType: { sev: string, id: string, text: string } = { sev: '', id: '', text: '' };
+          const newType: { sev: string; id: string; text: string } = { sev: '', id: '', text: '' };
           newType.sev = this.getfeedbackSeverity(mes);
           newType.id = mes.id;
           newType.text = mes.text;
@@ -228,7 +233,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   filterActivities() {
     this.loader.show();
-    let filtered = cloneDeep(this.activityData);
+    let filtered = JSON.parse(JSON.stringify(this.activityData));
 
     this.filterCompanyFeedback();
 
@@ -262,15 +267,11 @@ export class MainComponent implements OnInit, OnDestroy {
 
     // Filter feedback whitout messages
     filtered.forEach(act => {
-      act.feedback = act.feedback.filter(fb => {
-        return fb.messages.length > 0;
-      });
+      act.feedback = act.feedback.filter(fb => fb.messages.length > 0);
     });
 
     // Filter activities without feedback
-    filtered = filtered.filter(act => {
-      return act.feedback.length > 0;
-    });
+    filtered = filtered.filter(act => act.feedback.length > 0);
 
     this.activities = filtered;
     // set count on filter items
@@ -283,7 +284,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   filterCompanyFeedback() {
-    let filteredFeedback = cloneDeep(this.companyFeedbackData);
+    let filteredFeedback = JSON.parse(JSON.stringify(this.companyFeedbackData));
 
     // Filter feedback category
     filteredFeedback = filteredFeedback.filter(this.filterCategory);
@@ -306,32 +307,23 @@ export class MainComponent implements OnInit, OnDestroy {
     });
 
     // Filter feedback without messages
-    filteredFeedback = filteredFeedback.filter(fb => {
-      return fb.messages.length > 0;
-    });
+    filteredFeedback = filteredFeedback.filter(fb => fb.messages.length > 0);
 
     // Filter activities without feedback
     this.companyFeedback = filteredFeedback;
   }
 
-  filterSeverity = (message: Message) => {
-    return message.rulesets.some(rs => {
-      return this.severities.some(sev => sev.show === true && sev.slug === rs.severity);
-    });
-  }
+  filterSeverity = (message: Message) =>
+    message.rulesets.some(rs => this.severities.some(sev => sev.show === true && sev.slug === rs.severity));
 
-  filterSource = (ruleset: Ruleset) => {
-    return this.sources.some(s => s.show === true && s.slug === ruleset.src);
-  }
+  filterSource = (ruleset: Ruleset) => this.sources.some(s => s.show === true && s.slug === ruleset.src);
 
-  filterCategory = (feedback: Feedback) => {
-    return this.categories.some(c => c.show === true && c.id === feedback.category);
-  }
+  filterCategory = (feedback: Feedback) => this.categories.some(c => c.show === true && c.id === feedback.category);
 
-  filterTypeMessage = (message: Message) => {
+  filterTypeMessage = (message: Message) =>
     // return this.typeMessages.some(t => t.types.some(m => m.show === true && m.id === message.id ) );
-    return this.severities.some(t => t.types.some(m => m.show === true && m.id === message.id));
-  }
+    this.severities.some(t => t.types.some(m => m.show === true && m.id === message.id))
+  ;
 
   // Set the count of messages to the severity
   setSeverityCount() {

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-
+import { Subject } from 'rxjs';
 import { Message } from './message';
-import { MessageType } from './message-type.enum';
-import { Subject } from 'rxjs/Subject';
+
 
 @Injectable()
 export class MessagesService {

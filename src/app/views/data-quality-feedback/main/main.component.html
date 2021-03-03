@@ -5,7 +5,7 @@
   <div class="row alert alert-light">
     <div class="col">
       <h1>File validation report</h1>
-      <app-main-report-info [id]="dataset.id"></app-main-report-info>
+      <app-main-report-info *ngIf="dataset" [id]="dataset.id"></app-main-report-info>
       <app-iati-info [data]="data"></app-iati-info>
     </div>
   </div>
@@ -17,8 +17,7 @@
   <div *ngIf="activityData===undefined && companyFeedbackData===undefined && !isLoading " class="alert alert-warning"
     role="alert">
     <h2>No data found.</h2>
-    <p>It looks like the url
-      <strong> {{ md5 }}</strong> is not valid.</p>
+    <p>It looks like the url is not valid.</p>
     <ul>
       <li (click)="goBack()">
         <button type="button" class="btn btn-link">Go back to the previous page.</button>
@@ -29,7 +28,7 @@
     </ul>
   </div>
 
-  <div *ngIf="activityData!==undefined || companyFeedbackData!==undefined" class="row">
+  <div *ngIf="(activityData!==undefined || companyFeedbackData!==undefined) && !isLoading" class="row">
     <div class="col-md-4 filters">
       <h4>Filters</h4>
       <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">

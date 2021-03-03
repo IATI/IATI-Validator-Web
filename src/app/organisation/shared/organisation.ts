@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Workspace } from './workspace';
 
 export interface Organisation {

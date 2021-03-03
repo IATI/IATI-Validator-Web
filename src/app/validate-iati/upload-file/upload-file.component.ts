@@ -1,12 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-import { of } from 'rxjs/observable/of';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
 
-import { FileUploadService } from './../shared/file-upload.service';
-import { LogService } from './../../core/logging/log.service';
 import { Mode } from '../validate-iati';
+import { LogService } from './../../core/logging/log.service';
+import { FileUploadService } from './../shared/file-upload.service';
+
 
 @Component({
   selector: 'app-upload-file',
@@ -45,14 +45,14 @@ export class UploadFileComponent implements OnInit {
     this.activeStep.push('2');
   }
 
-  UploadFile(): void {
+  uploadFile(): void {
     const files = Array.prototype.slice.call(this.selectedFiles);
     const handleError = error => {
       // this.logger.debug('Error message component: ', error);
       this.requestStatus = 'error';
     };
 
-    if (files.length)  {
+    if (files.length) {
       this.requestStatus = 'pending';
 
       this.fileUploadService.checkWorkspaceId(this.tmpWorkspaceId)
@@ -75,7 +75,7 @@ export class UploadFileComponent implements OnInit {
     }
   }
 
-  ValidateFile() {
+  validateFile() {
     this.router.navigate(['validate', this.tmpWorkspaceId]);
   }
 

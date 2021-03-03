@@ -10,8 +10,8 @@ import { Dqfs, Activity } from './../shared/feedback';
 })
 export class FeedbackGroupComponent implements OnInit {
   @Input() activity: Activity;
-  @Input() item: 'activity';
-  @Input() items: 'activities';
+  @Input() item: 'activity' | 'organisation';
+  @Input() items: 'activities' | 'organisations';
   @Input() dqfs: Dqfs;
 
   public isCollapsed = false;

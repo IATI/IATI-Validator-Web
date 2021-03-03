@@ -25,10 +25,10 @@ export class OrganisationComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.LoadOrganisation(this.name);
+    this.loadOrganisation(this.name);
   }
 
-  LoadOrganisation(name: string) {
+  loadOrganisation(name: string) {
     this.organisationService.getOrganisation(name)
       .subscribe(
         data => {
@@ -45,6 +45,8 @@ export class OrganisationComponent implements OnInit, OnDestroy {
         return (this.organisationData.logo !== '');
       }
     }
+
+    return false;
   }
 
   ngOnDestroy() {

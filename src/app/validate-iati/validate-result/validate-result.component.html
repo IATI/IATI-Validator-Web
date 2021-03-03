@@ -27,7 +27,7 @@
 
     <ng-container *ngFor="let iatiDatasetData of iatiDatasetDatas">
       <div class="wrapper">
-        <div class="row" (click)="rowClick(iatiDatasetData, iatiDatasetData.id)" [class.dqf]="jsonUpdated(iatiDatasetData)"  >
+        <div class="row" (click)="rowClick(iatiDatasetData, iatiDatasetData.id)" [ngClass]="{'dqf': jsonUpdated(iatiDatasetData)}"  >
           <div class="col-12 col-md">
             <span *ngIf="hasSourceUrl(iatiDatasetData); else elseBlock2" >
               {{ iatiDatasetData.sourceUrl }}
@@ -68,7 +68,7 @@
 
   <div class="content-block">
     <p>
-      If you have added multiple files and are processing a large amount of data, this can take some time. 
+      If you have added multiple files and are processing a large amount of data, this can take some time.
       You can choose the option below for the validator to send you a notification via email once all the validation reports are ready.
     </p>
     <ng-container *ngIf="emailMode === 'draft'">
@@ -76,7 +76,7 @@
         Enter your email below. Your email will not be shared with anyone and will be removed when your personal workspace is deleted.
       </p>
       <div class="row">
-        <form class="email-form" [formGroup]="form" (submit)="saveEmailAddress($event)">
+        <form class="email-form" [formGroup]="form" (submit)="saveEmailAddress()">
           <input
             type="email"
             [formControl]="email"

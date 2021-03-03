@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  @Input() activeTab = 'feedback';
   public isCollapsed = true;
 
   constructor() { }
 
-  activeLink = 'feedback';
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

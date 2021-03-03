@@ -1,9 +1,6 @@
-﻿import { Observable } from 'rxjs/Observable';
-import { Http, Headers, RequestOptions } from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/of';
+﻿/* eslint-disable max-classes-per-file,no-shadow,@typescript-eslint/naming-convention */
+import { Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { LogEntry } from './log.service';
 
@@ -27,13 +24,13 @@ export class LogConsole extends LogPublisher {
     // Log to console
     console.log(entry.buildLogString());
 
-    return Observable.of(true);
+    return of(true);
   }
 
   clear(): Observable<boolean> {
     console.clear();
 
-    return Observable.of(true);
+    return of(true);
   }
 }
 
@@ -68,13 +65,13 @@ export class LogLocalStorage extends LogPublisher {
       console.log(ex);
     }
 
-    return Observable.of(ret);
+    return of(ret);
   }
 
   // Clear all log entries from local storage
   clear(): Observable<boolean> {
     localStorage.removeItem(this.location);
-    return Observable.of(true);
+    return of(true);
   }
 }
 
@@ -82,7 +79,7 @@ export class LogLocalStorage extends LogPublisher {
 // Logging Web API Class
 // ****************************************************
 export class LogWebApi extends LogPublisher {
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     // Must call super() from derived classes
     super();
     // Set location
@@ -95,18 +92,15 @@ export class LogWebApi extends LogPublisher {
 
   // Add log entry to back end data store
   log(entry: LogEntry): Observable<boolean> {
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    const options = new RequestOptions({ headers: headers });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this.http.post(this.location, entry, options)
-      .map(response => response.json())
-      .catch(this.handleErrors);
+    return this.http.post(this.location, entry, { headers }).pipe(this.handleErrors);
   }
 
   // Clear all log entries from local storage
   clear(): Observable<boolean> {
     // TODO: Call Web API to clear all values
-    return Observable.of(true);
+    return of(true);
   }
 
   // ***************
@@ -125,6 +119,6 @@ export class LogWebApi extends LogPublisher {
 
     console.error('An error occurred', errors);
 
-    return Observable.throw(errors);
+    return throwError(errors);
   }
 }

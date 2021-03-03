@@ -1,4 +1,5 @@
-﻿import { Injectable } from '@angular/core';
+﻿/* eslint-disable max-classes-per-file,no-shadow,@typescript-eslint/naming-convention */
+import { Injectable } from '@angular/core';
 
 import { LogPublishersService } from './log-publishers.service';
 import { LogPublisher } from './log-publishers';
@@ -71,15 +72,15 @@ export class LogEntry {
 // ****************************************************
 @Injectable()
 export class LogService {
-  constructor(private publishersService: LogPublishersService) {
-    // Set publishers
-    this.publishers = this.publishersService.publishers;
-  }
-
   // Public Properties
   publishers: LogPublisher[];
   level: LogLevel = LogLevel.All;
   logWithDate = true;
+
+  constructor(private publishersService: LogPublishersService) {
+    // Set publishers
+    this.publishers = this.publishersService.publishers;
+  }
 
   // *************************
   // Public methods

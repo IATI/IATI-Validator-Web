@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { last, retry } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class FileUploadService {
+  workspaceId = '';
   private urlApiFileUpUpload: string = window.__env.apiDataworkBench + '/iati-testfiles/file/source';
   private urlApiUrlsUpload: string = window.__env.apiDataworkBench + '/iati-testfiles/url/source';
   private urlApiTestWorkspace: string = window.__env.apiDataworkBench + '/iati-testworkspaces';
-
-  workspaceId = '';
 
   constructor(
     private readonly http: HttpClient,
@@ -35,9 +34,9 @@ export class FileUploadService {
     }
   }
 
-  uploadFile(file: File, tmpWorkspaceId?: string): Observable<HttpResponse<any>> {
+  uploadFile(file: File, tmpWorkspaceId?: string): Observable<HttpResponse<any>> | null {
     if (!file) {
-      return;
+      return null;
     }
 
     const url = tmpWorkspaceId ? `${this.urlApiTestWorkspace}/${tmpWorkspaceId}/file/source` : this.urlApiFileUpUpload;
@@ -60,7 +59,7 @@ export class FileUploadService {
       JSON.stringify({ url: fileUrl }),
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json' // eslint-disable-line @typescript-eslint/naming-convention
         },
         responseType: 'json'
       }

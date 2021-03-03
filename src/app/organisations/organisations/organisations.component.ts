@@ -1,10 +1,9 @@
-import { LoaderService } from './../../core/loader/loader.service';
 import { Component, OnInit } from '@angular/core';
-
-import { OrganisationsService } from './../shared/organisations.service';
-import { Organisation } from '../shared/organisation';
-import { Observable } from 'rxjs/Observable';
 import { LogService } from '../../core/logging/log.service';
+import { Organisation } from '../shared/organisation';
+import { LoaderService } from './../../core/loader/loader.service';
+import { OrganisationsService } from './../shared/organisations.service';
+
 
 @Component({
   selector: 'app-organisations',
@@ -17,8 +16,8 @@ export class OrganisationsComponent implements OnInit {
   isSearching = false;
 
   constructor(private organisationService: OrganisationsService,
-              private logger: LogService,
-              private loader: LoaderService) { }
+    private logger: LogService,
+    private loader: LoaderService) { }
 
   async ngOnInit() {
     this.searchOrganisation('');
@@ -28,11 +27,13 @@ export class OrganisationsComponent implements OnInit {
     this.logger.debug('Start searching organisations', name);
     this.isSearching = true;
     this.loader.show();
-    if (this.organisations === undefined || this.organisations.length === 0) {
+    if (!this.organisations || this.organisations.length === 0) {
       // get organisations from the web api
       this.organisationService.getOrganisations()
         .subscribe(org => this.organisations = org,
-          error => {console.log(error); this.isSearching = false; this.loader.hide(); },
+          error => {
+            console.log(error); this.isSearching = false; this.loader.hide();
+          },
           () => {
             // finished fetching organisations from web api, filter the organisations by name
             this.filterOrganisations(name);
@@ -45,21 +46,21 @@ export class OrganisationsComponent implements OnInit {
   }
 
   filterOrganisations(name: string) {
-    if (name === null || !name.trim()) {
+    if (!name || !name.trim()) {
       // return all organisations
       this.filteredOrganisations = this.organisations.slice(0)
-                                      .sort((a, b) => {
-                                        // tslint:disable-next-line:max-line-length
-                                        return (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase()) ;
-                                      });
+        .sort((a, b) =>
+          // eslint-disable-next-line max-len
+          (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase())
+        );
     } else {
       // filter organisations and save in filteredOrganisations
       this.filteredOrganisations = this.organisations
-                                      .filter((org) => new RegExp(name, 'gi').test(org.name))
-                                      .sort((a, b) => {
-                                        // tslint:disable-next-line:max-line-length
-                                        return (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase()) ;
-                                      });
+        .filter((org) => new RegExp(name, 'gi').test(org.name))
+        .sort((a, b) =>
+          // eslint-disable-next-line max-len
+          (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase())
+        );
     }
     this.isSearching = false;
     this.loader.hide();

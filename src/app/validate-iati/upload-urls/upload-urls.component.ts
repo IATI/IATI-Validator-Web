@@ -1,10 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-import { of } from 'rxjs/observable/of';
+import { forkJoin, of } from 'rxjs';
 
-import { FileUploadService } from './../shared/file-upload.service';
 import { Mode } from '../validate-iati';
+import { FileUploadService } from './../shared/file-upload.service';
+
 
 @Component({
   selector: 'app-upload-urls',
@@ -66,7 +66,7 @@ export class UploadUrlsComponent implements OnInit {
           (response: any) => {
             const tmpWorkspaceId = response.body.id;
 
-            this.parallelUpload(urls, tmpWorkspaceId)
+            (this.parallelUpload(urls, tmpWorkspaceId) as any)
               .subscribe(
                 () => {
                   this.tmpWorkspaceId = tmpWorkspaceId;
@@ -75,9 +75,9 @@ export class UploadUrlsComponent implements OnInit {
                 },
                 handleError
               );
-        },
-        handleError
-      );
+          },
+          handleError
+        );
     }
   }
 
@@ -85,12 +85,12 @@ export class UploadUrlsComponent implements OnInit {
     return this.activeStep.includes(step);
   }
 
-  ValidateFile() {
+  validateFile() {
     this.router.navigate(['validate', this.tmpWorkspaceId]);
   }
 
   private validateUrl(value) {
-    // tslint:disable-next-line
+    // eslint-disable-next-line
     return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(value);
   }
 
