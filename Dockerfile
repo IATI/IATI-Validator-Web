@@ -9,7 +9,7 @@
 ### STAGE 1: Build ###
 
 # We label our stage as ‘builder’
-FROM node:8-alpine as validator-front-end-builder
+FROM node:14-alpine as validator-front-end-builder
 
 # Optional --build-arg location= <path> to run the app from a different path on the server (exclude starting /)
 # Optional --build-arg NODE_ENV= <env> to build a different environment (default prod).
@@ -26,7 +26,7 @@ WORKDIR /ng-app
 COPY . .
 
 ## Build the angular app in production mode and store the artifacts in dist folder
-RUN $(npm bin)/ng build -e $NODE_ENV --base-href=/$location
+RUN $(npm bin)/ng build  --prod --base-href=/$location
 
 ### STAGE 2: Setup ###
 
