@@ -17,7 +17,6 @@ env:
   CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
   TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
   AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  RESOURCE_GROUP: dev-iati-resources
 
 jobs:
   deploy:
@@ -56,11 +55,8 @@ jobs:
           npm run build
 
       - name: Install @azure/ng-deploy
-        run: ng add @azure/ng-deploy -m \
-          -i ${{ env.AZURE_SUBSCRIPTION_ID }} \
-          -a ${{ env.STORAGE_NAME }} \
-          -g ${{ env.RESOURCE_GROUP }} \
-          -l 'UK South'
+        run: |
+          ng add @azure/ng-deploy -m -i ${{ env.AZURE_SUBSCRIPTION_ID }} -a ${{ env.STORAGE_NAME }} -g dev-iati-resources -l 'UK South'
 
       - name: Deploy to Azure Storage Blob
         run: ng run dqf-app:deploy
