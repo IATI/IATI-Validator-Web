@@ -57,9 +57,10 @@ jobs:
 
       - name: Install @azure/ng-deploy
         run: ng add @azure/ng-deploy -m \
-          --subscription-id ${{ env.AZURE_SUBSCRIPTION_ID }} \
-          --account ${{ env.STORAGE_NAME}} \
-          --location 'UK South'
+          -i ${{ env.AZURE_SUBSCRIPTION_ID }} \
+          -a ${{ env.STORAGE_NAME }} \
+          -g ${{ env.RESOURCE_GROUP }} \
+          -l 'UK South'
 
       - name: Deploy to Azure Storage Blob
         run: ng run dqf-app:deploy
