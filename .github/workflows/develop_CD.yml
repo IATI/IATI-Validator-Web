@@ -36,6 +36,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install --ignore-scripts
+          npm install -g @angular/cli
 
       - name: Run build
         run: |
