@@ -9,8 +9,6 @@ on:
       - unified-platform-migration # eventually update to develop
 
 env:
-  STAGE: dev # prefix to indicate environment stage
-  NAME: iati-validator-web
   STORAGE_NAME: deviativalidatorweb
   CI: 1
   CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
