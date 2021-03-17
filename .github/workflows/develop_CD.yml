@@ -50,7 +50,7 @@ jobs:
 
       - name: Copy environment specific env.js file
         run: |
-          cp env.dev.js env.js
+          cp src/env.dev.js src/env.js
 
       - name: Run build
         run: |
