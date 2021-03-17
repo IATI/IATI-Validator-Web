@@ -2,6 +2,27 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.0.
 
+## Environment variables
+
+The app must be built where `env.js` has the appropriate environment variables to point to the backend API
+
+### Local dev setup
+
+1. Copy example env.js file `cp src/example.env.js src/env.js`
+1. Update to use the neccessary variables (localhost if you're running the backend locally as well, or use staging/dev)
+
+### Live Deployments
+
+GitHub actions is set up to copy the following before building the Angular application. So make the appropriate changes in those files and deploy to reflect those changes.
+
+### Dev
+
+`cp src/env.dev.js src/env.js`
+
+### Prod
+
+`cp src/env.prod.js src/env.js`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
