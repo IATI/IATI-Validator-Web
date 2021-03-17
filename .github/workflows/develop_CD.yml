@@ -48,6 +48,10 @@ jobs:
           npm install --ignore-scripts
           npm install -g @angular/cli
 
+      - name: Copy environment specific env.js file
+        run: |
+          cp env.dev.js env.js
+
       - name: Run build
         run: |
           npm run build
