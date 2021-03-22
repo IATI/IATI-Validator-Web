@@ -10,11 +10,6 @@ on:
 
 env:
   STORAGE_NAME: deviativalidatorweb
-  CI: 1
-  CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-  CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-  TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
 jobs:
   deploy:
@@ -46,7 +41,6 @@ jobs:
       - name: Install dependencies
         run: |
           npm install --ignore-scripts
-          npm install -g @angular/cli
 
       - name: Copy environment specific env.js file
         run: |
@@ -56,9 +50,14 @@ jobs:
         run: |
           npm run build
 
-      - name: Install @azure/ng-deploy
-        run: |
-          ng add @azure/ng-deploy -m -i ${{ env.AZURE_SUBSCRIPTION_ID }} -a ${{ env.STORAGE_NAME }} -g dev-iati-resources -l 'UK South'
+      - name: Login to Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.DEV_AZURE_CREDENTIALS }}
 
-      - name: Deploy to Azure Storage Blob
-        run: ng run dqf-app:deploy
+      - name: Upload to blob storage
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch --account-name ${{ env.STORAGE_NAME }} -d '$web' -s dist/
