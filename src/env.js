@@ -10,10 +10,10 @@
   // Setting this to false will disable console output
   //window.__env.apiDataworkBench = 'http://localhost:3000/api/v1';
   //window.__env.apiDataworkBench = 'https://iativalidator.iatistandard.org/api/v1';
-  //window.__env.apiDataworkBench = 'http://stage.iativalidator.iatistandard.org/api/v1';
+  window.__env.apiDataworkBench = 'http://stage.iativalidator.iatistandard.org/api/v1';
 
 
-  //window.__env.stagePass = null;
+  window.__env.stagePass = null;
 
   //window.__env.valActualVersion = '1.6.2';
   //window.__env.valServerVersion = '1.0.1';

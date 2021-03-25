@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Feedback, Dqfs } from '../shared/feedback';
+import { GuidanceService } from './../../../guidance.service';
 
 @Component({
   selector: 'app-single-feedback',
@@ -13,7 +14,7 @@ export class SingleFeedbackComponent implements OnInit {
   @Input() items = 'activities';
   public isCollapsed = false;
 
-  constructor() { }
+  constructor(private guidance: GuidanceService) { }
 
   ngOnInit() {
   }
@@ -23,6 +24,16 @@ export class SingleFeedbackComponent implements OnInit {
 
     this.feedbackData.forEach(fb => {
       fb.messages.forEach(mes => {
+        const override = this.guidance.overrideGuidanceLink(mes.id);
+
+        mes.rulesets.forEach(ruleset => {
+          if (override != null) {
+            ruleset['src'] = override;
+          } else {
+            ruleset['src'] = ruleset['href'];
+          }
+        });
+
         if (mes.rulesets.some(r => r.severity === type)) {
           count += mes.context.length;
         }
