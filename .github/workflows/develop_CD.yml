@@ -1,4 +1,4 @@
-name: Deploy_To_Blob_NG_Dev
+name: Deploy_To_GH_Pages_NG_Dev
 
 on:
   push:
@@ -50,7 +50,7 @@ jobs:
       - name: Create 404 for github pages
         run: cp dist/index.html dist/404.html
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages (gh-pages branch)
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
