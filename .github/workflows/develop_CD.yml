@@ -8,9 +8,6 @@ on:
     branches:
       - unified-platform-migration # eventually update to develop
 
-env:
-  STORAGE_NAME: deviativalidatorweb
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -50,14 +47,12 @@ jobs:
         run: |
           npm run build
 
-      - name: Login to Azure CLI
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.DEV_AZURE_CREDENTIALS }}
+      - name: Create 404 for github pages
+        run: cp dist/index.html dist/404.html
 
-      - name: Upload to blob storage
-        uses: azure/CLI@v1
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          azcliversion: latest
-          inlineScript: |
-            az storage blob upload-batch --account-name ${{ env.STORAGE_NAME }} -d '$web' -s dist/
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: dev-validator.iatistandard.org
