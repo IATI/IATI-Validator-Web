@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface Organisation {
   name: string;
+  title: string;
   description: string;
   slug: string;
   logo: string;

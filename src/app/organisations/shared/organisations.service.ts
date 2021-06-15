@@ -9,13 +9,13 @@ import { LogService } from '../../core/logging/log.service';
 
 @Injectable()
 export class OrganisationsService {
-  private organisationsUrl = window.__env.apiDataworkBench;
+  private organisationsUrl = window.__env.validatorServicesUrl;
 
   constructor(private http: HttpClient,
               private logger: LogService) { }
 
   getOrganisations(): Observable<Organisation[]> {
-    const url: string = this.organisationsUrl + '/iati-publishers/current';
+    const url: string = this.organisationsUrl + '/pvt/publishers';
     return  this.http.get<Organisation[]>(url)
       .pipe(
         tap(_ => this.log(`fetched organisations`)),

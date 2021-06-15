@@ -4,6 +4,7 @@ import { Workspace } from './workspace';
 export interface Organisation {
   name: string;
   description: string;
+  title: string;
   slug: string;
   logo: string;
   country: string;

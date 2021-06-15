@@ -23,8 +23,8 @@ export class OrganisationsComponent implements OnInit {
     this.searchOrganisation('');
   }
 
-  searchOrganisation(name: string) {
-    this.logger.debug('Start searching organisations', name);
+  searchOrganisation(title: string) {
+    // this.logger.debug('Start searching organisations', title);
     this.isSearching = true;
     this.loader.show();
     if (!this.organisations || this.organisations.length === 0) {
@@ -35,31 +35,31 @@ export class OrganisationsComponent implements OnInit {
             console.log(error); this.isSearching = false; this.loader.hide();
           },
           () => {
-            // finished fetching organisations from web api, filter the organisations by name
-            this.filterOrganisations(name);
+            // finished fetching organisations from web api, filter the organisations by title
+            this.filterOrganisations(title);
           });
     } else {
       // organisations already loaded, only apply filter
-      this.filterOrganisations(name);
+      this.filterOrganisations(title);
     }
-    this.logger.debug('End searching organisations', name);
+    // this.logger.debug('End searching organisations', title);
   }
 
-  filterOrganisations(name: string) {
-    if (!name || !name.trim()) {
+  filterOrganisations(title: string) {
+    if (!title || !title.trim()) {
       // return all organisations
       this.filteredOrganisations = this.organisations.slice(0)
         .sort((a, b) =>
           // eslint-disable-next-line max-len
-          (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase())
+          (a.title || '').toString().toLowerCase().localeCompare((b.title || '').toString().toLowerCase())
         );
     } else {
       // filter organisations and save in filteredOrganisations
       this.filteredOrganisations = this.organisations
-        .filter((org) => new RegExp(name, 'gi').test(org.name))
+        .filter((org) => new RegExp(title, 'gi').test(org.title))
         .sort((a, b) =>
           // eslint-disable-next-line max-len
-          (a.name || '').toString().toLowerCase().localeCompare((b.name || '').toString().toLowerCase())
+          (a.title || '').toString().toLowerCase().localeCompare((b.title || '').toString().toLowerCase())
         );
     }
     this.isSearching = false;
