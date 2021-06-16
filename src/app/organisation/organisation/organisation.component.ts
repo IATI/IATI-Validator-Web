@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { OrganisationService } from './../shared/organisation.service';
-import { Organisation } from '../shared/organisation';
+import { Organisation } from '../../shared/organisation';
 
 @Component({
   selector: 'app-organisation',

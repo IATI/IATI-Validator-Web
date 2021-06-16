@@ -1,4 +1,4 @@
-import { Organisation } from './../shared/organisation';
+import { Organisation } from '../../shared/organisation';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

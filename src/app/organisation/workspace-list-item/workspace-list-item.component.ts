@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { IatiDataset } from '../shared/iati-dataset';
 import { OrganisationService } from './../../organisation/shared/organisation.service';
-import { Workspace } from './../shared/workspace';
+import { Workspace } from '../../shared/workspace';
 
 
 @Component({

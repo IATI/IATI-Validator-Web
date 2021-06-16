@@ -5,9 +5,10 @@ import { catchError, tap } from 'rxjs/operators';
 import { environment } from './../../../environments/environment';
 import { LogService } from './../../core/logging/log.service';
 import { IatiDataset } from './iati-dataset';
-import { Organisation } from './organisation';
-import { Version } from './version';
-import { Workspace } from './workspace';
+import { Organisation } from '../../shared/organisation';
+import { Version } from '../../shared/version';
+import { Workspace } from '../../shared/workspace';
+import { OrganisationsService } from '../../organisations/shared/organisations.service';
 
 @Injectable()
 export class OrganisationService {

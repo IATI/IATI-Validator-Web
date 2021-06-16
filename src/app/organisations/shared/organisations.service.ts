@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Organisation } from './organisation';
+import { Organisation } from '../../shared/organisation';
 import { LogService } from '../../core/logging/log.service';
 
 @Injectable()

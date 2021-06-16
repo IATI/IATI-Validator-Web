@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LogService } from '../../core/logging/log.service';
-import { Organisation } from '../shared/organisation';
+import { Organisation } from '../../shared/organisation';
 import { LoaderService } from './../../core/loader/loader.service';
 import { OrganisationsService } from './../shared/organisations.service';
 

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { OrganisationService } from '../shared/organisation.service';
-import { Organisation } from './../shared/organisation';
-import { Workspace } from './../shared/workspace';
-import { Version } from './../shared/version';
+import { Organisation } from '../../shared/organisation';
+import { Workspace } from '../../shared/workspace';
+import { Version } from '../../shared/version';
 
 @Component({
   selector: 'app-workspace',
