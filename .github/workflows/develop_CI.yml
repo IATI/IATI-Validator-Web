@@ -43,6 +43,6 @@ jobs:
 
       - name: Run build
         run: |
-          npm run build
+          npm run build:prd
         env:
           CI: true

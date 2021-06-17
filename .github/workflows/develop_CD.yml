@@ -45,7 +45,7 @@ jobs:
 
       - name: Run build
         run: |
-          npm run build
+          npm run build:dev
 
       - name: Create 404 for github pages
         run: cp dist/index.html dist/404.html
