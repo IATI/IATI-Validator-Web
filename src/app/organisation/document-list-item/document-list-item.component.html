@@ -1,0 +1,35 @@
+<div *ngIf="document" class="wrapper">
+  <div
+    class="row"
+    (click)="rowClick()"
+    [ngClass]="{'file-valid': isValid() === true, 
+                'file-invalid': isValid() === false,
+                'no-validation': isValid() === null}"
+  >
+    <div class="col-12 col-md">
+      {{ fileName() }}
+    </div>
+    <div class="col-12 col-md">
+      <span *ngIf="document.first_seen">{{
+        document.first_seen | date: "yyyy-MM-dd HH:mm (z)"
+      }}</span>
+    </div>
+    <div class="col-12 col-md">
+      <span *ngIf="document.downloaded">{{
+        document.downloaded | date: "yyyy-MM-dd HH:mm (z)"
+      }}</span>
+    </div>
+    <div class="col-12 col-md">
+      <span *ngIf="document.validation_created">
+        {{
+          (document ? document.validation_created : "")
+            | date: "yyyy-MM-dd HH:mm (z)"
+        }}
+      </span>
+    </div>
+    <div class="col-12 col-md">
+      Datastore Entered Date
+    </div>
+    <div class="col-12 d-md-none"><hr /></div>
+  </div>
+</div>

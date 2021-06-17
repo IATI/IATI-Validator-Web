@@ -6,13 +6,22 @@
   margin-left: 0;
 
 }
-.row.dqf {
+.row.file-valid {
   cursor: pointer;
   color: $success;
   font-weight: 700;
 }
+.row.file-invalid {
+  cursor: pointer;
+  color: $danger;
+  font-weight: 700;
+}
 
-.row.dqf:hover {
+.row.no-validation {
+  font-weight: 700;
+}
+
+.row.file-valid:hover, .row.file-invalid:hover  {
   background-color: lightyellow;
 }
 

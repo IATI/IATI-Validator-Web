@@ -11,7 +11,6 @@ import { Organisation } from '../../shared/organisation';
 })
 export class OrganisationComponent implements OnInit, OnDestroy {
   organisationData: Organisation;
-  workspaces: any = [];
   error: any;
   name = '';
 
@@ -33,7 +32,6 @@ export class OrganisationComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.organisationData = data;
-          this.workspaces = this.organisationData ? this.organisationData.workspaces : [];
         },
         error => this.error = error
       );
@@ -41,8 +39,8 @@ export class OrganisationComponent implements OnInit, OnDestroy {
 
   hasValidLogo(): boolean {
     if (this.organisationData !== undefined) {
-      if ('logo' in this.organisationData) {
-        return (this.organisationData.logo !== '');
+      if ('image_url' in this.organisationData) {
+        return (this.organisationData.image_url !== '');
       }
     }
 

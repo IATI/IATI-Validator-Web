@@ -1,11 +1,11 @@
 <div class="container">
   <div class="organisation-name">
-    <h1>{{ organisationData?.name }}</h1>
+    <h1>{{ organisationData?.title }}</h1>
   </div>
 
   <div class="row about-organisation">
     <div *ngIf="hasValidLogo()" class="col-md-3 h-100">
-      <img  [src]="organisationData?.logo" class="organisation-logo img-fluid" alt="{{organisationData?.slug}}">
+      <img  [src]="organisationData?.image_url" class="organisation-logo img-fluid" alt="{{organisationData?.name}}">
     </div>
     <div class="col" [ngClass]="{'col-md-9': hasValidLogo()}" *ngIf="organisationData?.description">
       <h3>Description</h3>
@@ -15,7 +15,15 @@
   </div>
 
   <div class="workspaces">
-    <app-workspace-list-item class="card-item" *ngFor="let ws of workspaces" [workspace]="ws"></app-workspace-list-item>
+    <div class="mycard">  
+        <div class="mycard-title">
+            Public data
+        </div>
+        <div class="mycard-body"><p>
+            <p class="card-text"><b>IATI files published in the IATI Registry</b></p>
+            <app-document-list [documents]='organisationData?.documents'></app-document-list>
+        </div>
+      </div>
   </div>
 
 </div>

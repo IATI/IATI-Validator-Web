@@ -5,16 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { OrganisationComponent } from './organisation/organisation.component';
 import { OrganisationService } from './shared/organisation.service';
-import { WorkspaceListItemComponent } from './workspace-list-item/workspace-list-item.component';
-import { WorkspaceComponent } from './workspace/workspace.component';
-import { WorkspaceViewItemComponent } from './workspace-view-item/workspace-view-item.component';
-import { WorkspaceViewItemFileComponent } from './workspace-view-item-file/workspace-view-item-file.component';
+import { OrganisationsService } from '../organisations/shared/organisations.service';
+import { DocumentListComponent } from './document-list/document-list.component';
+import { DocumentListItemComponent } from './document-list-item/document-list-item.component';
 
 const routes: Routes = [
   { path: '', component: OrganisationComponent },
   { path: ':name', component: OrganisationComponent },
-  { path: ':organisation/ws/:workspace', component: WorkspaceComponent },
-  { path: ':organisation/ws/:workspace/:version', component: WorkspaceComponent },
   { path: '', redirectTo: '/404dqf', pathMatch: 'full' },
 ];
 
@@ -29,13 +26,12 @@ const routes: Routes = [
   ],
   providers: [
     OrganisationService,
+    OrganisationsService
   ],
   declarations: [
     OrganisationComponent,
-    WorkspaceListItemComponent,
-    WorkspaceComponent,
-    WorkspaceViewItemComponent,
-    WorkspaceViewItemFileComponent
+    DocumentListComponent,
+    DocumentListItemComponent
   ]
 })
 export class OrganisationModule { }

@@ -1,76 +1,55 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map, mergeMap } from 'rxjs/operators';
 import { environment } from './../../../environments/environment';
 import { LogService } from './../../core/logging/log.service';
 import { IatiDataset } from './iati-dataset';
 import { Organisation } from '../../shared/organisation';
+import { Document } from '../../shared/document';
 import { Version } from '../../shared/version';
 import { Workspace } from '../../shared/workspace';
 import { OrganisationsService } from '../../organisations/shared/organisations.service';
 
 @Injectable()
 export class OrganisationService {
-  private urlApiOrganisation: string = window.__env.apiDataworkBench + '/iati-publishers';
-  private urlApiWorkspaces: string = window.__env.apiDataworkBench + '/workspaces';
-  private urlApiVersions: string = window.__env.apiDataworkBench + '/versions';
   private urlApiIatiDataset: string = window.__env.apiDataworkBench + '/iati-datasets';
   private urlApiIatiFile: string = window.__env.apiDataworkBench + '/iati-files';
+  // /pvt/publisher/{publisher_id}/documents
+  private urlApiOrganisationVS: string = window.__env.validatorServicesUrl + '/pvt/publisher';
 
   constructor(
     private http: HttpClient,
-    private logger: LogService
+    private logger: LogService,
+    private allOrganisations: OrganisationsService
   ) { }
-  // ttp://dev1.dataworkbench.io/api/iati-publishers/findOne?filter[where][slug]=cordaid
+
   getOrganisation(name: string): Observable<Organisation> {
-    const url: string = this.urlApiOrganisation + '/findOne?filter[where][slug]=' + name + '&filter[include]=workspaces';
-    this.log(url);
-    return this.http.get<Organisation>(url).pipe(
-      tap(_ => this.log(`fetched organisation id=${name}`)),
-      catchError(this.handleError<Organisation>(`getOrganisation id=${name}`))
-    );
+    return this.allOrganisations.getOrganisations()
+        .pipe(mergeMap(data => {
+          const selectedOrg = data.find((org) => org.name === name);
+          const workspaces: Workspace[] = [{
+            slug: 'public',
+            'owner-slug': selectedOrg.name,
+            title: 'Public data',
+            description: 'IATI files published in the IATI Registry',
+            id: selectedOrg.iati_id,
+            'iati-publisherId':
+             selectedOrg.iati_id,
+             versions: null,
+          }];
+          return this.getOrganisationDocuments(selectedOrg.org_id)
+            .pipe(map((documents) => ({...selectedOrg, workspaces, documents})));
+        }));
   }
 
-  getWorkspaces(organisation: string): Observable<Workspace[]> {
-    const url: string = this.urlApiWorkspaces + '?organisation_id=' + organisation;
+  getOrganisationDocuments(organisationId: string): Observable<Document[]> {
+    const url: string = this.urlApiOrganisationVS + '/' + organisationId + '/documents';
     this.log(url);
-    return this.http.get<Workspace[]>(url)
+    return this.http.get<Document[]>(url)
       .pipe(
-        tap(_ => this.log(`fetched workspaces`)),
-        catchError(this.handleError('getWorkspaces', []))
-      );
-  }
-
-  getWorkspace(organisationSlug: string, workspaceSlug: string): Observable<Workspace> {
-    const url: string = this.urlApiWorkspaces + '/findOne?filter=' +
-      `{"where":{"and": [ {"owner-slug": "${organisationSlug}"}, {"slug": "${workspaceSlug}"}]}, "include": "versions"}`;
-    this.log(url);
-    return this.http.get<Workspace>(url)
-      .pipe(
-        tap(_ => this.log(`fetched workspaces`)),
-        catchError(this.handleError('getWorkspaces', undefined))
-      );
-  }
-
-  getVersions(workspaceid: string): Observable<Version[]> {
-    const url: string = this.urlApiVersions + '?workspace_id=' + workspaceid;
-    this.log(url);
-    return this.http.get<Version[]>(url)
-      .pipe(
-        tap(_ => this.log(`fetched versions`)),
-        catchError(this.handleError('getVersions', []))
-      );
-  }
-
-  getVersion(workspaceId: string, versionSlug: string): Observable<Version[]> {
-    const url: string = this.urlApiWorkspaces + '/' + workspaceId + '/versions?filter[where][slug]=' + versionSlug;
-
-    this.log(url);
-    return this.http.get<Version>(url)
-      .pipe(
-        tap(_ => this.log(`fetched version`)),
-        catchError(this.handleError('getVersion', undefined))
+        tap(_ => this.log(`fetched documents`)),
+        catchError(this.handleError('getOrganisationDocuments', []))
       );
   }
 

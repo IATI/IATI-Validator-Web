@@ -1,32 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Workspace } from './workspace';
+import { Document } from './document';
 
 export interface Organisation {
+  org_id: string;
   name: string;
   description: string;
   title: string;
-  slug: string;
-  logo: string;
-  country: string;
-  iati_id: string;
-  registry_id: string;
-  datasets: number;
   state: string;
-  id: string;
+  image_url: string;
+  country_code: string;
+  iati_id: string;
+  package_count: number;
   workspaces: Workspace[];
+  documents: Document[];
 }
-
-// export interface Organisation {
-//   display_name: string;
-//   description: string;
-//   image_display_url?: string;
-//   package_count?: number;
-//   title?: string;
-//   is_organization: boolean;
-//   state: string;
-//   image_url?: string;
-//   type: string;
-//   num_followers: number;
-//   id: string;
-//   name: string;
-// }

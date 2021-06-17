@@ -1,0 +1,27 @@
+<div *ngIf="documents === undefined">
+    <p>No files found.</p>
+  </div>
+  
+  <div *ngIf="documents !== undefined" class="result-validation-table">
+    <div class="documents">
+      <div class="row heading">
+        <div class="col-12 col-md">
+          File name
+        </div>
+        <div class="col-12 col-md d-none d-md-block">
+          Identified in Registry
+        </div>
+        <div class="col-12 col-md d-none d-md-block">
+          Downloaded
+        </div>
+        <div class="col-12 col-md d-none d-md-block">
+          Validated
+        </div>
+        <div class="col-12 col-md d-none d-md-block">
+          Entered in Datastore
+        </div>
+      </div>
+      <app-document-list-item *ngFor="let document of documents" [document]="document"></app-document-list-item>
+    </div>
+  
+  </div>
