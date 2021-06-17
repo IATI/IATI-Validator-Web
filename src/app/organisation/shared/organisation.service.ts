@@ -53,17 +53,6 @@ export class OrganisationService {
       );
   }
 
-  getFileDataForPublisher(publisher: string): Observable<Version[]> {
-    const url: string = this.urlApiIatiDataset + '/?filter[where][publisher]=' + publisher;
-
-    this.log(url);
-    return this.http.get<Version>(url)
-      .pipe(
-        tap(_ => this.log(`fetched version`)),
-        catchError(this.handleError('getVersion', undefined))
-      );
-  }
-
   getIatiDataset(md5: string): Observable<IatiDataset[]> {
     const url: string = this.urlApiIatiDataset + '/?filter[where][md5]=' + md5;
 
