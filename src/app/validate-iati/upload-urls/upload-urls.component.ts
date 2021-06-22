@@ -47,7 +47,7 @@ export class UploadUrlsComponent implements OnInit {
     }
 
     this.urls = $event.target.value;
-    this.googleAnalyticsService.eventEmitter("setUrl", "check_data", "url_uploader");
+    this.googleAnalyticsService.eventEmitter('url_uploader', 'check_data', 'setUrl');
   }
 
   fetchFiles() {
@@ -56,7 +56,7 @@ export class UploadUrlsComponent implements OnInit {
     this.incorrectUrls = serializedUrls.filter(url => !this.validateUrl(url)).join(' | ');
 
     if (correctUrls.length && !this.incorrectUrls.length) {
-      this.googleAnalyticsService.eventEmitter("fetchFiles", "check_data", "url_uploader", correctUrls.length.toString());
+      this.googleAnalyticsService.eventEmitter('url_uploader', 'check_data', 'fetchFiles', null, correctUrls.length);
       const urls = correctUrls.slice();
       const handleError = error => {
         console.log('error: ', error);
@@ -90,7 +90,7 @@ export class UploadUrlsComponent implements OnInit {
   }
 
   validateFile() {
-    this.googleAnalyticsService.eventEmitter("validate", "check_data", "url_uploader");
+    this.googleAnalyticsService.eventEmitter('url_uploader', 'check_data', 'validate');
     this.router.navigate(['validate', this.tmpWorkspaceId]);
   }
 
