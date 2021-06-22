@@ -28,7 +28,7 @@ export class OrganisationComponent implements OnInit, OnDestroy {
   }
 
   loadOrganisation(name: string) {
-    this.organisationService.getOrganisation(name)
+    this.organisationService.getOrganisationAndDocuments(name)
       .subscribe(
         data => {
           this.organisationData = data;
