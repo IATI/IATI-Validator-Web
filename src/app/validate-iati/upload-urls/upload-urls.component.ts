@@ -4,6 +4,7 @@ import { forkJoin, of } from 'rxjs';
 
 import { Mode } from '../validate-iati';
 import { FileUploadService } from './../shared/file-upload.service';
+import { GoogleAnalyticsService } from '../../google-analytics.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class UploadUrlsComponent implements OnInit {
   constructor(
     private readonly fileUploadService: FileUploadService,
     private readonly router: Router,
+    private readonly googleAnalyticsService: GoogleAnalyticsService,
   ) { }
 
   ngOnInit() {
@@ -45,6 +47,7 @@ export class UploadUrlsComponent implements OnInit {
     }
 
     this.urls = $event.target.value;
+    this.googleAnalyticsService.eventEmitter("setUrl", "check_data", "url_uploader");
   }
 
   fetchFiles() {
@@ -53,6 +56,7 @@ export class UploadUrlsComponent implements OnInit {
     this.incorrectUrls = serializedUrls.filter(url => !this.validateUrl(url)).join(' | ');
 
     if (correctUrls.length && !this.incorrectUrls.length) {
+      this.googleAnalyticsService.eventEmitter("fetchFiles", "check_data", "url_uploader", correctUrls.length.toString());
       const urls = correctUrls.slice();
       const handleError = error => {
         console.log('error: ', error);
@@ -86,6 +90,7 @@ export class UploadUrlsComponent implements OnInit {
   }
 
   validateFile() {
+    this.googleAnalyticsService.eventEmitter("validate", "check_data", "url_uploader");
     this.router.navigate(['validate', this.tmpWorkspaceId]);
   }
 

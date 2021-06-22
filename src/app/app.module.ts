@@ -13,6 +13,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AboutComponent } from './views/data-quality-feedback/about/about.component';
 import { GtagModule } from 'angular-gtag';
 import { OrganisationService } from './organisation/shared/organisation.service';
+import {GoogleAnalyticsService} from './google-analytics.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { OrganisationService } from './organisation/shared/organisation.service'
     AppRoutingModule,
   ],
   providers: [
-    OrganisationService
+    OrganisationService,
+    GoogleAnalyticsService,
   ],
   exports: [
     CoreModule,

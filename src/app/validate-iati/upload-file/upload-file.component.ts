@@ -6,6 +6,7 @@ import { forkJoin, of } from 'rxjs';
 import { Mode } from '../validate-iati';
 import { LogService } from './../../core/logging/log.service';
 import { FileUploadService } from './../shared/file-upload.service';
+import { GoogleAnalyticsService } from '../../google-analytics.service';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class UploadFileComponent implements OnInit {
     private readonly logger: LogService,
     private readonly router: Router,
     private readonly fileUploadService: FileUploadService,
+    private readonly googleAnalyticsService: GoogleAnalyticsService,
   ) { }
 
   ngOnInit() {
@@ -43,6 +45,7 @@ export class UploadFileComponent implements OnInit {
     this.setActiveMode.emit(Mode.local);
     this.selectedFiles = event.target.files;
     this.activeStep.push('2');
+    this.googleAnalyticsService.eventEmitter("browse", "check_data", "file_uploader");
   }
 
   uploadFile(): void {
@@ -53,6 +56,7 @@ export class UploadFileComponent implements OnInit {
     };
 
     if (files.length) {
+      this.googleAnalyticsService.eventEmitter("upload", "check_data", "file_uploader", files.length.toString());
       this.requestStatus = 'pending';
 
       this.fileUploadService.checkWorkspaceId(this.tmpWorkspaceId)
@@ -76,10 +80,12 @@ export class UploadFileComponent implements OnInit {
   }
 
   validateFile() {
+    this.googleAnalyticsService.eventEmitter("validate", "check_data", "file_uploader");
     this.router.navigate(['validate', this.tmpWorkspaceId]);
   }
 
   clearFiles() {
+    this.googleAnalyticsService.eventEmitter("clear", "check_data", "file_uploader");
     this.clear.emit();
     this.selectedFiles = [];
     this.activeStep = ['1'];
