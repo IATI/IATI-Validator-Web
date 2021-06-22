@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 
 interface GtagOptions {
-  eventCategory: string;
-  eventLabel?: string;
-  eventAction: string;
-  eventValue?: number;
+  event_category: string;
+  event_label?: string;
+  event_value?: number;
 }
 
 declare let gtag: (arg1: string, arg2: string, arg3: GtagOptions) => void;
@@ -15,16 +14,14 @@ declare let gtag: (arg1: string, arg2: string, arg3: GtagOptions) => void;
 export class GoogleAnalyticsService {
 
   public eventEmitter(
-    eventName: string,
-    eventCategory: string,
     eventAction: string,
+    eventCategory: string,
     eventLabel: string = null,
     eventValue: number = null ){
-         gtag('event', eventName, {
-                 eventCategory,
-                 eventLabel,
-                 eventAction,
-                 eventValue
+         gtag('event', eventAction, {
+                 event_category: eventCategory,
+                 event_label: eventLabel,
+                 event_value: eventValue
                });
     }
 }
