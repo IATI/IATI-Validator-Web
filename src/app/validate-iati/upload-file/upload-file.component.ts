@@ -45,7 +45,7 @@ export class UploadFileComponent implements OnInit {
     this.setActiveMode.emit(Mode.local);
     this.selectedFiles = event.target.files;
     this.activeStep.push('2');
-    this.googleAnalyticsService.eventEmitter('browse', 'Validator Check Data', 'file_uploader');
+    this.googleAnalyticsService.eventEmitter('check_data_file_browse', 'Validator Check Data', 'file_uploader');
   }
 
   uploadFile(): void {
@@ -56,7 +56,7 @@ export class UploadFileComponent implements OnInit {
     };
 
     if (files.length) {
-      this.googleAnalyticsService.eventEmitter('upload', 'Validator Check Data', 'file_uploader', files.length);
+      this.googleAnalyticsService.eventEmitter('check_data_file_upload', 'Validator Check Data', 'file_uploader', files.length);
       this.requestStatus = 'pending';
 
       this.fileUploadService.checkWorkspaceId(this.tmpWorkspaceId)
@@ -80,12 +80,12 @@ export class UploadFileComponent implements OnInit {
   }
 
   validateFile() {
-    this.googleAnalyticsService.eventEmitter('validate', 'Validator Check Data', 'file_uploader');
+    this.googleAnalyticsService.eventEmitter('check_data_file_validate', 'Validator Check Data', 'file_uploader');
     this.router.navigate(['validate', this.tmpWorkspaceId]);
   }
 
   clearFiles() {
-    this.googleAnalyticsService.eventEmitter('clear', 'Validator Check Data', 'file_uploader');
+    this.googleAnalyticsService.eventEmitter('check_data_file_clear', 'Validator Check Data', 'file_uploader');
     this.clear.emit();
     this.selectedFiles = [];
     this.activeStep = ['1'];
