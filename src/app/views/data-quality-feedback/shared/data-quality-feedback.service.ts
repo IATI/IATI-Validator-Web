@@ -18,10 +18,18 @@ export class DataQualityFeedbackService {
   private urlApiIatiTestFile: string = window.__env.apiDataworkBench + '/iati-testfiles';
   private urlApiIatiDataSet: string = window.__env.apiDataworkBench + '/iati-datasets';
   private urlApiOrganisation: string = window.__env.apiDataworkBench + '/iati-publishers';
+  private urlApiValidationReport: string = window.__env.validatorServicesUrl + '/pub/validation/existing';
 
   constructor(private http: HttpClient,
     private logger: LogService) { }
 
+  getValidationReport(documentId: string): Observable<any> {
+    const url: string = this.urlApiValidationReport + '?id=' + documentId;
+    return this.http.get<any>(url)
+    .pipe(
+      catchError(this.handleError('getValidationReport', undefined) as any)
+    );
+  }
   getDataQualityFeedback(md5: string): Observable<Dqfs> {
     const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';
     //   /iati-files/{container}/download/{file}

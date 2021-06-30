@@ -1,1 +1,1 @@
-<h3><a [routerLink]="['/organisation', reportInfo.organisationSlug]" >{{reportInfo.organisationName}}</a>  - {{reportInfo.fileName}} </h3>
+<h3><a [routerLink]="['/organisation', organisationInfo.name]" >{{ organisationInfo.title }}</a> - <a *ngIf="documentInfo.url" href="{{ documentInfo.url }}">{{ fileName() }}</a></h3>

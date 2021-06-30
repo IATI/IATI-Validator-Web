@@ -1,7 +1,12 @@
-<h3>{{data.filename}}</h3>
 <p>
- <span *ngIf="data.schemaVersion" title="IATI-Rules version: {{data.schemaVersion}}"></span>
- <span *ngIf="data.iatiVersion">IATI version: {{data.iatiVersion}}</span>
- <span *ngIf="data.filetype"> | Type: {{data.filetype}}</span>
- <span *ngIf="data.feedbackUpdated"> | updated: {{data.feedbackUpdated}}</span>
+  <span *ngIf="validationReport.report.iatiVersion"
+    >IATI version: {{ validationReport.report.iatiVersion }}</span
+  >
+  <span *ngIf="validationReport.report.fileType">
+    | Type: {{ validationReport.report.fileType }}</span
+  >
+  <span *ngIf="documentInfo.validation_created">
+    | Report Generated:
+    {{ documentInfo.validation_created | date: "yyyy-MM-dd HH:mm (z)" }}</span
+  >
 </p>

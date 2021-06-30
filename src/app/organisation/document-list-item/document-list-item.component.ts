@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Document } from 'src/app/shared/document';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-document-list-item',
@@ -10,7 +11,7 @@ export class DocumentListItemComponent implements OnInit {
   @Input()
   document!: Document;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -51,6 +52,7 @@ export class DocumentListItemComponent implements OnInit {
   rowClick() {
     if (this.hasValidation()) {
       // this.router.navigate(['view', 'dqf', 'files', this.iatiDatasetData.id]);
+      this.router.navigate(['view', 'dqf', 'files', this.document.id]);
       console.log('Validation Report Link Clicked', this.document.id);
     }
   }

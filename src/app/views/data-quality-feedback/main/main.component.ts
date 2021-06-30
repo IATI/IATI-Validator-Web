@@ -6,12 +6,14 @@ import { LoaderService } from '../../../core/loader/loader.service';
 import { OrganisationService } from '../../../organisation/shared/organisation.service';
 import { ValidatedIatiService } from '../../../validate-iati/shared/validated-iati.service';
 import { Activity, Dqfs, Feedback, Message, Ruleset } from '../shared/feedback';
+import { Document } from 'src/app/shared/document';
 import { Severity } from '../shared/severity';
 import { LoaderState } from './../../../core/loader/loader';
 import { LogService } from './../../../core/logging/log.service';
 import { Category } from './../shared/category';
 import { DataQualityFeedbackService } from './../shared/data-quality-feedback.service';
 import { Source } from './../shared/source';
+import { Organisation } from 'src/app/shared/organisation';
 
 
 
@@ -34,6 +36,11 @@ export class MainComponent implements OnInit, OnDestroy {
   severities: Severity[] = [];
   sources: Source[] = [];
   categories: Category[] = [];
+
+  documentInfo: Document;
+  organisationInfo: Organisation;
+  validationReport: any;
+
   public dqfs: Dqfs | undefined;
   public filetype = '';
   private loaderSubscription: Subscription | undefined;
@@ -97,36 +104,51 @@ export class MainComponent implements OnInit, OnDestroy {
 
     if (isTestfiles) {
       this.dataQualityFeedbackService.getTestFilesDataQualityFeedbackById(id).subscribe(data => {
-            this.dataset = data as any;
-            if (this.dataset) {
-              (this.dataset as any)['filename'] = this.fileName;
-            }
-            this.setData(data);
-          },
-          error => {
-            this.logger.error('Error loadActivityData', error);
-            this.loader.hide();
-    });
-    } else {
-      this.organisationService.getIatiDatasetById(id).subscribe(iatiDataSet => {
-        if (iatiDataSet && iatiDataSet.length) {
-          this.dataset = iatiDataSet[0];
-          this.dataQualityFeedbackService.getDataQualityFeedback(iatiDataSet[0].md5).subscribe(
-            data => {
-              this.setData(data);
-            },
-            error => {
-              this.logger.error('Error loadActivityData', error);
-              this.loader.hide();
-            }
-          );
-        } else {
-          // FIXME: check if there's a better handle for a "no dataset" situation
-          this.activityData = undefined;
-          this.companyFeedbackData = undefined;
+        this.dataset = data as any;
+          if (this.dataset) {
+            (this.dataset as any)['filename'] = this.fileName;
+          }
+          this.setData(data);
+        },
+        error => {
+          this.logger.error('Error loadActivityData', error);
           this.loader.hide();
-
         }
+      );
+    } else {
+      this.organisationService.getDocument(id).subscribe(documentInfo => {
+        if (documentInfo) {
+          this.documentInfo = documentInfo[0];
+          this.organisationService.getOrganisationById(this.documentInfo.publisher).subscribe(orgInfo => {
+            if (orgInfo) {
+              this.organisationInfo = orgInfo[0];
+              this.dataQualityFeedbackService.getValidationReport(id).subscribe(validationInfo => {
+                if (validationInfo) {
+                  this.validationReport = validationInfo;
+                }
+                this.loader.hide();
+              });
+            }
+          });
+        }
+        // if (iatiDataSet && iatiDataSet.length) {
+        //   this.dataset = iatiDataSet[0];
+        //   this.dataQualityFeedbackService.getDataQualityFeedback(iatiDataSet[0].md5).subscribe(
+        //     data => {
+        //       this.setData(data);
+        //     },
+        //     error => {
+        //       this.logger.error('Error loadActivityData', error);
+        //       this.loader.hide();
+        //     }
+        //   );
+        // } else {
+        //   // FIXME: check if there's a better handle for a "no dataset" situation
+        //   this.activityData = undefined;
+        //   this.companyFeedbackData = undefined;
+        //   this.loader.hide();
+
+        // }
       });
     }
   }

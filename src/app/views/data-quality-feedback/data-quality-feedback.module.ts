@@ -7,6 +7,7 @@ import { GtagModule } from 'angular-gtag';
 
 
 import { DataQualityFeedbackService } from './shared/data-quality-feedback.service';
+import { OrganisationService } from 'src/app/organisation/shared/organisation.service';
 import { MainComponent } from './main/main.component';
 import { FilterSeverityComponent } from './filter-severity/filter-severity.component';
 import { FilterSourceComponent } from './filter-source/filter-source.component';
@@ -61,6 +62,6 @@ const routes: Routes = [
     MainReportInfoComponent,
     SingleFeedbackComponent,
     IatiInfoComponent],
-    providers: [DataQualityFeedbackService]
+    providers: [DataQualityFeedbackService, OrganisationService]
 })
 export class DataQualityFeedbackModule { }

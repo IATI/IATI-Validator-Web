@@ -10,22 +10,19 @@ import { DataQualityFeedbackService } from './../shared/data-quality-feedback.se
   styleUrls: ['./main-report-info.component.scss']
 })
 export class MainReportInfoComponent implements OnInit {
-  @Input() id = '';
-  reportInfo: ReportInfo  = {organisationName: '', fileName: '', organisationSlug: '' };
+  @Input() documentInfo = {} as any;
+  @Input() organisationInfo = {} as any;
 
-  constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
-              private logger: LogService) { }
+  constructor(private logger: LogService) { }
 
   ngOnInit() {
-    this.loadData(this.id);
   }
 
-  loadData(id: string) {
-    this.dataQualityFeedbackService.getReportInfo(id).subscribe(
-      data => {
-        this.reportInfo = data;
-      }
-    );
+  fileName(): string {
+    if ('url' in this.documentInfo) {
+      return this.documentInfo.url.split('/').pop();
+    } else {
+      return 'No filename available';
+    }
   }
-
 }
