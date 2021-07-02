@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Document } from 'src/app/shared/document';
+import { Document } from '../../shared/document';
 import { Router } from '@angular/router';
 
 @Component({
@@ -28,6 +28,29 @@ export class DocumentListItemComponent implements OnInit {
       return true;
     } else {
       return false;
+    }
+  }
+
+  fileStatus(): string {
+    let error = -1;
+    let warning = -1;
+    if ('summary' in this.document && this.document.summary !== null) {
+      ({ error, warning } = this.document.summary);
+    }
+    const {validation, valid} = this.document;
+
+    if (validation === null) {
+      return 'normal';
+    } else if (valid === true && error === 0 && warning === 0) {
+      return 'success';
+    } else if (valid === true && error === 0) {
+      return 'warning';
+    } else if (valid === true) {
+      return 'error';
+    } else if (valid === false) {
+      return 'critical';
+    } else {
+      return 'normal';
     }
   }
 

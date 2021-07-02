@@ -2,9 +2,11 @@
   <div
     class="row"
     (click)="rowClick()"
-    [ngClass]="{'file-valid': isValid() === true, 
-                'file-invalid': isValid() === false,
-                'no-validation': isValid() === null}"
+    [ngClass]="{'file-success': fileStatus() === 'success', 
+                'file-warning': fileStatus() === 'warning',
+                'file-error': fileStatus() === 'error',
+                'file-critical': fileStatus() === 'critical',
+                'no-validation': fileStatus() === 'normal'}"
   >
     <div class="col-12 col-md">
       {{ fileName() }}

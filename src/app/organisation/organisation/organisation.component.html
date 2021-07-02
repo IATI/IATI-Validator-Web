@@ -21,7 +21,7 @@
         </div>
         <div class="mycard-body"><p>
             <p class="card-text"><b>IATI files published in the IATI Registry</b></p>
-            <app-document-list [documents]='organisationData?.documents'></app-document-list>
+            <app-document-list *ngIf="organisationData?.documents" [documents]='organisationData?.documents'></app-document-list>
         </div>
       </div>
   </div>

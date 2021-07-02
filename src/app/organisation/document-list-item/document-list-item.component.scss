@@ -6,14 +6,24 @@
   margin-left: 0;
 
 }
-.row.file-valid {
+.row.file-success {
   cursor: pointer;
   color: $success;
   font-weight: 700;
 }
-.row.file-invalid {
+.row.file-critical {
   cursor: pointer;
-  color: $danger;
+  color: $severity-critical;
+  font-weight: 700;
+}
+.row.file-error {
+  cursor: pointer;
+  color: $severity-error;
+  font-weight: 700;
+}
+.row.file-warning {
+  cursor: pointer;
+  color: $severity-warning;
   font-weight: 700;
 }
 
@@ -21,7 +31,7 @@
   font-weight: 700;
 }
 
-.row.file-valid:hover, .row.file-invalid:hover  {
+.row.file-success:hover, .row.file-critical:hover, .row.file-error:hover, .row.file-warning:hover {
   background-color: lightyellow;
 }
 
