@@ -1,13 +1,13 @@
 <div class="feedback">
-  <div class="category-label">{{feedback.label}}</div>
+  <div class="category-label">{{getCategoryLabel(feedback.category)}}</div>
   <ul class="feedback-list">
-    <li *ngFor="let mes of feedback.messages" class="message {{getfeedbackColor(mes)}}"   >
-      <span class="message-text" >{{mes.text}}</span>
+    <li *ngFor="let mes of feedback.errors" class="message {{getfeedbackColor(mes)}}"   >
+      <span class="message-text" >{{mes.message}}</span>
       <span class="message-id d-inline float-right">
         {{mes.id}}
-        <span *ngFor="let ruleset of mes.rulesets">
+        <!-- <span *ngFor="let ruleset of mes.rulesets">
           <a [hidden]="ruleset.src==null" href="{{ruleset.src}}" target="_blank" title="Open guidance in a new window">(see guidance)</a>
-        </span>
+        </span> -->
       </span>
       <ul [hidden]="mes.context.length===1 && mes.context[0].text===''">
         <li *ngFor="let con of mes.context" class="context">{{con.text}}</li>

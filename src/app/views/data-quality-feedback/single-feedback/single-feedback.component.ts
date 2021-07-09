@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Feedback, Dqfs } from '../shared/feedback';
+import { Feedback } from '../shared/feedback';
 
 @Component({
   selector: 'app-single-feedback',
@@ -21,10 +21,10 @@ export class SingleFeedbackComponent implements OnInit {
   getIssueCount(type: string): number {
     let count = 0;
 
-    this.feedbackData.forEach(fb => {
-      fb.messages.forEach(mes => {
-        if (mes.rulesets.some(r => r.severity === type)) {
-          count += mes.context.length;
+    this.feedbackData.forEach(catGroup => {
+      catGroup.errors.forEach(err => {
+        if (err.severity === type) {
+          count += err.context.length;
         }
       });
     });

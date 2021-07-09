@@ -8,7 +8,7 @@
           title="Open this {{item}} in d-portal" 
           target="_blank" (click)="$event.stopPropagation()">{{ cleanIdentifier(activity.identifier)}}</a></span>
         <span class="badge badge-critical" *ngIf="getIssueCount('critical')>0">{{getIssueCount('critical')}}</span>
-        <span class="badge badge-danger" *ngIf="getIssueCount('danger')>0">{{getIssueCount('danger')}}</span>
+        <span class="badge badge-danger" *ngIf="getIssueCount('error')>0">{{getIssueCount('error')}}</span>
         <span class="badge badge-warning" *ngIf="getIssueCount('warning')>0">{{getIssueCount('warning')}}</span>
         <span class="badge badge-info" *ngIf="getIssueCount('info')>0">{{getIssueCount('info')}}</span>
         <span class="badge badge-success" *ngIf="getIssueCount('success')>0">{{getIssueCount('success')}}</span>
@@ -23,7 +23,7 @@
 
   </div>
   <div class="feedback-items" [ngbCollapse]="isCollapsed">
-    <app-feedback-item *ngFor="let fb of activity.feedback" [feedback]="fb" ></app-feedback-item>
+    <app-feedback-item *ngFor="let fb of activity.errors" [feedback]="fb" ></app-feedback-item>
   </div>  
 </div>
 

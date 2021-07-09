@@ -14,7 +14,7 @@
     <app-spinner [backColor]="'white'"></app-spinner>
     <span class="loading-text">Loading report...</span>
   </div>
-  <div *ngIf="activityData===undefined && companyFeedbackData===undefined && !isLoading " class="alert alert-warning"
+  <div *ngIf="documentInfo===undefined && validationReport===undefined && !isLoading " class="alert alert-warning"
     role="alert">
     <h2>No data found.</h2>
     <p>It looks like the url is not valid.</p>
@@ -28,31 +28,30 @@
     </ul>
   </div>
 
-  <div *ngIf="(activityData!==undefined || companyFeedbackData!==undefined) && !isLoading" class="row">
+  <div *ngIf="(documentInfo!==undefined || validationReport!==undefined) && !isLoading" class="row">
     <div class="col-md-4 filters">
       <h4>Filters</h4>
       <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">
       </app-filter-severity>
-      <!-- <app-filter-source [sources]="sources" (selectedChanged)="sourceSelectedChanged()"></app-filter-source> -->
       <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()">
       </app-filter-category>
     </div>
     <div class="col-md-8 results">
       <h4>Feedback</h4>
-      <div *ngIf="companyFeedback">
+      <div *ngIf="validationReport">
         <!-- Determine which components to display -->
-        <div *ngIf="filetype==='iati-activities'">
-          <app-single-feedback [feedbackData]="companyFeedback" [title]="'Activity file feedback'" [item]="'activity'" [items]="'activities'"></app-single-feedback>
-          <app-multi-feedback [activityData]="activities" [title]="'Feedback per activity'" [item]="'activity'" [items]="'activities'" [dqfs]="data"></app-multi-feedback>
+        <div *ngIf="fileType==='iati-activities'">
+          <app-single-feedback [feedbackData]="fileErrors" [title]="'Activity file feedback'" [item]="'activity'" [items]="'activities'"></app-single-feedback>
+          <app-multi-feedback [activityData]="activityErrors" [title]="'Feedback per activity'" [item]="'activity'" [items]="'activities'" [dqfs]="data"></app-multi-feedback>
         </div>
 
       </div>
-      <div *ngIf="filetype==='iati-organisations'">
-        <app-single-feedback [feedbackData]="companyFeedback" [title]="'Organisation file feedback'" [item]="'organisation'" [items]="'organisations'" ></app-single-feedback>
-        <app-multi-feedback [activityData]="activities" [title]="'Organisation feedback'" [item]="'organisation'" [items]="'organisations'" [dqfs]="data"></app-multi-feedback>
+      <div *ngIf="fileType==='iati-organisations'">
+        <app-single-feedback [feedbackData]="fileErrors" [title]="'Organisation file feedback'" [item]="'organisation'" [items]="'organisations'" ></app-single-feedback>
+        <app-multi-feedback [activityData]="activityErrors" [title]="'Organisation feedback'" [item]="'organisation'" [items]="'organisations'" [dqfs]="data"></app-multi-feedback>
       </div>
-      <div *ngIf="filetype==='not-iati'">
-        <app-single-feedback [feedbackData]="companyFeedbackData" [title]="'Not an IATI file'"></app-single-feedback>
+      <div *ngIf="fileType===''">
+        <app-single-feedback [feedbackData]="fileErrors" [title]="'Not an IATI file'"></app-single-feedback>
       </div>
 
 

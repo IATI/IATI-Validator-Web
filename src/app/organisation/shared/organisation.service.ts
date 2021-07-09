@@ -11,6 +11,8 @@ import { Version } from '../../shared/version';
 import { Workspace } from '../../shared/workspace';
 import { OrganisationsService } from '../../organisations/shared/organisations.service';
 
+import { exDocument } from 'src/app/views/data-quality-feedback/shared/documentInfoEx';
+
 @Injectable()
 export class OrganisationService {
   private urlApiIatiDataset: string = window.__env.apiDataworkBench + '/iati-datasets';
@@ -44,7 +46,7 @@ export class OrganisationService {
         }));
   }
 
-  getOrganisationByName(name: string): Observable<Organisation> {
+  getOrganisationByName(name: string): Observable<Organisation[]> {
     const url: string = this.urlApiOrganisationVS + '/' + name + '?lookupKey=name' ;
     this.log(url);
     return this.http.get<Organisation>(url)
@@ -54,7 +56,7 @@ export class OrganisationService {
       );
   }
 
-  getOrganisationById(id: string): Observable<Organisation> {
+  getOrganisationById(id: string): Observable<Organisation[]> {
     const url: string = this.urlApiOrganisationVS + '/' + id + '?lookupKey=id' ;
     this.log(url);
     return this.http.get<Organisation>(url)
@@ -64,7 +66,7 @@ export class OrganisationService {
       );
   }
 
-  getDocument(documentId: string): Observable<Document> {
+  getDocument(documentId: string): Observable<Document[]> {
     const url: string = this.urlApiDocumentVS + '/' + documentId ;
     this.log(url);
     return this.http.get<Document>(url)
@@ -72,6 +74,7 @@ export class OrganisationService {
         tap(_ => this.log(`fetched document`)),
         catchError(this.handleError('getDocumentInfo', undefined))
       );
+    // return of(exDocument);
   }
   getOrganisationDocuments(organisationId: string): Observable<Document[]> {
     const url: string = this.urlApiOrganisationVS + '/' + organisationId + '/documents';
