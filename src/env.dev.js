@@ -6,7 +6,8 @@
   window.__env.apiDataworkBench =
     "http://stage.iativalidator.iatistandard.org/api/v1";
 
-  window.__env.validatorServicesUrl = "http://localhost:7071/api"
+  // window.__env.validatorServicesUrl = "http://localhost:7071/api"
+  window.__env.validatorServicesUrl = "https://dev-iati-api-gateway.azure-api.net/vs"
 
   // staging password
   window.__env.stagePass = "reallybigsecret";

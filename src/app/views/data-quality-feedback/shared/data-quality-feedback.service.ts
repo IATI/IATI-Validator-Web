@@ -11,7 +11,6 @@ import { Dqfs } from './feedback';
 import { IatiDataset } from './../../../organisation/shared/iati-dataset';
 import { ReportInfo } from './report-info';
 
-import { exReport } from './report';
 
 @Injectable()
 export class DataQualityFeedbackService {
@@ -25,13 +24,13 @@ export class DataQualityFeedbackService {
     private logger: LogService) { }
 
   getValidationReport(documentId: string): Observable<any> {
-    // const url: string = this.urlApiValidationReport + '?id=' + documentId;
-    // return this.http.get<any>(url)
-    // .pipe(
-    //   catchError(this.handleError('getValidationReport', undefined) as any)
-    // );
-    return of(exReport);
+    const url: string = this.urlApiValidationReport + '?id=' + documentId;
+    return this.http.get<any>(url)
+    .pipe(
+      catchError(this.handleError('getValidationReport', undefined) as any)
+    );
   }
+
   getDataQualityFeedback(md5: string): Observable<Dqfs> {
     const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';
     //   /iati-files/{container}/download/{file}
