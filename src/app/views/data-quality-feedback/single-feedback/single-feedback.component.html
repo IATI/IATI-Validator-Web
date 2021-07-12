@@ -6,7 +6,7 @@
           <div class="d-inline float-right" *ngIf="feedbackData.length>0">
             <!-- <span class="identifier-link"><a href="{{getLinkDportal(activity.publisher, cleanIdentifier(activity.identifier))}}" target="_blank" >{{ cleanIdentifier(activity.identifier)}}</a></span> -->
             <span class="badge badge-critical" *ngIf="getIssueCount('critical')>0">{{getIssueCount('critical')}}</span>
-            <span class="badge badge-danger" *ngIf="getIssueCount('danger')>0">{{getIssueCount('danger')}}</span>
+            <span class="badge badge-danger" *ngIf="getIssueCount('error')>0">{{getIssueCount('error')}}</span>
             <span class="badge badge-warning" *ngIf="getIssueCount('warning')>0">{{getIssueCount('warning')}}</span>
             <span class="badge badge-info" *ngIf="getIssueCount('info')>0">{{getIssueCount('info')}}</span>
             <span class="badge badge-success" *ngIf="getIssueCount('success')>0">{{getIssueCount('success')}}</span>

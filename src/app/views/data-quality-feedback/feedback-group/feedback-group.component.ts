@@ -36,16 +36,16 @@ export class FeedbackGroupComponent implements OnInit {
   getIssueCount(type): number {
     let count = 0;
 
-    this.activity.feedback.forEach(fb => {
-      fb.messages.forEach(mes => {
-        if (mes.rulesets.some(r => r.severity === type)) {
-          const override = this.overrideGuidanceLink(mes.id);
+    this.activity.errors.forEach(fb => {
+      fb.errors.forEach(mes => {
+        if (mes.severity === type) {
+          // const override = this.overrideGuidanceLink(mes.id);
 
-          if (override != null) {
-            mes.rulesets.forEach(ruleset => {
-              ruleset['href'] = override;
-            });
-          }
+          // if (override != null) {
+          //   mes.rulesets.forEach(ruleset => {
+          //     ruleset['href'] = override;
+          //   });
+          // }
 
           count += mes.context.length;
         }

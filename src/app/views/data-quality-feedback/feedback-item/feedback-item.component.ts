@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Feedback, Message } from '../shared/feedback';
+import { DataQualityFeedbackService } from './../shared/data-quality-feedback.service';
 
 @Component({
   selector: 'app-feedback-item',
@@ -9,7 +10,8 @@ import { Feedback, Message } from '../shared/feedback';
 export class FeedbackItemComponent implements OnInit {
   @Input() feedback: Feedback;
 
-  constructor() { }
+  constructor(private dataQualityFeedbackService: DataQualityFeedbackService) {
+   }
 
   ngOnInit() {
     this.sortData();
@@ -17,21 +19,21 @@ export class FeedbackItemComponent implements OnInit {
 
   sortData = () =>  {
     // Sort the messages based on severity
-    this.feedback.messages.sort(this.compareSeverity);
+    this.feedback.errors.sort(this.compareSeverity);
   };
 
   compareSeverity = (a: Message, b: Message) => this.getSeverity(a) - this.getSeverity(b);
 
   getSeverity = (message: Message) => {
-    if (message.rulesets.some(x => x.severity === 'critical')) {
+    if (message.severity === 'critical') {
       return 1;
-    } else if (message.rulesets.some(x => x.severity === 'danger')) {
+    } else if (message.severity === 'error') {
       return 2;
-    } else if (message.rulesets.some(x => x.severity === 'warning')) {
+    } else if (message.severity === 'warning') {
       return 2;
-    } else if (message.rulesets.some(x => x.severity === 'info')) {
+    } else if (message.severity === 'info') {
       return 3;
-    } else if (message.rulesets.some(x => x.severity === 'success')) {
+    } else if (message.severity === 'success') {
       return 4;
     } else {
       return 9;
@@ -39,20 +41,23 @@ export class FeedbackItemComponent implements OnInit {
   };
 
   getfeedbackColor(message: Message): string {
-    if (message.rulesets.some(x => x.severity === 'danger')) {
+    if (message.severity === 'error') {
       return 'error';
-    } else if (message.rulesets.some(x => x.severity === 'critical')) {
+    } else if (message.severity === 'critical') {
       return 'critical';
-    } else if (message.rulesets.some(x => x.severity === 'warning')) {
+    } else if (message.severity === 'warning') {
       return 'warning';
-    } else if (message.rulesets.some(x => x.severity === 'info')) {
+    } else if (message.severity === 'info') {
       return 'improvement';
-    } else if (message.rulesets.some(x => x.severity === 'success')) {
+    } else if (message.severity === 'success') {
       return 'notification';
     } else {
       return 'other';
     }
+  }
 
+  getCategoryLabel(category: string): string {
+    return this.dataQualityFeedbackService.getCategoryLabel(category);
   }
 
 }

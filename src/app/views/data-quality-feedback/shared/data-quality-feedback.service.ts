@@ -30,6 +30,7 @@ export class DataQualityFeedbackService {
       catchError(this.handleError('getValidationReport', undefined) as any)
     );
   }
+
   getDataQualityFeedback(md5: string): Observable<Dqfs> {
     const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';
     //   /iati-files/{container}/download/{file}
@@ -86,7 +87,7 @@ export class DataQualityFeedbackService {
       },
       {
         id: 'error',
-        slug: 'danger',
+        slug: 'error',
         name: 'Errors',
         description: 'Errors make it hard or impossible to use the data.',
         count: null,
@@ -149,6 +150,23 @@ export class DataQualityFeedbackService {
       { id: 'practice', slug: 'practice', name: 'Common practice', count: null, order: 4, show: true },
       { id: 'iati-doc', slug: 'iati-doc', name: 'IATI Standard (additional)', count: null, order: 5, show: true },
     ];
+  }
+
+  getCategoryLabel(category: string): string {
+    const categories = {
+      schema: 'Schema',
+      information: 'Basic activity information',
+      financial: 'Financial',
+      identifiers: 'Identification',
+      organisation: 'Basic organisation information',
+      participating: 'Participating organisations',
+      geo: 'Geopolitical information',
+      classifications: 'Classifications',
+      documents: 'Related documents',
+      performance: 'Performance',
+      iati: 'IATI file'
+    };
+    return categories[category];
   }
 
   /**

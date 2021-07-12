@@ -1,9 +1,9 @@
 <p>
-  <span *ngIf="validationReport.report.iatiVersion"
-    >IATI version: {{ validationReport.report.iatiVersion }}</span
+  <span *ngIf="validationReport.iatiVersion"
+    >IATI version: {{ validationReport.iatiVersion }}</span
   >
-  <span *ngIf="validationReport.report.fileType">
-    | Type: {{ validationReport.report.fileType }}</span
+  <span *ngIf="validationReport.fileType">
+    | Type: {{ validationReport.fileType }}</span
   >
   <span *ngIf="documentInfo.validation_created">
     | Report Generated:

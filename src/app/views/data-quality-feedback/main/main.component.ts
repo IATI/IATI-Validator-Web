@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { LoaderService } from '../../../core/loader/loader.service';
 import { OrganisationService } from '../../../organisation/shared/organisation.service';
 import { ValidatedIatiService } from '../../../validate-iati/shared/validated-iati.service';
-import { Activity, Dqfs, Feedback, Message, Ruleset } from '../shared/feedback';
+import { Activity, Dqfs, Feedback, Message, Report, Ruleset, ReportResponse } from '../shared/feedback';
 import { Document } from 'src/app/shared/document';
 import { Severity } from '../shared/severity';
 import { LoaderState } from './../../../core/loader/loader';
@@ -14,6 +14,7 @@ import { Category } from './../shared/category';
 import { DataQualityFeedbackService } from './../shared/data-quality-feedback.service';
 import { Source } from './../shared/source';
 import { Organisation } from 'src/app/shared/organisation';
+import * as _ from 'lodash';
 
 
 
@@ -31,7 +32,6 @@ export class MainComponent implements OnInit, OnDestroy {
   tmpWorkspaceId = '';
   activityData: Activity[] = [];
   activities: Activity[] = [];
-  companyFeedbackData: Feedback[] = [];
   companyFeedback: Feedback[] = [];
   severities: Severity[] = [];
   sources: Source[] = [];
@@ -39,10 +39,16 @@ export class MainComponent implements OnInit, OnDestroy {
 
   documentInfo: Document;
   organisationInfo: Organisation;
-  validationReport: any;
+  validationReportResponse: ReportResponse = {} as ReportResponse;
+  validationReport: Report = {} as Report;
+
+  fileErrors: Feedback[] = [];
+  fileErrorsOriginal: Feedback[] = [];
+  activityErrors: Activity[] = [];
+  activityErrorsOriginal: Activity[] = [];
 
   public dqfs: Dqfs | undefined;
-  public filetype = '';
+  public fileType = '';
   private loaderSubscription: Subscription | undefined;
   private paramsSubscription: Subscription | undefined;
   private qParamsSubscription: Subscription | undefined;
@@ -117,68 +123,61 @@ export class MainComponent implements OnInit, OnDestroy {
       );
     } else {
       this.organisationService.getDocument(id).subscribe(documentInfo => {
-        if (documentInfo) {
+        if (length in documentInfo && documentInfo.length === 1) {
           this.documentInfo = documentInfo[0];
           this.organisationService.getOrganisationById(this.documentInfo.publisher).subscribe(orgInfo => {
-            if (orgInfo) {
+            if (length in orgInfo && orgInfo.length === 1) {
               this.organisationInfo = orgInfo[0];
               this.dataQualityFeedbackService.getValidationReport(id).subscribe(validationInfo => {
                 if (validationInfo) {
-                  this.validationReport = validationInfo;
+                  this.validationReportResponse = validationInfo;
+                  this.validationReport = this.validationReportResponse.report;
+                  this.setData(null);
+                } else {
+                  this.documentInfo = undefined;
+                  this.validationReportResponse = undefined;
+                  this.loader.hide();
                 }
                 this.loader.hide();
               });
+            } else {
+              this.documentInfo = undefined;
+              this.validationReportResponse = undefined;
+              this.loader.hide();
             }
           });
+        } else {
+            this.documentInfo = undefined;
+            this.validationReportResponse = undefined;
+            this.loader.hide();
         }
-        // if (iatiDataSet && iatiDataSet.length) {
-        //   this.dataset = iatiDataSet[0];
-        //   this.dataQualityFeedbackService.getDataQualityFeedback(iatiDataSet[0].md5).subscribe(
-        //     data => {
-        //       this.setData(data);
-        //     },
-        //     error => {
-        //       this.logger.error('Error loadActivityData', error);
-        //       this.loader.hide();
-        //     }
-        //   );
-        // } else {
-        //   // FIXME: check if there's a better handle for a "no dataset" situation
-        //   this.activityData = undefined;
-        //   this.companyFeedbackData = undefined;
-        //   this.loader.hide();
-
-        // }
       });
     }
   }
 
   setData(data: any) {
-    this.data = data;
-    this.fileName = this.dataset.filename;
-    if (data.feedback) {
-      this.companyFeedbackData = data.feedback;
+    this.fileType = this.validationReport.fileType;
+    if ('url' in this.documentInfo) {
+      this.fileName = this.documentInfo.url.split('/').pop();
+    } else {
+      this.fileName = 'No filename available';
     }
 
-    this.filetype = data.filetype;
-    if (data.filetype === 'iati-activities') {
-      if (data.activities) {
-        this.activityData = data.activities;
-      }
-    }
+    this.fileErrors = this.validationReport.errors.reduce((acc, actOrgFile) => {
+      if (actOrgFile.identifier === 'file') {
+         return actOrgFile.errors;
+        }
+      return acc;
+    }, []);
+    this.fileErrorsOriginal = [...this.fileErrors];
 
-    if (data.filetype === 'iati-organisations') {
-      if (data.organisations) {
-        this.activityData = data.organisations;
-      }
-    }
+    this.activityErrors = this.validationReport.errors.filter((actOrgFile) => actOrgFile.identifier !== 'file');
+    this.activityErrorsOriginal = [...this.activityErrors];
 
-    if (this.activityData === undefined && this.companyFeedbackData === undefined) {
-      this.loader.hide();
-      return;
-    }
     this.loadCategories();
-    this.loadTypeMessages(this.activityData, this.companyFeedbackData);
+
+    this.loadTypeMessages(this.validationReport.errors);
+
     this.filterActivities();
 
     this.loader.hide();
@@ -188,57 +187,36 @@ export class MainComponent implements OnInit, OnDestroy {
 
     const uniqueCat: { id: string; name: string }[] = [];
 
-    this.activityData.forEach(act => {
-      act.feedback.forEach(fb => {
-        if (uniqueCat.some(u => u.id === fb.category)) {
-          // nothing
+    this.validationReport.errors.forEach(actOrgFile => {
+      actOrgFile.errors.forEach(error => {
+        if (uniqueCat.some(u => u.id === error.category)) {
+          //nothing
         } else {
-          uniqueCat.push({ id: fb.category, name: fb.label });
+          uniqueCat.push({ id: error.category, name: this.dataQualityFeedbackService.getCategoryLabel(error.category) });
         }
       });
     });
-
-    this.companyFeedbackData.forEach(element => {
-      if (uniqueCat.some(u => u.id === element.category)) {
-        // nothing
-      } else {
-        uniqueCat.push({ id: element.category, name: element.label });
-      }
-    });
-
-
 
     uniqueCat.forEach(u => {
       this.categories.push({ id: u.id, name: u.name, count: null, order: 0, show: true });
     });
   }
 
-  loadTypeMessages(activities: Activity[], inCompanyFeedback: Feedback[]) {
+  loadTypeMessages(errors: any[]) {
     const types: { sev: string; id: string; text: string }[] = [];
     // Get unique messages, with the highest level of severity
-    activities.forEach(act => {
-      act.feedback.forEach(fb => {
-        fb.messages.forEach(mes => {
-          if (!types.some(t => t.id === mes.id)) {
+    errors.forEach(actOrgFile => {
+      actOrgFile.errors.forEach(errorCat => {
+        errorCat.errors.forEach(error => {
+          const { message, severity, id } = error;
+          if (!types.some(t => t.id === id)) {
             const newType: { sev: string; id: string; text: string } = { sev: '', id: '', text: '' };
-            newType.sev = this.getfeedbackSeverity(mes);
-            newType.id = mes.id;
-            newType.text = mes.text;
+            newType.sev = severity;
+            newType.id = id;
+            newType.text = message;
             types.push(newType);
           }
         });
-      });
-    });
-
-    inCompanyFeedback.forEach(fb => {
-      fb.messages.forEach(mes => {
-        if (!types.some(t => t.id === mes.id)) {
-          const newType: { sev: string; id: string; text: string } = { sev: '', id: '', text: '' };
-          newType.sev = this.getfeedbackSeverity(mes);
-          newType.id = mes.id;
-          newType.text = mes.text;
-          types.push(newType);
-        }
       });
     });
 
@@ -255,88 +233,86 @@ export class MainComponent implements OnInit, OnDestroy {
 
   filterActivities() {
     this.loader.show();
-    let filtered = JSON.parse(JSON.stringify(this.activityData));
+    let filtered = JSON.parse(JSON.stringify(this.activityErrorsOriginal));
 
     this.filterCompanyFeedback();
 
     // Filter feedback category
     filtered.forEach(act => {
-      act.feedback = act.feedback.filter(this.filterCategory);
+      act.errors = act.errors.filter(this.filterCategory);
     });
 
     // Filter messages that are not selected in source
-    filtered.forEach(act => {
-      act.feedback.forEach(fb => {
-        fb.messages.forEach(mes => {
-          mes.rulesets = mes.rulesets.filter(this.filterSource);
-        });
-      });
-    });
+    // filtered.forEach(act => {
+    //   act.errors.forEach(fb => {
+    //     fb.errors.forEach(mes => {
+    //       mes.rulesets = mes.rulesets.filter(this.filterSource);
+    //     });
+    //   });
+    // });
 
     // Filter type messages selected
     filtered.forEach(act => {
-      act.feedback.forEach(fb => {
-        fb.messages = fb.messages.filter(this.filterTypeMessage);
+      act.errors.forEach(fb => {
+        fb.errors = fb.errors.filter(this.filterTypeMessage);
       });
     });
 
     // Filter messages with severity selected
     filtered.forEach(act => {
-      act.feedback.forEach(fb => {
-        fb.messages = fb.messages.filter(this.filterSeverity);
+      act.errors.forEach(fb => {
+        fb.errors = fb.errors.filter(this.filterSeverity);
       });
     });
 
     // Filter feedback whitout messages
     filtered.forEach(act => {
-      act.feedback = act.feedback.filter(fb => fb.messages.length > 0);
+      act.errors = act.errors.filter(fb => fb.errors.length > 0);
     });
 
     // Filter activities without feedback
-    filtered = filtered.filter(act => act.feedback.length > 0);
+    filtered = filtered.filter(act => act.errors.length > 0);
 
-    this.activities = filtered;
+    this.activityErrors = filtered;
     // set count on filter items
     this.setSeverityCount();
-    this.setSourceCount();
     this.setCategoryCount();
-    // this.loadTypeMessages(this.activities);
     this.setTypeMessageCount();
     this.loader.hide();
   }
 
   filterCompanyFeedback() {
-    let filteredFeedback = JSON.parse(JSON.stringify(this.companyFeedbackData));
+    let filteredFeedback = JSON.parse(JSON.stringify(this.fileErrorsOriginal));
 
     // Filter feedback category
     filteredFeedback = filteredFeedback.filter(this.filterCategory);
 
     // Filter messages that are not selected in source
-    filteredFeedback.forEach(fb => {
-      fb.messages.forEach(mes => {
-        mes.rulesets = mes.rulesets.filter(this.filterSource);
-      });
-    });
+    // filteredFeedback.forEach(fb => {
+    //   fb.errors.forEach(mes => {
+    //     mes.rulesets = mes.rulesets.filter(this.filterSource);
+    //   });
+    // });
 
     // Filter type messages selected
     filteredFeedback.forEach(fb => {
-      fb.messages = fb.messages.filter(this.filterTypeMessage);
+      fb.errors = fb.errors.filter(this.filterTypeMessage);
     });
 
-    // Filter messages with severity selected
+    // Filter errors with severity selected
     filteredFeedback.forEach(fb => {
-      fb.messages = fb.messages.filter(this.filterSeverity);
+      fb.errors = fb.errors.filter(this.filterSeverity);
     });
 
-    // Filter feedback without messages
-    filteredFeedback = filteredFeedback.filter(fb => fb.messages.length > 0);
+    // Filter feedback without errors
+    filteredFeedback = filteredFeedback.filter(fb => fb.errors.length > 0);
 
     // Filter activities without feedback
-    this.companyFeedback = filteredFeedback;
+    this.fileErrors = filteredFeedback;
   }
 
   filterSeverity = (message: Message) =>
-    message.rulesets.some(rs => this.severities.some(sev => sev.show === true && sev.slug === rs.severity));
+    this.severities.some(sev => sev.show === true && sev.slug === message.severity);
 
   filterSource = (ruleset: Ruleset) => this.sources.some(s => s.show === true && s.slug === ruleset.src);
 
@@ -354,49 +330,21 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
-  getIssueCount(severity): number {
+  getIssueCount(severity: string): number {
     let count = 0;
-    this.activities.forEach(act => {
-      act.feedback.forEach(fb => {
-        fb.messages.forEach(mes => {
-          if (mes.rulesets.some(r => r.severity === severity)) {
+    this.activityErrors.forEach(act => {
+      act.errors.forEach(fb => {
+        fb.errors.forEach(mes => {
+          if (mes.severity === severity) {
             count += mes.context.length;
           }
         });
       });
     });
 
-    this.companyFeedbackData.forEach(fb => {
-      fb.messages.forEach(mes => {
-        if (mes.rulesets.some(r => r.severity === severity)) {
-          count += mes.context.length;
-        }
-      });
-    });
-    return count;
-  }
-
-  // Set the count of messages to the sources
-  setSourceCount() {
-    this.sources.forEach(src => {
-      src.count = src.show ? this.getSourceCount(src.slug) : null;
-    });
-  }
-
-  getSourceCount(type): number {
-    let count = 0;
-    this.activities.forEach(act => {
-      act.feedback.forEach(fb => {
-        fb.messages.forEach(mes => {
-          if (mes.rulesets.some(r => r.src === type)) {
-            count += mes.context.length;
-          }
-        });
-      });
-    });
-    this.companyFeedbackData.forEach(fb => {
-      fb.messages.forEach(mes => {
-        if (mes.rulesets.some(r => r.src === type)) {
+    this.fileErrors.forEach(fb => {
+      fb.errors.forEach(mes => {
+        if (mes.severity === severity) {
           count += mes.context.length;
         }
       });
@@ -412,23 +360,14 @@ export class MainComponent implements OnInit, OnDestroy {
 
   getCategoryCount(id: string): number {
     let count = 0;
-    this.activities.forEach(act => {
-      act.feedback.forEach(fb => {
-        if (fb.category === id) {
-          fb.messages.forEach(mes => {
-            count += mes.context.length;
-          });
+    this.validationReport.errors.forEach(actOrgFile => {
+      actOrgFile.errors.forEach(errorCatGroup => {
+        if (errorCatGroup.category === id) {
+          count += errorCatGroup.errors.length;
         }
       });
     });
 
-    this.companyFeedbackData.forEach(fb => {
-      if (fb.category === id) {
-        fb.messages.forEach(mes => {
-          count += mes.context.length;
-        });
-      }
-    });
     return count;
   }
 
@@ -447,23 +386,18 @@ export class MainComponent implements OnInit, OnDestroy {
 
   getTypeMessageCount(typeId: string): number {
     let count = 0;
-    this.activities.forEach(act => {
-      act.feedback.forEach(fb => {
-        fb.messages.forEach(mes => {
-          if (mes.id === typeId) {
-            count += mes.context.length;
+
+    this.validationReport.errors.forEach(actOrgFile => {
+      actOrgFile.errors.forEach(errorCatGroup => {
+        errorCatGroup.errors.forEach((error) => {
+          const { id } = error;
+          if (typeId === id) {
+            count += 1;
           }
         });
       });
     });
 
-    this.companyFeedbackData.forEach(fb => {
-      fb.messages.forEach(mes => {
-        if (mes.id === typeId) {
-          count += mes.context.length;
-        }
-      });
-    });
     return count;
   }
 
@@ -484,15 +418,15 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   getfeedbackSeverity(message: Message): string {
-    if (message.rulesets.some(x => x.severity === 'danger')) {
+    if (message.severity === 'error') {
       return 'error';
-    } else if (message.rulesets.some(x => x.severity === 'critical')) {
+    } else if (message.severity === 'critical') {
       return 'critical';
-    } else if (message.rulesets.some(x => x.severity === 'warning')) {
+    } else if (message.severity === 'warning') {
       return 'warning';
-    } else if (message.rulesets.some(x => x.severity === 'info')) {
+    } else if (message.severity === 'info') {
       return 'improvement';
-    } else if (message.rulesets.some(x => x.severity === 'success')) {
+    } else if (message.severity === 'success') {
       return 'notification';
     } else {
       return 'other';
@@ -522,6 +456,4 @@ export class MainComponent implements OnInit, OnDestroy {
   goBack() {
     this.location.back();
   }
-
-
 }

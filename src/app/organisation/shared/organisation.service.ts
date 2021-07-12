@@ -44,7 +44,7 @@ export class OrganisationService {
         }));
   }
 
-  getOrganisationByName(name: string): Observable<Organisation> {
+  getOrganisationByName(name: string): Observable<Organisation[]> {
     const url: string = this.urlApiOrganisationVS + '/' + name + '?lookupKey=name' ;
     this.log(url);
     return this.http.get<Organisation>(url)
@@ -54,7 +54,7 @@ export class OrganisationService {
       );
   }
 
-  getOrganisationById(id: string): Observable<Organisation> {
+  getOrganisationById(id: string): Observable<Organisation[]> {
     const url: string = this.urlApiOrganisationVS + '/' + id + '?lookupKey=id' ;
     this.log(url);
     return this.http.get<Organisation>(url)
@@ -64,7 +64,7 @@ export class OrganisationService {
       );
   }
 
-  getDocument(documentId: string): Observable<Document> {
+  getDocument(documentId: string): Observable<Document[]> {
     const url: string = this.urlApiDocumentVS + '/' + documentId ;
     this.log(url);
     return this.http.get<Document>(url)
