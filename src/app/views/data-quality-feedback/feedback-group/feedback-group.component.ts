@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { LogService } from './../../../core/logging/log.service';
-import { Dqfs, Activity } from './../shared/feedback';
+import { Activity } from './../shared/feedback';
 
 @Component({
   selector: 'app-feedback-group',
@@ -12,7 +12,7 @@ export class FeedbackGroupComponent implements OnInit {
   @Input() activity: Activity;
   @Input() item: 'activity' | 'organisation';
   @Input() items: 'activities' | 'organisations';
-  @Input() dqfs: Dqfs;
+  @Input() organisationInfo = {} as any;
 
   public isCollapsed = false;
 
@@ -25,12 +25,14 @@ export class FeedbackGroupComponent implements OnInit {
     this.isCollapsed = !this.isCollapsed;
   }
 
-  getLinkDportal(publisher: string, activity: string) {
-    if (this.dqfs && this.dqfs.filetype === 'iati-organisations') {
-      return `http://d-portal.org/ctrack.html?publisher=${encodeURIComponent(publisher)}`;
-    } else {
-      return `http://d-portal.org/ctrack.html?publisher=${encodeURIComponent(publisher)}#view=act&aid=${encodeURIComponent(activity)}`;
+  getLinkDportal(activity: string) {
+    if (this.items === 'organisations') {
+      return `http://d-portal.org/ctrack.html?publisher=${encodeURIComponent(activity)}`;
+    } else if (this.organisationInfo.iati_id) {
+      // eslint-disable-next-line max-len
+      return `http://d-portal.org/ctrack.html?publisher=${encodeURIComponent(this.organisationInfo.iati_id)}#view=act&aid=${encodeURIComponent(activity)}`;
     }
+    return '';
   }
 
   getIssueCount(type): number {

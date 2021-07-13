@@ -1,6 +1,6 @@
 import { Component, Input, QueryList, ViewChildren } from '@angular/core';
 import { FeedbackGroupComponent } from '../feedback-group/feedback-group.component';
-import { Activity, Dqfs } from '../shared/feedback';
+import { Activity } from '../shared/feedback';
 
 
 @Component({
@@ -13,7 +13,7 @@ export class MultiFeedbackComponent {
   @Input() title = '';
   @Input() item: 'activity' | 'organisation' = 'activity';
   @Input() items: 'activities' | 'organisations' = 'activities';
-  @Input() dqfs: Dqfs | undefined; // TODO: verify undefined type
+  @Input() organisationInfo = {} as any;
   @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent> | undefined; // TODO: verify undefined type
   isCollapsed = false;
 
