@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
+import { SharedModule } from './../shared/shared.module';
 import { OrganisationComponent } from './organisation/organisation.component';
 import { OrganisationService } from './shared/organisation.service';
 import { OrganisationsService } from '../organisations/shared/organisations.service';
@@ -20,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
+    SharedModule
   ],
   exports: [
     RouterModule
