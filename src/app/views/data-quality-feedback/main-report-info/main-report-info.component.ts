@@ -1,8 +1,6 @@
-import { ReportInfo } from './../shared/report-info';
 import { Component, OnInit, Input } from '@angular/core';
 
 import { LogService } from './../../../core/logging/log.service';
-import { DataQualityFeedbackService } from './../shared/data-quality-feedback.service';
 
 @Component({
   selector: 'app-main-report-info',
