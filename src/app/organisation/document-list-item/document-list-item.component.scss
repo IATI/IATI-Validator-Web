@@ -1,5 +1,9 @@
 @import "../../../styles/variables";
 
+.filename {
+  word-break: break-word;
+}
+
 .row {
   padding: 3px 0;
   margin-right: 0;

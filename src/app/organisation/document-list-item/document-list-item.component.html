@@ -8,29 +8,24 @@
                 'file-critical': fileStatus() === 'critical',
                 'no-validation': fileStatus() === 'normal'}"
   >
-    <div class="col-12 col-md">
+    <div class="col-12 col-md filename">
       {{ fileName() }}
     </div>
     <div class="col-12 col-md">
-      <span *ngIf="document.first_seen">{{
-        document.first_seen | date: "yyyy-MM-dd HH:mm (z)"
-      }}</span>
-    </div>
-    <div class="col-12 col-md">
-      <span *ngIf="document.downloaded">{{
-        document.downloaded | date: "yyyy-MM-dd HH:mm (z)"
+      <span *ngIf="document.first_seen || document.modified">{{
+        document.modified || document.first_seen | date: "yyyy-MM-dd HH:mm (z)"
       }}</span>
     </div>
     <div class="col-12 col-md">
       <span *ngIf="document.validation_created">
         {{
-          (document ? document.validation_created : "")
+          ( document.validation_created ? document.validation_created : "")
             | date: "yyyy-MM-dd HH:mm (z)"
         }}
       </span>
-    </div>
-    <div class="col-12 col-md">
-      Datastore Entered Date
+      <span *ngIf="document.validation_created === null">
+        Pending
+      </span>
     </div>
     <div class="col-12 d-md-none"><hr /></div>
   </div>
