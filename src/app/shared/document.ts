@@ -10,7 +10,8 @@ export interface Document {
     download_error: string;
     validation: string;
     publisher: string;
-    validation_created: number;
+    validation_created: string;
     valid: boolean;
     summary: Summary;
+    modified: string;
 }
