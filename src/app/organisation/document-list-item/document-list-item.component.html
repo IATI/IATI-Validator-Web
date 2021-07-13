@@ -17,11 +17,6 @@
       }}</span>
     </div>
     <div class="col-12 col-md">
-      <span *ngIf="document.downloaded">{{
-        document.downloaded | date: "yyyy-MM-dd HH:mm (z)"
-      }}</span>
-    </div>
-    <div class="col-12 col-md">
       <span *ngIf="document.validation_created">
         {{
           ( document.validation_created ? document.validation_created : "")
