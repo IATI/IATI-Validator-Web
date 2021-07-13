@@ -26,12 +26,13 @@ export class FeedbackGroupComponent implements OnInit {
   }
 
   getLinkDportal(activity: string) {
-    if (this.organisationInfo.iati_id && this.items === 'organisations') {
+    if (this.items === 'organisations') {
       return `http://d-portal.org/ctrack.html?publisher=${encodeURIComponent(activity)}`;
-    } else {
+    } else if (this.organisationInfo.iati_id) {
       // eslint-disable-next-line max-len
       return `http://d-portal.org/ctrack.html?publisher=${encodeURIComponent(this.organisationInfo.iati_id)}#view=act&aid=${encodeURIComponent(activity)}`;
     }
+    return '';
   }
 
   getIssueCount(type): number {
