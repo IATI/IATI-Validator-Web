@@ -1,4 +1,4 @@
-import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { last, retry } from 'rxjs/operators';
@@ -39,15 +39,14 @@ export class FileUploadService {
       return null;
     }
 
-    const url = tmpWorkspaceId ? `${this.urlApiTestWorkspace}/${tmpWorkspaceId}/file/source` : this.urlApiFileUpUpload;
+    const url = `http://localhost:7071/api/pvt-post-adhoc-file?sessionId=${tmpWorkspaceId}`;
     const uploadData = new FormData();
     uploadData.append('file', file, file.name);
-
+{}
     const req = new HttpRequest('POST', url, uploadData);
 
     return this.http.request(req).pipe(
-      last(),
-      retry(3)
+      last()
     ) as any;
   }
 

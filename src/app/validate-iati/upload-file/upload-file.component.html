@@ -38,7 +38,7 @@
   </div>
 
   <div class="step" [ngClass]="{'next': isActiveStep('2')}">
-    <h5 class="step-title">Step 2: Upload your IATI files</h5>
+    <h5 class="step-title">Step 2: Upload your IATI files and start validation</h5>
     <button
       *ngIf="!isActiveStep('3')"
       class="btn btn-success iati-button border-radius-none"
@@ -67,19 +67,4 @@
       </ng-container>
     </div>
   </div>
-
-  <div
-    class="step"
-    [ngClass]="{'next': isActiveStep('3')}"
-  >
-    <h5 class="step-title">Step 3: Start validating your files</h5>
-    <button
-      class="btn btn-success iati-button border-radius-none"
-      (click)="validateFile()"
-      [disabled]="!isActiveStep('3')"
-    >
-      Validate
-    </button>
-  </div>
-
 </div>

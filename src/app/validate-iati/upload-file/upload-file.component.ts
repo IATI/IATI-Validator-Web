@@ -48,7 +48,6 @@ export class UploadFileComponent implements OnInit {
   uploadFile(): void {
     const files = Array.prototype.slice.call(this.selectedFiles);
     const handleError = error => {
-      // this.logger.debug('Error message component: ', error);
       this.requestStatus = 'error';
     };
 
