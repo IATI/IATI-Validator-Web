@@ -39,7 +39,7 @@ export class FileUploadService {
       return null;
     }
 
-    const url = `${window.__env.validatorServicesUrl}/pvt-post-adhoc-file?sessionId=${tmpWorkspaceId}&filename=${file.name}`;
+    const url = `${window.__env.validatorServicesUrl}/pvt/adhoc/upload?sessionId=${tmpWorkspaceId}&filename=${file.name}`;
     const uploadData = new FormData();
     uploadData.append('file', file, file.name);
 {}

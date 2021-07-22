@@ -8,8 +8,8 @@
       <a [routerLink]="['/validate', uploadId]">{{environmentUrl}}/iati-feedback/validate/{{uploadId}}</a>
       <button class="btn btn-outline-primary ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
     </p>
-    <p>This is where you can see your ‘Validation Results’.</p>
-    <p>You can ‘Copy the address’ of your personal workplace and access the results later.</p>
+    <p>This is where you can view your Validation Reports.<b style="color: red">DEV NOTE Perhaps link to API documentation on the Validator Report</b>;</p>
+    <p>You can copy the address of your personal workplace and access the results later.</p>
   </div>
 
   <div *ngIf="iatiDatasetDatas.length" class="files">
@@ -21,30 +21,40 @@
         Uploaded
       </div>
       <div class="col-12 col-md d-none d-md-block">
-        Report status
+        Validated
+      </div>
+      <div class="col-12 col-md d-none d-md-block">
+        Valid
+      </div>
+      <div class="col-12 col-md d-none d-md-block">
+        Report
       </div>
     </div>
 
     <ng-container *ngFor="let iatiDatasetData of iatiDatasetDatas">
       <div class="wrapper">
-        <div class="row" (click)="rowClick(iatiDatasetData, iatiDatasetData.id)" [ngClass]="{'dqf': jsonUpdated(iatiDatasetData)}"  >
+        <div class="row" (click)="rowClick(iatiDatasetData)" [ngClass]="{'dqf': jsonUpdated(iatiDatasetData)}"  >
           <div class="col-12 col-md">
-            <span *ngIf="hasSourceUrl(iatiDatasetData); else elseBlock2" >
-              {{ iatiDatasetData.sourceUrl }}
-            </span>
-            <ng-template #elseBlock2>
               {{ iatiDatasetData.filename }}
-            </ng-template>
           </div>
           <div class="col-12 col-md">
-            {{ iatiDatasetData.uploaded | date:'yyyy-MM-dd HH:mm (z)' }}
+            {{ iatiDatasetData.created | date:'yyyy-MM-dd HH:mm (z)' }}
+          </div>
+          <div class="col-12 col-md">
+            {{ iatiDatasetData.validated | date:'yyyy-MM-dd HH:mm (z)' }}
+          </div>
+          <div *ngIf="iatiDatasetData.valid" class="col-12 col-md" style="color:green">
+            Yes
+          </div>
+          <div *ngIf="!iatiDatasetData.valid" class="col-12 col-md" style="color:red">
+            No
           </div>
           <div class="col-12 col-md">
             <span *ngIf="jsonUpdated(iatiDatasetData); else elseBlock" >
               <button type="button" class="btn btn-link dqf-button">{{ reportType(iatiDatasetData) }}</button>
             </span>
             <ng-template #elseBlock>
-              <span *ngIf="iatiDatasetData">{{iatiDatasetData.status}}</span>
+              <span *ngIf="iatiDatasetData">{{iatiDatasetData.valid}}</span>
             </ng-template>
           </div>
           <div class="col-12 d-md-none"><hr></div>
@@ -57,7 +67,6 @@
     <p>
       If you want to validate more files, you have the option to do so by clicking “Add more files”.
     </p>
-    <p>Please note that your personal workspace and the files will be deleted 72 hours after uploading and processing all files.</p>
     <button
       class="btn btn-success iati-button border-radius-none"
       (click)="addMoreFiles()"
@@ -73,7 +82,7 @@
     </p>
     <ng-container *ngIf="emailMode === 'draft'">
       <p>
-        Enter your email below. Your email will not be shared with anyone and will be removed when your personal workspace is deleted.
+        <b style="color:red">DEV NOTE Emails not yet implemented</b> Enter your email below. Your email will not be shared with anyone and will be removed when your personal workspace is deleted.
       </p>
       <div class="row">
         <form class="email-form" [formGroup]="form" (submit)="saveEmailAddress()">

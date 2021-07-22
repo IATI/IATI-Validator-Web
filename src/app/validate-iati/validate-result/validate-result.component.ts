@@ -72,8 +72,7 @@ export class ValidateResultComponent implements OnDestroy {
             this.email.setValue(data.email);
             this.emailMode = 'saved';
           }
-          // this;
-          this.iatiDatasetDatas = data.datasets;
+          this.iatiDatasetDatas = data;
         },
         error => this.logger.error('Faild to load iati data', error)
       );
@@ -91,15 +90,11 @@ export class ValidateResultComponent implements OnDestroy {
     return !!inDataset['json-updated'];
   }
 
-  hasSourceUrl(inDataset: IatiTestDataset): boolean {
-    return !!inDataset.sourceUrl;
-  }
-
   reportType(dataset): string {
     return this.jsonUpdated(dataset) ? 'Validation finished (click to view)' : '-';
   }
 
-  rowClick(dataset: IatiTestDataset, id: string) {
+  rowClick(dataset: IatiTestDataset) {
     if (this.jsonUpdated(dataset)) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -107,7 +102,7 @@ export class ValidateResultComponent implements OnDestroy {
         }
       };
 
-      this.router.navigate(['view', 'dqf', 'files', id], navigationExtras);
+      this.router.navigate(['view', 'dqf', 'files', dataset.guid], navigationExtras);
     }
   }
 

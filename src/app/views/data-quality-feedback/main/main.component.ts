@@ -80,9 +80,9 @@ export class MainComponent implements OnInit, OnDestroy {
             if (qParams.isTestfiles) {
               this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDataSet => {
 
-                const theFileId = iatiTestDataSet.fileid.split('.').shift();
+                const theFileId = iatiTestDataSet.guid;
                 this.fileName = iatiTestDataSet.filename;
-                this.tmpWorkspaceId = iatiTestDataSet.tmpworkspaceId;
+                this.tmpWorkspaceId = iatiTestDataSet.sessionId;
                 this.loadData(theFileId as string, qParams.isTestfiles);
               });
             } else {

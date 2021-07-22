@@ -55,8 +55,8 @@ export class ValidatedIatiService {
     );
   }
 
-
-  private urlApiTmpWorkspace = (id: string) => `${window.__env.apiDataworkBench}/iati-testworkspaces/${id}`;
+//#HERE
+  private urlApiTmpWorkspace = (id: string) => `${window.__env.validatorServicesUrl}/pvt/adhoc/session/?sessionId=${id}`;
 
   /**
    * Handle Http operation that failed.

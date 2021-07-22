@@ -62,9 +62,24 @@
         </ng-container>
         <ng-container *ngSwitchDefault>
           <app-spinner [backColor]="'white'"></app-spinner>
-          Your files are uploading now. Large files could uploading more than few minutes.
+          Your files are uploading now. Large files could be uploading for more than few minutes.
         </ng-container>
       </ng-container>
     </div>
   </div>
+
+  <div
+    class="step"
+    [ngClass]="{'next': isActiveStep('3')}"
+  >
+    <h5 class="step-title">Step 3: Your files are being validated - click below to view their progress and, when complete, reports.</h5>
+    <button
+      class="btn btn-success iati-button border-radius-none"
+      (click)="validateFile()"
+      [disabled]="!isActiveStep('3')"
+    >
+      View progress and reports
+    </button>
+  </div>
+
 </div>
