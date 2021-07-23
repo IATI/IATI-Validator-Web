@@ -14,6 +14,8 @@ export class MultiFeedbackComponent {
   @Input() item: 'activity' | 'organisation' = 'activity';
   @Input() items: 'activities' | 'organisations' = 'activities';
   @Input() organisationInfo = {} as any;
+  @Input() version = '';
+
   @ViewChildren(FeedbackGroupComponent) groups: QueryList<FeedbackGroupComponent> | undefined; // TODO: verify undefined type
   isCollapsed = false;
 

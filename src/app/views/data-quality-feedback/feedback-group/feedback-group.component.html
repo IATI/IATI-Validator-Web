@@ -23,7 +23,7 @@
 
   </div>
   <div class="feedback-items" [ngbCollapse]="isCollapsed">
-    <app-feedback-item *ngFor="let fb of activity.errors" [feedback]="fb" ></app-feedback-item>
+    <app-feedback-item *ngFor="let fb of activity.errors" [feedback]="fb" [version]="version" ></app-feedback-item>
   </div>  
 </div>
 

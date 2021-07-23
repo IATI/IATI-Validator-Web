@@ -15,6 +15,7 @@ export interface Message {
   // text: string;
   message: string;
   severity: string;
+  codelist?: string;
   // rulesets: Ruleset[];
   context: Context[];
 }
@@ -49,6 +50,10 @@ export interface Report {
   valid: boolean;
   fileType: string;
   iatiVersion: string;
+  rulesetCommitSha: string;
+  codelistCommitSha: string;
+  orgIdPrefixFileName: string;
+  apiVersion: string;
   summary: Summary;
   errors: Activity[];
 }
