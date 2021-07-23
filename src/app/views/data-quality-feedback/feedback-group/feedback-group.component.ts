@@ -13,6 +13,7 @@ export class FeedbackGroupComponent implements OnInit {
   @Input() item: 'activity' | 'organisation';
   @Input() items: 'activities' | 'organisations';
   @Input() organisationInfo = {} as any;
+  @Input() version = '';
 
   public isCollapsed = false;
 

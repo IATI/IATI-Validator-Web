@@ -8,6 +8,7 @@
         <!-- <span *ngFor="let ruleset of mes.rulesets">
           <a [hidden]="ruleset.src==null" href="{{ruleset.src}}" target="_blank" title="Open guidance in a new window">(see guidance)</a>
         </span> -->
+        <a [hidden]="mes.codelist==null" href="https://iatistandard.org/en/iati-standard/{{ cleanVersion() }}/codelists/{{ mes.codelist }}" target="_blank" title="Open guidance in a new window">(see guidance)</a>
       </span>
       <ul [hidden]="mes.context.length===1 && mes.context[0].text===''">
         <li *ngFor="let con of mes.context" class="context">{{con.text}}</li>

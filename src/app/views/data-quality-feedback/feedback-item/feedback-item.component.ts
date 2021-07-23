@@ -9,6 +9,7 @@ import { DataQualityFeedbackService } from './../shared/data-quality-feedback.se
 })
 export class FeedbackItemComponent implements OnInit {
   @Input() feedback: Feedback;
+  @Input() version = '';
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService) {
    }
@@ -17,6 +18,9 @@ export class FeedbackItemComponent implements OnInit {
     this.sortData();
   }
 
+  cleanVersion() {
+    return this.version.replace('.', '');
+  }
   sortData = () =>  {
     // Sort the messages based on severity
     this.feedback.errors.sort(this.compareSeverity);
