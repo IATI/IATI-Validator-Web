@@ -16,6 +16,7 @@ export interface Message {
   message: string;
   severity: string;
   codelist?: string;
+  guidanceLink?: string;
   // rulesets: Ruleset[];
   context: Context[];
 }

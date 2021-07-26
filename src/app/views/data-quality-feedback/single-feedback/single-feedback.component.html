@@ -20,7 +20,7 @@
     
       </div>
       <div class="feedback-items" [ngbCollapse]="isCollapsed" *ngIf="feedbackData.length>0;else noFeedbackData">
-        <app-feedback-item *ngFor="let fb of feedbackData" [feedback]="fb"></app-feedback-item>
+        <app-feedback-item *ngFor="let fb of feedbackData" [feedback]="fb" [guidanceLinks]=guidanceLinks></app-feedback-item>
       </div>
       </div>
 
