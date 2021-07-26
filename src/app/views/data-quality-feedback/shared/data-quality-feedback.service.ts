@@ -19,6 +19,7 @@ export class DataQualityFeedbackService {
   private urlApiIatiDataSet: string = window.__env.apiDataworkBench + '/iati-datasets';
   private urlApiOrganisation: string = window.__env.apiDataworkBench + '/iati-publishers';
   private urlApiValidationReport: string = window.__env.validatorServicesUrl + '/pub/validation/existing';
+  private urlApiGuidanceLinks: string = window.__env.validatorServicesUrl + '/pvt/guidance-links';
 
   constructor(private http: HttpClient,
     private logger: LogService) { }
@@ -28,6 +29,14 @@ export class DataQualityFeedbackService {
     return this.http.get<any>(url)
     .pipe(
       catchError(this.handleError('getValidationReport', undefined) as any)
+    );
+  }
+
+  getGuidanceLinks(version: string): Observable<any> {
+    const url: string = this.urlApiGuidanceLinks + '/' + version;
+    return this.http.get<any>(url)
+    .pipe(
+      catchError(this.handleError('getGuidanceLinks', undefined) as any)
     );
   }
 

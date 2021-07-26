@@ -41,6 +41,7 @@ export class MainComponent implements OnInit, OnDestroy {
   organisationInfo: Organisation;
   validationReportResponse: ReportResponse = {} as ReportResponse;
   validationReport: Report = {} as Report;
+  guidanceLinks = {};
 
   fileErrors: Feedback[] = [];
   fileErrorsOriginal: Feedback[] = [];
@@ -180,7 +181,17 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.filterActivities();
 
+    this.loadGuidanceLinks(this.validationReport.iatiVersion);
+
     this.loader.hide();
+  }
+
+  loadGuidanceLinks(version: string) {
+    this.dataQualityFeedbackService.getGuidanceLinks(version).subscribe(data => {
+      if (data.version === version) {
+        this.guidanceLinks = data;
+      }
+    });
   }
 
   loadCategories() {

@@ -14,6 +14,7 @@ export class FeedbackGroupComponent implements OnInit {
   @Input() items: 'activities' | 'organisations';
   @Input() organisationInfo = {} as any;
   @Input() version = '';
+  @Input() guidanceLinks = {};
 
   public isCollapsed = false;
 
