@@ -8,7 +8,7 @@
         </span>
     </h5>
     <div *ngIf="activityData.length>0; else noActivityData">
-        <app-feedback-group *ngFor="let act of activityData" [activity]="act" [item]="item" [items]="items" [organisationInfo]="organisationInfo" [version]="version"></app-feedback-group>
+        <app-feedback-group *ngFor="let act of activityData" [activity]="act" [item]="item" [items]="items" [organisationInfo]="organisationInfo" [version]="version" [guidanceLinks]="guidanceLinks"></app-feedback-group>
     </div>
 </div>
 

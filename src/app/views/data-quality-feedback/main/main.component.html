@@ -40,14 +40,14 @@
       <div *ngIf="validationReport">
         <!-- Determine which components to display -->
         <div *ngIf="fileType==='iati-activities'">
-          <app-single-feedback [feedbackData]="fileErrors" [title]="'Activity file feedback'" [item]="'activity'" [items]="'activities'"></app-single-feedback>
-          <app-multi-feedback [activityData]="activityErrors" [title]="'Feedback per activity'" [item]="'activity'" [items]="'activities'" [organisationInfo]="organisationInfo" [version]="validationReport.iatiVersion"></app-multi-feedback>
+          <app-single-feedback [feedbackData]="fileErrors" [title]="'Activity file feedback'" [item]="'activity'" [items]="'activities'" [guidanceLinks]="guidanceLinks"></app-single-feedback>
+          <app-multi-feedback [activityData]="activityErrors" [title]="'Feedback per activity'" [item]="'activity'" [items]="'activities'" [organisationInfo]="organisationInfo" [version]="validationReport.iatiVersion" [guidanceLinks]="guidanceLinks"></app-multi-feedback>
         </div>
 
       </div>
       <div *ngIf="fileType==='iati-organisations'">
-        <app-single-feedback [feedbackData]="fileErrors" [title]="'Organisation file feedback'" [item]="'organisation'" [items]="'organisations'" ></app-single-feedback>
-        <app-multi-feedback [activityData]="activityErrors" [title]="'Organisation feedback'" [item]="'organisation'" [items]="'organisations'" [organisationInfo]="organisationInfo" [version]="validationReport.iatiVersion"></app-multi-feedback>
+        <app-single-feedback [feedbackData]="fileErrors" [title]="'Organisation file feedback'" [item]="'organisation'" [items]="'organisations'" [guidanceLinks]="guidanceLinks"></app-single-feedback>
+        <app-multi-feedback [activityData]="activityErrors" [title]="'Organisation feedback'" [item]="'organisation'" [items]="'organisations'" [organisationInfo]="organisationInfo" [version]="validationReport.iatiVersion" [guidanceLinks]="guidanceLinks"></app-multi-feedback>
       </div>
       <div *ngIf="fileType===''">
         <app-single-feedback [feedbackData]="fileErrors" [title]="'Not an IATI file'"></app-single-feedback>
