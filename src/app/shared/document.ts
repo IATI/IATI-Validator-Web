@@ -1,5 +1,3 @@
-import { Summary } from './summary';
-
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface Document {
     id: string;
@@ -12,6 +10,6 @@ export interface Document {
     publisher: string;
     validation_created: string;
     valid: boolean;
-    summary: Summary;
+    report: any;
     modified: string;
 }

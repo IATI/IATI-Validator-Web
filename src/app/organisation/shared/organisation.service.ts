@@ -73,7 +73,7 @@ export class OrganisationService {
         catchError(this.handleError('getDocumentInfo', undefined))
       );
   }
-  getOrganisationDocuments(organisationId: string): Observable<Document[]> {
+  getOrganisationDocuments(organisationId: string): Observable<Document[]> { //HERE
     const url: string = this.urlApiOrganisationVS + '/' + organisationId + '/documents';
     this.log(url);
     return this.http.get<Document[]>(url)

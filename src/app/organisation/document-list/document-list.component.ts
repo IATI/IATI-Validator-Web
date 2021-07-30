@@ -21,8 +21,8 @@ export class DocumentListComponent implements OnInit {
   getSeverity = (document: Document) => {
     let error = -1;
     let warning = -1;
-    if ('summary' in document && document.summary !== null) {
-      ({ error, warning } = document.summary);
+    if (document.report != null) {
+      ({ error, warning } = document.report.summary);
     }
     const {validation, valid} = document;
 

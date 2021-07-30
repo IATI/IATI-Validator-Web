@@ -6,4 +6,5 @@ export interface IatiTestDataset {
   validated: Date;
   valid: boolean;
   report: string;
+  class: string;
 }

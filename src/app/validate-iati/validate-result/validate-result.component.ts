@@ -7,8 +7,6 @@ import { LogService } from '../../core/logging/log.service';
 import { IatiTestDataset } from './../shared/iati-testdataset';
 import { ValidatedIatiService } from './../shared/validated-iati.service';
 
-
-
 @Component({
   selector: 'app-validate-result',
   templateUrl: './validate-result.component.html',
@@ -41,7 +39,7 @@ export class ValidateResultComponent implements OnDestroy {
     private readonly router: Router,
     private readonly validatedIatiService: ValidatedIatiService,
     private readonly logger: LogService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
   ) {
 
     this.activateRoute
@@ -72,6 +70,10 @@ export class ValidateResultComponent implements OnDestroy {
             this.email.setValue(data.email);
             this.emailMode = 'saved';
           }
+          for (const element of data) {
+            element.class = this.fileStatus(element);
+          }
+
           this.iatiDatasetDatas = data;
         },
         error => this.logger.error('Faild to load iati data', error)
@@ -95,7 +97,7 @@ export class ValidateResultComponent implements OnDestroy {
   }
 
   rowClick(dataset: IatiTestDataset) {
-    if (this.jsonUpdated(dataset)) {
+    if (dataset.valid != null) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           isTestfiles: true,
@@ -103,6 +105,32 @@ export class ValidateResultComponent implements OnDestroy {
       };
 
       this.router.navigate(['view', 'dqf', 'files', dataset.guid], navigationExtras);
+    }
+  }
+
+  fileStatus(dataset): string {
+    let error = -1;
+    let warning = -1;
+    let valid = null;
+
+    if (dataset.report !== null) {
+      ({ valid } = dataset.report);
+      error = dataset.report.summary.error;
+      warning = dataset.report.summary.warning;
+    }
+
+    if (dataset.report === null) {
+      return 'normal';
+    } else if (valid === true && error === 0 && warning === 0) {
+      return 'success dqf';
+    } else if (valid === true && error === 0) {
+      return 'warning dqf';
+    } else if (valid === true) {
+      return 'error dqf';
+    } else if (valid === false) {
+      return 'critical dqf';
+    } else {
+      return 'normal';
     }
   }
 

@@ -31,6 +31,14 @@ export class DataQualityFeedbackService {
     );
   }
 
+  getTestValidationReport(guid: string): Observable<any> {
+    const url: string = this.urlApiValidationReport + '?testfile=' + guid;
+    return this.http.get<any>(url)
+    .pipe(
+      catchError(this.handleError('getValidationReport', undefined) as any)
+    );
+  }
+
   getDataQualityFeedback(md5: string): Observable<Dqfs> {
     const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';
     //   /iati-files/{container}/download/{file}

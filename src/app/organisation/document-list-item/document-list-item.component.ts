@@ -34,12 +34,15 @@ export class DocumentListItemComponent implements OnInit {
   fileStatus(): string {
     let error = -1;
     let warning = -1;
-    if ('summary' in this.document && this.document.summary !== null) {
-      ({ error, warning } = this.document.summary);
-    }
-    const {validation, valid} = this.document;
+    let valid = null;
 
-    if (validation === null) {
+    if (this.document.report !== null) {
+      ({ valid } = this.document.report);
+      error = this.document.report.summary.error;
+      warning = this.document.report.summary.warning;
+    }
+
+    if (this.document.report === null) {
       return 'normal';
     } else if (valid === true && error === 0 && warning === 0) {
       return 'success';
@@ -74,7 +77,6 @@ export class DocumentListItemComponent implements OnInit {
 
   rowClick() {
     if (this.hasValidation()) {
-      // this.router.navigate(['view', 'dqf', 'files', this.iatiDatasetData.id]);
       this.router.navigate(['view', 'dqf', 'files', this.document.id]);
       console.log('Validation Report Link Clicked', this.document.id);
     }

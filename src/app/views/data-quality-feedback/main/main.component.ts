@@ -78,11 +78,11 @@ export class MainComponent implements OnInit, OnDestroy {
             this.isTestfiles = qParams.isTestfiles;
 
             if (qParams.isTestfiles) {
-              this.validatedIatiService.getIatiDatasetById(params['id']).subscribe(iatiTestDataSet => {
-
+              this.dataQualityFeedbackService.getTestValidationReport(params['id']).subscribe(iatiTestDataSet => {
                 const theFileId = iatiTestDataSet.guid;
                 this.fileName = iatiTestDataSet.filename;
-                this.tmpWorkspaceId = iatiTestDataSet.sessionId;
+                this.tmpWorkspaceId = iatiTestDataSet.session_id;
+                this.validationReport = iatiTestDataSet.report;
                 this.loadData(theFileId as string, qParams.isTestfiles);
               });
             } else {
@@ -109,18 +109,10 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loader.show();
 
     if (isTestfiles) {
-      this.dataQualityFeedbackService.getTestFilesDataQualityFeedbackById(id).subscribe(data => {
-        this.dataset = data as any;
-          if (this.dataset) {
-            (this.dataset as any)['filename'] = this.fileName;
-          }
-          this.setData(data);
-        },
-        error => {
-          this.logger.error('Error loadActivityData', error);
-          this.loader.hide();
-        }
-      );
+      this.documentInfo = undefined;
+      this.validationReportResponse = undefined;
+      this.setData(null);
+      this.loader.hide();
     } else {
       this.organisationService.getDocument(id).subscribe(documentInfo => {
         if (length in documentInfo && documentInfo.length === 1) {
@@ -157,18 +149,19 @@ export class MainComponent implements OnInit, OnDestroy {
 
   setData(data: any) {
     this.fileType = this.validationReport.fileType;
-    if ('url' in this.documentInfo) {
-      this.fileName = this.documentInfo.url.split('/').pop();
-    } else {
-      this.fileName = 'No filename available';
+
+    if ( ! this.isTestfiles) {
+      if ('url' in this.documentInfo) {
+        this.fileName = this.documentInfo.url.split('/').pop();
+      } else {
+        this.fileName = 'No filename available';
+      }
     }
 
     this.fileErrors = this.validationReport.errors.reduce((acc, actOrgFile) => {
-      if (actOrgFile.identifier === 'file') {
-         return actOrgFile.errors;
-        }
-      return acc;
+      return actOrgFile.errors;
     }, []);
+
     this.fileErrorsOriginal = [...this.fileErrors];
 
     this.activityErrors = this.validationReport.errors.filter((actOrgFile) => actOrgFile.identifier !== 'file');
@@ -432,6 +425,22 @@ export class MainComponent implements OnInit, OnDestroy {
       return 'other';
     }
 
+  }
+
+  fileStatus(): string {
+    const error = this.validationReport.summary.error;
+    const warning = this.validationReport.summary.warning;
+    const valid = this.validationReport.valid;
+
+    if (valid === true && error === 0 && warning === 0) {
+      return 'success';
+    } else if (valid === true && error === 0) {
+      return 'warning';
+    } else if (valid === true) {
+      return 'error';
+    } else {
+      return 'critical';
+    }
   }
 
   // addCountContextFunctions() {

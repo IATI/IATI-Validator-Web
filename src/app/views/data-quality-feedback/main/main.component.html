@@ -4,9 +4,21 @@
   </div>
   <div class="row alert alert-light">
     <div class="col">
-      <h1>File validation report</h1>
+      <h2>File validation report</h2>
       <app-main-report-info *ngIf="documentInfo && organisationInfo" [documentInfo]="documentInfo" [organisationInfo]="organisationInfo"></app-main-report-info>
       <app-iati-info *ngIf="documentInfo && validationReport" [documentInfo]="documentInfo" [validationReport]="validationReport"></app-iati-info>
+      <div *ngIf="fileStatus() === 'success'" class="file-success" role="alert">
+        <h1>Valid</h1>
+      </div>
+      <div *ngIf="fileStatus() === 'warning'" class="file-warning" role="alert">
+        <h1>Valid, but with warnings</h1>
+      </div>
+      <div *ngIf="fileStatus() === 'error'" class="file-error" role="alert">
+        <h1>Valid, but with non critical errors</h1>
+      </div>
+      <div *ngIf="fileStatus() === 'critical'" class="file-critical" role="alert">
+        <h1>Critical errors</h1>
+      </div>
     </div>
   </div>
 
@@ -14,21 +26,8 @@
     <app-spinner [backColor]="'white'"></app-spinner>
     <span class="loading-text">Loading report...</span>
   </div>
-  <div *ngIf="documentInfo===undefined && validationReport===undefined && !isLoading " class="alert alert-warning"
-    role="alert">
-    <h2>No data found.</h2>
-    <p>It looks like the url is not valid.</p>
-    <ul>
-      <li (click)="goBack()">
-        <button type="button" class="btn btn-link">Go back to the previous page.</button>
-      </li>
-      <li>
-        <button routerLink="\" type="button" class="btn btn-link">Go to the home page.</button>
-      </li>
-    </ul>
-  </div>
 
-  <div *ngIf="(documentInfo!==undefined || validationReport!==undefined) && !isLoading" class="row">
+  <div *ngIf="!isLoading" class="row">
     <div class="col-md-4 filters">
       <h4>Filters</h4>
       <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">

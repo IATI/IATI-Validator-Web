@@ -2,8 +2,9 @@
   <h1>Validation results</h1>
 
   <div class="content-block">
+
     <p>
-      Your personal workspace is here:
+      Your personal workspace is here:     
       <br>
       <a [routerLink]="['/validate', uploadId]">{{environmentUrl}}/iati-feedback/validate/{{uploadId}}</a>
       <button class="btn btn-outline-primary ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
@@ -23,39 +24,21 @@
       <div class="col-12 col-md d-none d-md-block">
         Validated
       </div>
-      <div class="col-12 col-md d-none d-md-block">
-        Valid
-      </div>
-      <div class="col-12 col-md d-none d-md-block">
-        Report
-      </div>
     </div>
 
     <ng-container *ngFor="let iatiDatasetData of iatiDatasetDatas">
       <div class="wrapper">
-        <div class="row" (click)="rowClick(iatiDatasetData)" [ngClass]="{'dqf': jsonUpdated(iatiDatasetData)}"  >
+        <div class="row {{ iatiDatasetData.class }}" (click)="rowClick(iatiDatasetData)">
           <div class="col-12 col-md">
-              {{ iatiDatasetData.filename }}
+            {{ iatiDatasetData.filename }}
           </div>
           <div class="col-12 col-md">
+            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'blue'"></app-spinner>
             {{ iatiDatasetData.created | date:'yyyy-MM-dd HH:mm (z)' }}
           </div>
           <div class="col-12 col-md">
+            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'blue'"></app-spinner>
             {{ iatiDatasetData.validated | date:'yyyy-MM-dd HH:mm (z)' }}
-          </div>
-          <div *ngIf="iatiDatasetData.valid" class="col-12 col-md" style="color:green">
-            Yes
-          </div>
-          <div *ngIf="!iatiDatasetData.valid" class="col-12 col-md" style="color:red">
-            No
-          </div>
-          <div class="col-12 col-md">
-            <span *ngIf="jsonUpdated(iatiDatasetData); else elseBlock" >
-              <button type="button" class="btn btn-link dqf-button">{{ reportType(iatiDatasetData) }}</button>
-            </span>
-            <ng-template #elseBlock>
-              <span *ngIf="iatiDatasetData">{{iatiDatasetData.valid}}</span>
-            </ng-template>
           </div>
           <div class="col-12 d-md-none"><hr></div>
         </div>

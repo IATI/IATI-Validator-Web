@@ -24,6 +24,36 @@
   font-weight: 700;
 }
 
+.row.success {
+  cursor: pointer;
+  color: $success;
+  font-weight: 700;
+}
+.row.critical {
+  cursor: pointer;
+  color: $severity-critical;
+  font-weight: 700;
+}
+.row.error {
+  cursor: pointer;
+  color: $severity-error;
+  font-weight: 700;
+}
+.row.warning {
+  cursor: pointer;
+  color: $severity-warning;
+  font-weight: 700;
+}
+
+.row.normal {
+  cursor: pointer;
+  color: grey;
+  font-weight: 700;
+}
+
+.row.no-validation {
+  font-weight: 700;
+}
 .row.dqf:hover {
   background-color: lightyellow;
 }
