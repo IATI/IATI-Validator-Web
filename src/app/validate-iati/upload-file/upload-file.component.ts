@@ -6,6 +6,7 @@ import { forkJoin, of } from 'rxjs';
 import { Mode } from '../validate-iati';
 import { LogService } from './../../core/logging/log.service';
 import { FileUploadService } from './../shared/file-upload.service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -32,10 +33,16 @@ export class UploadFileComponent implements OnInit {
     private readonly logger: LogService,
     private readonly router: Router,
     private readonly fileUploadService: FileUploadService,
+    private cookieService: CookieService
   ) { }
 
   ngOnInit() {
-    this.tmpWorkspaceId = this.router.parseUrl(this.router.url).queryParams.tmpWorkspaceId;
+    if (this.cookieService.check('adhocsession')) {
+      this.tmpWorkspaceId = this.cookieService.get('adhocsession');
+    } else {
+      this.tmpWorkspaceId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+      this.cookieService.set('adhocsession', this.tmpWorkspaceId);
+    }
   }
 
   onFileChanged(event) {
@@ -54,23 +61,14 @@ export class UploadFileComponent implements OnInit {
     if (files.length) {
       this.requestStatus = 'pending';
 
-      this.fileUploadService.checkWorkspaceId(this.tmpWorkspaceId)
-        .subscribe(
-          (response: HttpResponse<any>) => {
-            const tmpWorkspaceId = response.body.id;
-
-            this.parallelUpload(files, tmpWorkspaceId)
-              .subscribe(
-                () => {
-                  this.tmpWorkspaceId = tmpWorkspaceId;
-                  this.activeStep = ['3'];
-                  this.requestStatus = 'success';
-                },
-                handleError
-              );
-          },
-          handleError
-        );
+      this.parallelUpload(files)
+      .subscribe(
+        () => {
+          this.activeStep = ['3'];
+          this.requestStatus = 'success';
+        },
+        handleError
+      );
     }
   }
 
@@ -88,11 +86,11 @@ export class UploadFileComponent implements OnInit {
     return this.activeStep.includes(step);
   }
 
-  private parallelUpload(files: File[], tmpWorkspaceId: string) {
+  private parallelUpload(files: File[]) {
     if (!files.length) {
       return of('skip' as any);
     }
 
-    return forkJoin(files.map(file => this.fileUploadService.uploadFile(file, tmpWorkspaceId)) as any);
+    return forkJoin(files.map(file => this.fileUploadService.uploadFile(file, this.tmpWorkspaceId)) as any);
   }
 }

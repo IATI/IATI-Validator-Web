@@ -14,6 +14,7 @@ import { AboutComponent } from './views/data-quality-feedback/about/about.compon
 import { GtagModule } from 'angular-gtag';
 import { OrganisationService } from './organisation/shared/organisation.service';
 import { OrganisationsService } from './organisations/shared/organisations.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { OrganisationsService } from './organisations/shared/organisations.servi
     AppRoutingModule,
   ],
   providers: [
-    OrganisationService, OrganisationsService
+    OrganisationService, OrganisationsService, [CookieService],
   ],
   exports: [
     CoreModule,
