@@ -51,8 +51,7 @@ export class FileUploadService {
   }
 
   fetchFileByUrl(fileUrl: string, tmpWorkspaceId?: string) {
-    const url = tmpWorkspaceId ? `${this.urlApiTestWorkspace}/${tmpWorkspaceId}/url/source` : this.urlApiUrlsUpload;
-
+    const url = `${window.__env.validatorServicesUrl}/pvt/adhoc/url?sessionId=${tmpWorkspaceId}&url=${fileUrl}`;
     return this.http.post<any>(
       url,
       JSON.stringify({ url: fileUrl }),

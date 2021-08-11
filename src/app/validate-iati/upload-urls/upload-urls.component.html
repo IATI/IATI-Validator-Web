@@ -1,6 +1,6 @@
 <div class="urls-upload" [ngClass]="{'disable': mode !== 'both' && mode === 'local'}">
   <div class="step" [ngClass]="{'next': isActiveStep('1')}">
-    <h5 class="step-title">Step 1: <span style="color: red">DEV NOTE: Not yet implemented</span>Add a web address (URL) of your IATI XMLfile. You can add multiple files by seperating them with |</h5>
+    <h5 class="step-title">Step 1: Add a web address (URL) of your IATI XMLfile. You can add multiple files by seperating them with |</h5>
     <input
       (change)="setUrl($event)"
       class="urls-input"
@@ -40,7 +40,7 @@
   </div>
 
   <div class="step" [ngClass]="{'next': isActiveStep('3')}">
-    <h5 class="step-title">Step 3: Start validating your files</h5>
+    <h5 class="step-title">Step 3: Your URLs are being validated - click below to view their progress and, when complete, reports.</h5>
     <button
       class="btn btn-success iati-button border-radius-none"
       (click)="validateFile()"
