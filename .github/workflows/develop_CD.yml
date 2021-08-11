@@ -1,4 +1,4 @@
-name: Deploy_To_GH_Pages_NG_Dev
+name: Deploy_To_Azure_Blobs_NG_Dev
 
 on:
   push:
