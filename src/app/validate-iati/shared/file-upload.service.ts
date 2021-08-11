@@ -14,26 +14,6 @@ export class FileUploadService {
     private readonly http: HttpClient,
   ) { }
 
-  checkWorkspaceId(tmpWorkspaceId?: string): Observable<HttpResponse<any>> {
-    if (!tmpWorkspaceId) {
-      // create a new iati-testworkspace
-      const req = new HttpRequest('POST', this.urlApiTestWorkspace, '{}');
-
-      return this.http.request(req).pipe(
-        last(),
-        retry(3)
-      ) as any;
-    } else {
-      // check existing workspace
-      const req = new HttpRequest('GET', this.urlApiTestWorkspace + '/' + tmpWorkspaceId);
-
-      return this.http.request(req).pipe(
-        last(),
-        retry(3)
-      ) as any;
-    }
-  }
-
   uploadFile(file: File, tmpWorkspaceId?: string): Observable<HttpResponse<any>> | null {
     if (!file) {
       return null;
