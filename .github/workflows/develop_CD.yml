@@ -47,15 +47,8 @@ jobs:
         run: |
           npm run build:dev
 
-      - name: Create 404 for github pages
+      - name: Create 404
         run: cp dist/index.html dist/404.html
-
-      - name: Deploy to GitHub Pages (gh-pages branch)
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          cname: dev-validator.iatistandard.org
 
       - name: Login to Azure CLI
         uses: azure/login@v1
