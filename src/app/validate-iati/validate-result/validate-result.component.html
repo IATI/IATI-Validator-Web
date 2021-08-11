@@ -9,7 +9,7 @@
       <a [routerLink]="['/validate', uploadId]">{{environmentUrl}}/iati-feedback/validate/{{uploadId}}</a>
       <button class="btn btn-outline-primary ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
     </p>
-    <p>This is where you can view your Validation Reports.<b style="color: red">DEV NOTE Perhaps link to API documentation on the Validator Report</b>;</p>
+    <p>This is where you can view your Validation Reports.</p>
     <p>You can copy the address of your personal workplace and access the results later.</p>
   </div>
 
@@ -65,7 +65,7 @@
     </p>
     <ng-container *ngIf="emailMode === 'draft'">
       <p>
-        <b style="color:red">DEV NOTE Emails not yet implemented</b> Enter your email below. Your email will not be shared with anyone and will be removed when your personal workspace is deleted.
+        <b style="color:red">DEV NOTE Emails not yet implemented - UAT to decide if required.</b> Enter your email below. Your email will not be shared with anyone and will be removed when your personal workspace is deleted.
       </p>
       <div class="row">
         <form class="email-form" [formGroup]="form" (submit)="saveEmailAddress()">
