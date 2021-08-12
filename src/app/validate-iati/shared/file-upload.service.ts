@@ -34,13 +34,7 @@ export class FileUploadService {
     const url = `${window.__env.validatorServicesUrl}/pvt/adhoc/url?sessionId=${tmpWorkspaceId}&url=${fileUrl}`;
     return this.http.post<any>(
       url,
-      JSON.stringify({ url: fileUrl }),
-      {
-        headers: {
-          'Content-Type': 'application/json' // eslint-disable-line @typescript-eslint/naming-convention
-        },
-        responseType: 'json'
-      }
+      JSON.stringify({ url: fileUrl })
     );
   }
 
