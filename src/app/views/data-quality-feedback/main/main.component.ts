@@ -160,7 +160,10 @@ export class MainComponent implements OnInit, OnDestroy {
     }
 
     this.fileErrors = this.validationReport.errors.reduce((acc, actOrgFile) => {
-      return actOrgFile.errors;
+      if (actOrgFile.identifier === 'file') {
+        return actOrgFile.errors;
+       }
+     return acc;
     }, []);
 
     this.fileErrorsOriginal = [...this.fileErrors];
