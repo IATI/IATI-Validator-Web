@@ -11,11 +11,12 @@
   <section class="about-content">
     <h3 class="about-content__title">How does the IATI Validator work?</h3>
     <div class="about-content__description">
-      <p class="about-content__description">There are two ways to use the IATI Validator.</p>
-      <p class="about-content__description list-item"><span class="list-item-style">-</span> Anyone can upload their
+      <p class="about-content__description">There are three ways to use the IATI Validator.</p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span><a routerLink="/validate">Check Data</a> - Anyone can upload their
         IATI data files to be checked before publishing them.</p>
-      <p class="about-content__description list-item"><span class="list-item-style">-</span> Anyone can check all IATI
+      <p class="about-content__description list-item"><span class="list-item-style">-</span><a routerLink="/organisations">Public Data Viewer</a> - Anyone can check all IATI
         data files that have been published.</p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span><a href="https://developer.iatistandard.org/api-details#api=iati-validator-v2" >Public API</a> - Developers can GET reports for published files or POST a file and receive a validation report</p>
       <p class="about-content__description">The IATI Validator undertakes multiple layers of checks to identify where
         data does not comply with the IATI Standard. The Validator provides messages to indicate where errors have
         occurred and what needs to be changed.</p>
@@ -72,6 +73,12 @@
   </section>
   <section class="about-content">
     <h3 class="about-content__title">What is the tech stack powering the service?</h3>
-    <p class="about-content__description">All application code can be found in the IATI-Validator repositories in <a href="https://github.com/IATI"> GitHub</a>.</p>
+    <div class="about-content__description">
+      <p class="about-content__description">All application code can be found in the IATI-Validator repositories in <a href="https://github.com/IATI"> GitHub</a>.</p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span><a href="https://github.com/IATI/js-validation-api" target="_blank">Validator API</a> - Core validation logic</p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span><a href="https://github.com/IATI/IATI-Validator-Web" target="_blank">Front End</a> - Angular single page application</p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span><a href="https://github.com/IATI/validator-services" target="_blank">Back End Service</a> - Back end service for the front end</p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span><a href="https://github.com/IATI/refresher" target="_blank">Refresher</a> - Published file identification, download, and validation loop</p>
+    </div>
   </section>
 </div>
