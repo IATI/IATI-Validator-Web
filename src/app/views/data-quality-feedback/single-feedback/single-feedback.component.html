@@ -25,5 +25,14 @@
       </div>
 
       <ng-template #noFeedbackData>
-        <p>There is no {{item}} file feedback to display</p>
+        <div class="feedback-items collapse show">
+          <div class="feedback">
+            <ul class="feedback-list">
+              <li class="message success">
+                <span class="message-text" >Congratulations! This IATI {{item}} file has successfully passed IATI XML schema validation with no errors!</span>
+              </li>
+            </ul>
+
+          </div>
+        </div>
       </ng-template>
