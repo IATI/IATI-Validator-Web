@@ -4,9 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AboutComponent } from './views/data-quality-feedback/about/about.component';
 
-// import { OrganisationsComponent } from './organisations/organisations/organisations.component';
-// import { OrganisationComponent } from './organisation/organisation/organisation.component';
-
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   // Lazy loading feature moduels

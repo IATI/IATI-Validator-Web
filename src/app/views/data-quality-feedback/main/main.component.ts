@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoaderService } from '../../../core/loader/loader.service';
 import { OrganisationService } from '../../../organisation/shared/organisation.service';
-import { ValidatedIatiService } from '../../../validate-iati/shared/validated-iati.service';
 import { Activity, Dqfs, Feedback, Message, Report, Ruleset, ReportResponse } from '../shared/feedback';
 import { Document } from 'src/app/shared/document';
 import { Severity } from '../shared/severity';
@@ -58,7 +57,6 @@ export class MainComponent implements OnInit, OnDestroy {
   private qParamsSubscription: Subscription | undefined;
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
-    private validatedIatiService: ValidatedIatiService,
     private organisationService: OrganisationService,
     private logger: LogService,
     private activateRoute: ActivatedRoute,
@@ -72,7 +70,6 @@ export class MainComponent implements OnInit, OnDestroy {
         this.isLoading = state.show;
       });
     this.severities = this.dataQualityFeedbackService.getSeverities();
-    this.sources = this.dataQualityFeedbackService.getSources();
 
     this.paramsSubscription = this.activateRoute
       .params
@@ -91,7 +88,7 @@ export class MainComponent implements OnInit, OnDestroy {
                   this.loadData(theFileId as string, qParams.isTestfiles);
                 }
               },
-              error => console.error(error),
+              error => this.logger.error(error),
               () => {
                 if (Object.keys(this.validationReport).length === 0) {
                   this.loadError.status = true;
@@ -162,7 +159,7 @@ export class MainComponent implements OnInit, OnDestroy {
             this.loader.hide();
         }
       },
-      error => console.error(error),
+      error => this.logger.error(error),
       () => {
         if (this.documentInfo === undefined && this.validationReportResponse === undefined) {
           this.loadError.status = true;
@@ -274,15 +271,6 @@ export class MainComponent implements OnInit, OnDestroy {
       act.errors = act.errors.filter(this.filterCategory);
     });
 
-    // Filter messages that are not selected in source
-    // filtered.forEach(act => {
-    //   act.errors.forEach(fb => {
-    //     fb.errors.forEach(mes => {
-    //       mes.rulesets = mes.rulesets.filter(this.filterSource);
-    //     });
-    //   });
-    // });
-
     // Filter type messages selected
     filtered.forEach(act => {
       act.errors.forEach(fb => {
@@ -319,13 +307,6 @@ export class MainComponent implements OnInit, OnDestroy {
     // Filter feedback category
     filteredFeedback = filteredFeedback.filter(this.filterCategory);
 
-    // Filter messages that are not selected in source
-    // filteredFeedback.forEach(fb => {
-    //   fb.errors.forEach(mes => {
-    //     mes.rulesets = mes.rulesets.filter(this.filterSource);
-    //   });
-    // });
-
     // Filter type messages selected
     filteredFeedback.forEach(fb => {
       fb.errors = fb.errors.filter(this.filterTypeMessage);
@@ -351,7 +332,6 @@ export class MainComponent implements OnInit, OnDestroy {
   filterCategory = (feedback: Feedback) => this.categories.some(c => c.show === true && c.id === feedback.category);
 
   filterTypeMessage = (message: Message) =>
-    // return this.typeMessages.some(t => t.types.some(m => m.show === true && m.id === message.id ) );
     this.severities.some(t => t.types.some(m => m.show === true && m.id === message.id))
   ;
 
@@ -484,25 +464,6 @@ export class MainComponent implements OnInit, OnDestroy {
     }
     return '';
   }
-
-  // addCountContextFunctions() {
-  //   this.dqfs.activities.forEach( act => {
-  //     act.feedback.forEach(fb => {
-
-  //       fb.countContext = function () {
-  //         let count = 0;
-  //         fb.messages.forEach( mes => {
-  //           count += mes.countContext();
-  //         });
-  //         return count;
-  //        } ;
-
-  //       fb.messages.forEach(mes => {
-  //         mes.countContext = function () { return mes.context.length; };
-  //       });
-  //     });
-  //   });
-  // }
 
   goBack() {
     this.location.back();

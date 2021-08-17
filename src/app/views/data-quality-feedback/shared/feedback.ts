@@ -12,18 +12,15 @@ export interface Context {
 
 export interface Message {
   id: string;
-  // text: string;
   message: string;
   severity: string;
   codelist?: string;
-  // rulesets: Ruleset[];
   context: Context[];
 }
 
 export interface Feedback {
   category: string;
   label?: string;
-  // messages: Message[];
   errors: Message[];
 }
 
@@ -31,7 +28,6 @@ export interface Activity {
   title: string;
   identifier: string;
   publisher?: string;
-  // feedback: Feedback[];
   errors: Feedback[];
 }
 
