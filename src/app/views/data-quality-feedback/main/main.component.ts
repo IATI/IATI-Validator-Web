@@ -448,19 +448,22 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   fileStatus(): string {
-    const error = this.validationReport.summary.error;
-    const warning = this.validationReport.summary.warning;
-    const valid = this.validationReport.valid;
+    if (Object.keys(this.validationReport).length > 0){
+      const error = this.validationReport.summary.error;
+      const warning = this.validationReport.summary.warning;
+      const valid = this.validationReport.valid;
 
-    if (valid === true && error === 0 && warning === 0) {
-      return 'success';
-    } else if (valid === true && error === 0) {
-      return 'warning';
-    } else if (valid === true) {
-      return 'error';
-    } else {
-      return 'critical';
+      if (valid === true && error === 0 && warning === 0) {
+        return 'success';
+      } else if (valid === true && error === 0) {
+        return 'warning';
+      } else if (valid === true) {
+        return 'error';
+      } else {
+        return 'critical';
+      }
     }
+    return '';
   }
 
   // addCountContextFunctions() {
