@@ -49,6 +49,8 @@ export class MainComponent implements OnInit, OnDestroy {
   activityErrors: Activity[] = [];
   activityErrorsOriginal: Activity[] = [];
 
+  loadError = {} as any;
+
   public dqfs: Dqfs | undefined;
   public fileType = '';
   private loaderSubscription: Subscription | undefined;
@@ -81,11 +83,20 @@ export class MainComponent implements OnInit, OnDestroy {
 
             if (qParams.isTestfiles) {
               this.dataQualityFeedbackService.getTestValidationReport(params['id']).subscribe(iatiTestDataSet => {
-                const theFileId = iatiTestDataSet.guid;
-                this.fileName = iatiTestDataSet.filename;
-                this.tmpWorkspaceId = iatiTestDataSet.session_id;
-                this.validationReport = iatiTestDataSet.report;
-                this.loadData(theFileId as string, qParams.isTestfiles);
+                if (iatiTestDataSet) {
+                  const theFileId = iatiTestDataSet.guid;
+                  this.fileName = iatiTestDataSet.filename;
+                  this.tmpWorkspaceId = iatiTestDataSet.session_id;
+                  this.validationReport = iatiTestDataSet.report;
+                  this.loadData(theFileId as string, qParams.isTestfiles);
+                }
+              },
+              error => console.error(error),
+              () => {
+                if (Object.keys(this.validationReport).length === 0) {
+                  this.loadError.status = true;
+                  this.loadError.message = 'No document found with id "' + params['id'] + '"';
+                }
               });
             } else {
               this.loadData(params['id'], qParams.isTestfiles);
@@ -121,7 +132,8 @@ export class MainComponent implements OnInit, OnDestroy {
       this.setData(null);
       this.loader.hide();
     } else {
-      this.organisationService.getDocument(id).subscribe(documentInfo => {
+      this.organisationService.getDocument(id).subscribe(
+        documentInfo => {
         if (length in documentInfo && documentInfo.length === 1) {
           this.documentInfo = documentInfo[0];
           this.organisationService.getOrganisationById(this.documentInfo.publisher).subscribe(orgInfo => {
@@ -135,7 +147,6 @@ export class MainComponent implements OnInit, OnDestroy {
                 } else {
                   this.documentInfo = undefined;
                   this.validationReportResponse = undefined;
-                  this.loader.hide();
                 }
                 this.loader.hide();
               });
@@ -150,7 +161,15 @@ export class MainComponent implements OnInit, OnDestroy {
             this.validationReportResponse = undefined;
             this.loader.hide();
         }
-      });
+      },
+      error => console.error(error),
+      () => {
+        if (this.documentInfo === undefined && this.validationReportResponse === undefined) {
+          this.loadError.status = true;
+          this.loadError.message = 'No document found with id "' + id + '"';
+        }
+      }
+      );
     }
   }
 
