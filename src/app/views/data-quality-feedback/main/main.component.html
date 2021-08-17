@@ -26,8 +26,21 @@
     <app-spinner [backColor]="'white'"></app-spinner>
     <span class="loading-text">Loading report...</span>
   </div>
+  <div *ngIf="!isLoading && loadError.status" class="alert alert-warning"
+    role="alert">
+    <h2>No data found.</h2>
+    <p>{{ loadError.message }}</p>
+    <ul>
+      <li (click)="goBack()">
+        <button type="button" class="btn btn-link">Go back to the previous page.</button>
+      </li>
+      <li>
+        <button routerLink="\" type="button" class="btn btn-link">Go to the home page.</button>
+      </li>
+    </ul>
+  </div>
 
-  <div *ngIf="!isLoading" class="row">
+  <div *ngIf="!isLoading && !loadError.status" class="row">
     <div class="col-md-4 filters">
       <h4>Filters</h4>
       <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">
@@ -52,8 +65,6 @@
       <div *ngIf="fileType===''">
         <app-single-feedback [feedbackData]="fileErrors" [title]="'Not an IATI file'"></app-single-feedback>
       </div>
-
-
     </div>
   </div>
 </div>
