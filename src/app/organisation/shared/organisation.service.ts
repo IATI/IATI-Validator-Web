@@ -25,19 +25,22 @@ export class OrganisationService {
   getOrganisationAndDocuments(name: string): Observable<Organisation> {
     return this.getOrganisationByName(name)
         .pipe(mergeMap(data => {
-          const org = data[0];
-          const workspaces: Workspace[] = [{
-            slug: 'public',
-            'owner-slug': name,
-            title: 'Public data',
-            description: 'IATI files published in the IATI Registry',
-            id: org.iati_id,
-            'iati-publisherId':
-             org.iati_id,
-             versions: null,
-          }];
-          return this.getOrganisationDocuments(org.org_id)
-            .pipe(map((documents) => ({...org, workspaces, documents})));
+          if (data.length > 0) {
+            const org = data[0];
+            const workspaces: Workspace[] = [{
+              slug: 'public',
+              'owner-slug': name,
+              title: 'Public data',
+              description: 'IATI files published in the IATI Registry',
+              id: org.iati_id,
+              'iati-publisherId':
+               org.iati_id,
+               versions: null,
+            }];
+            return this.getOrganisationDocuments(org.org_id)
+              .pipe(map((documents) => ({...org, workspaces, documents})));
+          }
+          return [];
         }));
   }
 
