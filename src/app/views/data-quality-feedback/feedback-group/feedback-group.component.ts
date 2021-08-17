@@ -30,7 +30,7 @@ export class FeedbackGroupComponent implements OnInit {
   getLinkDportal(activity: string) {
     if (this.items === 'organisations') {
       return `http://d-portal.org/ctrack.html?publisher=${encodeURIComponent(activity)}`;
-    } else if (this.organisationInfo.iati_id) {
+    } else if (this.organisationInfo != null && this.organisationInfo.iati_id) {
       // eslint-disable-next-line max-len
       return `http://d-portal.org/ctrack.html?publisher=${encodeURIComponent(this.organisationInfo.iati_id)}#view=act&aid=${encodeURIComponent(activity)}`;
     }

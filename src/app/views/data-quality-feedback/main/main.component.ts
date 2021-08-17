@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -111,7 +112,12 @@ export class MainComponent implements OnInit, OnDestroy {
 
     if (isTestfiles) {
       this.documentInfo = undefined;
-      this.validationReportResponse = undefined;
+      this.organisationInfo = null;
+      this.validationReportResponse = {document_url: null,
+                                       registry_hash: null,
+                                       registry_id: null,
+                                       valid: this.validationReport.valid,
+                                       report: this.validationReport};
       this.setData(null);
       this.loader.hide();
     } else {
