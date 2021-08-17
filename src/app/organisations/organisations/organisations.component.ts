@@ -3,7 +3,6 @@ import { LogService } from '../../core/logging/log.service';
 import { Organisation } from '../../shared/organisation';
 import { LoaderService } from './../../core/loader/loader.service';
 import { OrganisationsService } from './../shared/organisations.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-organisations',
@@ -32,7 +31,7 @@ export class OrganisationsComponent implements OnInit {
       this.organisationService.getOrganisations()
         .subscribe(org => this.organisations = org,
           error => {
-            console.log(error); this.isSearching = false; this.loader.hide();
+            this.logger.error(error); this.isSearching = false; this.loader.hide();
           },
           () => {
             // finished fetching organisations from web api, filter the organisations by title

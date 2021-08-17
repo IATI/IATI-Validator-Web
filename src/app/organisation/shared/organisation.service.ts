@@ -1,15 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, tap, map, mergeMap, elementAt } from 'rxjs/operators';
+import { catchError, tap, map, mergeMap } from 'rxjs/operators';
 import { environment } from './../../../environments/environment';
 import { LogService } from './../../core/logging/log.service';
-import { IatiDataset } from './iati-dataset';
 import { Organisation } from '../../shared/organisation';
 import { Document } from '../../shared/document';
-import { Version } from '../../shared/version';
 import { Workspace } from '../../shared/workspace';
-import { OrganisationsService } from '../../organisations/shared/organisations.service';
 
 @Injectable()
 export class OrganisationService {
@@ -19,7 +16,6 @@ export class OrganisationService {
   constructor(
     private http: HttpClient,
     private logger: LogService,
-    private allOrganisations: OrganisationsService
   ) { }
 
   getOrganisationAndDocuments(name: string): Observable<Organisation> {
@@ -73,7 +69,8 @@ export class OrganisationService {
         catchError(this.handleError('getDocumentInfo', undefined))
       );
   }
-  getOrganisationDocuments(organisationId: string): Observable<Document[]> { //HERE
+
+  getOrganisationDocuments(organisationId: string): Observable<Document[]> {
     const url: string = this.urlApiOrganisationVS + '/' + organisationId + '/documents';
     this.log(url);
     return this.http.get<Document[]>(url)
@@ -81,35 +78,6 @@ export class OrganisationService {
         tap(_ => this.log(`fetched documents`)),
         catchError(this.handleError('getOrganisationDocuments', []))
       );
-  }
-
-  getEmptyWorkspace(): Workspace {
-    const ws: Workspace = {
-      id: '',
-      description: '',
-      // organisation_id: '',
-      // organisation_name: '',
-      slug: '',
-      title: '',
-      'owner-slug': '',
-      'iati-publisherId': '',
-      versions: []
-    };
-    return ws;
-  }
-
-  getEmptyVersion(): Version {
-    const vs: Version = {
-      id: '',
-      slug: '',
-      ['owner-slug']: '',
-      ['workspace-slug']: '',
-      title: '',
-      description: '',
-      md5: [],
-      workspaceId: ''
-    };
-    return vs;
   }
 
   private log(message: string) {
@@ -139,6 +107,4 @@ export class OrganisationService {
       return of(result as T);
     };
   }
-
-
 }

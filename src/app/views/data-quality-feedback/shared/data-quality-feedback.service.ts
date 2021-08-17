@@ -1,16 +1,10 @@
-import { Organisation } from './../../../shared/organisation';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { LogService } from '../../../core/logging/log.service';
-import { Source } from './source';
 import { Severity } from './severity';
-import { Dqfs } from './feedback';
-import { IatiDataset } from './../../../organisation/shared/iati-dataset';
-import { ReportInfo } from './report-info';
-
 
 @Injectable()
 export class DataQualityFeedbackService {
@@ -96,30 +90,6 @@ export class DataQualityFeedbackService {
         show: true,
         types: []
       },
-    ];
-  }
-
-  getSources(): Source[] {
-    return [
-      { id: 'iati', slug: 'iati', name: 'IATI Standard', count: null, order: 1, show: true },
-      {
-        id: 'minbuza',
-        slug: 'minbuza',
-        name: 'Netherlands: Ministry of Foreign Affairs additional rules',
-        count: null,
-        order: 2,
-        show: true
-      },
-      {
-        id: 'dfid',
-        slug: 'dfid',
-        name: 'UK: Department for International Development (DFID) additional rules',
-        count: null,
-        order: 3,
-        show: true
-      },
-      { id: 'practice', slug: 'practice', name: 'Common practice', count: null, order: 4, show: true },
-      { id: 'iati-doc', slug: 'iati-doc', name: 'IATI Standard (additional)', count: null, order: 5, show: true },
     ];
   }
 
