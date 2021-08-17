@@ -4,13 +4,10 @@
   <div class="content-block">
 
     <p>
-      Your personal workspace is here:     
-      <br>
+      Your personal workspace is     
       <a [routerLink]="['/validate', uploadId]">{{environmentUrl}}/iati-feedback/validate/{{uploadId}}</a>
       <button class="btn btn-outline-primary ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
     </p>
-    <p>This is where you can view your Validation Reports. You can add more files using the button at the bottom of the page. You can also copy the address of your personal workplace and access the results later, which can be useful if you are processing a large amount of data and it is taking some time to complete.</p>
-    <p></p>
   </div>
 
   <div *ngIf="iatiDatasetDatas.length" class="files">
@@ -53,6 +50,12 @@
     >
       Add more files
     </button>
+    <button style="margin-left: 10px;"
+    class="btn iati-warnbutton"
+    (click)="clearWorkspace()"
+  >
+    Clear Workspace
+  </button>
   </div>
 
   <div class="content-block">

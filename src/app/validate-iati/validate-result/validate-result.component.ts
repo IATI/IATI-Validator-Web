@@ -6,6 +6,7 @@ import { Subscription, timer } from 'rxjs';
 import { LogService } from '../../core/logging/log.service';
 import { IatiTestDataset } from './../shared/iati-testdataset';
 import { ValidatedIatiService } from './../shared/validated-iati.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-validate-result',
@@ -19,7 +20,7 @@ export class ValidateResultComponent implements OnDestroy {
   iatiDatasetDatas: IatiTestDataset[] = [];
   md5 = '';
   environmentUrl = window.__env.baseUrl;
-  source = timer(100, 2000);
+  source = timer(100, 2500);
   subscribeTimer: Subscription;
   interval: any;
   emailMode: 'saved' | 'edit' | 'draft' = 'draft';
@@ -40,6 +41,7 @@ export class ValidateResultComponent implements OnDestroy {
     private readonly validatedIatiService: ValidatedIatiService,
     private readonly logger: LogService,
     private readonly fb: FormBuilder,
+    private cookieService: CookieService
   ) {
 
     this.activateRoute
@@ -194,6 +196,15 @@ export class ValidateResultComponent implements OnDestroy {
         tmpWorkspaceId: this.uploadId,
       }
     });
+  }
+
+  async clearWorkspace() {
+    if( ! confirm('Are you sure you want to clear all files from your workspace and return to the upload page?')) {
+      return;
+    }
+
+    await this.cookieService.delete('adhocsession', '/');
+    this.router.navigate(['/validate']);
   }
 
   removeEmail() {
