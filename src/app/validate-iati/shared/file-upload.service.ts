@@ -6,9 +6,6 @@ import { last, retry } from 'rxjs/operators';
 @Injectable()
 export class FileUploadService {
   workspaceId = '';
-  private urlApiFileUpUpload: string = window.__env.apiDataworkBench + '/iati-testfiles/file/source';
-  private urlApiUrlsUpload: string = window.__env.apiDataworkBench + '/iati-testfiles/url/source';
-  private urlApiTestWorkspace: string = window.__env.apiDataworkBench + '/iati-testworkspaces';
 
   constructor(
     private readonly http: HttpClient,

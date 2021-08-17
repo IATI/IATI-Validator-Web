@@ -53,7 +53,7 @@ export interface Report {
   rulesetCommitSha: string;
   codelistCommitSha: string;
   orgIdPrefixFileName: string;
-  apiVersion: string;
+  ApiVersion: string;
   summary: Summary;
   errors: Activity[];
 }

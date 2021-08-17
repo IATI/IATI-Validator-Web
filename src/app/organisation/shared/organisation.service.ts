@@ -13,9 +13,6 @@ import { OrganisationsService } from '../../organisations/shared/organisations.s
 
 @Injectable()
 export class OrganisationService {
-  private urlApiIatiDataset: string = window.__env.apiDataworkBench + '/iati-datasets';
-  private urlApiIatiFile: string = window.__env.apiDataworkBench + '/iati-files';
-
   private urlApiOrganisationVS: string = window.__env.validatorServicesUrl + '/pvt/publishers';
   private urlApiDocumentVS: string = window.__env.validatorServicesUrl + '/pvt/documents';
 
@@ -80,59 +77,6 @@ export class OrganisationService {
       .pipe(
         tap(_ => this.log(`fetched documents`)),
         catchError(this.handleError('getOrganisationDocuments', []))
-      );
-  }
-
-  getIatiDataset(md5: string): Observable<IatiDataset[]> {
-    const url: string = this.urlApiIatiDataset + '/?filter[where][md5]=' + md5;
-
-    this.log(url);
-    return this.http.get<IatiDataset>(url)
-      .pipe(
-        tap(_ => this.log(`fetched iati dataset`)),
-        catchError(this.handleError('getIatiDataset', undefined))
-      );
-  }
-
-  getIatiDatasetById(id: string): Observable<IatiDataset[]> {
-    const url: string = this.urlApiIatiDataset + '/?filter[where][id]=' + id;
-
-    this.log(url);
-    return this.http.get<IatiDataset[]>(url)
-      .pipe(
-        tap(_ => this.log(`fetched iati dataset`)),
-        catchError(this.handleError('getIatiDataset', undefined))
-      );
-  }
-
-  getNextInQueue(): Observable<IatiDataset> {
-    const url: string = window.__env.apiDataworkBench + '/queue/next';
-
-    return this.http.get<IatiDataset>(url)
-      .pipe(
-        tap(_ => this.log(`fetched iati dataset`)),
-        catchError(this.handleError('getIatiDataset', undefined))
-      );
-  }
-
-  getQueueLength(): Observable<any> {
-    const url: string = window.__env.apiDataworkBench + '/queue/length';
-
-    return this.http.get<any>(url)
-      .pipe(
-        tap(_ => this.log(`fetched queue length`)),
-        catchError(this.handleError('getQueueLength', undefined))
-      );
-  }
-
-  getIatiFile(md5: string): Observable<any> {
-    const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';
-    //   /iati-files/{container}/download/{file}
-    this.log(url);
-    return this.http.get<any>(url)
-      .pipe(
-        tap(_ => this.log(`fetched iati file`)),
-        catchError(this.handleError('getIatiFile', undefined))
       );
   }
 

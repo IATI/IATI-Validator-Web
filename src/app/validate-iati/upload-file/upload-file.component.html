@@ -11,7 +11,7 @@
       <ng-container *ngIf="!isActiveStep('3')">
         <section class="col">
           <ng-container *ngIf="!selectedFiles.length; else clearState">
-            <label class="btn btn-success iati-button border-radius-none iati-file-label" for="file-upload">
+            <label class="btn btn-success iati-button  iati-file-label" for="file-upload">
               Browse
             </label>
             <input
@@ -25,7 +25,7 @@
           </ng-container>
           <ng-template #clearState>
             <button
-              class="btn btn-success iati-button border-radius-none"
+              class="btn btn-success iati-button "
               (click)="clearFiles()"
               [disabled]="!isActiveStep('1')"
             >
@@ -41,7 +41,7 @@
     <h5 class="step-title">Step 2: Upload your IATI files and start validation</h5>
     <button
       *ngIf="!isActiveStep('3')"
-      class="btn btn-success iati-button border-radius-none"
+      class="btn btn-success iati-button "
       (click)="uploadFile()"
       [disabled]="!isActiveStep('2')"
     >
@@ -74,7 +74,7 @@
   >
     <h5 class="step-title">Step 3: Your files are being validated - click below to view their progress and, when complete, reports.</h5>
     <button
-      class="btn btn-success iati-button border-radius-none"
+      class="btn btn-success iati-button "
       (click)="validateFile()"
       [disabled]="!isActiveStep('3')"
     >

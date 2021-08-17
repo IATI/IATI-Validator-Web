@@ -13,7 +13,7 @@
   <div class="step" [ngClass]="{'next': isActiveStep('2')}">
     <h5 class="step-title">Step 2: Fetch the files from the web</h5>
     <button
-      class="btn btn-success iati-button border-radius-none"
+      class="btn btn-success iati-button "
       [disabled]="!isActiveStep('2')"
       (click)="fetchFiles()"
     >
@@ -42,7 +42,7 @@
   <div class="step" [ngClass]="{'next': isActiveStep('3')}">
     <h5 class="step-title">Step 3: Your URLs are being validated - click below to view their progress and, when complete, reports.</h5>
     <button
-      class="btn btn-success iati-button border-radius-none"
+      class="btn btn-success iati-button "
       (click)="validateFile()"
       [disabled]="!isActiveStep('3')"
     >

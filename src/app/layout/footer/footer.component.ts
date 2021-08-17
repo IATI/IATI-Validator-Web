@@ -7,14 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   webVersion!: '?';
-  serverVersion!: '?';
-  actualVersion!: '?';
+  servicesVersion!: '?';
+  apiVersion!: '?';
   constructor() { }
 
   ngOnInit() {
     this.webVersion = window.__env.valWebVersion;
-    this.serverVersion = window.__env.valServerVersion;
-    this.actualVersion = window.__env.valActualVersion;
+    this.servicesVersion = window.__env.valServicesVersion;
+    this.apiVersion = window.__env.valApiVersion;
   }
 
 }

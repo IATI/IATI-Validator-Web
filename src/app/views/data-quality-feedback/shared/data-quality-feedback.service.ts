@@ -14,10 +14,6 @@ import { ReportInfo } from './report-info';
 
 @Injectable()
 export class DataQualityFeedbackService {
-  private urlApiIatiFile: string = window.__env.apiDataworkBench + '/iati-files';
-  private urlApiIatiTestFile: string = window.__env.apiDataworkBench + '/iati-testfiles';
-  private urlApiIatiDataSet: string = window.__env.apiDataworkBench + '/iati-datasets';
-  private urlApiOrganisation: string = window.__env.apiDataworkBench + '/iati-publishers';
   private urlApiValidationReport: string = window.__env.validatorServicesUrl + '/pub/validation/existing';
   private urlApiGuidanceLinks: string = window.__env.validatorServicesUrl + '/pvt/guidance-links';
 
@@ -46,48 +42,6 @@ export class DataQualityFeedbackService {
     .pipe(
       catchError(this.handleError('getGuidanceLinks', undefined) as any)
     );
-  }
-
-  getDataQualityFeedback(md5: string): Observable<Dqfs> {
-    const url: string = this.urlApiIatiFile + '/file/json/' + md5 + '.json';
-    //   /iati-files/{container}/download/{file}
-    return this.http.get<any>(url)
-      .pipe(
-        // tap(_ => this.log(`fetched iati file`)),
-        catchError(this.handleError('getIatiFile', undefined) as any)
-      );
-  }
-
-  getTestFilesDataQualityFeedbackById(inId: string): Observable<Dqfs> {
-    const url: string = this.urlApiIatiTestFile + '/file/json/' + inId + '.json';
-    //   /iati-testfiles/{container}/download/{file}
-    return this.http.get<any>(url)
-      .pipe(
-        // tap(_ => this.log(`fetched iati file`)),
-        catchError(this.handleError('getIatiFile', undefined) as any)
-      );
-  }
-
-  getReportInfo(id: string): Observable<ReportInfo> {
-    const reportInfo: ReportInfo = { organisationName: '', fileName: '', organisationSlug: '' };
-
-    const url: string = this.urlApiIatiDataSet + '/findOne/' + '?filter[where][id]=' + id;
-    this.http.get<IatiDataset>(url)
-      .subscribe(
-        (data: any) => {
-          reportInfo.fileName = data.filename;
-          reportInfo.organisationSlug = data.publisher;
-          const urlPublisher: string = this.urlApiOrganisation + '/findOne/' + '?filter[where][slug]=' + data.publisher;
-          this.http.get<Organisation>(urlPublisher)
-            .subscribe(
-              (datas: any) => {
-                reportInfo.organisationName = datas.name;
-                return of(reportInfo);
-              }
-            );
-        }
-      );
-    return of(reportInfo);
   }
 
   getSeverities(): Severity[] {

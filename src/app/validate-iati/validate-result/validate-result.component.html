@@ -9,8 +9,8 @@
       <a [routerLink]="['/validate', uploadId]">{{environmentUrl}}/iati-feedback/validate/{{uploadId}}</a>
       <button class="btn btn-outline-primary ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
     </p>
-    <p>This is where you can view your Validation Reports.</p>
-    <p>You can copy the address of your personal workplace and access the results later.</p>
+    <p>This is where you can view your Validation Reports. You can add more files using the button at the bottom of the page. You can also copy the address of your personal workplace and access the results later, which can be useful if you are processing a large amount of data and it is taking some time to complete.</p>
+    <p></p>
   </div>
 
   <div *ngIf="iatiDatasetDatas.length" class="files">
@@ -33,11 +33,11 @@
             {{ iatiDatasetData.filename }}
           </div>
           <div class="col-12 col-md">
-            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'blue'"></app-spinner>
+            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'darkslategray'"></app-spinner>
             {{ iatiDatasetData.created | date:'yyyy-MM-dd HH:mm (z)' }}
           </div>
           <div class="col-12 col-md">
-            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'blue'"></app-spinner>
+            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'darkslategray'"></app-spinner>
             {{ iatiDatasetData.validated | date:'yyyy-MM-dd HH:mm (z)' }}
           </div>
           <div class="col-12 d-md-none"><hr></div>
@@ -47,11 +47,8 @@
   </div>
 
   <div class="content-block">
-    <p>
-      If you want to validate more files, you have the option to do so by clicking “Add more files”.
-    </p>
     <button
-      class="btn btn-success iati-button border-radius-none"
+      class="btn btn-success iati-button "
       (click)="addMoreFiles()"
     >
       Add more files
@@ -59,9 +56,10 @@
   </div>
 
   <div class="content-block">
-    <p>
-      If you have added multiple files and are processing a large amount of data, this can take some time.
-      You can choose the option below for the validator to send you a notification via email once all the validation reports are ready.
+    
+
+      <!--
+     <p>You can choose the option below for the validator to send you a notification via email once all the validation reports are ready.
     </p>
     <ng-container *ngIf="emailMode === 'draft'">
       <p>
@@ -76,7 +74,7 @@
             placeholder="your email address"
           />
           <button
-            class="btn btn-success iati-button border-radius-none"
+            class="btn btn-success iati-button "
             type="submit"
             [disabled]="form.invalid"
           >
@@ -92,7 +90,7 @@
       </p>
         <span class="saved-email">{{email.value}}</span>
         <button
-          class="btn btn-success iati-button border-radius-none"
+          class="btn btn-success iati-button "
           (click)="editEmail()"
         >
           Edit email address
@@ -111,25 +109,26 @@
             placeholder="your email address"
           />
           <button
-            class="btn btn-success iati-button border-radius-none"
+            class="btn btn-success iati-button "
             type="submit"
             [disabled]="newForm.invalid || !newForm.touched"
           >
             Save
           </button>
           <button
-            class="btn btn-success iati-button border-radius-none"
+            class="btn btn-success iati-button "
             (click)="returnViewMode()"
           >
             Cancel
           </button>
         </form>
         <button
-          class="btn btn-success iati-button border-radius-none"
+          class="btn btn-success iati-button "
           (click)="removeEmail()"
         >
           Remove
         </button>
     </ng-container>
+    -->
   </div>
 </div>

@@ -4,38 +4,14 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { LogService } from '../../core/logging/log.service';
-import { IatiTestDataset } from './iati-testdataset';
 
 
 @Injectable()
 export class ValidatedIatiService {
-  private urlApiIatiDataset: string = window.__env.apiDataworkBench + '/iati-testdatasets';
-
   constructor(
     private logger: LogService,
     private http: HttpClient
   ) { }
-
-  getIatiDataset(workspaceId: string): Observable<IatiTestDataset[]> {
-    const url: string = this.urlApiIatiDataset + '/?filter[where][tmpworkspaceId]=' + workspaceId;
-
-    this.logger.debug(url);
-
-    return this.http.get<IatiTestDataset>(url)
-      .pipe(
-        tap(_ => this.logger.debug(`fetched iati dataset`)),
-        catchError(this.handleError('getIatiDataset', undefined))
-      ) as any;
-  }
-
-  getIatiDatasetById(inUploadId: string): Observable<IatiTestDataset> {
-    const url: string = this.urlApiIatiDataset + '/' + inUploadId;
-    return this.http.get<any>(url)
-      .pipe(
-        tap(_ => this.logger.debug(`fetched iati dataset`)),
-        catchError(this.handleError('getIatiDataset', undefined))
-      ) as any;
-  }
 
   // TODO: replace any
   getTmpWorkspace(workspaceId: string): any {
@@ -55,7 +31,6 @@ export class ValidatedIatiService {
     );
   }
 
-//#HERE
   private urlApiTmpWorkspace = (id: string) => `${window.__env.validatorServicesUrl}/pvt/adhoc/session/?sessionId=${id}`;
 
   /**
