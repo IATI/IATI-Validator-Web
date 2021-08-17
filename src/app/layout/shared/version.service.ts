@@ -10,19 +10,30 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class VersionService {
-  private urlApiVersionVS: string = window.__env.validatorServicesUrl + '/pub/version';
+  private urlApiServicesVersionVS: string = window.__env.validatorServicesUrl + '/pub/version';
+  private urlApiValidatorVersionVS: string = window.__env.validatorServicesUrl + '/pub/validator-version';
 
   constructor(
     private http: HttpClient,
     private logger: LogService) { }
 
     getServicesVersion(): Observable<string> {
-      const url: string = this.urlApiVersionVS;
+      const url: string = this.urlApiServicesVersionVS;
       this.log(url);
       return this.http.get(url, {responseType: 'text'})
         .pipe(
           tap(_ => this.log(`fetched validator services version`)),
           catchError(this.handleError('getServicesVersion', undefined))
+        );
+    }
+
+    getValidatorVersion(): Observable<string> {
+      const url: string = this.urlApiValidatorVersionVS;
+      this.log(url);
+      return this.http.get(url, {responseType: 'text'})
+        .pipe(
+          tap(_ => this.log(`fetched validator version`)),
+          catchError(this.handleError('getValidatorVersion', undefined))
         );
     }
 
