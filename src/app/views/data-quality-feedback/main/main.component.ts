@@ -16,8 +16,6 @@ import { Source } from './../shared/source';
 import { Organisation } from 'src/app/shared/organisation';
 import * as _ from 'lodash';
 
-
-
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
