@@ -24,7 +24,7 @@
 
   <div *ngIf="isLoading" class="alert alert-info" role="alert">
     <app-spinner [backColor]="'white'"></app-spinner>
-    <span class="loading-text">Loading report...</span>
+    <span class="loading-text"> Loading report...</span>
   </div>
   <div *ngIf="!isLoading && loadError.status" class="alert alert-warning"
     role="alert">

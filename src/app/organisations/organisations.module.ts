@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { SharedModule } from './../shared/shared.module';
 
 import { OrganisationsComponent } from './organisations/organisations.component';
 import { OrganisationsListComponent } from './organisations-list/organisations-list.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    SharedModule
   ],
   exports: [
     RouterModule

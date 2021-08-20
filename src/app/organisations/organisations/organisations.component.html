@@ -6,6 +6,8 @@
     New organisations and IATI files will not immediately be visible here, but after at most a day.
   </p>
   <app-organisations-search (search)="searchOrganisation($event)"></app-organisations-search>
-  <div *ngIf="isSearching" class="text-info">Searching ....</div>
+  <div *ngIf="isSearching" class="text-info" style="margin-top: 5px; color:darkslategray">
+    <app-spinner [backColor]="'#81c3d6'">Loading organisations...</app-spinner>
+  </div>
   <app-organisations-list [organisations]="filteredOrganisations"></app-organisations-list>
 </div>

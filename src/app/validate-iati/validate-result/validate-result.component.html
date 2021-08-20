@@ -9,8 +9,11 @@
       <button class="btn btn-outline-primary ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
     </p>
   </div>
-
-  <div *ngIf="iatiDatasetDatas.length" class="files">
+<div *ngIf="!iatiDatasetDatas.length">
+  <app-spinner [backColor]="'#81c3d6'"></app-spinner>
+</div>
+<div *ngIf="iatiDatasetDatas.length">
+  <div class="files">
     <div class="row heading">
       <div class="col-12 col-md">
         File name
@@ -30,11 +33,11 @@
             {{ iatiDatasetData.filename }}
           </div>
           <div class="col-12 col-md">
-            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'darkslategray'"></app-spinner>
+            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'#81c3d6'"></app-spinner>
             {{ iatiDatasetData.created | date:'yyyy-MM-dd HH:mm (z)' }}
           </div>
           <div class="col-12 col-md">
-            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'darkslategray'"></app-spinner>
+            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'#81c3d6'"></app-spinner>
             {{ iatiDatasetData.validated | date:'yyyy-MM-dd HH:mm (z)' }}
           </div>
           <div class="col-12 d-md-none"><hr></div>
@@ -57,6 +60,7 @@
     Clear Workspace
   </button>
   </div>
+</div>
 
   <div class="content-block">
     
