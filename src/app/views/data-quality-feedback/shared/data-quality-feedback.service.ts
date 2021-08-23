@@ -10,13 +10,15 @@ import { Severity } from './severity';
 export class DataQualityFeedbackService {
   private urlApiValidationReport: string = window.__env.validatorServicesUrl + '/pub/validation/existing';
   private urlApiGuidanceLinks: string = window.__env.validatorServicesUrl + '/pvt/guidance-links';
+  private apiKeyName: string = window.__env.validatorServicesKeyName;
+  private apiKeyValue: string = window.__env.validatorServicesKeyValue;
 
   constructor(private http: HttpClient,
     private logger: LogService) { }
 
   getValidationReport(documentId: string): Observable<any> {
     const url: string = this.urlApiValidationReport + '?id=' + documentId;
-    return this.http.get<any>(url)
+    return this.http.get<any>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
     .pipe(
       catchError(this.handleError('getValidationReport', undefined) as any)
     );
@@ -24,7 +26,7 @@ export class DataQualityFeedbackService {
 
   getTestValidationReport(guid: string): Observable<any> {
     const url: string = this.urlApiValidationReport + '?testfile=' + guid;
-    return this.http.get<any>(url)
+    return this.http.get<any>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
     .pipe(
       catchError(this.handleError('getValidationReport', undefined) as any)
       );
@@ -32,7 +34,7 @@ export class DataQualityFeedbackService {
 
   getGuidanceLinks(version: string): Observable<any> {
     const url: string = this.urlApiGuidanceLinks + '/' + version;
-    return this.http.get<any>(url)
+    return this.http.get<any>(url,{ headers: { [this.apiKeyName]: this.apiKeyValue }})
     .pipe(
       catchError(this.handleError('getGuidanceLinks', undefined) as any)
     );

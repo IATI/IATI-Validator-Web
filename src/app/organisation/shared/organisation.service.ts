@@ -12,6 +12,8 @@ import { Workspace } from '../../shared/workspace';
 export class OrganisationService {
   private urlApiOrganisationVS: string = window.__env.validatorServicesUrl + '/pvt/publishers';
   private urlApiDocumentVS: string = window.__env.validatorServicesUrl + '/pvt/documents';
+  private apiKeyName: string = window.__env.validatorServicesKeyName;
+  private apiKeyValue: string = window.__env.validatorServicesKeyValue;
 
   constructor(
     private http: HttpClient,
@@ -43,7 +45,7 @@ export class OrganisationService {
   getOrganisationByName(name: string): Observable<Organisation[]> {
     const url: string = this.urlApiOrganisationVS + '/' + name + '?lookupKey=name' ;
     this.log(url);
-    return this.http.get<Organisation>(url)
+    return this.http.get<Organisation>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
       .pipe(
         tap(_ => this.log(`fetched organisation`)),
         catchError(this.handleError('getOrganisationByName', undefined))
@@ -53,7 +55,7 @@ export class OrganisationService {
   getOrganisationById(id: string): Observable<Organisation[]> {
     const url: string = this.urlApiOrganisationVS + '/' + id + '?lookupKey=id' ;
     this.log(url);
-    return this.http.get<Organisation>(url)
+    return this.http.get<Organisation>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
       .pipe(
         tap(_ => this.log(`fetched organisation`)),
         catchError(this.handleError('getOrganisationById', undefined))
@@ -63,7 +65,7 @@ export class OrganisationService {
   getDocument(documentId: string): Observable<Document[]> {
     const url: string = this.urlApiDocumentVS + '/' + documentId ;
     this.log(url);
-    return this.http.get<Document>(url)
+    return this.http.get<Document>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
       .pipe(
         tap(_ => this.log(`fetched document`)),
         catchError(this.handleError('getDocumentInfo', undefined))
@@ -73,7 +75,7 @@ export class OrganisationService {
   getOrganisationDocuments(organisationId: string): Observable<Document[]> {
     const url: string = this.urlApiOrganisationVS + '/' + organisationId + '/documents';
     this.log(url);
-    return this.http.get<Document[]>(url)
+    return this.http.get<Document[]>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
       .pipe(
         tap(_ => this.log(`fetched documents`)),
         catchError(this.handleError('getOrganisationDocuments', []))

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -8,6 +8,10 @@ import { LogService } from '../../core/logging/log.service';
 
 @Injectable()
 export class ValidatedIatiService {
+  private apiKeyName: string = window.__env.validatorServicesKeyName;
+  private apiKeyValue: string = window.__env.validatorServicesKeyValue;
+  private authHeader: HttpHeaders = new HttpHeaders({ [this.apiKeyName]: this.apiKeyValue });
+
   constructor(
     private logger: LogService,
     private http: HttpClient
@@ -17,7 +21,7 @@ export class ValidatedIatiService {
   getTmpWorkspace(workspaceId: string): any {
     const url: string = this.urlApiTmpWorkspace(workspaceId);
 
-    return this.http.get(url).pipe(
+    return this.http.get(url, {headers: this.authHeader}).pipe(
       catchError(this.handleError('getTmpWorkspace', undefined))
     );
 
@@ -26,7 +30,7 @@ export class ValidatedIatiService {
   sendEmail(id: string, email: string) {
     return this.http.patch(this.urlApiTmpWorkspace(id), {
       email
-    }).pipe(
+    }, {headers: this.authHeader}).pipe(
       catchError(this.handleError('sendEmail', undefined))
     );
   }
