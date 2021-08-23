@@ -15,7 +15,7 @@ export class LogPublishersService {
 
   constructor(private http: Http) {
     // Build publishers arrays
-    this.buildPublishers();
+    // this.buildPublishers();
   }
 
   // *************************
