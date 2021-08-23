@@ -10,13 +10,15 @@ import { LogService } from '../../core/logging/log.service';
 @Injectable()
 export class OrganisationsService {
   private organisationsUrl = window.__env.validatorServicesUrl;
+  private apiKeyName: string = window.__env.validatorServicesKeyName;
+  private apiKeyValue: string = window.__env.validatorServicesKeyValue;
 
   constructor(private http: HttpClient,
               private logger: LogService) { }
 
   getOrganisations(): Observable<Organisation[]> {
     const url: string = this.organisationsUrl + '/pvt/publishers';
-    return  this.http.get<Organisation[]>(url)
+    return  this.http.get<Organisation[]>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
       .pipe(
         tap(_ => this.log(`fetched organisations`)),
         catchError(this.handleError('getOrganisations', []))
