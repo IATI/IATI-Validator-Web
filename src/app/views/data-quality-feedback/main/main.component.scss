@@ -30,3 +30,15 @@
   color: $severity-warning;
   font-weight: 700;
 }
+
+.mycard {
+  width: 100%;
+  margin: 10px;
+  border: 1px lightgray solid;
+  border-radius: $border-radius;
+  font-family: Lato;
+}
+
+.mycard-body {
+  padding: 14px;
+}
