@@ -9,7 +9,10 @@
                 'no-validation': fileStatus() === 'normal'}"
   >
     <div class="col-12 col-md filename">
-      {{ fileName() }}
+      <span *ngIf="document.validation_created !== null">
+        {{ fileName() }}
+      </span>
+      <a *ngIf="document.downloaded === null" href="{{document.url}}" target="_blank">{{ fileName() }}</a>
     </div>
     <div class="col-12 col-md">
       <span *ngIf="document.first_seen || document.modified">{{
@@ -25,6 +28,9 @@
       </span>
       <span *ngIf="document.validation_created === null">
         Pending
+      </span>
+      <span *ngIf="document.downloaded === null">
+        Download
       </span>
     </div>
     <div class="col-12 d-md-none"><hr /></div>
