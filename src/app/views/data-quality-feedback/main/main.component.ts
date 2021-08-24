@@ -364,7 +364,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   getAllIssueCount(): number {
     let count = 0;
-    this.activityErrors.forEach(act => {
+    this.activityErrorsOriginal.forEach(act => {
       act.errors.forEach(fb => {
         fb.errors.forEach(mes => {
           count += mes.context.length;
@@ -372,7 +372,7 @@ export class MainComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.fileErrors.forEach(fb => {
+    this.fileErrorsOriginal.forEach(fb => {
       fb.errors.forEach(mes => {
         count += mes.context.length;
       });
