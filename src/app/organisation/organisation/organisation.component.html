@@ -21,6 +21,13 @@
         </div>
         <div class="mycard-body"><p>
             <p class="card-text"><b>IATI files published in the IATI Registry</b></p>
+            <p class="card-text">The file(s) with a validation report available are marked with a status. If the file is flagged with a <span class="file-critical">Critical</span>, <span class="file-error">Error</span>, or <span class="file-warning">Warning</span> status it means that there are errors to fix. We recommend addressing the <span class="file-critical">Critical</span> errors first. The <span class="file-error">Errors</span> should be addressed next. <span class="file-warning">Warnings</span> should be corrected when possible.</p>
+            <ul> 
+              <li><span class="file-success">Success</span> - file is valid with no errors of any type, congratulations!</li>
+              <li><span class="file-warning">Warning</span> - data can be more valuable and warnings should be corrected when possible.</li>
+              <li><span class="file-error">Error</span> - data is hard or impossible use.</li>
+              <li><span class="file-critical">Critical</span> - data cannot be used by tools.</li>
+            </ul>
             <app-document-list *ngIf="organisationData?.documents" [documents]='organisationData?.documents'></app-document-list>
             <div *ngIf="isLoading" class="alert alert-info" role="alert">
               <app-spinner [backColor]="'white'"></app-spinner>

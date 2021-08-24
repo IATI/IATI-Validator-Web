@@ -71,7 +71,7 @@
   height: 1em !important;
 }
 
-p {
+p, li {
   font-size: 1em;
 }
 
@@ -122,4 +122,21 @@ button, .btn {
       color: red;
     }
   }
+}
+
+.file-success {
+  color: $success;
+  font-weight: 1000;
+}
+.file-critical {
+  color: $severity-critical;
+  font-weight: 700;
+}
+.file-error {
+  color: $severity-error;
+  font-weight: 700;
+}
+.file-warning {
+  color: $severity-warning;
+  font-weight: 700;
 }

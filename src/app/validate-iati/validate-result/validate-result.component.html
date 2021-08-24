@@ -5,9 +5,17 @@
 
     <p>
       Your personal workspace is     
-      <a [routerLink]="['/validate', uploadId]">{{environmentUrl}}/iati-feedback/validate/{{uploadId}}</a>
+      <a [routerLink]="['/validate', uploadId]">{{environmentUrl}}/validate/{{uploadId}}</a>
       <button class="btn btn-outline-primary ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
     </p>
+
+    <p class="card-text">The file(s) with a validation report available are marked with a status. If the file is flagged with a <span class="file-critical">Critical</span>, <span class="file-error">Error</span>, or <span class="file-warning">Warning</span> status it means that there are errors to fix. We recommend addressing the <span class="file-critical">Critical</span> errors first. The <span class="file-error">Errors</span> should be addressed next. <span class="file-warning">Warnings</span> should be corrected when possible.</p>
+      <ul> 
+        <li><span class="file-success">Success</span> - file is valid with no errors of any type, congratulations!</li>
+        <li><span class="file-warning">Warning</span> - data can be more valuable and warnings should be corrected when possible.</li>
+        <li><span class="file-error">Error</span> - data is hard or impossible use.</li>
+        <li><span class="file-critical">Critical</span> - data cannot be used by tools.</li>
+      </ul>
   </div>
 <div *ngIf="!iatiDatasetDatas.length">
   <app-spinner [backColor]="'#81c3d6'"></app-spinner>
@@ -24,6 +32,9 @@
       <div class="col-12 col-md d-none d-md-block">
         Validated
       </div>
+      <div class="col-12 col-md d-none d-md-block">
+        Validation Status
+      </div>
     </div>
 
     <ng-container *ngFor="let iatiDatasetData of iatiDatasetDatas">
@@ -39,6 +50,10 @@
           <div class="col-12 col-md">
             <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'#81c3d6'"></app-spinner>
             {{ iatiDatasetData.validated | date:'yyyy-MM-dd HH:mm (z)' }}
+          </div>
+          <div class="col-12 col-md">
+            <app-spinner *ngIf="iatiDatasetData.class === 'normal'" [backColor]="'#81c3d6'"></app-spinner>
+            {{ fileStatusDisplay(iatiDatasetData.class) }}
           </div>
           <div class="col-12 d-md-none"><hr></div>
         </div>
