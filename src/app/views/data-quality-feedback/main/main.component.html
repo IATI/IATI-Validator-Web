@@ -11,10 +11,10 @@
         <h1>Valid</h1>
       </div>
       <div *ngIf="fileStatus() === 'warning'" class="file-warning" role="alert">
-        <h1>Valid, but with warnings</h1>
+        <h1>Warnings</h1>
       </div>
       <div *ngIf="fileStatus() === 'error'" class="file-error" role="alert">
-        <h1>Valid, but with non critical errors</h1>
+        <h1>Non critical errors</h1>
       </div>
       <div *ngIf="fileStatus() === 'critical'" class="file-critical" role="alert">
         <h1>Critical errors</h1>
@@ -41,14 +41,14 @@
   </div>
 
   <div *ngIf="!isLoading && !loadError.status" class="row">
-    <div class="col-md-4 filters">
+    <div *ngIf="getAllIssueCount()>0" class="col-md-4 filters">
       <h4>Filters</h4>
       <app-filter-severity [severities]="severities" (selectedChanged)="severitySelectedChanged()">
       </app-filter-severity>
       <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()">
       </app-filter-category>
     </div>
-    <div class="col-md-8 results">
+    <div [ngClass]="{'col-md-8': getAllIssueCount()>0, 'col-md-12': getAllIssueCount()==0}" class="results">
       <h4>Feedback</h4>
       <div *ngIf="validationReport">
         <!-- Determine which components to display -->
