@@ -15,12 +15,18 @@ export class DocumentListItemComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   fileName(): string {
     if ('url' in this.document) {
-      return this.document.url.split('/').pop();
-    } else {
-      return 'No filename available';
+      const filename = this.document.url.replace(/\/$/, '').split('/').pop();
+
+      if (filename.length > 0) {
+        return filename;
+      }
     }
+
+    return 'No filename available';
+
   }
 
   hasValidation(): boolean {
