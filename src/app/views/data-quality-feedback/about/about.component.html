@@ -24,7 +24,7 @@
   </section>
   <section class="about-content">
     <h3 class="about-content__title">What happens when the IATI Validator identifies invalid data?</h3>
-    <p class="about-content__description">An error or a warning message is displayed for each occurrence of an error,
+    <p class="about-content__description">When the IATI Validator identifies invalid data, it returns a message to the user.A critical error or a warning message is displayed for each occurrence,
       identifying what data needs to be corrected and where it occurs in the data file. A count of errors is also
       displayed which shows how many times an error is repeated throughout a file. For example, if all activities in a
       dataset have omitted activity dates, then the user will see a count of this repeated error as well as the location
@@ -32,36 +32,32 @@
   </section>
   <section class="about-content">
     <h3 class="about-content__title">What help and support can publishers access to correct their data?</h3>
-    <p class="about-content__description">When data requires correcting, an actionable error or warning message will be
-      displayed. In the near future, the IATI Validator will be updated to provide specific instructions on how to
-      correct data. For additional support using the IATI Validator, please refer to:</p>
+    <p class="about-content__description">When data requires correcting an actionable error or warning message will be
+      displayed. Guidance links are also made available to assist users with fixing the data. For additional support using the IATI Validator, please refer to:</p>
     <div class="about-content__description">
       <p class="about-content__description list-item"><span class="list-item-style">-</span> IATI Technical Team
         helpdesk: <a href="mailto:support@iatistandard.org">support@iatistandard.org</a></p>
-      <p class="about-content__description list-item"><span class="list-item-style">-</span> Sign-up to webinars held by
-        the IATI Technical Team on how to use the IATI Validator. Details of upcoming webinars can be found at <a
-          href="https://iatistandard.org/en/events/">IATI Events</a>.</p>
       <p class="about-content__description list-item"><span class="list-item-style">-</span> Post questions to IATI’s
-        community on the forum: <a href="https://discuss.iatistandard.org/c/community-zone/data-quality">IATI
-          Discuss</a>.</p>
+        community on the forum: <a href="https://iaticonnect.org/data-publishing-cop/stream">IATI
+          Connect</a>.</p>
     </div>
   </section>
   <section class="about-content">
     <h3 class="about-content__title">Specifically what checks will be made to IATI datafiles?</h3>
     <p class="about-content__description">The IATI Validator run checks on datafiles against version 2 of the IATI
       Standard Schema and Rulesets.</p>
-    <p class="about-content__description set-title">Check 1: Schema Validation</p>
+    <p class="about-content__description set-title">Check 1: Schema Validation- Critical</p>
     <p class="about-content__description">The IATI Validator checks if data adheres to the format set out in the IATI
       XML Schema. The IATI Schema provides the exact order and structure that organisations should provide their XML in.
       Full information about the IATI Schema can be found on <a
         href="http://reference.iatistandard.org/203/schema/">IATI’s Reference site</a>.</p>
-    <p class="about-content__description set-title">Check 2: Rulesets Validation</p>
+    <p class="about-content__description set-title">Check 2: Rulesets Validation - Error and Warning</p>
     <p class="about-content__description">The IATI Validator also checks if the data follows IATI’s Rulesets. These
       checks provide a more detailed review of the quality of data. To view the most up-to-date information about IATI’s 
       Rulesets please refer to the <a href="https://github.com/IATI/IATI-Rulesets" target="_blank">
       IATI Ruleset repository</a>.</p>
     <p class="about-content__description">For more information, please see 
-      <a href="https://iatistandard.org/documents/10454/IATI_Validator_QA_September_2020.pdf" target="_blank">Q&A: New IATI Validator</a>.</p>
+      <a href="https://prod-iati-website.azureedge.net/prod-iati-website/documents/QA__IATI_Validator-__September_2021_2.pdf" target="_blank">Q&A: New IATI Validator</a>.</p>
   </section>
   <section class="about-content">
     <h3 class="about-content__title">Does the IATI Validator check if datasets have complied with a donor’s requirement
@@ -75,7 +71,7 @@
     <h3 class="about-content__title">What is the tech stack powering the service?</h3>
     <div class="about-content__description">
       <p class="about-content__description">All application code can be found in the IATI-Validator repositories in <a href="https://github.com/IATI"> GitHub</a>.</p>
-      <p class="about-content__description list-item"><span class="list-item-style">-</span><a href="https://github.com/IATI/js-validation-api" target="_blank">Validator API</a> - Core validation logic</p>
+      <p class="about-content__description list-item"><span class="list-item-style">-</span><a href="https://github.com/IATI/js-validator-api" target="_blank">Validator API</a> - Core validation logic</p>
       <p class="about-content__description list-item"><span class="list-item-style">-</span><a href="https://github.com/IATI/IATI-Validator-Web" target="_blank">Front End</a> - Angular single page application</p>
       <p class="about-content__description list-item"><span class="list-item-style">-</span><a href="https://github.com/IATI/validator-services" target="_blank">Back End Service</a> - Back end service for the front end</p>
       <p class="about-content__description list-item"><span class="list-item-style">-</span><a href="https://github.com/IATI/refresher" target="_blank">Refresher</a> - Published file identification, download, and validation loop</p>
