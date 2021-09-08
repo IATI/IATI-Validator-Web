@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
     // todo - this, properly - we've no sensitive stuff on the staging site,
     // so this currently is just a quick "hey, you know this is the staging site, right?" check
 
-    if (window.__env.stagePass === null) {
+    if (window.__env.stagePass === undefined) {
       return;
     }
 
