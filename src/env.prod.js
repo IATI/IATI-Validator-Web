@@ -9,9 +9,6 @@
   window.__env.validatorServicesKeyName = 'Ocp-Apim-Subscription-Key';
   window.__env.validatorServicesKeyValue = '280182cc8cb8436cb94102f485034fd1';
 
-  // staging password
-  window.__env.stagePass = "reallybigsecret";
-
   // guidance link baseUrl
   window.__env.guidanceLinkBaseUrl = 'https://iatistandard.org/en/iati-standard'
   
