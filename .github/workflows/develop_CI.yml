@@ -8,7 +8,7 @@ on:
       - '.github/workflows/develop_CD.yml'
       - '.github/workflows/main_CD.yml'
     branches:
-      - develop # update to develop
+      - develop
 
 jobs:
   test-build:
@@ -43,3 +43,11 @@ jobs:
           npm run build:prod
         env:
           CI: true
+
+  automerge:
+      needs: test-build
+      runs-on: ubuntu-latest
+      steps:
+        - uses: fastify/github-action-merge-dependabot@v2.5.0
+          with:
+            github-token: ${{secrets.GITHUB_TOKEN}}
