@@ -1,3 +1,12 @@
+# _NOTE_
+
+## IATI-Validator-Web#main-legacy-v1 
+- v1 of the IATI Validator is now deprecated and superseded by v2
+- This branch `main-legacy-v1` of the repository is legacy code from v1 and not maintained by IATI
+- Please see `main` branch for live code, and `develop` for development.
+
+[Full Announcement](https://iatistandard.org/en/news/iati-focuses-on-improving-data-quality-by-enhancing-validator-services/)
+
 # DqfApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.0.
