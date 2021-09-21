@@ -1,7 +1,7 @@
 {
-  "name": "dqf-app",
+  "name": "IATI-Validator-Web",
   "version": "2.0.6",
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -82,5 +82,9 @@
     "src/**/*.ts": [
       "eslint"
     ]
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11"
+  ]
 }
