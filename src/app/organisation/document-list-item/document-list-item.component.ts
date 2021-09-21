@@ -15,12 +15,18 @@ export class DocumentListItemComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   fileName(): string {
     if ('url' in this.document) {
-      return this.document.url.split('/').pop();
-    } else {
-      return 'No filename available';
+      const filename = this.document.url.replace(/\/$/, '').split('/').pop();
+
+      if (filename.length > 0) {
+        return filename;
+      }
     }
+
+    return 'No filename available';
+
   }
 
   hasValidation(): boolean {
@@ -31,7 +37,7 @@ export class DocumentListItemComponent implements OnInit {
     }
   }
 
-  fileStatus(): string {
+  fileStatus(display = false): string {
     let error = -1;
     let warning = -1;
     let valid = null;
@@ -43,17 +49,17 @@ export class DocumentListItemComponent implements OnInit {
     }
 
     if (this.document.report === null) {
-      return 'normal';
+      return display ? 'N/A' : 'normal';
     } else if (valid === true && error === 0 && warning === 0) {
-      return 'success';
+      return display ? 'Success' : 'success';
     } else if (valid === true && error === 0) {
-      return 'warning';
+      return display ? 'Warning' : 'warning';
     } else if (valid === true) {
-      return 'error';
+      return display ? 'Error' : 'error';
     } else if (valid === false) {
-      return 'critical';
+      return display ? 'Critical' : 'critical';
     } else {
-      return 'normal';
+      return display ? 'N/A' : 'normal';
     }
   }
 

@@ -2,12 +2,12 @@
   <div class="category-label">{{getCategoryLabel(feedback.category)}}</div>
   <ul class="feedback-list">
     <li *ngFor="let mes of feedback.errors" class="message {{getfeedbackColor(mes)}}"   >
-      <span class="message-text" >{{mes.message}}</span>
       <span class="message-id d-inline float-right">
         {{mes.id}}
         <a *ngIf="guidanceAvailable(mes.id)" href="{{ getGuidanceLink(mes.id) }}" target="_blank" title="Open guidance in a new window">(see guidance)</a>
         <a [hidden]="mes.codelist==null" href="{{ guidanceLinkBaseUrl }}/{{ cleanVersion() }}/codelists/{{ mes.codelist }}" target="_blank" title="Open guidance in a new window">(see guidance)</a>
       </span>
+      <span class="message-text" >{{mes.message}}</span>
       <ul [hidden]="mes.context.length===1 && mes.context[0].text===''">
         <li *ngFor="let con of mes.context" class="context">{{con.text}}</li>
       </ul>

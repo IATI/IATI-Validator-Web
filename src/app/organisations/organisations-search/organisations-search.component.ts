@@ -24,7 +24,7 @@ export class OrganisationsSearchComponent implements OnInit {
   }
 
   searchOrganisations() {
-    this.search.emit(this.term.value);
+    this.search.emit(this.term.value.trim());
   }
 
 }

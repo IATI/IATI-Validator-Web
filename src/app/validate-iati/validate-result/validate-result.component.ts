@@ -142,6 +142,23 @@ export class ValidateResultComponent implements OnDestroy {
     }
   }
 
+  fileStatusDisplay(input): string {
+    switch (input) {
+      case 'normal':
+        return null;
+      case 'success dqf':
+        return 'Success';
+      case 'warning dqf':
+        return 'Warning';
+      case 'error dqf':
+        return 'Error';
+      case 'critical dqf':
+        return 'Critical';
+      default:
+        return null;
+    }
+  }
+
   copyTextToClipboard(_) {
     const txtArea = document.createElement('textarea');
     const url = this.environmentUrl + '/validate/' + this.uploadId;

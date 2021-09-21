@@ -47,3 +47,20 @@
 .card-item {
   width: 100%;
 }
+
+.file-success {
+  color: $success;
+  font-weight: 1000;
+}
+.file-critical {
+  color: $severity-critical;
+  font-weight: 700;
+}
+.file-error {
+  color: $severity-error;
+  font-weight: 700;
+}
+.file-warning {
+  color: $severity-warning;
+  font-weight: 700;
+}

@@ -362,6 +362,24 @@ export class MainComponent implements OnInit, OnDestroy {
     return count;
   }
 
+  getAllIssueCount(): number {
+    let count = 0;
+    this.activityErrorsOriginal.forEach(act => {
+      act.errors.forEach(fb => {
+        fb.errors.forEach(mes => {
+          count += mes.context.length;
+        });
+      });
+    });
+
+    this.fileErrorsOriginal.forEach(fb => {
+      fb.errors.forEach(mes => {
+        count += mes.context.length;
+      });
+    });
+    return count;
+  }
+
   setCategoryCount() {
     this.categories.forEach(cat => {
       cat.count = cat.show ? this.getCategoryCount(cat.id) : null;
