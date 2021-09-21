@@ -53,7 +53,7 @@ export class ValidateResultComponent implements OnDestroy {
     this.subscribeTimer = this.source.subscribe(val => {
       this.loadData();
 
-      if (this.allDataHasJsonUpdated()) {
+      if (this.reportsComplete()) {
         logger.debug('unsubscribe');
         this.subscribeTimer.unsubscribe();
       }
@@ -82,12 +82,18 @@ export class ValidateResultComponent implements OnDestroy {
       );
   }
 
-  allDataHasJsonUpdated(): boolean {
-    if (!this.iatiDatasetDatas.length) {
+  reportsComplete(): boolean {
+    if (this.iatiDatasetDatas.length === 0) {
       return false;
-    } else {
-      return this.iatiDatasetDatas.every(iatiDatasetData => this.jsonUpdated(iatiDatasetData));
     }
+
+    for (const idd of this.iatiDatasetDatas) {
+      if (idd.report === null) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   jsonUpdated(inDataset: IatiTestDataset): boolean {
