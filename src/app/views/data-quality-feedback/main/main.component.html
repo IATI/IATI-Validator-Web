@@ -60,7 +60,7 @@
       <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()">
       </app-filter-category>
     </div>
-    <div [ngClass]="{'col-md-8': getAllIssueCount()>0, 'col-md-12': getAllIssueCount()==0}" class="results">
+    <div [ngClass]="{'col-md-8': getAllIssueCount()>0, 'col-md-12': getAllIssueCount()===0}" class="results">
       <h4>Feedback</h4>
       <div *ngIf="validationReport">
         <!-- Determine which components to display -->
