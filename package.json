@@ -55,7 +55,7 @@
     "@typescript-eslint/parser": "^4.14.1",
     "angular-ide": "^0.9.76",
     "codelyzer": "^6.0.1",
-    "eslint": "^7.6.0",
+    "eslint": "^7.32.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "^31.4.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
