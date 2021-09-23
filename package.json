@@ -48,7 +48,7 @@
     "@angular/compiler-cli": "^12.1.4",
     "@angular/language-service": "^12.1.4",
     "@types/jasmine": "~3.9.1",
-    "@types/jasminewd2": "^2.0.8",
+    "@types/jasminewd2": "^2.0.10",
     "@types/lodash": "^4.14.173",
     "@types/node": "^16.9.6",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
