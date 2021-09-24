@@ -53,7 +53,7 @@
     "@types/node": "^16.9.6",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
-    "angular-ide": "^0.9.76",
+    "angular-ide": "^0.9.77",
     "codelyzer": "^6.0.1",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "2.22.1",
