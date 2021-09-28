@@ -51,7 +51,7 @@
     "@types/jasminewd2": "^2.0.10",
     "@types/lodash": "^4.14.173",
     "@types/node": "^16.9.6",
-    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
     "@typescript-eslint/parser": "^4.31.2",
     "angular-ide": "^0.9.77",
     "codelyzer": "^6.0.1",
