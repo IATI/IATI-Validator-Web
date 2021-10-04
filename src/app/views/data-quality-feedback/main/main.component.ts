@@ -43,6 +43,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   fileErrors: Feedback[] = [];
   fileErrorsOriginal: Feedback[] = [];
+  fileErrorsOrigStatus = false;
   activityErrors: Activity[] = [];
   activityErrorsOriginal: Activity[] = [];
 
@@ -187,6 +188,7 @@ export class MainComponent implements OnInit, OnDestroy {
     }, []);
 
     this.fileErrorsOriginal = [...this.fileErrors];
+    this.fileErrorsOrigStatus = (this.fileErrorsOriginal.length > 0);
 
     this.activityErrors = this.validationReport.errors.filter((actOrgFile) => actOrgFile.identifier !== 'file');
     this.activityErrorsOriginal = [...this.activityErrors];

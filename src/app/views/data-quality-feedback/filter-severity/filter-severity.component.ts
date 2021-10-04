@@ -29,4 +29,8 @@ export class FilterSeverityComponent implements OnInit {
     this.selectionChanged();
   }
 
+  getSeverityShow(index: number, severity: any) {
+    return severity.id;
+  }
+
 }

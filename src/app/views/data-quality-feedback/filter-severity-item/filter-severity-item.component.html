@@ -9,7 +9,7 @@
     </div>
 
     <div class="col-auto collapse-col">
-        <app-checkbox [(checked)]="severity.show" [name]="'filterSrc' + severity.name" (checkedChange)="selectionChanged()"></app-checkbox>
+        <app-checkbox *ngIf="isCollapsed" [(checked)]="severity.show" [name]="'filterSrc' + severity.name" (checkedChange)="selectionChanged()"></app-checkbox>
       <button type="button" class="btn btn-outline-light collapser" (click)="collapse()">
         <span *ngIf="!isCollapsed"><img src="assets/icons/arrow_down_24_white.svg" alt="icon arrow down"></span>
         <span *ngIf="isCollapsed"><img src="assets/icons/arrow_up_24_white.svg" alt="icon arrow up"></span>
@@ -25,5 +25,5 @@
     <span *ngIf="allSelected()" class="show-label"><button type="button" class="btn btn-link" (click)="unSelectAll()">Unselect all</button></span>
     <span *ngIf="!allSelected()" class="show-label"><button type="button" class="btn btn-link" (click)="selectAll()">Select all</button></span>
   </li>
-  <app-filter-type-message *ngFor="let mes of severity.types" [typeMessage]="mes" (selectedChanged)="selectionChanged()"></app-filter-type-message>
+  <app-filter-type-message *ngFor="let mes of severity.types; trackBy: getMessageShow" [typeMessage]="mes" (selectedChanged)="selectionChanged()"></app-filter-type-message>
 </div>
