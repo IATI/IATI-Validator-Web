@@ -33,11 +33,13 @@ export class FilterSeverityItemComponent implements OnInit {
 
   selectAll(): void {
     this.severity.types.forEach(x => x.show = true);
+    this.severity.show = true;
     this.selectionChanged();
   }
 
   unSelectAll(): void {
     this.severity.types.forEach(x => x.show = false);
+    this.severity.show = false;
     this.selectionChanged();
   }
 
@@ -56,5 +58,9 @@ export class FilterSeverityItemComponent implements OnInit {
     return count;
   }
 
+  // used by app-filter-type-message ngFor trackBy to detect changes
+  getMessageShow(index: number, message: any) {
+    return message.show;
+  }
 
 }

@@ -25,7 +25,7 @@
       </div>
 
       <ng-template #noFeedbackData>
-        <div class="feedback-items collapse show">
+        <div class="feedback-items collapse show" *ngIf="!fileErrorsOrigStatus">
           <div class="feedback">
             <ul class="feedback-list">
               <li class="message success">
