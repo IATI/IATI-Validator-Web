@@ -10,6 +10,8 @@ on:
     branches:
       - develop
 
+concurrency: develop_CI
+
 jobs:
   test-build:
     name: "Test & Build"
