@@ -1,3 +1,6 @@
+[![Deploy_To_Azure_Blobs_NG_Dev](https://github.com/IATI/IATI-Validator-Web/actions/workflows/develop_CD.yml/badge.svg)](https://github.com/IATI/IATI-Validator-Web/actions/workflows/develop_CD.yml)
+[![Deploy_To_Production_Blob_on_Release](https://github.com/IATI/IATI-Validator-Web/actions/workflows/main_CD.yml/badge.svg)](https://github.com/IATI/IATI-Validator-Web/actions/workflows/main_CD.yml)
+
 # IATI-Validator-Web
 
 This repo contains the Angular Front End for the IATI Validator.
