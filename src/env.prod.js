@@ -2,7 +2,7 @@
   window.__env = window.__env || {};
 
   // API urls
-  window.__env.baseUrl = "https://prod-validator.iatistandard.org";
+  window.__env.baseUrl = "https://iativalidator.iatistandard.org";
   window.__env.validatorServicesUrl = "https://api.iatistandard.org/vs"
 
   // validator services api key
