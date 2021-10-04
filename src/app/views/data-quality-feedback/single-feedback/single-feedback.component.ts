@@ -12,6 +12,7 @@ export class SingleFeedbackComponent implements OnInit {
   @Input() item = 'activity';
   @Input() items = 'activities';
   @Input() guidanceLinks = {};
+  @Input() fileErrorsOrigStatus = false;
   public isCollapsed = false;
 
   constructor() { }
