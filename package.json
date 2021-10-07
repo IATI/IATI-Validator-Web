@@ -33,12 +33,12 @@
     "ngx-cookie-service": "^12.0.3",
     "popper.js": "^1.16.1",
     "rxjs": "^6.6.7",
-    "rxjs-compat": "^6.6.3",
+    "rxjs-compat": "^6.6.7",
     "tslib": "^2.3.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^12.1.4",
+    "@angular-devkit/build-angular": "^12.2.9",
     "@angular-eslint/builder": "12.5.0",
     "@angular-eslint/eslint-plugin": "12.5.0",
     "@angular-eslint/eslint-plugin-template": "12.5.0",
@@ -66,7 +66,7 @@
     "karma-chrome-launcher": "^3.1.0",
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^4.0.1",
-    "karma-jasmine-html-reporter": "^1.5.4",
+    "karma-jasmine-html-reporter": "^1.7.0",
     "lint-staged": "^11.1.2",
     "protractor": "^7.0.0",
     "sass": "^1.42.1",
