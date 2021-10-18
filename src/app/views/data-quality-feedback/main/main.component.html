@@ -60,22 +60,22 @@
       <app-filter-category [categories]="categories" (selectedChanged)="categorySelectedChanged()">
       </app-filter-category>
     </div>
-    <div [ngClass]="{'col-md-8': getAllIssueCount()>0, 'col-md-12': getAllIssueCount()==0}" class="results">
+    <div [ngClass]="{'col-md-8': getAllIssueCount()>0, 'col-md-12': getAllIssueCount()===0}" class="results">
       <h4>Feedback</h4>
       <div *ngIf="validationReport">
         <!-- Determine which components to display -->
         <div *ngIf="fileType==='iati-activities'">
-          <app-single-feedback [feedbackData]="fileErrors" [title]="'Activity file feedback'" [item]="'activity'" [items]="'activities'" [guidanceLinks]="guidanceLinks"></app-single-feedback>
+          <app-single-feedback [feedbackData]="fileErrors" [title]="'Activity file feedback'" [item]="'activity'" [items]="'activities'" [guidanceLinks]="guidanceLinks" [fileErrorsOrigStatus]="fileErrorsOrigStatus"></app-single-feedback>
           <app-multi-feedback [activityData]="activityErrors" [title]="'Feedback per activity'" [item]="'activity'" [items]="'activities'" [organisationInfo]="organisationInfo" [version]="validationReport.iatiVersion" [guidanceLinks]="guidanceLinks"></app-multi-feedback>
         </div>
 
       </div>
       <div *ngIf="fileType==='iati-organisations'">
-        <app-single-feedback [feedbackData]="fileErrors" [title]="'Organisation file feedback'" [item]="'organisation'" [items]="'organisations'" [guidanceLinks]="guidanceLinks"></app-single-feedback>
+        <app-single-feedback [feedbackData]="fileErrors" [title]="'Organisation file feedback'" [item]="'organisation'" [items]="'organisations'" [guidanceLinks]="guidanceLinks" [fileErrorsOrigStatus]="fileErrorsOrigStatus"></app-single-feedback>
         <app-multi-feedback [activityData]="activityErrors" [title]="'Organisation feedback'" [item]="'organisation'" [items]="'organisations'" [organisationInfo]="organisationInfo" [version]="validationReport.iatiVersion" [guidanceLinks]="guidanceLinks"></app-multi-feedback>
       </div>
       <div *ngIf="fileType===''">
-        <app-single-feedback [feedbackData]="fileErrors" [title]="'Not an IATI file'"></app-single-feedback>
+        <app-single-feedback [feedbackData]="fileErrors" [title]="'Not an IATI file'" [fileErrorsOrigStatus]="fileErrorsOrigStatus"></app-single-feedback>
       </div>
     </div>
   </div>

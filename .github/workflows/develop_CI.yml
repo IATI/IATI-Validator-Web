@@ -8,7 +8,9 @@ on:
       - '.github/workflows/develop_CD.yml'
       - '.github/workflows/main_CD.yml'
     branches:
-      - unified-platform-migration # update to develop
+      - develop
+
+concurrency: develop_CI
 
 jobs:
   test-build:
@@ -19,10 +21,10 @@ jobs:
         node-version: [12.x]
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.4.0
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
@@ -43,3 +45,11 @@ jobs:
           npm run build:prod
         env:
           CI: true
+
+  automerge:
+      needs: test-build
+      runs-on: ubuntu-latest
+      steps:
+        - uses: fastify/github-action-merge-dependabot@v2.5.0
+          with:
+            github-token: ${{secrets.GITHUB_TOKEN}}

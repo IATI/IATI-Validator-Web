@@ -6,6 +6,6 @@
       <!-- <span *ngIf="allSelected()" class="show-label">Show/hide</span>
       <span *ngIf="!allSelected()" class="show-label"><button type="button" class="btn btn-link" (click)="selectAll()">Select all</button></span> -->
     </li>
-    <app-filter-severity-item *ngFor="let sev of severities" [severity]="sev" (selectedChanged)="selectionChanged()"></app-filter-severity-item>
+    <app-filter-severity-item *ngFor="let sev of severities; trackBy: getSeverityShow" [severity]="sev" (selectedChanged)="selectionChanged()"></app-filter-severity-item>
   </ul>
 </div>
