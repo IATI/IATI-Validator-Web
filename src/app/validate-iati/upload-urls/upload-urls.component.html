@@ -26,7 +26,8 @@
     >
       <ng-container [ngSwitch]="requestStatus">
         <ng-container *ngSwitchCase="'error'">
-          File(s) uploading failed. Check your files and try again.
+          File(s) uploading failed. Check your files and try again. <br>
+          {{ requestErrorMessage }}
         </ng-container>
         <ng-container *ngSwitchCase="'success'">
           File(s) have been uploaded successfully
