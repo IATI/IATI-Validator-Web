@@ -71,6 +71,10 @@ export class FeedbackItemComponent implements OnInit {
     return this.guidanceLinks.version && id in this.guidanceLinks.content;
   }
 
+  codelistAvailable(mes: Message): boolean {
+    return 'codelist' in mes;
+  }
+
   getGuidanceLink(id: string): string {
     if (this.guidanceAvailable(id)) {
       if ('url' in this.guidanceLinks.content[id]) {

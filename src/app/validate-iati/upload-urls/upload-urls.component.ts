@@ -24,6 +24,7 @@ export class UploadUrlsComponent implements OnInit {
   tmpWorkspaceId = '';
   activeStep: string[] = ['1'];
   requestStatus: 'pending' | 'draft' | 'success' | 'error' = 'draft';
+  requestErrorMessage = '';
 
   constructor(
     private readonly fileUploadService: FileUploadService,
@@ -63,6 +64,9 @@ export class UploadUrlsComponent implements OnInit {
       const handleError = error => {
         console.log('error: ', error);
         this.requestStatus = 'error';
+        if (error.status === 422) {
+          this.requestErrorMessage = error.error.message;
+        }
       };
 
       this.requestStatus = 'pending';
