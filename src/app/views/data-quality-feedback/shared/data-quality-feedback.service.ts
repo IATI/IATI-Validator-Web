@@ -107,7 +107,8 @@ export class DataQualityFeedbackService {
       classifications: 'Classifications',
       documents: 'Related documents',
       performance: 'Performance',
-      iati: 'IATI file'
+      iati: 'IATI file',
+      relations: 'Relations'
     };
     return categories[category];
   }
