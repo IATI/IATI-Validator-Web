@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "^12.1.4",
     "@angular/router": "^12.1.4",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
-    "ajv": "^8.7.1",
+    "ajv": "^8.8.0",
     "angular-gtag": "^1.0.4",
     "bootstrap": "^4.6.1",
     "core-js": "^3.19.1",
