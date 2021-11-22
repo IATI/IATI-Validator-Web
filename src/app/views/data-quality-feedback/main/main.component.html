@@ -6,7 +6,7 @@
     <div class="col">
       <h2>File validation report</h2>
       <app-main-report-info *ngIf="documentInfo && organisationInfo" [documentInfo]="documentInfo" [organisationInfo]="organisationInfo"></app-main-report-info>
-      <app-iati-info *ngIf="documentInfo && validationReport" [documentInfo]="documentInfo" [validationReport]="validationReport"></app-iati-info>
+      <app-iati-info *ngIf="validationReport" [documentInfo]="documentInfo" [validationReport]="validationReport"></app-iati-info>
       <div *ngIf="fileStatus() === 'success'" class="file-success" role="alert">
         <h1>Success</h1>
       </div>
