@@ -10,6 +10,7 @@ import { LogService } from './../../../core/logging/log.service';
 export class MainReportInfoComponent implements OnInit {
   @Input() documentInfo = {} as any;
   @Input() organisationInfo = {} as any;
+  @Input() fileNameString = '' as any;
 
   constructor(private logger: LogService) { }
 
