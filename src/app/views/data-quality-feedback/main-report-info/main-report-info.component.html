@@ -2,5 +2,5 @@
     <a *ngIf="organisationInfo" [routerLink]="['/organisation', organisationInfo.name]" >{{ organisationInfo.title }}</a> 
     <span *ngIf="organisationInfo" > - </span>
     <a *ngIf="documentInfo?.url" href="{{ documentInfo?.url }}">{{ fileName() }}</a>
-    <p *ngIf="!documentInfo?.url && fileNameString" >{{ fileNameString }}</p>  
+    <p class="filename-string" *ngIf="!documentInfo?.url && fileNameString" >{{ fileNameString }}</p>  
 </h3>

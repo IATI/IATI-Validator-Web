@@ -199,14 +199,16 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.filterActivities();
 
-    this.loadGuidanceLinks(this.validationReport.iatiVersion);
+    if (this.validationReport.iatiVersion !== '') {
+      this.loadGuidanceLinks(this.validationReport.iatiVersion);
+    }
 
     this.loader.hide();
   }
 
   loadGuidanceLinks(version: string) {
     this.dataQualityFeedbackService.getGuidanceLinks(version).subscribe(data => {
-      if (data.version === version) {
+      if (data && data.version === version) {
         this.guidanceLinks = data;
       }
     });
