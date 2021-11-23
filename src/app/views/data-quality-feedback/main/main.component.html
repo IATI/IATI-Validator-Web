@@ -5,8 +5,8 @@
   <div class="row alert alert-light">
     <div class="col">
       <h2>File validation report</h2>
-      <app-main-report-info *ngIf="documentInfo && organisationInfo" [documentInfo]="documentInfo" [organisationInfo]="organisationInfo"></app-main-report-info>
-      <app-iati-info *ngIf="documentInfo && validationReport" [documentInfo]="documentInfo" [validationReport]="validationReport"></app-iati-info>
+      <app-main-report-info [documentInfo]="documentInfo" [organisationInfo]="organisationInfo" [fileNameString]="fileName"></app-main-report-info>
+      <app-iati-info *ngIf="validationReport" [documentInfo]="documentInfo" [validationReport]="validationReport" ></app-iati-info>
       <div *ngIf="fileStatus() === 'success'" class="file-success" role="alert">
         <h1>Success</h1>
       </div>
