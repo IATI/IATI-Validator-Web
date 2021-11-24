@@ -1,6 +1,6 @@
 {
   "name": "IATI-Validator-Web",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "ng": "ng",
@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "^12.1.4",
     "@angular/router": "^12.1.4",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
-    "ajv": "^8.8.1",
+    "ajv": "^8.8.2",
     "angular-gtag": "^1.0.4",
     "bootstrap": "^4.6.1",
     "core-js": "^3.19.1",
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^12.2.12",
-    "@angular-eslint/builder": "12.6.1",
+    "@angular-eslint/builder": "13.0.1",
     "@angular-eslint/eslint-plugin": "13.0.1",
     "@angular-eslint/eslint-plugin-template": "13.0.1",
     "@angular-eslint/schematics": "12.7.0",
@@ -67,7 +67,7 @@
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^4.0.1",
     "karma-jasmine-html-reporter": "^1.7.0",
-    "lint-staged": "^12.1.1",
+    "lint-staged": "^12.1.2",
     "protractor": "^7.0.0",
     "sass": "^1.43.4",
     "ts-node": "^10.4.0",
