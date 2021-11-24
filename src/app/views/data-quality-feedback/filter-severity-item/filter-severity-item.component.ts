@@ -60,7 +60,7 @@ export class FilterSeverityItemComponent implements OnInit {
 
   // used by app-filter-type-message ngFor trackBy to detect changes
   getMessageShow(index: number, message: any) {
-    return message.show;
+    return message.id + message.show;
   }
 
 }
