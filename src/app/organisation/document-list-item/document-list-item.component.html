@@ -33,7 +33,27 @@
         Download
       </span>
     </div>
+
     <div class="col-12 col-md">{{ fileStatus(true) }}</div>
+
+    <div class="col-12 col-md">
+      <span *ngIf="document.solrize_end">
+        {{
+          ( document.validation_created ? document.solrize_end : "")
+            | date: "yyyy-MM-dd HH:mm (z)"
+        }}
+      </span>
+      <span *ngIf="document.validation_created !== null && fileStatus() === 'critical'">
+        Not eligible
+      </span>
+      <span *ngIf="document.report?.fileType === 'iati-activities' && document.solrize_end === null && fileStatus() !== 'critical'">
+        Pending
+      </span>
+      <span *ngIf="document.report?.fileType === 'iati-organisations'">
+        N/A
+      </span>
+    </div>
+
     <div class="col-12 d-md-none"><hr /></div>
   </div>
 </div>

@@ -12,4 +12,5 @@ export interface Document {
     valid: boolean;
     report: any;
     modified: string;
+    solrize_end: any;
 }
