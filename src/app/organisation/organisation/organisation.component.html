@@ -26,7 +26,7 @@
               <li><span class="file-success">Success</span> - file is valid with no errors of any type, congratulations!</li>
               <li><span class="file-warning">Warning</span> - data can be more valuable and warnings should be corrected when possible.</li>
               <li><span class="file-error">Error</span> - data is hard or impossible to use.</li>
-              <li><span class="file-critical">Critical</span> - data cannot be used by tools.</li>
+              <li><span class="file-critical">Critical</span> - data cannot be used by tools and will not be available in the <a href="https://iatidatastore.iatistandard.org">IATI Datastore</a></li>
             </ul>
             <app-document-list *ngIf="organisationData?.documents" [documents]='organisationData?.documents'></app-document-list>
             <div *ngIf="isLoading" class="alert alert-info" role="alert">
