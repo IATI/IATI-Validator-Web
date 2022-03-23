@@ -30,7 +30,7 @@ export class DocumentListItemComponent implements OnInit {
   }
 
   hasValidation(): boolean {
-    if (this.document.validation) {
+    if (this.document.validation && this.document.hash) {
       return true;
     } else {
       return false;
