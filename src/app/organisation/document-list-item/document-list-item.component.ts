@@ -14,6 +14,10 @@ export class DocumentListItemComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    if (this.document.hash === '') {
+      this.document.report = null;
+      this.document.validation_created = null;
+    }
   }
 
   fileName(): string {
@@ -30,7 +34,7 @@ export class DocumentListItemComponent implements OnInit {
   }
 
   hasValidation(): boolean {
-    if (this.document.validation) {
+    if (this.document.validation && this.document.hash) {
       return true;
     } else {
       return false;
@@ -60,24 +64,6 @@ export class DocumentListItemComponent implements OnInit {
       return display ? 'Critical' : 'critical';
     } else {
       return display ? 'N/A' : 'normal';
-    }
-  }
-
-  isValid(): boolean {
-    if (this.document.validation && this.document.valid) {
-      return true;
-    } else if (this.document.validation && (this.document.valid === false)) {
-      return false;
-    } else {
-      return null;
-    }
-  }
-
-  reportType(): string {
-    if (this.hasValidation()) {
-      return 'File Validation report (click to view)';
-    } else {
-      return '-';
     }
   }
 
