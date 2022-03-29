@@ -6,22 +6,29 @@ on:
       - "**/README.md" # don't run on README.md file updates anywhere in repo
       - "**/dependabot.yml"
     branches:
-      - develop # eventually update to develop
+      - develop
+  schedule:
+    - cron: '22 04 * * *' # 0422am daily
+
+env:
+  STORAGE_ACCOUNT_NAME: savalidatorwebdev
+  STORAGE_ACCOUNT_KEY: ${{ secrets.DEV_STORAGE_KEY }}
 
 jobs:
-  deploy:
+  should_run:
+    uses: IATI/.github/.github/workflows/should_run.yaml@main
+
+  deploy: 
+    needs: should_run
+    if: ${{ needs.should_run.outputs.should_run == 'true' }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.5.1
+      - name: Set up Node.js 
+        uses: actions/setup-node@v3.0.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version-file: ".nvmrc"
           cache: 'npm'
 
       - name: Install dependencies
@@ -39,16 +46,14 @@ jobs:
       - name: Create 404
         run: cp dist/index.html dist/404.html
 
-      - name: Login to Azure CLI
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.DEV_AZURE_CREDENTIALS }}
-
       - name: Upload to blob storage
         uses: azure/CLI@v1
-        env: 
-          STORAGE_NAME: savalidatorwebdev
         with:
-          azcliversion: latest
+          azcliversion: 2.34.0
           inlineScript: |
-            az storage blob upload-batch --account-name ${{ env.STORAGE_NAME }} --auth-mode key -d '$web' -s dist/
+            az storage blob upload-batch \
+            --overwrite true \
+            --account-name ${{ env.STORAGE_ACCOUNT_NAME }} \
+            --account-key ${{ env.STORAGE_ACCOUNT_KEY }} \
+            -d '$web' \
+            -s dist/
