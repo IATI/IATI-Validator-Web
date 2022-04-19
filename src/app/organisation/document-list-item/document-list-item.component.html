@@ -26,22 +26,22 @@
             | date: "yyyy-MM-dd HH:mm (z)"
         }}
       </span>
-      <span *ngIf="document.validation_created === null && document.download_error?.toString() === '0'">
+      <span *ngIf="document.validation_created === null && downloadErrorString() === '0'">
         Failed Download (Connection Error)
       </span>
-      <span *ngIf="document.validation_created === null && document.download_error?.toString() === '1'">
+      <span *ngIf="document.validation_created === null && downloadErrorString() === '1'">
         Failed Download (SSL Issue)
       </span>
-      <span *ngIf="document.validation_created === null && document.download_error?.toString() === '2'">
+      <span *ngIf="document.validation_created === null && downloadErrorString() === '2'">
         Failed Download (Character Encoding Issue)
       </span>
-      <span *ngIf="document.validation_created === null && document.download_error?.toString() === '3'">
+      <span *ngIf="document.validation_created === null && downloadErrorString() === '3'">
         Failed Download (Invalid URL)
       </span>
-      <span *ngIf="document.validation_created === null && ['400', '401', '403', '404', '500', '501', '502', '503', '504', '505', '506', '507', '509', '510'].includes(document.download_error?.toString())">
+      <span *ngIf="document.validation_created === null && ['400', '401', '403', '404', '500', '501', '502', '503', '504', '505', '506', '507', '509', '510'].includes(downloadErrorString())">
         Failed Download (HTTP Error {{ document.download_error }})
       </span>
-      <span *ngIf="document.validation_created === null && !['0', '1', '2', '3', '400', '401', '403', '404', '500', '501', '502', '503', '504', '505', '506', '507', '509', '510'].includes(document.download_error?.toString())">
+      <span *ngIf="document.validation_created === null && !['0', '1', '2', '3', '400', '401', '403', '404', '500', '501', '502', '503', '504', '505', '506', '507', '509', '510'].includes(downloadErrorString())">
         Pending Download
       </span>
     </div>

@@ -33,6 +33,15 @@ export class DocumentListItemComponent implements OnInit {
 
   }
 
+  downloadErrorString(): string {
+    if ('download_error' in this.document) {
+      if (this.document.download_error !== null){
+        return this.document.download_error.toString();
+      }
+    }
+    return '';
+  }
+
   hasValidation(): boolean {
     if (this.document.validation && this.document.hash) {
       return true;
