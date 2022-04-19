@@ -9,7 +9,7 @@
                 'no-validation': fileStatus(false) === 'normal'}"
   >
     <div class="col-12 col-md filename">
-      <span *ngIf="document.validation_created !== null && document.download_error === null">
+      <span *ngIf="document.validation_created !== null && document.download_error === null && document.downloaded !== null && document.hash !== ''">
         {{ fileName() }}
       </span>
       <a *ngIf="document.download_error!== null || document.downloaded === null || document.hash === ''" href="{{document.url}}" target="_blank">{{ fileName() }}</a>
@@ -55,13 +55,13 @@
             | date: "yyyy-MM-dd HH:mm (z)"
         }}
       </span>
-      <span *ngIf="document.validation_created !== null && fileStatus() === 'critical'">
+      <span *ngIf="document.solrize_end === null && document.validation_created !== null && fileStatus() === 'critical'">
         Not eligible
       </span>
-      <span *ngIf="document.report?.fileType === 'iati-activities' && document.solrize_end === null && fileStatus() !== 'critical'">
+      <span *ngIf="document.solrize_end === null && document.report?.fileType === 'iati-activities' && document.solrize_end === null && fileStatus() !== 'critical'">
         Pending
       </span>
-      <span *ngIf="document.report?.fileType === 'iati-organisations'">
+      <span *ngIf="document.solrize_end === null && document.report?.fileType === 'iati-organisations'">
         N/A
       </span>
     </div>
