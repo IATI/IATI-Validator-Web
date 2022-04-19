@@ -36,7 +36,7 @@ export class DocumentListItemComponent implements OnInit {
   downloadErrorString(): string {
     if ('download_error' in this.document) {
       if (this.document.download_error !== null){
-        return this.document.download_error.toString();
+        return this.document.download_error?.toString() || '';
       }
     }
     return '';
