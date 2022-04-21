@@ -76,11 +76,13 @@ export class DocumentListItemComponent implements OnInit {
 
   datastoreAvailability(): string {
     if (this.document.solrize_end) {
-      return formatDate(
+      const formatedDate = formatDate(
         this.document.solrize_end,
         'yyyy-MM-dd HH:mm (z)',
         new Intl.NumberFormat().resolvedOptions().locale
       );
+
+      return `Yes - ${formatedDate}`;
     }
 
     const fileStatus = this.fileStatus();
