@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Document } from '../../shared/document';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-document-list-item',
@@ -71,6 +72,31 @@ export class DocumentListItemComponent implements OnInit {
     }
 
     return display ? 'N/A' : 'normal';
+  }
+
+  datastoreAvailability(): string {
+    if (this.document.solrize_end) {
+      return formatDate(
+        this.document.solrize_end,
+        'yyyy-MM-dd HH:mm (z)',
+        new Intl.NumberFormat().resolvedOptions().locale
+      );
+    }
+
+    const fileStatus = this.fileStatus();
+    if (this.document.validation_created && fileStatus === 'critical') {
+      return 'Not eligible';
+    }
+
+    if (this.document.report?.fileType === 'iati-activities' && fileStatus !== 'critical') {
+      return `Pending`;
+    }
+
+    if (this.document.report?.fileType === 'iati-organisations') {
+      return 'N/A';
+    }
+
+    return '';
   }
 
   rowClick() {
