@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-document-list-item',
   templateUrl: './document-list-item.component.html',
-  styleUrls: ['./document-list-item.component.scss']
+  styleUrls: ['./document-list-item.component.scss'],
 })
 export class DocumentListItemComponent implements OnInit {
   @Input()
   document!: Document;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (this.document.hash === '') {
@@ -30,12 +30,11 @@ export class DocumentListItemComponent implements OnInit {
     }
 
     return 'No filename available';
-
   }
 
   downloadErrorString(): string {
     if ('download_error' in this.document) {
-      if (this.document.download_error !== null){
+      if (this.document.download_error !== null) {
         return this.document.download_error.toString();
       }
     }
@@ -51,29 +50,27 @@ export class DocumentListItemComponent implements OnInit {
   }
 
   fileStatus(display = false): string {
-    let error = -1;
-    let warning = -1;
-    let valid = null;
-
-    if (this.document.report !== null) {
-      ({ valid } = this.document.report);
-      error = this.document.report.summary.error;
-      warning = this.document.report.summary.warning;
-    }
+    const { report } = this.document;
+    const { valid } = report || { valid: null };
+    const { error, warning } = report ? report.summary : { error: -1, warning: -1 };
 
     if (this.document.report === null) {
       return display ? 'N/A' : 'normal';
-    } else if (valid === true && error === 0 && warning === 0) {
-      return display ? 'Success' : 'success';
-    } else if (valid === true && error === 0) {
-      return display ? 'Warning' : 'warning';
-    } else if (valid === true) {
-      return display ? 'Error' : 'error';
-    } else if (valid === false) {
-      return display ? 'Critical' : 'critical';
-    } else {
-      return display ? 'N/A' : 'normal';
     }
+    if (valid === true && error === 0 && warning === 0) {
+      return display ? 'Success' : 'success';
+    }
+    if (valid === true && error === 0) {
+      return display ? 'Warning' : 'warning';
+    }
+    if (valid === true) {
+      return display ? 'Error' : 'error';
+    }
+    if (valid === false) {
+      return display ? 'Critical' : 'critical';
+    }
+
+    return display ? 'N/A' : 'normal';
   }
 
   rowClick() {
@@ -82,5 +79,4 @@ export class DocumentListItemComponent implements OnInit {
       console.log('Validation Report Link Clicked', this.document.id);
     }
   }
-
 }

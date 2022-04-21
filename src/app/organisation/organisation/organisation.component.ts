@@ -40,11 +40,9 @@ export class OrganisationComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.loaderSubscription = this.loader.loaderState.subscribe(
-      (state: LoaderState) => {
-        this.isLoading = state.show;
-      }
-    );
+    this.loaderSubscription = this.loader.loaderState.subscribe((state: LoaderState) => {
+      this.isLoading = state.show;
+    });
     this.loadOrganisation(this.name);
   }
 
