@@ -139,6 +139,9 @@ export class MainComponent implements OnInit, OnDestroy {
                 if (validationInfo) {
                   this.validationReportResponse = validationInfo;
                   this.validationReport = this.validationReportResponse.report;
+                  if (this.documentInfo) {
+                    this.documentInfo.report = this.validationReport;
+                  }
                   this.setData(null);
                 } else {
                   this.documentInfo = undefined;

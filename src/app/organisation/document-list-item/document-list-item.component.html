@@ -10,7 +10,7 @@
       'no-validation': fileStatus(false) === 'normal'
     }"
   >
-    <div class="col-12 col-md filename">
+    <div class="col-12 col-md filename" *ngIf="!hideTitle">
       <span
         *ngIf="
           document.validation_created !== null &&

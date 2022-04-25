@@ -9,8 +9,8 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./document-list-item.component.scss'],
 })
 export class DocumentListItemComponent implements OnInit {
-  @Input()
-  document!: Document;
+  @Input() document!: Document;
+  @Input() hideTitle?: boolean;
 
   constructor(private router: Router) {}
 

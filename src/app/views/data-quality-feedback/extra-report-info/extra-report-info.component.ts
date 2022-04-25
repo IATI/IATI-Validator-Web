@@ -14,12 +14,4 @@ export class ExtraReportInfoComponent implements OnInit {
   constructor(private logger: LogService) {}
 
   ngOnInit() {}
-
-  fileName(): string {
-    if (this.document) {
-      return this.document.url;
-    }
-
-    return '';
-  }
 }
