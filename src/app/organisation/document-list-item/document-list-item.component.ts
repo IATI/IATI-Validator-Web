@@ -75,23 +75,40 @@ export class DocumentListItemComponent implements OnInit {
   }
 
   datastoreAvailability(): string {
-    if (this.document.solrize_end) {
+    /* see this ticket for full explanation on these availability statuses
+    https://trello.com/c/XeovXQrf/232-front-end-indicator-that-file-is-partially-in-ds-for-al-validation */
+    const fileStatus = this.fileStatus();
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { report, solrize_end, alv_end, alv_start, alv_error } = this.document;
+
+    if (solrize_end) {
       const formatedDate = formatDate(
-        this.document.solrize_end,
+        solrize_end,
         'yyyy-MM-dd HH:mm (z)',
         new Intl.NumberFormat().resolvedOptions().locale
       );
 
-      return `Yes - ${formatedDate}`;
+      return `${fileStatus === 'critical' && alv_end ? 'Partial' : 'Yes'} - ${formatedDate}`;
     }
 
-    const fileStatus = this.fileStatus();
-    if (this.document.validation_created && fileStatus === 'critical') {
-      return 'Not eligible';
+    if (
+      fileStatus === 'critical' &&
+      ((report?.fileType === 'iati-activities' && !alv_start) || alv_error === 'No valid activities')
+    ) {
+      return 'No';
     }
 
-    if (this.document.report?.fileType === 'iati-activities' && fileStatus !== 'critical') {
-      return `Pending`;
+    if (
+      (report?.fileType === 'iati-activities' && fileStatus !== 'critical') ||
+      (report?.fileType === 'iati-activities' &&
+        fileStatus === 'critical' &&
+        !alv_start &&
+        report?.iatiVersion !== '' &&
+        report?.iatiVersion !== '1*' &&
+        this.hasErrorVersions(['0.6.1', '0.2.1', '0.1.1'], report?.errors)) ||
+      (fileStatus === 'critical' && alv_end)
+    ) {
+      return 'Pending';
     }
 
     if (this.document.report?.fileType === 'iati-organisations') {
@@ -106,5 +123,9 @@ export class DocumentListItemComponent implements OnInit {
       this.router.navigate(['view', 'dqf', 'files', this.document.id]);
       console.log('Validation Report Link Clicked', this.document.id);
     }
+  }
+
+  private hasErrorVersions(versions: string[], errors?: { identifier: string }[]): boolean {
+    return !!(errors && errors.find((error) => versions.includes(error.identifier))); // TODO: check with Nick if identifier == id
   }
 }
