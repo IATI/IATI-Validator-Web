@@ -1,0 +1,23 @@
+@import "../../../../styles/variables";
+
+.extra-report-info {
+  width: 100%;
+  margin: 10px;
+}
+
+.documents {
+  border: 1px solid lightgray;
+  border-radius: $border-radius;
+  font-size: 1.5em;
+}
+
+.documents > .heading {
+  background-color: $gray-200;
+  padding: 6px 0;
+  font-weight: 700;
+}
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
