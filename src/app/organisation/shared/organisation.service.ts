@@ -1,12 +1,13 @@
+import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, tap, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { Document } from '../../shared/document';
+import { Organisation } from '../../shared/organisation';
+import { Workspace } from '../../shared/workspace';
 import { environment } from './../../../environments/environment';
 import { LogService } from './../../core/logging/log.service';
-import { Organisation } from '../../shared/organisation';
-import { Document } from '../../shared/document';
-import { Workspace } from '../../shared/workspace';
 
 @Injectable()
 export class OrganisationService {
@@ -84,10 +85,57 @@ export class OrganisationService {
       );
   }
 
+  getDocumentDatastoreAvailability(document: Document, fileStatus: string) {
+    /* see this ticket for full explanation on these availability statuses
+    https://trello.com/c/XeovXQrf/232-front-end-indicator-that-file-is-partially-in-ds-for-al-validation */
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { report, solrize_end, alv_end, alv_start, alv_error } = document;
+
+    if (solrize_end) {
+      const formatedDate = formatDate(
+        solrize_end,
+        'yyyy-MM-dd HH:mm (z)',
+        new Intl.NumberFormat().resolvedOptions().locale
+      );
+
+      return `${fileStatus === 'critical' && alv_end ? 'Partial' : 'Yes'} - ${formatedDate}`;
+    }
+
+    if (
+      fileStatus === 'critical' &&
+      ((report?.fileType === 'iati-activities' && !alv_start) || alv_error === 'No valid activities')
+    ) {
+      return 'No';
+    }
+
+    if (
+      (report?.fileType === 'iati-activities' && fileStatus !== 'critical') ||
+      (report?.fileType === 'iati-activities' &&
+        fileStatus === 'critical' &&
+        !alv_start &&
+        report?.iatiVersion !== '' &&
+        report?.iatiVersion !== '1*' &&
+        this.checkDocumentHasErrorVersions(['0.6.1', '0.2.1', '0.1.1'], report?.errors)) ||
+      (fileStatus === 'critical' && alv_end)
+    ) {
+      return 'Pending';
+    }
+
+    if (document.report?.fileType === 'iati-organisations') {
+      return 'N/A';
+    }
+
+    return '';
+  }
+
   private log(message: string) {
     if (!environment.production) {
       this.logger.debug(message);
     }
+  }
+
+  private checkDocumentHasErrorVersions(versions: string[], errors?: { identifier: string }[]): boolean {
+    return !!(errors && errors.find((error) => versions.includes(error.identifier))); // TODO: check with Nick if identifier == id
   }
 
   /**

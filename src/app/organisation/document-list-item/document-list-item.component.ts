@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Document } from '../../shared/document';
 import { Router } from '@angular/router';
-import { formatDate } from '@angular/common';
+import { OrganisationService } from '../shared/organisation.service';
 
 @Component({
   selector: 'app-document-list-item',
@@ -12,7 +12,7 @@ export class DocumentListItemComponent implements OnInit {
   @Input() document!: Document;
   @Input() hideTitle?: boolean;
 
-  constructor(private router: Router) {}
+  constructor(private organisationService: OrganisationService, private router: Router,) {}
 
   ngOnInit(): void {
     if (this.document.hash === '') {
@@ -78,44 +78,8 @@ export class DocumentListItemComponent implements OnInit {
     /* see this ticket for full explanation on these availability statuses
     https://trello.com/c/XeovXQrf/232-front-end-indicator-that-file-is-partially-in-ds-for-al-validation */
     const fileStatus = this.fileStatus();
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { report, solrize_end, alv_end, alv_start, alv_error } = this.document;
 
-    if (solrize_end) {
-      const formatedDate = formatDate(
-        solrize_end,
-        'yyyy-MM-dd HH:mm (z)',
-        new Intl.NumberFormat().resolvedOptions().locale
-      );
-
-      return `${fileStatus === 'critical' && alv_end ? 'Partial' : 'Yes'} - ${formatedDate}`;
-    }
-
-    if (
-      fileStatus === 'critical' &&
-      ((report?.fileType === 'iati-activities' && !alv_start) || alv_error === 'No valid activities')
-    ) {
-      return 'No';
-    }
-
-    if (
-      (report?.fileType === 'iati-activities' && fileStatus !== 'critical') ||
-      (report?.fileType === 'iati-activities' &&
-        fileStatus === 'critical' &&
-        !alv_start &&
-        report?.iatiVersion !== '' &&
-        report?.iatiVersion !== '1*' &&
-        this.hasErrorVersions(['0.6.1', '0.2.1', '0.1.1'], report?.errors)) ||
-      (fileStatus === 'critical' && alv_end)
-    ) {
-      return 'Pending';
-    }
-
-    if (this.document.report?.fileType === 'iati-organisations') {
-      return 'N/A';
-    }
-
-    return '';
+    return this.organisationService.getDocumentDatastoreAvailability(this.document, fileStatus);
   }
 
   rowClick() {
@@ -123,9 +87,5 @@ export class DocumentListItemComponent implements OnInit {
       this.router.navigate(['view', 'dqf', 'files', this.document.id]);
       console.log('Validation Report Link Clicked', this.document.id);
     }
-  }
-
-  private hasErrorVersions(versions: string[], errors?: { identifier: string }[]): boolean {
-    return !!(errors && errors.find((error) => versions.includes(error.identifier))); // TODO: check with Nick if identifier == id
   }
 }
