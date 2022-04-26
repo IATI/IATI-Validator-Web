@@ -14,4 +14,8 @@ export class ExtraReportInfoComponent implements OnInit {
   constructor(private logger: LogService) {}
 
   ngOnInit() {}
+
+  isLoading() {
+    return !this.document || !this.document.report;
+  }
 }
