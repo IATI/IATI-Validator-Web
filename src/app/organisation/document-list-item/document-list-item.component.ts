@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Document } from '../../shared/document';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrganisationService } from '../shared/organisation.service';
+import { Document } from '../../shared/document';
+import { DocumentService } from '../shared/document.service';
 
 @Component({
   selector: 'app-document-list-item',
@@ -12,7 +12,7 @@ export class DocumentListItemComponent implements OnInit {
   @Input() document!: Document;
   @Input() hideTitle?: boolean;
 
-  constructor(private organisationService: OrganisationService, private router: Router,) {}
+  constructor(private documentService: DocumentService, private router: Router,) {}
 
   ngOnInit(): void {
     if (this.document.hash === '') {
@@ -51,15 +51,11 @@ export class DocumentListItemComponent implements OnInit {
   }
 
   fileStatus(display = false): string {
-    return this.organisationService.getDocumentStatus(this.document, display);
+    return this.documentService.getDocumentStatus(this.document, display);
   }
 
   datastoreAvailability(): string {
-    /* see this ticket for full explanation on these availability statuses
-    https://trello.com/c/XeovXQrf/232-front-end-indicator-that-file-is-partially-in-ds-for-al-validation */
-    const fileStatus = this.fileStatus();
-
-    return this.organisationService.getDocumentDatastoreAvailability(this.document, fileStatus);
+    return this.documentService.getDocumentDatastoreAvailability(this.document, this.fileStatus());
   }
 
   rowClick() {
