@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DocumentService } from 'src/app/organisation/shared/document.service';
+import { OrganisationService } from 'src/app/organisation/shared/organisation.service';
 import { Dqfs } from '../shared/feedback';
 
 @Component({
@@ -10,7 +12,7 @@ export class IatiInfoComponent implements OnInit {
   @Input() validationReport = {} as any;
   @Input() documentInfo = {} as any;
 
-  constructor() { }
+  constructor(private documentService: DocumentService) { }
 
   ngOnInit() {
   }
@@ -21,6 +23,15 @@ export class IatiInfoComponent implements OnInit {
     } else {
       return 'No filename available';
     }
+  }
+
+  datastoreAvailability(): string {
+    return this.documentInfo && this.documentInfo.report
+      ? this.documentService.getDocumentDatastoreAvailability(
+          this.documentInfo,
+          this.documentService.getDocumentStatus(this.documentInfo)
+        )
+      : '';
   }
 
 }

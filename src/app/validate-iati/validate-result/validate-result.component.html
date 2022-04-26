@@ -4,17 +4,17 @@
   <div class="content-block">
 
     <p>
-      Your personal workspace is     
+      Your personal workspace is
       <a [routerLink]="['/validate', uploadId]">{{environmentUrl}}/validate/{{uploadId}}</a>
       <button class="btn btn-outline-primary ml-2" (click)="copyTextToClipboard('text')">Copy the address</button>
     </p>
 
     <p class="card-text">The file(s) with a validation report available are marked with a status. If the file is flagged with a <span class="file-critical">Critical</span>, <span class="file-error">Error</span>, or <span class="file-warning">Warning</span> status it means that there are errors to fix. We recommend addressing the <span class="file-critical">Critical</span> errors first. The <span class="file-error">Errors</span> should be addressed next. <span class="file-warning">Warnings</span> should be corrected when possible.</p>
-      <ul> 
+      <ul>
         <li><span class="file-success">Success</span> - file is valid with no errors of any type, congratulations!</li>
         <li><span class="file-warning">Warning</span> - data can be more valuable and warnings should be corrected when possible.</li>
         <li><span class="file-error">Error</span> - data is hard or impossible to use.</li>
-        <li><span class="file-critical">Critical</span> - data cannot be used by tools and will not be available in the <a href="https://iatidatastore.iatistandard.org">IATI Datastore</a></li>
+        <li><span class="file-critical">Critical</span> - data contains significant errors, none or not all of the data can be used by tools or accessed by the <a href="https://iatidatastore.iatistandard.org">IATI Datastore</a></li>
       </ul>
   </div>
 <div *ngIf="!iatiDatasetDatas.length">
@@ -78,7 +78,7 @@
 </div>
 
   <div class="content-block">
-    
+
 
       <!--
      <p>You can choose the option below for the validator to send you a notification via email once all the validation reports are ready.

@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, tap, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { Document } from '../../shared/document';
+import { Organisation } from '../../shared/organisation';
+import { Workspace } from '../../shared/workspace';
 import { environment } from './../../../environments/environment';
 import { LogService } from './../../core/logging/log.service';
-import { Organisation } from '../../shared/organisation';
-import { Document } from '../../shared/document';
-import { Workspace } from '../../shared/workspace';
 
 @Injectable()
 export class OrganisationService {
@@ -15,69 +15,62 @@ export class OrganisationService {
   private apiKeyName: string = window.__env.validatorServicesKeyName;
   private apiKeyValue: string = window.__env.validatorServicesKeyValue;
 
-  constructor(
-    private http: HttpClient,
-    private logger: LogService,
-  ) { }
+  constructor(private http: HttpClient, private logger: LogService) {}
 
   getOrganisationAndDocuments(name: string): Observable<Organisation> {
-    return this.getOrganisationByName(name)
-        .pipe(mergeMap(data => {
-          if (data.length > 0) {
-            const org = data[0];
-            const workspaces: Workspace[] = [{
+    return this.getOrganisationByName(name).pipe(
+      mergeMap((data) => {
+        if (data.length > 0) {
+          const org = data[0];
+          const workspaces: Workspace[] = [
+            {
               slug: 'public',
               'owner-slug': name,
               title: 'Public data',
               description: 'IATI files published in the IATI Registry',
               id: org.iati_id,
-              'iati-publisherId':
-               org.iati_id,
-               versions: null,
-            }];
-            return this.getOrganisationDocuments(org.org_id)
-              .pipe(map((documents) => ({...org, workspaces, documents})));
-          }
-          return [];
-        }));
+              'iati-publisherId': org.iati_id,
+              versions: null,
+            },
+          ];
+          return this.getOrganisationDocuments(org.org_id).pipe(
+            map((documents) => ({ ...org, workspaces, documents }))
+          );
+        }
+        return [];
+      })
+    );
   }
 
   getOrganisationByName(name: string): Observable<Organisation[]> {
-    const url: string = this.urlApiOrganisationVS + '/' + name + '?lookupKey=name' ;
+    const url: string = this.urlApiOrganisationVS + '/' + name + '?lookupKey=name';
     this.log(url);
-    return this.http.get<Organisation>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
+    return this.http
+      .get<Organisation>(url, { headers: { [this.apiKeyName]: this.apiKeyValue } })
       .pipe(
-        tap(_ => this.log(`fetched organisation`)),
+        tap((_) => this.log(`fetched organisation`)),
         catchError(this.handleError('getOrganisationByName', undefined))
       );
   }
 
   getOrganisationById(id: string): Observable<Organisation[]> {
-    const url: string = this.urlApiOrganisationVS + '/' + id + '?lookupKey=id' ;
+    const url: string = this.urlApiOrganisationVS + '/' + id + '?lookupKey=id';
     this.log(url);
-    return this.http.get<Organisation>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
+    return this.http
+      .get<Organisation>(url, { headers: { [this.apiKeyName]: this.apiKeyValue } })
       .pipe(
-        tap(_ => this.log(`fetched organisation`)),
+        tap((_) => this.log(`fetched organisation`)),
         catchError(this.handleError('getOrganisationById', undefined))
-      );
-  }
-
-  getDocument(documentId: string): Observable<Document[]> {
-    const url: string = this.urlApiDocumentVS + '/' + documentId ;
-    this.log(url);
-    return this.http.get<Document>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
-      .pipe(
-        tap(_ => this.log(`fetched document`)),
-        catchError(this.handleError('getDocumentInfo', undefined))
       );
   }
 
   getOrganisationDocuments(organisationId: string): Observable<Document[]> {
     const url: string = this.urlApiOrganisationVS + '/' + organisationId + '/documents';
     this.log(url);
-    return this.http.get<Document[]>(url, { headers: { [this.apiKeyName]: this.apiKeyValue }})
+    return this.http
+      .get<Document[]>(url, { headers: { [this.apiKeyName]: this.apiKeyValue } })
       .pipe(
-        tap(_ => this.log(`fetched documents`)),
+        tap((_) => this.log(`fetched documents`)),
         catchError(this.handleError('getOrganisationDocuments', []))
       );
   }
@@ -97,7 +90,6 @@ export class OrganisationService {
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
       // TODO: send the error to remote logging
       this.logger.error(error);
       // console.error(error); // log to console instead

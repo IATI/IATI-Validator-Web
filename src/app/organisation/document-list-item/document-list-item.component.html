@@ -2,29 +2,45 @@
   <div
     class="row"
     (click)="rowClick()"
-    [ngClass]="{'file-success': fileStatus(false) === 'success', 
-                'file-warning': fileStatus(false) === 'warning',
-                'file-error': fileStatus(false) === 'error',
-                'file-critical': fileStatus(false) === 'critical',
-                'no-validation': fileStatus(false) === 'normal'}"
+    [ngClass]="{
+      'file-success': fileStatus(false) === 'success',
+      'file-warning': fileStatus(false) === 'warning',
+      'file-error': fileStatus(false) === 'error',
+      'file-critical': fileStatus(false) === 'critical',
+      'no-validation': fileStatus(false) === 'normal'
+    }"
   >
-    <div class="col-12 col-md filename">
-      <span *ngIf="document.validation_created !== null && document.download_error === null && document.downloaded !== null && document.hash !== ''">
+    <div class="col-12 col-md filename" *ngIf="!hideTitle">
+      <span
+        *ngIf="
+          document.validation_created !== null &&
+          document.download_error === null &&
+          document.downloaded !== null &&
+          document.hash !== ''
+        "
+      >
         {{ fileName() }}
       </span>
-      <a *ngIf="document.validation_created === null || document.download_error!== null || document.downloaded === null || document.hash === ''" href="{{document.url}}" target="_blank">{{ fileName() }}</a>
+      <a
+        *ngIf="
+          document.validation_created === null ||
+          document.download_error !== null ||
+          document.downloaded === null ||
+          document.hash === ''
+        "
+        href="{{ document.url }}"
+        target="_blank"
+        >{{ fileName() }}</a
+      >
     </div>
     <div class="col-12 col-md">
       <span *ngIf="document.first_seen || document.modified">{{
-        document.modified || document.first_seen | date: "yyyy-MM-dd HH:mm (z)"
+        document.modified || document.first_seen | date: 'yyyy-MM-dd HH:mm (z)'
       }}</span>
     </div>
     <div class="col-12 col-md">
       <span *ngIf="document.validation_created">
-        {{
-          ( document.validation_created ? document.validation_created : "")
-            | date: "yyyy-MM-dd HH:mm (z)"
-        }}
+        {{ (document.validation_created ? document.validation_created : '') | date: 'yyyy-MM-dd HH:mm (z)' }}
       </span>
       <span *ngIf="document.validation_created === null && downloadErrorString() === '0'">
         Failed Download (Connection Error)
@@ -38,10 +54,41 @@
       <span *ngIf="document.validation_created === null && downloadErrorString() === '3'">
         Failed Download (Invalid URL)
       </span>
-      <span *ngIf="document.validation_created === null && ['400', '401', '403', '404', '500', '501', '502', '503', '504', '505', '506', '507', '509', '510'].includes(downloadErrorString())">
+      <span
+        *ngIf="
+          document.validation_created === null &&
+          ['400', '401', '403', '404', '500', '501', '502', '503', '504', '505', '506', '507', '509', '510'].includes(
+            downloadErrorString()
+          )
+        "
+      >
         Failed Download (HTTP Error {{ document.download_error }})
       </span>
-      <span *ngIf="document.validation_created === null && !['0', '1', '2', '3', '400', '401', '403', '404', '500', '501', '502', '503', '504', '505', '506', '507', '509', '510'].includes(downloadErrorString())">
+      <span
+        *ngIf="
+          document.validation_created === null &&
+          ![
+            '0',
+            '1',
+            '2',
+            '3',
+            '400',
+            '401',
+            '403',
+            '404',
+            '500',
+            '501',
+            '502',
+            '503',
+            '504',
+            '505',
+            '506',
+            '507',
+            '509',
+            '510'
+          ].includes(downloadErrorString())
+        "
+      >
         Pending Download
       </span>
     </div>
@@ -49,21 +96,7 @@
     <div class="col-12 col-md">{{ fileStatus(true) }}</div>
 
     <div class="col-12 col-md">
-      <span *ngIf="document.solrize_end">
-        {{
-          ( document.validation_created ? document.solrize_end : "")
-            | date: "yyyy-MM-dd HH:mm (z)"
-        }}
-      </span>
-      <span *ngIf="document.solrize_end === null && document.validation_created !== null && fileStatus() === 'critical'">
-        Not eligible
-      </span>
-      <span *ngIf="document.solrize_end === null && document.report?.fileType === 'iati-activities' && document.solrize_end === null && fileStatus() !== 'critical'">
-        Pending
-      </span>
-      <span *ngIf="document.solrize_end === null && document.report?.fileType === 'iati-organisations'">
-        N/A
-      </span>
+      <span>{{ datastoreAvailability() }}</span>
     </div>
 
     <div class="col-12 d-md-none"><hr /></div>

@@ -1,17 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Document } from '../../shared/document';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Document } from '../../shared/document';
+import { DocumentService } from '../shared/document.service';
 
 @Component({
   selector: 'app-document-list-item',
   templateUrl: './document-list-item.component.html',
-  styleUrls: ['./document-list-item.component.scss']
+  styleUrls: ['./document-list-item.component.scss'],
 })
 export class DocumentListItemComponent implements OnInit {
-  @Input()
-  document!: Document;
+  @Input() document!: Document;
+  @Input() hideTitle?: boolean;
 
-  constructor(private router: Router) { }
+  constructor(private documentService: DocumentService, private router: Router,) {}
 
   ngOnInit(): void {
     if (this.document.hash === '') {
@@ -30,12 +31,11 @@ export class DocumentListItemComponent implements OnInit {
     }
 
     return 'No filename available';
-
   }
 
   downloadErrorString(): string {
     if ('download_error' in this.document) {
-      if (this.document.download_error !== null){
+      if (this.document.download_error !== null) {
         return this.document.download_error.toString();
       }
     }
@@ -51,29 +51,11 @@ export class DocumentListItemComponent implements OnInit {
   }
 
   fileStatus(display = false): string {
-    let error = -1;
-    let warning = -1;
-    let valid = null;
+    return this.documentService.getDocumentStatus(this.document, display);
+  }
 
-    if (this.document.report !== null) {
-      ({ valid } = this.document.report);
-      error = this.document.report.summary.error;
-      warning = this.document.report.summary.warning;
-    }
-
-    if (this.document.report === null) {
-      return display ? 'N/A' : 'normal';
-    } else if (valid === true && error === 0 && warning === 0) {
-      return display ? 'Success' : 'success';
-    } else if (valid === true && error === 0) {
-      return display ? 'Warning' : 'warning';
-    } else if (valid === true) {
-      return display ? 'Error' : 'error';
-    } else if (valid === false) {
-      return display ? 'Critical' : 'critical';
-    } else {
-      return display ? 'N/A' : 'normal';
-    }
+  datastoreAvailability(): string {
+    return this.documentService.getDocumentDatastoreAvailability(this.document, this.fileStatus());
   }
 
   rowClick() {
@@ -82,5 +64,4 @@ export class DocumentListItemComponent implements OnInit {
       console.log('Validation Report Link Clicked', this.document.id);
     }
   }
-
 }

@@ -9,6 +9,7 @@ import { OrganisationService } from './shared/organisation.service';
 import { OrganisationsService } from '../organisations/shared/organisations.service';
 import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentListItemComponent } from './document-list-item/document-list-item.component';
+import { DocumentService } from './shared/document.service';
 
 const routes: Routes = [
   { path: '', component: OrganisationComponent },
@@ -28,7 +29,8 @@ const routes: Routes = [
   ],
   providers: [
     OrganisationService,
-    OrganisationsService
+    OrganisationsService,
+    DocumentService
   ],
   declarations: [
     OrganisationComponent,
