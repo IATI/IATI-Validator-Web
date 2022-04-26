@@ -24,8 +24,7 @@ const routes: Routes = [
     SharedModule
   ],
   exports: [
-    RouterModule,
-    DocumentListItemComponent,
+    RouterModule
   ],
   providers: [
     OrganisationService,
