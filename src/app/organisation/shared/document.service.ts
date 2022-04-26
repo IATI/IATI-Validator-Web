@@ -20,7 +20,7 @@ export class DocumentService {
     this.log(url);
     return this.http.get<Document>(url, { headers: { [this.apiKeyName]: this.apiKeyValue } }).pipe(
       tap((_) => this.log(`fetched document`)),
-      catchError(this.handleError('getDocumentInfo', undefined))
+      catchError(this.handleError('DocumentService.getDocument', undefined))
     );
   }
 
@@ -110,12 +110,7 @@ export class DocumentService {
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging
       this.logger.error(error);
-      // console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      // this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
