@@ -128,6 +128,30 @@ export class OrganisationService {
     return '';
   }
 
+  getDocumentStatus(document: Document, display = false) {
+    const { report } = document;
+    const { valid } = report || { valid: null };
+    const { error, warning } = report ? report.summary : { error: -1, warning: -1 };
+
+    if (document.report === null) {
+      return display ? 'N/A' : 'normal';
+    }
+    if (valid === true && error === 0 && warning === 0) {
+      return display ? 'Success' : 'success';
+    }
+    if (valid === true && error === 0) {
+      return display ? 'Warning' : 'warning';
+    }
+    if (valid === true) {
+      return display ? 'Error' : 'error';
+    }
+    if (valid === false) {
+      return display ? 'Critical' : 'critical';
+    }
+
+    return display ? 'N/A' : 'normal';
+  }
+
   private log(message: string) {
     if (!environment.production) {
       this.logger.debug(message);

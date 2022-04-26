@@ -51,27 +51,7 @@ export class DocumentListItemComponent implements OnInit {
   }
 
   fileStatus(display = false): string {
-    const { report } = this.document;
-    const { valid } = report || { valid: null };
-    const { error, warning } = report ? report.summary : { error: -1, warning: -1 };
-
-    if (this.document.report === null) {
-      return display ? 'N/A' : 'normal';
-    }
-    if (valid === true && error === 0 && warning === 0) {
-      return display ? 'Success' : 'success';
-    }
-    if (valid === true && error === 0) {
-      return display ? 'Warning' : 'warning';
-    }
-    if (valid === true) {
-      return display ? 'Error' : 'error';
-    }
-    if (valid === false) {
-      return display ? 'Critical' : 'critical';
-    }
-
-    return display ? 'N/A' : 'normal';
+    return this.organisationService.getDocumentStatus(this.document, display);
   }
 
   datastoreAvailability(): string {
