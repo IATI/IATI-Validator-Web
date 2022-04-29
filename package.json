@@ -26,7 +26,7 @@
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "ajv": "^8.11.0",
     "angular-gtag": "^1.0.4",
-    "bootstrap": "^4.6.1",
+    "bootstrap": "^5.1.3",
     "core-js": "^3.22.2",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
