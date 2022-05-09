@@ -11,7 +11,7 @@ import { LoaderState } from './../../core/loader/loader';
 @Component({
   selector: 'app-organisation',
   templateUrl: './organisation.component.html',
-  styleUrls: ['./organisation.component.scss']
+  styleUrls: ['./organisation.component.scss'],
 })
 export class OrganisationComponent implements OnInit, OnDestroy {
   isLoading = false;
@@ -21,23 +21,26 @@ export class OrganisationComponent implements OnInit, OnDestroy {
 
   private loaderSubscription: Subscription | undefined;
 
-  constructor(private organisationService: OrganisationService,
-    private activateRoute: ActivatedRoute, private loader: LoaderService, private router: Router) {
-    this.activateRoute
-      .params
-      .subscribe(params => {
+  constructor(
+    private organisationService: OrganisationService,
+    private activateRoute: ActivatedRoute,
+    private loader: LoaderService,
+    private router: Router
+  ) {
+    this.activateRoute.params.subscribe(
+      (params) => {
         if ('name' in params) {
           this.name = params['name'];
         } else {
           this.router.navigate(['/404dqf']);
         }
       },
-      error => this.error = error);
+      (error) => (this.error = error)
+    );
   }
 
   async ngOnInit() {
-    this.loaderSubscription = this.loader.loaderState
-    .subscribe((state: LoaderState) => {
+    this.loaderSubscription = this.loader.loaderState.subscribe((state: LoaderState) => {
       this.isLoading = state.show;
     });
     this.loadOrganisation(this.name);
@@ -46,49 +49,43 @@ export class OrganisationComponent implements OnInit, OnDestroy {
   loadOrganisation(name: string) {
     this.loader.show();
 
-    this.organisationService.getOrganisationAndDocuments(name)
-      .subscribe(
-        data => {
-          this.organisationData = data;
-        },
-        error => this.error = error,
-        () => {
-          if (this.organisationData === undefined) {
-            this.organisationData = {
-              // eslint-disable-next-line @typescript-eslint/naming-convention
-              org_id: '',
-              name: '',
-              description: 'No organisation found with name "' + name + '"',
-              title: 'Organisation Not Found',
-              state: '',
-              // eslint-disable-next-line @typescript-eslint/naming-convention
-              image_url: '',
-              // eslint-disable-next-line @typescript-eslint/naming-convention
-              country_code: '',
-              // eslint-disable-next-line @typescript-eslint/naming-convention
-              iati_id: '',
-              // eslint-disable-next-line @typescript-eslint/naming-convention
-              package_count: null,
-              workspaces: [],
-              documents: null,
-            };
-          }
-          this.loader.hide();
+    this.organisationService.getOrganisationAndDocuments(name).subscribe(
+      (data) => {
+        this.organisationData = data;
+      },
+      (error) => (this.error = error),
+      () => {
+        if (!this.organisationData) {
+          this.organisationData = {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            org_id: '',
+            name: '',
+            description: 'No organisation found with name "' + name + '"',
+            title: 'Organisation Not Found',
+            state: '',
+            image_url: '',
+            country_code: '',
+            iati_id: '',
+            package_count: null,
+            workspaces: [],
+            documents: null,
+          };
+          /* eslint-enable @typescript-eslint/naming-convention */
         }
-      );
+        this.loader.hide();
+      }
+    );
   }
 
   hasValidLogo(): boolean {
     if (this.organisationData !== undefined) {
       if ('image_url' in this.organisationData) {
-        return (this.organisationData.image_url !== '');
+        return this.organisationData.image_url !== '';
       }
     }
 
     return false;
   }
 
-  ngOnDestroy() {
-  }
-
+  ngOnDestroy() {}
 }

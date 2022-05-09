@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GtagModule } from 'angular-gtag';
 
-
 import { DataQualityFeedbackService } from './shared/data-quality-feedback.service';
 import { OrganisationService } from 'src/app/organisation/shared/organisation.service';
 import { MainComponent } from './main/main.component';
@@ -25,10 +24,11 @@ import { SingleFeedbackComponent } from './single-feedback/single-feedback.compo
 import { IatiInfoComponent } from './iati-info/iati-info.component';
 import { ValidateIatiModule } from '../../validate-iati/validate-iati.module';
 import { MultiFeedbackComponent } from './multi-feedback/multi-feedback.component';
+import { OrganisationModule } from 'src/app/organisation/organisation.module';
 
 const routes: Routes = [
   { path: 'files/:id', component: MainComponent },
-  { path: '', redirectTo: '/404dqf' , pathMatch: 'full' },
+  { path: '', redirectTo: '/404dqf', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -39,11 +39,10 @@ const routes: Routes = [
     NgbModule,
     SharedModule,
     ValidateIatiModule,
-    GtagModule
+    GtagModule,
+    OrganisationModule,
   ],
-  exports: [
-    RouterModule
-  ],
+  exports: [RouterModule],
   declarations: [
     MainComponent,
     FilterSeverityComponent,
@@ -59,7 +58,8 @@ const routes: Routes = [
     FilterSeverityItemComponent,
     MainReportInfoComponent,
     SingleFeedbackComponent,
-    IatiInfoComponent],
-    providers: [DataQualityFeedbackService, OrganisationService]
+    IatiInfoComponent,
+  ],
+  providers: [DataQualityFeedbackService, OrganisationService],
 })
-export class DataQualityFeedbackModule { }
+export class DataQualityFeedbackModule {}

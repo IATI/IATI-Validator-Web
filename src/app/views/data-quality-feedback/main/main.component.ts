@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoaderService } from '../../../core/loader/loader.service';
 import { OrganisationService } from '../../../organisation/shared/organisation.service';
+import { DocumentService } from 'src/app/organisation/shared/document.service';
 import { Activity, Dqfs, Feedback, Message, Report, Ruleset, ReportResponse } from '../shared/feedback';
 import { Document } from 'src/app/shared/document';
 import { Severity } from '../shared/severity';
@@ -57,6 +58,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   constructor(private dataQualityFeedbackService: DataQualityFeedbackService,
     private organisationService: OrganisationService,
+    private documentService: DocumentService,
     private logger: LogService,
     private activateRoute: ActivatedRoute,
     private loader: LoaderService,
@@ -128,7 +130,7 @@ export class MainComponent implements OnInit, OnDestroy {
       this.setData(null);
       this.loader.hide();
     } else {
-      this.organisationService.getDocument(id).subscribe(
+      this.documentService.getDocument(id).subscribe(
         documentInfo => {
         if (length in documentInfo && documentInfo.length === 1) {
           this.documentInfo = documentInfo[0];
@@ -139,6 +141,9 @@ export class MainComponent implements OnInit, OnDestroy {
                 if (validationInfo) {
                   this.validationReportResponse = validationInfo;
                   this.validationReport = this.validationReportResponse.report;
+                  if (this.documentInfo) {
+                    this.documentInfo.report = this.validationReport;
+                  }
                   this.setData(null);
                 } else {
                   this.documentInfo = undefined;

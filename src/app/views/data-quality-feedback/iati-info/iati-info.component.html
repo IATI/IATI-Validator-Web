@@ -9,4 +9,8 @@
     | Report Generated:
     {{ documentInfo?.validation_created | date: "yyyy-MM-dd HH:mm (z)" }}</span
   >
+  <span *ngIf="documentInfo?.validation_created">
+    | Available in Datastore:
+    {{ datastoreAvailability() }}</span
+  >
 </p>
