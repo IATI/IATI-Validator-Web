@@ -1,71 +1,64 @@
 <div *ngIf="document" class="wrapper">
-  <div
-    class="row"
-    (click)="rowClick()"
-    [ngClass]="{
+  <div class="row" (click)="rowClick()" [ngClass]="{
       'file-success': fileStatus(false) === 'success',
       'file-warning': fileStatus(false) === 'warning',
       'file-error': fileStatus(false) === 'error',
       'file-critical': fileStatus(false) === 'critical',
       'no-validation': fileStatus(false) === 'normal'
-    }"
-  >
+    }">
     <div class="col-12 col-md filename" *ngIf="!hideTitle">
-      <span
-        *ngIf="
+      <span *ngIf="
           document.validation_created !== null &&
           document.download_error === null &&
           document.downloaded !== null &&
           document.hash !== ''
-        "
-      >
+        ">
         {{ fileName() }}
       </span>
-      <a
-        *ngIf="
+      <a *ngIf="
           document.validation_created === null ||
           document.download_error !== null ||
           document.downloaded === null ||
           document.hash === ''
-        "
-        href="{{ document.url }}"
-        target="_blank"
-        >{{ fileName() }}</a
-      >
+        " href="{{ document.url }}" target="_blank">{{ fileName() }}</a>
     </div>
     <div class="col-12 col-md">
       <span *ngIf="document.first_seen || document.modified">{{
         document.modified || document.first_seen | date: 'yyyy-MM-dd HH:mm (z)'
-      }}</span>
+        }}</span>
     </div>
     <div class="col-12 col-md">
       <span *ngIf="document.validation_created">
         {{ (document.validation_created ? document.validation_created : '') | date: 'yyyy-MM-dd HH:mm (z)' }}
       </span>
-      <span *ngIf="document.validation_created === null && downloadErrorString() === '0'">
-        Failed Download (Connection Error)
-      </span>
-      <span *ngIf="document.validation_created === null && downloadErrorString() === '1'">
-        Failed Download (SSL Issue)
-      </span>
-      <span *ngIf="document.validation_created === null && downloadErrorString() === '2'">
-        Failed Download (Character Encoding Issue)
-      </span>
-      <span *ngIf="document.validation_created === null && downloadErrorString() === '3'">
-        Failed Download (Invalid URL)
+      <span *ngIf="document.validation_created === null && document.downloaded !== null">
+        Pending Validation
       </span>
       <span
-        *ngIf="
+        *ngIf="document.validation_created === null && downloadErrorString() === '0' && document.downloaded === null">
+        Failed Download (Connection Error)
+      </span>
+      <span
+        *ngIf="document.validation_created === null && downloadErrorString() === '1' && document.downloaded === null">
+        Failed Download (SSL Issue)
+      </span>
+      <span
+        *ngIf="document.validation_created === null && downloadErrorString() === '2' && document.downloaded === null">
+        Failed Download (Character Encoding Issue)
+      </span>
+      <span
+        *ngIf="document.validation_created === null && downloadErrorString() === '3' && document.downloaded === null">
+        Failed Download (Invalid URL)
+      </span>
+      <span *ngIf="
           document.validation_created === null &&
           ['400', '401', '403', '404', '500', '501', '502', '503', '504', '505', '506', '507', '509', '510'].includes(
             downloadErrorString()
-          )
-        "
-      >
+          ) && document.downloaded === null
+        ">
         Failed Download (HTTP Error {{ document.download_error }})
       </span>
-      <span
-        *ngIf="
+      <span *ngIf="
           document.validation_created === null &&
           ![
             '0',
@@ -86,9 +79,8 @@
             '507',
             '509',
             '510'
-          ].includes(downloadErrorString())
-        "
-      >
+          ].includes(downloadErrorString()) && document.downloaded === null
+        ">
         Pending Download
       </span>
     </div>
@@ -99,6 +91,8 @@
       <span>{{ datastoreAvailability() }}</span>
     </div>
 
-    <div class="col-12 d-md-none"><hr /></div>
+    <div class="col-12 d-md-none">
+      <hr />
+    </div>
   </div>
 </div>
