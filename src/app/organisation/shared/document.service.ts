@@ -55,7 +55,7 @@ export class DocumentService {
     const { report, solrize_end, alv_end, alv_start, alv_error } = document;
 
     if (solrize_end) {
-      const formatedDate = formatDate(solrize_end, 'yyyy-MM-dd HH:mm (z)', 'en-US');
+      const formatedDate = formatDate(solrize_end, 'yyyy-MM-dd HH:mm (z)', 'en');
 
       return `${fileStatus === 'critical' && alv_end ? 'Partial' : 'Yes'} - ${formatedDate}`;
     }
