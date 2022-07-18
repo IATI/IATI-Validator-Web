@@ -13,7 +13,7 @@ export class DocumentService {
   private apiKeyName: string = window.__env.validatorServicesKeyName;
   private apiKeyValue: string = window.__env.validatorServicesKeyValue;
 
-  constructor(private http: HttpClient, private logger: LogService) {}
+  constructor(private http: HttpClient, private logger: LogService) { }
 
   getDocument(documentId: string): Observable<Document[]> {
     const url: string = this.urlApiDocumentVS + '/' + documentId;
@@ -63,6 +63,12 @@ export class DocumentService {
     if (
       fileStatus === 'critical' &&
       ((report?.fileType === 'iati-activities' && !alv_start) || alv_error === 'No valid activities')
+    ) {
+      return 'No';
+    }
+
+    if (
+      fileStatus === 'critical' && report?.fileType === ''
     ) {
       return 'No';
     }

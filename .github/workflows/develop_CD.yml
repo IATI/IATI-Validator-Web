@@ -3,8 +3,8 @@ name: Deploy_To_Azure_Blobs_NG_Dev
 on:
   push:
     paths-ignore: # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
-      - "**/README.md" # don't run on README.md file updates anywhere in repo
-      - "**/dependabot.yml"
+      - '**/README.md' # don't run on README.md file updates anywhere in repo
+      - '**/dependabot.yml'
     branches:
       - develop
   schedule:
@@ -18,17 +18,17 @@ jobs:
   should_run:
     uses: IATI/.github/.github/workflows/should_run.yaml@main
 
-  deploy: 
+  deploy:
     needs: should_run
     if: ${{ needs.should_run.outputs.should_run == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Node.js 
-        uses: actions/setup-node@v3.2.0
+      - name: Set up Node.js
+        uses: actions/setup-node@v3.4.1
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       - name: Install dependencies
@@ -57,3 +57,14 @@ jobs:
             --account-key ${{ env.STORAGE_ACCOUNT_KEY }} \
             -d '$web' \
             -s dist/
+
+  # Mark status checks success/fail on dependabot commits for scheduled deploys
+  status_check_success:
+    needs: [deploy]
+    if: success() && github.event_name == 'schedule'
+    uses: IATI/.github/.github/workflows/status_check_success.yaml@main
+
+  status_check_failure:
+    needs: [deploy]
+    if: failure() && github.event_name == 'schedule'
+    uses: IATI/.github/.github/workflows/status_check_failure.yaml@main
