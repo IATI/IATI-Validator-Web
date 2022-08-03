@@ -27,7 +27,7 @@
     "ajv": "^8.11.0",
     "angular-gtag": "^1.0.4",
     "bootstrap": "^4.6.2",
-    "core-js": "^3.24.0",
+    "core-js": "^3.24.1",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "ngx-cookie-service": "^12.0.3",
