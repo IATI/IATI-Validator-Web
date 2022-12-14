@@ -50,3 +50,12 @@ Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.pr
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Closed PRs prior to archiving
+
+We have closed the following PRs as we are going to archive this repo
+1. [PR 696](https://github.com/IATI/IATI-Validator-Web/pull/696)
+2. [PR 723](https://github.com/IATI/IATI-Validator-Web/pull/723)
+3. [PR 705](https://github.com/IATI/IATI-Validator-Web/pull/705)
+
+We have archived this and replaced it with [validator-web](https://github.com/IATI/validator-web)
